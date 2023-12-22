@@ -22,4 +22,9 @@ public class TestController {
 		return "/test/main";
 	}
 	
+	@RequestMapping("hello")
+	public String hello() {
+		return "/test/hello";
+	}
+	
 }
