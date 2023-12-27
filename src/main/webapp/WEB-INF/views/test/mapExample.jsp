@@ -22,8 +22,6 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 
 // 마커가 표시될 위치입니다 
 
-
-
 var markerPosition  = new kakao.maps.LatLng(37.616768417, 126.847764121); 
 
 // 마커를 생성합니다

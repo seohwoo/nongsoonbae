@@ -42,4 +42,9 @@ public class TestController {
 		return "/test/chart";
 	}
 	
+	@RequestMapping("address")
+	public String address() {
+		return "/test/addressTest";
+	}
+	
 }

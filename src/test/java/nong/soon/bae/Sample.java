@@ -14,13 +14,6 @@ public class Sample {
 		
 		ArrayList<HashMap<String, String>> area = api.findLocation();
 		
-		/*
-		 * for (HashMap<String, String> areaMap : area) {
-		 * System.out.println(areaMap.get("code"));
-		 * System.out.println(areaMap.get("name"));
-		 * System.out.println("========================"); }
-		 */
-		
 		ArrayList<Integer> areacodeList = new ArrayList<Integer>();
 		
 		for (HashMap<String, String> areaMap : area) {
