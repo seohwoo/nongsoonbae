@@ -25,11 +25,8 @@ public class UsingKorAPI extends KorServiceAPI{
 
 	public ArrayList<HashMap<String, String>> findLocation() {
 		ArrayList<HashMap<String, String>> location = new ArrayList<HashMap<String, String>>();
-
 		try {
-			
 			url = new URL("https://apis.data.go.kr/B551011/KorService1/areaCode1?numOfRows=30&pageNo=1&MobileOS=ETC&MobileApp=nongsoonbae&_type=json&serviceKey="+api_key);
-			
 			bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 			result = bf.readLine();
 			JSONParser jsonParser = new JSONParser();
@@ -54,11 +51,8 @@ public class UsingKorAPI extends KorServiceAPI{
 	
 	public ArrayList<HashMap<String, String>> findSubLocation(int areacode) {
 		ArrayList<HashMap<String, String>> location = new ArrayList<HashMap<String, String>>();
-
 		try {
-			
 			url = new URL("https://apis.data.go.kr/B551011/KorService1/areaCode1?numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=nongsoonbae&areaCode="+areacode+"&_type=json&serviceKey="+api_key);
-			
 			bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 			result = bf.readLine();
 			JSONParser jsonParser = new JSONParser();
@@ -79,6 +73,6 @@ public class UsingKorAPI extends KorServiceAPI{
 			e.printStackTrace();
 		}
 		return location;
-	}// findLocation()
+	}// findSubLocation()
 	
 }

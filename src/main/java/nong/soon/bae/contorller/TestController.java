@@ -27,4 +27,19 @@ public class TestController {
 		return "/test/hello";
 	}
 	
+	@RequestMapping("map")
+	public String map() {
+		return "/test/mapExample";
+	}
+	
+	@RequestMapping("pay")
+	public String pay() {
+		return "/test/kakaoPay";
+	}
+	
+	@RequestMapping("chart")
+	public String chart() {
+		return "/test/chart";
+	}
+	
 }
