@@ -1,3 +1,4 @@
+
 package nong.soon.bae.bean;
 
 import java.util.Date;
@@ -17,3 +18,4 @@ public class UserDetailsDTO {
 	private String phone;
 	private int followers;
 }
+
