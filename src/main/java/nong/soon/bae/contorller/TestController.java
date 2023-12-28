@@ -47,4 +47,9 @@ public class TestController {
 		return "/test/addressTest";
 	}
 	
+	@RequestMapping("addressmap")
+	public String addressmap() {
+		return "/test/addressMap";
+	}
+	
 }
