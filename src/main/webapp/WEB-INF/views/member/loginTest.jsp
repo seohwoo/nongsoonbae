@@ -15,10 +15,12 @@
 
 </head>
 <body>
+<%@include file="/WEB-INF/views/include/header.jsp"%>
 <form class="form-signin" action="/login/pro" method="POST">
 	<img src="/resources/img/spring.png" style="width: 200px; height: 95px">
 	<h1 class="h3 mb-3 font-weight-normal">${username}</h1>
 	<p class="mt-5 mb-3 text-muted">loginTest.jsp</p>
 </form>
+<%@include file="/WEB-INF/views/include/footer.jsp"%>
 </body>
 </html>

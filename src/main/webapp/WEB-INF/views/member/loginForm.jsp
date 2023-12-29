@@ -21,18 +21,19 @@
 
 </head>
 <body>
+<%@include file="/WEB-INF/views/include/header.jsp"%>
 <form class="form-signin" action="/login" method="POST">
 	<img src="/resources/img/spring.png" style="width: 200px; height: 95px">
-	<h1 class="h3 mb-3 font-weight-normal"></h1>
+	<h1 class="h3 mb-3 font-weight-normal">로그인</h1>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<input type="text" name="username" class="form-control" placeholder="ID" required autofocus>
 	<input type="password" name="password" class="form-control" placeholder="Password" required>
-	자동 로그인 : <input type="checkbox" name="remember-me" />
-	<button class="btn btn-lg btn-primary btn-block" type="submit">LOGIN</button>
+	자동 로그인 : <input type="checkbox" name="remember-me" /><p></p>
+	<button class="btn btn-primary col-6" type="submit">LOGIN</button>
 	<c:if test="${param.err == true}">
 		<p style="color: red">ID와 Password를 확인해주세요.</p>
 	</c:if>
-	<p class="mt-5 mb-3"> -------------------또는-------------------- </p>
+	<p class="mt-3 mb-3"> -------------------또는-------------------- </p>
 	<div>
 		<a id="kakao-login-btn" href="javascript:loginWithKakao()">
 		  <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222" alt="카카오 로그인 버튼" />
@@ -89,5 +90,6 @@
 	</div>
 	<p class="mt-5 mb-3 text-muted">loginForm.jsp</p>
 </form>
+<%@include file="/WEB-INF/views/include/footer.jsp"%>
 </body>
 </html>

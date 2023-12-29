@@ -55,12 +55,10 @@ $(document).ready(function(){
 
 </head>
 <body>
-<%@include file="/WEB-INF/views/include/header.jsp"%>s
+<%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<div>
 <form class="form-signin" action="/member/reg" method="POST">
-	<img src="/resources/img/spring.png" style="width: 200px; height: 95px">
-	<h1 class="h3 mb-3 font-weight-normal"></h1>
+	<h1 class="h3 mb-3 font-weight-normal">회원가입</h1>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	아이디<input type="text" name="username" class="form-control" placeholder="ID" required autofocus>
 	비밀번호<input type="password" name="password" class="form-control" placeholder="Password" required>
@@ -76,6 +74,6 @@ $(document).ready(function(){
 	</c:if>
 	<p class="mt-5 mb-3 text-muted">regForm.jsp</p>
 </form>
-</div>
+<%@include file="/WEB-INF/views/include/footer.jsp"%>
 </body>
 </html>
