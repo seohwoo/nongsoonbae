@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.ProductMapper">
+	
+	<select id="selectProductcategory" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory
+	</select>
+	
+	<insert id="createProduct" parameterType="String">
+		create table ${username}_PRODUCT ( 
+			productnum varchar2(50) primary key not null,
+		    productname varchar2(200) not null,
+		    wishcount number default 0,
+		    totalprice number not null,
+		    productcount number not null,
+		    sellcount number default 0 not null,
+		    imagecount number default 0 not null,
+		    content varchar2(4000) not null,
+		    readcount number default 0 not null,
+		    startdate date default sysdate not null,
+		    enddate date,
+		    optionstatus number)
+	</insert>
+	
+	<insert id="createSEQ" parameterType="String">
+		create sequence ${username}PRODUCT_SEQ
+	</insert>
+	
+	<!-- FINISH -->
+	
+	<insert id="productInsert" parameterType="nong.soon.bae.bean.ProductDTO">
+    insert into ${username}PRODUCT (productnum, productname, totalprice, 
+    productcount, content, startdate, enddate, optionstatus) 
+    values(
+        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || LPAD(${username}product_seq.nextval, 5, '0')),
+        #{productname}, 
+        #{totalprice}, 
+        #{productcount},
+        #{content}, 
+        sysdate, 
+        #{enddate}, 
+        #{optionstatus}
+    )
+	</insert>
+	
+</mapper>    
+    
