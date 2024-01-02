@@ -1,10 +1,16 @@
 package nong.soon.bae.contorller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import nong.soon.bae.bean.AreaDTO;
+import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.service.AreaService;
+import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
 
 @Controller
@@ -15,6 +21,12 @@ public class MainController {
 	@Autowired
 	private MainService service;
 	
+	@Autowired
+	private AreaService areaservice;
+
+	@Autowired
+	private CategoryService cateservice;
+		
 	@RequestMapping("main")
 	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3) {
 		if (categoryNum==null) {
@@ -51,6 +63,38 @@ public class MainController {
 		}
 		return "main/chart";
 	}
+	
+	@RequestMapping("menu")
+	public String main(Model model, String catename) {
+		List<ProductCategoryDTO> dto = cateservice.catemenu(catename);
+		model.addAttribute("dto",dto);
+		return "main/categorymain";
+	}
+	
+	@RequestMapping("menulist")
+	public String main2(Model model, int cate1) {
+		List<ProductCategoryDTO> menu = cateservice.catelist(cate1);
+		model.addAttribute("menu",menu);
+		return "main/categorylist";
+	}
+	
+	
+	@RequestMapping("arealist")
+	public String area(Model model, String areaname) {
+		List<AreaDTO> dto = areaservice.catelist(areaname);
+		model.addAttribute("dto",dto);
+		return "main/areamain";
+	}
+	
+	@RequestMapping("areas")
+	public String area2(Model model, int area1) {
+		List<AreaDTO> areas = areaservice.catelistarea(area1);
+		model.addAttribute("areas",areas);
+		return "main/areacategory";
+	}
+	
+	
+	
 	
 	
 }
