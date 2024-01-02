@@ -1,5 +1,17 @@
 package nong.soon.bae.repository;
 
+import java.util.HashMap;
+import java.util.List;
+
+import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.ProductCategoryDTO;
+
 public interface MainMapper {
+	
+	public int seasonCategoryCnt(String keyword);
+	public List<ProductCategoryDTO> seasonCategory(HashMap<String, String> map);
+	public String findCatename(HashMap<String, String> map);
+	public int seasonProductCnt(HashMap<String, String> map);
+	public List<AllProductDTO> seasonProduct(HashMap<String, String> map);
 	
 }
