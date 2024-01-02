@@ -89,5 +89,5 @@ public class MemberController {
 		logger.info("post custom logout");
 		return "member/logout";
 	}
-	
+
 }

@@ -17,3 +17,4 @@ public class UserDetailsDTO {
 	private String phone;
 	private int followers;
 }
+

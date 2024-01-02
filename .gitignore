@@ -38,6 +38,11 @@ local.properties
 .project
 pom.properties
 
+# api_key
+KorServiceAPI.java
+VlandAPI.java
+
+
 # sbteclipse plugin
 .target
 

@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class UsersDTO {
-	
 	private String username;
 	private String password;
 	private String name;
@@ -15,5 +14,4 @@ public class UsersDTO {
 	private String birth;
 	private int gender;
 	private int grade;
-	
 }

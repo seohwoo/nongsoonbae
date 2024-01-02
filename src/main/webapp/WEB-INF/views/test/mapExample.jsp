@@ -8,6 +8,7 @@
     
 </head>
 <body>
+<<<<<<< HEAD
 <div id="map" style="width:100%;height:600px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a59143e26d58362551774373cb766b2"></script>
@@ -35,5 +36,8 @@ marker.setMap(map);
 // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 // marker.setMap(null);    
 </script>
+=======
+	${content }
+>>>>>>> branch 'shw/2' of https://github.com/seohwoo/nongsoonbae.git
 </body>
 </html>

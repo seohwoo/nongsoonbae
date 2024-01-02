@@ -21,6 +21,5 @@
 	<h1 class="h3 mb-3 font-weight-normal">${username}</h1>
 	<p class="mt-5 mb-3 text-muted">loginTest.jsp</p>
 </form>
-<%@include file="/WEB-INF/views/include/footer.jsp"%>
 </body>
 </html>

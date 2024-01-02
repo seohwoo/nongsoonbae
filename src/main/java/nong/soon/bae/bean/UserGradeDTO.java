@@ -7,3 +7,4 @@ public class UserGradeDTO {
 	private int gradenum;
 	private String gradename;
 }
+
