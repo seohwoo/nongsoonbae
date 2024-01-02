@@ -20,7 +20,6 @@ public class AreaServiceImpl implements AreaService{
 
 	@Override
 	public List<AreaDTO> catelistarea(int area1) {
-		
 		return mapper.catelistarea(area1);
 	}
 }

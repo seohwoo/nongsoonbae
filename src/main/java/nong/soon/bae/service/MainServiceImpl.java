@@ -97,7 +97,6 @@ public class MainServiceImpl implements MainService {
 			seasonCategoryMap.put("keyword", keyword);
 			lastlist.add(mapper.productChart(seasonCategoryMap));
 		}
-		
 		model.addAttribute("catename", catename);
 		model.addAttribute("thisYear", thisYear);
 		model.addAttribute("lastYear", lastYear);
