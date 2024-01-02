@@ -22,4 +22,34 @@ public class TestController {
 		return "/test/main";
 	}
 	
+	@RequestMapping("hello")
+	public String hello() {
+		return "/test/hello";
+	}
+	
+	@RequestMapping("map")
+	public String map() {
+		return "/test/mapExample";
+	}
+	
+	@RequestMapping("pay")
+	public String pay() {
+		return "/test/kakaoPay";
+	}
+	
+	@RequestMapping("chart")
+	public String chart() {
+		return "/test/chart";
+	}
+	
+	@RequestMapping("address")
+	public String address() {
+		return "/test/addressTest";
+	}
+	
+	@RequestMapping("addressmap")
+	public String addressmap() {
+		return "/test/addressMap";
+	}
+	
 }

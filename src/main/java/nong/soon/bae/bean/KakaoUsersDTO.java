@@ -5,15 +5,14 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class UsersDTO {
+public class KakaoUsersDTO {
 	private String username;
 	private String password;
+	private String nickname;
 	private String name;
-	private List<UserGradeDTO> gradenames;
+	private List<UserGradeDTO> grade;
 	private String email;
+	private String phone;
 	private String birth;
-	private int gender;
-	private int grade;
-	
-
+	private String gender;
 }
