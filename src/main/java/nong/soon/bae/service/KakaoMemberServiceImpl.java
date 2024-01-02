@@ -23,7 +23,7 @@ public class KakaoMemberServiceImpl implements KakaoMemberService {
 		mapper.kakaoInsert(usersDTO);
         String userid = usersDTO.getUsername();
         log.info("userid:: " + userid);
-        mapper.authorize(usersDTO);
+    //    mapper.authorize(usersDTO);
 
 	}
 
@@ -40,14 +40,8 @@ public class KakaoMemberServiceImpl implements KakaoMemberService {
 	}
 
 	@Override
-	public String findUserIdBy2(String username) {
-		log.info("username:: " + username);
-        return mapper.findUserIdBy2(username);
-	}
-
-	@Override
-	public KakaoUsersDTO findByUserId(String userid) {
-		 return mapper.read(userid);
+	public KakaoUsersDTO findByUserId(String username) {
+		 return mapper.read(username);
 	}
 
 }

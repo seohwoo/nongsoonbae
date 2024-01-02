@@ -1,6 +1,9 @@
 package nong.soon.bae.contorller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,9 +56,11 @@ public class KakaoController {
         String name = (String) result.get("name");
         String email = (String) result.get("email");
         String gender = (String) result.get("gender");
-        String birth = (String)result.get("birthyear"+"birthday");
+        String birthyear = (String)result.get("birthyear");
+        String birthday = (String)result.get("birthday");
         String phone = (String)result.get("phone_number");
         String nickname = (String)result.get("nickname");
+        String birth = birthyear+birthday;
         String password = birth+nickname;
         System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+phone+","+nickname+","+password);
 
@@ -79,8 +84,7 @@ public class KakaoController {
 
        
         log.warn("카카오로 로그인");
-        String userid = memberService.findUserIdBy2(username);
-        KakaoUsersDTO vo = memberService.findByUserId(userid);
+        KakaoUsersDTO vo = memberService.findByUserId(username);
         log.warn("member:: " + vo);
             /*Security Authentication에 붙이는 과정*/
         CustomUser user = new CustomUser(vo);
@@ -95,7 +99,7 @@ public class KakaoController {
         /* 로그아웃 처리 시, 사용할 토큰 값 */
         session.setAttribute("kakaoToken", kakaoToken);
 
-        return "redirect:/";
+        return "redirect:/member/test";
 
     }
 

@@ -33,7 +33,7 @@
 	<p class="mt-3 mb-3"> -------------------또는-------------------- </p>
 	<div>
 		<a id="kakao-login-btn" href="javascript:loginWithKakao()">
-		  <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222" alt="카카오 로그인 버튼" />
+		  <img src="https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png" width="150" alt="카카오 로그인 버튼" />
 		</a>
 		<p id="token-result"></p>
 		
@@ -47,9 +47,6 @@
 		  function requestUserInfo() {
 			  Kakao.API.request({
 				  url: '/v2/user/me',
-				  data: {
-				    property_keys: ['kakao_account.email', 'kakao_account.gender'],
-				  },
 				})
 				  .then(function(response) {
 				    console.log(response);
@@ -59,30 +56,6 @@
 				  });
 			  }
 		
-		  // 아래는 데모를 위한 UI 코드입니다.
-		  displayToken()
-		  function displayToken() {
-		    var token = getCookie('authorize-access-token');
-		
-		    if(token) {
-		      Kakao.Auth.setAccessToken(token);
-		      Kakao.Auth.getStatusInfo()
-		        .then(function(res) {
-		          if (res.status === 'connected') {
-		            document.getElementById('token-result').innerText
-		              = 'login success, token: ' + Kakao.Auth.getAccessToken();
-		          }
-		        })
-		        .catch(function(err) {
-		          Kakao.Auth.setAccessToken(null);
-		        });
-		    }
-		  }
-		
-		  function getCookie(name) {
-		    var parts = document.cookie.split(name + '=');
-		    if (parts.length === 2) { return parts[1].split(';')[0]; }
-		  }
 		</script>
 	</div>
 	<p class="mt-5 mb-3 text-muted">loginForm.jsp</p>

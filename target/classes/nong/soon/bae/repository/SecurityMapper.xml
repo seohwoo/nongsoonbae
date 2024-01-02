@@ -20,6 +20,21 @@
 	    <result property="gradenum" column="gradenum"/>
 	    <result property="gradename" column="gradename"/>
 	  </resultMap>
+	  
+	  <resultMap type="nong.soon.bae.bean.KakaoUsersDTO" id="kakaoMap">
+	    <id property="username" column="username"/>
+	    <result property="username" column="username"/>
+	    <result property="password" column="password"/>
+	    <result property="nickname" column="nickname"/>
+	    <result property="name" column="name"/>
+	    <result property="email" column="email"/>
+	    <result property="birth" column="birth"/>
+	    <result property="phone" column="phone"/>
+	    <result property="gender" column="gender"/>
+	    <result property="grade" column="grade"/>
+	    <collection property="gradenames" resultMap="authMap">
+	    </collection> 
+	  </resultMap>
     
 	<select id="login" resultMap="memberMap">
 		select * from users u, usergrade g where u.username=#{username} and u.grade=g.gradenum
@@ -28,6 +43,10 @@
 	<insert id="kakaoInsert" >
     	INSERT INTO kakaousers values (#{username}, #{nickname}, #{name}, 100, #{email}, #{phone}, #{birth}, #{gender}, #{password})
 	</insert>
+	
+	<select id="read" resultMap="kakaoMap">
+		select * from kakaousers where username=#{username}
+	</select>
 	
 </mapper>    
     

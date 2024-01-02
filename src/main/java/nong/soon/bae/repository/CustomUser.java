@@ -38,9 +38,9 @@ public class CustomUser extends User {
 		logger.info("========="+dto+"=========");
 	}
 	
-	public CustomUser(KakaoUsersDTO dto) {
-		super(dto.getUsername(),dto.getPassword(),dto.getGrade().stream().map(auth -> new SimpleGrantedAuthority(auth.getGradename())).collect(Collectors.toList()));
-		this.kdto = dto;
+	public CustomUser(KakaoUsersDTO kdto) {
+		super(kdto.getUsername(),kdto.getPassword(),kdto.getGradenames().stream().map(auth -> new SimpleGrantedAuthority(auth.getGradename())).collect(Collectors.toList()));
+		this.kdto = kdto;
 	}
 
 }
