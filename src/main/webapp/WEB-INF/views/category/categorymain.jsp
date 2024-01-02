@@ -4,22 +4,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>지역별 보기</title>
+		<title>카테고리별</title>
 	</head>
 	<body>
-	<h1> 지역별 카테고리</h1>
-		<table>
+	<h1> 품목별 카테고리</h1>
+		<div>
 			<c:forEach var="dto" items="${dto}" >
-				<tr>
-					<a href="areas?area1=${dto.area1}&area2=${dto.area2}">${dto.areaname}</a> </br>
-				</tr>
+				<div>
+					<img src="${dto.img}" border="0" width="100" height="100">
+					<a href="menulist?cate1=${dto.cate1}&cate2=${dto.cate2}">${dto.catename}</a>
+				</div>
 			</c:forEach>
-		</table>
-		
+		</div>
 	</body>
 </html>
-
-
-
-
 

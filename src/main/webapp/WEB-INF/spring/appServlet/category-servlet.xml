@@ -7,6 +7,6 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 		
-		<beans:bean id="productcategoryDTO" class="nong.soon.bae.bean.ProductcategoryDTO" />
+		<beans:bean id="areaDTO" class="nong.soon.bae.bean.AreaDTO" />
 	
 </beans:beans>

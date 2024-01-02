@@ -11,7 +11,7 @@
 		<table>
 			<c:forEach var="areas" items="${areas}" >
 				<tr>
-					<a href="category?area1=${dto.area1}">${areas.areaname}</a> </br>
+					<a href="category?area1=${areas.area1}">${areas.areaname}</a> </br>
 				</tr>
 			</c:forEach>
 		</table>

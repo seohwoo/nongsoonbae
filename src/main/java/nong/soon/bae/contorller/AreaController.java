@@ -24,7 +24,7 @@ public class AreaController {
 		return "area/areamain";
 	}
 	
-	@RequestMapping("category")
+	@RequestMapping("areas")
 	public String main2(Model model, int area1) {
 		List<AreaDTO> areas = service.catelistarea(area1);
 		model.addAttribute("areas",areas);
