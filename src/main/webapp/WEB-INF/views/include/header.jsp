@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <link href="/resources/css/headandfoot.css" rel="stylesheet" type="text/css">
 <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
@@ -9,9 +12,19 @@
         <li class="nav-item"><a href="#" class="nav-link link-dark px-2">전국 특산품</a></li>
       </ul>
       <ul class="nav">
-        <li class="nav-item"><a href="/member/form" class="nav-link link-dark px-2">로그인</a></li>
-        <li class="nav-item"><a href="/member/regForm" class="nav-link link-dark px-2">회원가입</a></li>
-      </ul>
+	    <sec:authorize access="isAnonymous()">
+			<!-- 로그인 안 한 익명일 경우 -->
+			<li class="nav-item"><a href="/member/form" class="nav-link link-dark px-2">로그인</a></li>
+	       	<li class="nav-item"><a href="/member/regForm" class="nav-link link-dark px-2">회원가입</a></li>
+		</sec:authorize>
+			
+		<sec:authorize access="isAuthenticated()">
+			<!-- 로그인(인증된) 사용자인 경우 -->	
+			<li class="nav-item"><a href="/mypage" class="nav-link link-dark px-2">마이페이지</a></li>
+			<li class="nav-item"><a href="/member/logout" class="nav-link link-dark px-2">로그아웃</a></li>
+		</sec:authorize>
+
+	</ul>
     </div>
   </nav>
   <header class="py-3 mb-4 border-bottom">

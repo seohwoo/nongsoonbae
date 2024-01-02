@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nong.soon.bae.bean.UserGradeDTO;
@@ -81,6 +82,12 @@ public class MemberController {
 	public String detailForm() {
 		
 		return "";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout() {
+		logger.info("post custom logout");
+		return "member/logout";
 	}
 	
 }
