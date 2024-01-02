@@ -2,6 +2,39 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="nong.soon.bae.repository.MainMapper">
-		
-	</mapper>
+<mapper namespace="nong.soon.bae.repository.MainMapper">
+	
+	<select id="seasonCategoryCnt" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from productcategory where cate3>0 and month like #{keyword}
+		]]>
+	</select>
+	
+	<select id="seasonCategory" parameterType="hashmap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		<![CDATA[
+			select * from 
+			(select c.* , rownum r from 
+			(select * from productcategory where cate3>0 
+			and month like #{keyword} order by readcount) c) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	
+	<select id="findCatename" parameterType="hashmap" resultType="String">
+		select catename from productcategory where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3}
+	</select>
+	
+	<select id="seasonProductCnt" parameterType="hashmap" resultType="int">
+		select count(*) from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3}
+	</select>
+	
+	<select id="seasonProduct" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3}
+	</select>
+	
+	<select id="productChart" parameterType="hashmap" resultType="double">
+		select avg(avgprice) from chart where regdate like #{keyword} and name=#{catename}
+	</select>
+	
+	
+</mapper>
