@@ -8,4 +8,7 @@ public class ProductCategoryDTO {
 	private int cate2;
 	private int cate3;
 	private String catename;
+	private int readcount;
+	private String img;
+	private String month;
 }
