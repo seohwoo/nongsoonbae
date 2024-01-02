@@ -1,6 +1,7 @@
 package nong.soon.bae.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +26,10 @@ public class MainServiceImpl implements MainService {
 	private SimpleDateFormat simpleDateFormat;
 	@Autowired
 	private HashMap<String, String> seasonCategoryMap;
+	@Autowired
+	private ArrayList<Double> thislist;
+	@Autowired
+	private ArrayList<Double> lastlist;
 
 	public String[] todayInfo() {
 		String formatDate = simpleDateFormat.format(date);
@@ -72,6 +77,32 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("catename", catename);
 		model.addAttribute("productCnt", cnt);
 		model.addAttribute("productList", list);
+	}
+
+	@Override
+	public void showChart(Model model, String cate1, String cate2, String cate3) {
+		String thisYear = String.valueOf((Integer.parseInt(todayInfo()[0])-1));
+		String lastYear = String.valueOf((Integer.parseInt(todayInfo()[0])-2));
+		seasonCategoryMap.put("cate1", cate1);
+		seasonCategoryMap.put("cate2", cate2);
+		seasonCategoryMap.put("cate3", cate3);
+		String catename = mapper.findCatename(seasonCategoryMap);
+		seasonCategoryMap.put("catename", catename);
+		String keyword = "";
+		for (int i = 1; i <= 12; i++) {
+			keyword = "%" + thisYear + "년" + i + "월%";
+			seasonCategoryMap.put("keyword", keyword);
+			thislist.add(mapper.productChart(seasonCategoryMap));
+			keyword = "%" + lastYear + "년" + i + "월%";
+			seasonCategoryMap.put("keyword", keyword);
+			lastlist.add(mapper.productChart(seasonCategoryMap));
+		}
+		
+		model.addAttribute("catename", catename);
+		model.addAttribute("thisYear", thisYear);
+		model.addAttribute("lastYear", lastYear);
+		model.addAttribute("thislist", thislist);
+		model.addAttribute("lastlist", lastlist);
 	}
 	
 	

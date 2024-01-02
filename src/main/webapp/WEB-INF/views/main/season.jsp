@@ -12,12 +12,13 @@
 			<c:forEach var="dto" items="${categoryList}">
 				<div style="margin-right: 10px; text-align: center;">
 					<img src="${dto.img}" width="100px" height="100px" /> <br />
-					<a href="/main/detail?cate1=${dto.cate1}&cate2=${dto.cate2}&cate3=${dto.cate3}">
+					<a href="/main/main?categoryNum=${categoryNum}&cate1=${dto.cate1}&cate2=${dto.cate2}&cate3=${dto.cate3}">
 						<span>${dto.catename}</span>
 					</a>
 				</div>
 			</c:forEach>
 		</div>
+		<br />
 		<c:if test="${categoryNum>1}">
 			<button onclick="window.location='/main/main?categoryNum=${categoryNum-1}'">⏪</button>
 		</c:if>

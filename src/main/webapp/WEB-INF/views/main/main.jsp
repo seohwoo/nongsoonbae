@@ -9,5 +9,7 @@
 	<body>
 		<h1>메인입니당</h1>
 		<jsp:include page="/WEB-INF/views/main/season.jsp" />
+		<jsp:include page="/WEB-INF/views/main/chart.jsp" />
+		<jsp:include page="/WEB-INF/views/main/seasonDetail.jsp" />
 	</body>
 </html>

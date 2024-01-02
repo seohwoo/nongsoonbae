@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.ChartDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 
 public interface MainMapper {
@@ -13,5 +14,6 @@ public interface MainMapper {
 	public String findCatename(HashMap<String, String> map);
 	public int seasonProductCnt(HashMap<String, String> map);
 	public List<AllProductDTO> seasonProduct(HashMap<String, String> map);
+	public double productChart(HashMap<String, String> map);
 	
 }

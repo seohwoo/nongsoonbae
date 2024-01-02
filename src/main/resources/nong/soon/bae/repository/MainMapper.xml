@@ -32,5 +32,9 @@
 		select * from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3}
 	</select>
 	
+	<select id="productChart" parameterType="hashmap" resultType="double">
+		select avg(avgprice) from chart where regdate like #{keyword} and name=#{catename}
+	</select>
+	
 	
 </mapper>

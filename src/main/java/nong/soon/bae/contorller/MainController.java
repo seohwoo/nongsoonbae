@@ -16,11 +16,15 @@ public class MainController {
 	private MainService service;
 	
 	@RequestMapping("main")
-	public String main(Model model, String categoryNum) {
+	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3) {
 		if (categoryNum==null) {
 			categoryNum = "1";
 		}
 		service.seasonCategory(model, Integer.parseInt(categoryNum));
+		if(cate1!=null && cate2!=null && cate3!=null ) {
+			service.showChart(model, cate1, cate2, cate3);
+			service.detailSeasonCategory(model, cate1, cate2, cate3);
+		}
 		return "main/main";
 	}
 	
@@ -38,6 +42,14 @@ public class MainController {
 		service.detailSeasonCategory(model, cate1, cate2, cate3);
 		
 		return "main/seasonDetail";
+	}
+	
+	@RequestMapping("chart")
+	public String chart(Model model, String cate1, String cate2, String cate3) {
+		if(cate1!=null && cate2!=null && cate3!=null ) {
+			service.showChart(model, cate1, cate2, cate3);
+		}
+		return "main/chart";
 	}
 	
 	
