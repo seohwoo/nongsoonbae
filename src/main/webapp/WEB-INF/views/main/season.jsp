@@ -7,7 +7,7 @@
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<h1>${month}월</h1>
+		<h1 class="h1 mb-4">${month}월</h1><br />
 		<div style="display: flex;">
 			<c:forEach var="dto" items="${categoryList}">
 				<div style="margin-right: 10px; text-align: center;">
