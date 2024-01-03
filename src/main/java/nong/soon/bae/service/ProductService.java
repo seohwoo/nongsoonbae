@@ -20,4 +20,11 @@ public interface ProductService {
 	
 	// 판매 정보 넣기
 	public void productInsert(ProductDTO product, String username);
+	
+	// TEST
+	public List<ProductCategoryDTO> selectCate1();
+	
+	public List<ProductCategoryDTO> selectCate2();
+	
+	public List<ProductCategoryDTO> selectCate3();
 }

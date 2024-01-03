@@ -22,4 +22,12 @@ public interface ProductMapper {
 	
 	// 판매 정보 넣기
 	public int productInsert(ProductDTO product);
+	
+	// TEST
+	public List<ProductCategoryDTO> selectCate1();
+	
+	public List<ProductCategoryDTO> selectCate2();
+	
+	public List<ProductCategoryDTO> selectCate3();
+	
 }

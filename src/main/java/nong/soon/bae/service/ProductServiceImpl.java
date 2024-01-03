@@ -41,5 +41,20 @@ public class ProductServiceImpl implements ProductService {
 	public void productInsert(ProductDTO product, String username) {
 		mapper.productInsert(product);
 	}
+
+	@Override
+	public List<ProductCategoryDTO> selectCate1() {
+		return mapper.selectCate1();
+	}
+
+	@Override
+	public List<ProductCategoryDTO> selectCate2() {
+		return mapper.selectCate2();
+	}
+
+	@Override
+	public List<ProductCategoryDTO> selectCate3() {
+		return mapper.selectCate3();
+	}
 	
 }

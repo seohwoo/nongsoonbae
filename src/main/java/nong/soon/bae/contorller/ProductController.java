@@ -1,12 +1,14 @@
 package nong.soon.bae.contorller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.service.ProductService;
@@ -64,7 +66,16 @@ public class ProductController {
 	
 	
 	@RequestMapping("sample")
-	public String sample() {
+	public String sample(Model model) {
+		List<ProductCategoryDTO> categoryDTO = service.selectProductcategory();
+		List<ProductCategoryDTO> cate1 = service.selectCate1();
+		List<ProductCategoryDTO> cate2 = service.selectCate2();
+		List<ProductCategoryDTO> cate3 = service.selectCate3();
+		
+		model.addAttribute("categoryDTO", categoryDTO);
+		model.addAttribute("cate1", cate1);
+		model.addAttribute("cate2", cate2);
+		model.addAttribute("cate3", cate3);
 		return "product/sample";
 	}
 	

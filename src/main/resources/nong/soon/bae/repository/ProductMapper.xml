@@ -45,5 +45,19 @@
     )
 	</insert>
 	
+	<!-- TEST -->
+	
+	<select id="selectCate1" resultType="String">
+		select catename from productcategory where cate1>0 and cate2=0 and cate3=0
+	</select>
+	
+	<select id="selectCate2" resultType="String">
+		select catename from productcategory where cate1>0 and cate2>0 and cate3=0
+	</select>
+	
+	<select id="selectCate3" resultType="String">
+		select catename from productcategory where cate1>0 and cate2>0 and cate3>0
+	</select>
+	
 </mapper>    
     
