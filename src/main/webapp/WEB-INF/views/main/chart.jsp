@@ -35,10 +35,14 @@
 		      ]
 		    },
 		    options: {
+		      responsive: false,	
 		      scales: {
-		        y: {
-		          beginAtZero: true
-		        }
+		    	yAxes: [{
+		    		ticks: {
+		    			suggestedMin: 0,
+	                    suggestedMax: ${yValue}
+		    		}
+		    	}]
 		      }
 		    }
 		  });

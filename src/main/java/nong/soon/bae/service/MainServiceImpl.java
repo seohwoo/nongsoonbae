@@ -81,6 +81,10 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void showChart(Model model, String cate1, String cate2, String cate3) {
+		if(thislist!=null && lastlist!=null) {
+			thislist.clear();
+			lastlist.clear();
+		}
 		String thisYear = String.valueOf((Integer.parseInt(todayInfo()[0])-1));
 		String lastYear = String.valueOf((Integer.parseInt(todayInfo()[0])-2));
 		seasonCategoryMap.put("cate1", cate1);
@@ -88,6 +92,14 @@ public class MainServiceImpl implements MainService {
 		seasonCategoryMap.put("cate3", cate3);
 		String catename = mapper.findCatename(seasonCategoryMap);
 		seasonCategoryMap.put("catename", catename);
+		int max = mapper.maxAvgPrice(catename);
+		String strMax = String.valueOf(max);
+		int yValue = Integer.parseInt(strMax.substring(0,1))+1;
+		String chartY = String.valueOf(yValue);
+		for (int i = 0; i < strMax.length()-1; i++) {
+			chartY += "0";
+		}
+		yValue = Integer.parseInt(chartY);
 		String keyword = "";
 		for (int i = 1; i <= 12; i++) {
 			keyword = "%" + thisYear + "³â" + i + "¿ù%";
@@ -100,6 +112,7 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("catename", catename);
 		model.addAttribute("thisYear", thisYear);
 		model.addAttribute("lastYear", lastYear);
+		model.addAttribute("yValue", yValue);
 		model.addAttribute("thislist", thislist);
 		model.addAttribute("lastlist", lastlist);
 	}

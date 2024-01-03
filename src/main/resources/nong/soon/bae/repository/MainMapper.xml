@@ -37,4 +37,8 @@
 	</select>
 	
 	
+	<select id="maxAvgPrice" parameterType="String" resultType="int">
+		select max(avgprice) from chart where name=#{catename}
+	</select>
+	
 </mapper>
