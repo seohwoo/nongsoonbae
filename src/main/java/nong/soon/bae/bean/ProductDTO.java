@@ -2,8 +2,6 @@ package nong.soon.bae.bean;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 
 @Data
@@ -17,9 +15,7 @@ public class ProductDTO {
 	private int imagecount;
 	private String content;
 	private int readcount;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private Date startdate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date enddate;
 	private int optionstatus;
 }

@@ -7,6 +7,7 @@
     <title>주소로 장소 표시하기</title>
     <style type="text/css">
     	p {
+
     		
     	}
     </style>
@@ -46,6 +47,7 @@ geocoder.addressSearch('경기도 고양시 덕양구 충경로 156 (행신동, 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new kakao.maps.InfoWindow({
             content: '<div style="width:150px;text-align:center;padding:6px 0;">쇼핑몰이름</div>'
+
         });
         infowindow.open(map, marker);
 

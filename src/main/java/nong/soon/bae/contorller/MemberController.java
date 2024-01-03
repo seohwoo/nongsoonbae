@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nong.soon.bae.bean.UserGradeDTO;
@@ -61,11 +62,39 @@ public class MemberController {
 	
 	@RequestMapping("/reg")
 	public String register(UsersDTO users) {
-		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		users.setPassword(passwordEncoder.encode(users.getPassword()));
 		usersRepository.save(users);
 		return "redirect:/member/form";
 	}
 	
+	@RequestMapping("/regSuccess")
+	public String regSucess(Model model, Principal principal) {
+		String username = principal.getName();
+		logger.info("===============register success================");
+		logger.info("==============="+username+"================");
+		
+		model.addAttribute("username", username);
+		return "member/welcome";
+	}
+	
+	@RequestMapping("/detailForm")
+	public String detailForm(Model model, Principal principal) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		return "member/detailForm";
+	}
+	
+	@RequestMapping("/details")
+	public String detailPro(Model model, Principal principal) {
+		String username = principal.getName();
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout() {
+		logger.info("post custom logout");
+		return "member/logout";
+	}
+
 }

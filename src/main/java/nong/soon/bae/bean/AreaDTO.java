@@ -6,5 +6,5 @@ import lombok.Data;
 public class AreaDTO {
 	private int area1;
 	private int area2;
-	private String name;
+	private String areaname;
 }

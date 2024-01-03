@@ -92,13 +92,15 @@ public class KakaoService {
                 int responseCode = conn.getResponseCode();
                 System.out.println("responseCode : " + responseCode);
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
 
                 String br_line = "";
                 String result = "";
 
+
                 while ((br_line = br.readLine()) != null) {
-                    result += br_line;
+                    result += new String(URLDecoder.decode(br_line, "UTF-8"));
                 }
                System.out.println("response:" + result);
 
@@ -119,10 +121,10 @@ public class KakaoService {
                 String phone_number = kakao_account.getAsJsonObject().get("phone_number").getAsString();
                 
                 log.warn("email:: " + email);
-                resultMap.put("nickname", (URLDecoder.decode(nickname,"UTF-8")));
+                resultMap.put("nickname", nickname);
                 resultMap.put("id", id);
                 resultMap.put("email", email);
-                resultMap.put("name", (URLDecoder.decode(name,"UTF-8")));
+                resultMap.put("name", name);
                 resultMap.put("gender", gender);
                 resultMap.put("birthyear", birthyear);
                 resultMap.put("birthday", birthday);
