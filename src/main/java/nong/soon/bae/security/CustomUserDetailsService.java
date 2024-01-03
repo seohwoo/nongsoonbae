@@ -46,10 +46,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Authentication auth = new UsernamePasswordAuthenticationToken(username, dto.getPassword(), roles);
 		logger.warn("auth : " + auth);
         SecurityContextHolder.getContext().setAuthentication(auth);
-        UserGradeDTO gradeDTO = new UserGradeDTO();
-        gradeDTO.setGrade(grade);
-        gradeDTO.setUsername(username);
-        mapper.saveauth(gradeDTO);
+        if(mapper.regCheck(username)==null) {
+        	UserGradeDTO gradeDTO = new UserGradeDTO();
+            gradeDTO.setGrade(grade);
+            gradeDTO.setUsername(username);
+        	mapper.saveauth(gradeDTO);
+        }
 		logger.info(""+dto);
 		return dto == null ? null : new CustomUser(dto);
 	}

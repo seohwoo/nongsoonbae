@@ -53,4 +53,9 @@ public class KakaoMemberServiceImpl implements KakaoMemberService {
 		mapper.savegrade(gradeDTO);
 	}
 
+	@Override
+	public String regCheck(String username) {
+		return mapper.regCheck(username);
+	}
+
 }
