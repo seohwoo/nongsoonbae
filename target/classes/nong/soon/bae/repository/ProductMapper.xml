@@ -21,27 +21,30 @@
 		    readcount number default 0 not null,
 		    startdate date default sysdate not null,
 		    enddate date,
-		    optionstatus number)
+		    optionstatus number,
+		    username varchar2(50) )
 	</insert>
 	
 	<insert id="createSEQ" parameterType="String">
-		create sequence ${username}PRODUCT_SEQ
+		create sequence ${username}_PRODUCT_SEQ
 	</insert>
 	
 	<!-- FINISH -->
 	
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.ProductDTO">
-    insert into ${username}PRODUCT (productnum, productname, totalprice, 
-    productcount, content, startdate, enddate, optionstatus) 
+    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
+    productcount, imagecount, content, startdate, enddate, optionstatus, username) 
     values(
-        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || LPAD(${username}product_seq.nextval, 5, '0')),
+        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || LPAD(${username}_product_seq.nextval, 5, '0')),
         #{productname}, 
         #{totalprice}, 
         #{productcount},
+        #{imagecount},
         #{content}, 
         sysdate, 
         #{enddate}, 
-        #{optionstatus}
+        #{optionstatus},
+        #{username}
     )
 	</insert>
 	

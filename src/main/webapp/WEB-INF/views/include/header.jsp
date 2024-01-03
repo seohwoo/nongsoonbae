@@ -24,6 +24,7 @@
 			
 		<sec:authorize access="isAuthenticated()">
 			<!-- 로그인(인증된) 사용자인 경우 -->	
+			<li class="nav-item"><a href="/product/productMain" class="nav-link link-dark px-2">상품등록</a></li>
 			<li class="nav-item"><a href="/mypage" class="nav-link link-dark px-2">마이페이지</a></li>
 			<li class="nav-item"><a href="/member/logout" class="nav-link link-dark px-2">로그아웃</a></li>
 		</sec:authorize>

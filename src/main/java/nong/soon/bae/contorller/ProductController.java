@@ -50,7 +50,14 @@ public class ProductController {
 	// 상품 등록
 	@RequestMapping("productWriteForm")
 	public String productWriteForm(Model model, Principal principal) {
+		List<ProductCategoryDTO> cate1 = service.selectCate1();
+		List<ProductCategoryDTO> cate2 = service.selectCate2();
+		List<ProductCategoryDTO> cate3 = service.selectCate3();
 		String username = principal.getName();
+		
+		model.addAttribute("cate1", cate1);
+		model.addAttribute("cate2", cate2);
+		model.addAttribute("cate3", cate3);
 		model.addAttribute("username", username);
 		return "product/productWriteForm";
 	}
@@ -62,6 +69,13 @@ public class ProductController {
 		
 		service.productInsert(product, username);
 		return "product/productWritePro";
+	}
+	
+	@RequestMapping("myProduct")
+	public String myProduct(Model model, Principal principal) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		return "product/myProduct";
 	}
 	
 	
