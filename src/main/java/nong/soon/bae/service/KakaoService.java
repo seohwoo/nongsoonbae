@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.OutputStreamWriter; 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -50,14 +50,16 @@ public class KakaoService {
             sb.append("&redirect_uri=http://localhost:8080/login/oauth2/code/kakao"); // 앱 CALLBACK 경로
             sb.append("&code=" + code);
             bw.write(sb.toString());
-            bw.flush();
-
-            //  RETURN 값 result 변수에 저장
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String br_line = "";
+            bw.flush(); 
+            
+			
+             
+            //  RETURN 값 result 변수에 저장  
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream())); 
+            String br_line = ""; 
             String result = "";
 
-            while ((br_line = br.readLine()) != null) {
+            while ((br_line = br.readLine()) != null) { 
                 result += br_line;
             }
 
@@ -91,7 +93,7 @@ public class KakaoService {
 
                 int responseCode = conn.getResponseCode();
                 System.out.println("responseCode : " + responseCode);
-
+            
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
 
                 String br_line = "";
