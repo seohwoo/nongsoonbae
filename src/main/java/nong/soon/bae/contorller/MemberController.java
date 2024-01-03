@@ -79,9 +79,16 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/detailForm")
-	public String detailForm() {
-		
-		return "";
+	public String detailForm(Model model, Principal principal) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		return "member/detailForm";
+	}
+	
+	@RequestMapping("/details")
+	public String detailPro(Model model, Principal principal) {
+		String username = principal.getName();
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/logout")

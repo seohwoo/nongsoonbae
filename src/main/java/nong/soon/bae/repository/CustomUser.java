@@ -26,20 +26,15 @@ public class CustomUser extends User {
 	}
 	
 	public CustomUser(UsersDTO dto) {
-		super(dto.getUsername(), dto.getPassword(), dto.getGradenames().stream().map(gradename -> {
-			if (gradename.getGradenum() == dto.getGrade()) {
-				return new SimpleGrantedAuthority(gradename.getGradename());
-			} else {
-				return null;
-			}
-		}).collect(Collectors.toList()));
+		super(dto.getUsername(), dto.getPassword(), dto.getGrade().stream().map(grade -> 
+		new SimpleGrantedAuthority(grade.getGrade())).collect(Collectors.toList()));
 		logger.info("=========CustomUser=========");
 		this.dto = dto;
 		logger.info("========="+dto+"=========");
 	}
 	
 	public CustomUser(KakaoUsersDTO kdto) {
-		super(kdto.getUsername(),kdto.getPassword(),kdto.getGradenames().stream().map(auth -> new SimpleGrantedAuthority(auth.getGradename())).collect(Collectors.toList()));
+		super(kdto.getUsername(),kdto.getPassword(),kdto.getGrade().stream().map(grade -> new SimpleGrantedAuthority(grade.getGrade())).collect(Collectors.toList()));
 		this.kdto = kdto;
 	}
 

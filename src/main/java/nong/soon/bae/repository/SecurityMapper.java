@@ -3,6 +3,7 @@ package nong.soon.bae.repository;
 import org.apache.ibatis.annotations.Select;
 
 import nong.soon.bae.bean.KakaoUsersDTO;
+import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface SecurityMapper {
@@ -16,17 +17,22 @@ public interface SecurityMapper {
 	public void modify(KakaoUsersDTO vo);                     // 회원 정보 수정 
 	public void remove(KakaoUsersDTO vo);                         // 회원 탈퇴
 	public int checkPw(String userid, String userpw);     // 수정 및 삭제를 위한 비밀번호 체크
+	
+	
+	public String getgrade(String username);				//등급 부여를 위한 정보 조회
 
     /* 카카오 로그인 */
 
     // 카카오 회원가입
     void kakaoInsert(KakaoUsersDTO usersDTO);
+    public void savegrade(UserGradeDTO gradeDTO);
 
     //snsId로 회원정보얻기
     @Select("SELECT name, email, birth FROM kakaousers WHERE username = #{username}")
     KakaoUsersDTO kakaoSelect(String username);
 
     //회원아이디로 권한찾기
-    @Select("select gradename from kakaousers u, usergrade g where u.username = #{username}")
+    @Select("select grade from kakaousers where username = #{username}")
     String findAuthBy(String username);
+	
 }

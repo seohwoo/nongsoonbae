@@ -12,13 +12,13 @@
 	    <result property="email" column="email"/>
 	    <result property="birth" column="birth"/>
 	    <result property="gender" column="gender"/>
-	    <result property="grade" column="grade"/>
-	    <collection property="gradenames" resultMap="authMap">
+	    <collection property="grade" resultMap="authMap">
 	    </collection> 
 	  </resultMap>
+	  
 	  <resultMap type="nong.soon.bae.bean.UserGradeDTO" id="authMap">
-	    <result property="gradenum" column="gradenum"/>
-	    <result property="gradename" column="gradename"/>
+	    <result property="grade" column="grade"/>
+	    <result property="username" column="username"/>
 	  </resultMap>
 	  
 	  <resultMap type="nong.soon.bae.bean.KakaoUsersDTO" id="kakaoMap">
@@ -31,21 +31,26 @@
 	    <result property="birth" column="birth"/>
 	    <result property="phone" column="phone"/>
 	    <result property="gender" column="gender"/>
-	    <result property="grade" column="grade"/>
-	    <collection property="gradenames" resultMap="authMap">
+	    <collection property="grade" resultMap="authMap">
 	    </collection> 
 	  </resultMap>
     
 	<select id="login" resultMap="memberMap">
-		select * from users u, usergrade g where u.username=#{username} and u.grade=g.gradenum
+		select * from users where username=#{username}
 	</select>
 	
 	<insert id="kakaoInsert" >
-    	INSERT INTO kakaousers values (#{username}, #{nickname}, #{name}, 100, #{email}, #{phone}, #{birth}, #{gender}, #{password})
+    	INSERT INTO kakaousers values (#{username}, #{nickname}, #{name}, 'user', #{email}, #{phone}, #{birth}, #{gender}, #{password})
 	</insert>
 	
 	<select id="read" resultMap="kakaoMap">
 		select * from kakaousers where username=#{username}
+	</select>
+	<insert id="savegrade">
+		insert into usergrade values(#{username}, #{grade})
+	</insert>
+	<select id="getgrade" resultType="String">
+		select grade from kakaousers where username=#{username}
 	</select>
 	
 </mapper>    

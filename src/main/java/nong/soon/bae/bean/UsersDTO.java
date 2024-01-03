@@ -9,9 +9,8 @@ public class UsersDTO {
 	private String username;
 	private String password;
 	private String name;
-	private List<UserGradeDTO> gradenames;
+	private List<UserGradeDTO> grade;
 	private String email;
 	private String birth;
 	private int gender;
-	private int grade;
 }

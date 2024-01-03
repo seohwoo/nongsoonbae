@@ -3,17 +3,16 @@ package nong.soon.bae.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import nong.soon.bae.bean.KakaoUsersDTO;
+import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.contorller.KakaoController;
 import nong.soon.bae.repository.SecurityMapper;
 
 @Service
 public class KakaoMemberServiceImpl implements KakaoMemberService {
-	private static final Logger log = LoggerFactory.getLogger(KakaoController.class);
+	private static final Logger log = LoggerFactory.getLogger(KakaoMemberServiceImpl.class);
 	
 	@Autowired
     private SecurityMapper mapper;
@@ -42,6 +41,16 @@ public class KakaoMemberServiceImpl implements KakaoMemberService {
 	@Override
 	public KakaoUsersDTO findByUserId(String username) {
 		 return mapper.read(username);
+	}
+
+	@Override
+	public String getgrade(String username) {
+		return mapper.getgrade(username);
+	}
+
+	@Override
+	public void setgrade(UserGradeDTO gradeDTO) {
+		mapper.savegrade(gradeDTO);
 	}
 
 }
