@@ -9,17 +9,11 @@ import java.nio.charset.StandardCharsets;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-<<<<<<< HEAD
-public class UsingVLandAPI {
-	
-	public static void main(String[] args) {
-		String apikey ="";
-=======
+
 public class UsingVLandAPI extends VlandAPI{
 	
 	public void usingVLandXY() {
 		String apikey = getApi_key();
->>>>>>> branch 'shw/2' of https://github.com/seohwoo/nongsoonbae.git
 		String searchType = "road";
 		String searchAddr = "경기도 고양시 덕양구 충경로 156 (행신동, 서정마을5단지아파트)";
 		String epsg = "epsg:4326";

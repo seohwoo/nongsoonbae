@@ -10,15 +10,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-<<<<<<< HEAD
-public class UsingKorAPI {
 
-	private String api_key = "";
-=======
 public class UsingKorAPI extends KorServiceAPI{
 
 	private String api_key = getApi_key();
->>>>>>> branch 'shw/2' of https://github.com/seohwoo/nongsoonbae.git
 	private URL url;
 	BufferedReader bf;
 	String result;
