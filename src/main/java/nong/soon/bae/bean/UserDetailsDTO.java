@@ -1,4 +1,3 @@
-
 package nong.soon.bae.bean;
 
 import java.util.Date;

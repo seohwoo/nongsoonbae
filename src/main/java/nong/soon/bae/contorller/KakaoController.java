@@ -1,6 +1,9 @@
 package nong.soon.bae.contorller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +42,8 @@ public class KakaoController {
 	@Autowired
     private KakaoMemberService memberService;
 
-    @RequestMapping(value = "/login/oauth2/code/kakao", method = RequestMethod.GET)
+    @SuppressWarnings("null")
+	@RequestMapping(value = "/login/oauth2/code/kakao", method = RequestMethod.GET)
     public String redirectkakao(@RequestParam String code, HttpSession session) throws IOException {
         System.out.println("code:: " + code);
 
@@ -53,9 +57,11 @@ public class KakaoController {
         String name = (String) result.get("name");
         String email = (String) result.get("email");
         String gender = (String) result.get("gender");
-        String birth = (String)result.get("birthyear"+"birthday");
+        String birthyear = (String)result.get("birthyear");
+        String birthday = (String)result.get("birthday");
         String phone = (String)result.get("phone_number");
         String nickname = (String)result.get("nickname");
+        String birth = birthyear+birthday;
         String password = birth+nickname;
         System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+phone+","+nickname+","+password);
 
@@ -79,15 +85,26 @@ public class KakaoController {
 
        
         log.warn("카카오로 로그인");
-        String userid = memberService.findUserIdBy2(username);
-        KakaoUsersDTO vo = memberService.findByUserId(userid);
+        KakaoUsersDTO vo = memberService.findByUserId(username);
+        String grade = memberService.getgrade(username);
         log.warn("member:: " + vo);
+        log.warn("grade : " + grade);
             /*Security Authentication에 붙이는 과정*/
         CustomUser user = new CustomUser(vo);
         log.warn("user : " + user);
         List<GrantedAuthority> roles = new ArrayList<>(1);
-        String roleStr = username.equals("admin") ? "ROLE_ADMIN" : "ROLE_MEMBER";
-        roles.add(new SimpleGrantedAuthority(roleStr));
+//        String roleStr = username.equals("admin") ? "ADMIN" : "MEMBER";
+        if(grade=="ADMIN") {
+        	roles.add(new SimpleGrantedAuthority("ADMIN"));
+        }else {
+        	roles.add(new SimpleGrantedAuthority("MEMBER"));
+        }
+//        roles.add(new SimpleGrantedAuthority(roleStr));
+        UserGradeDTO gradeDTO = new UserGradeDTO();
+        log.warn("grade : " + grade);
+        gradeDTO.setGrade(grade);
+        gradeDTO.setUsername(username);
+        memberService.setgrade(gradeDTO);
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
         log.warn("auth : " + auth);
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -95,7 +112,7 @@ public class KakaoController {
         /* 로그아웃 처리 시, 사용할 토큰 값 */
         session.setAttribute("kakaoToken", kakaoToken);
 
-        return "redirect:/";
+        return "redirect:/member/test";
 
     }
 
