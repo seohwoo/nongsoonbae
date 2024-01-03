@@ -11,10 +11,24 @@
 		<table>
 			<c:forEach var="cate" items="${menu}" >
 				<tr>
-					<a href="menulist?cate1=${cate.cate1}&area2=${cate.cate2}">${cate.catename}</a> </br>
+					<a href="menulistDetail?cate1=${cate.cate1}&cate2=${cate.cate2}">${cate.catename}</a> </br>
 				</tr>
 			</c:forEach>
 		</table>
-	</body>
+	</body>	
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

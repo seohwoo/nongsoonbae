@@ -16,8 +16,6 @@ import nong.soon.bae.service.MainService;
 @Controller
 @RequestMapping("/main/*")
 public class MainController {
-
-	
 	@Autowired
 	private MainService service;
 	
@@ -78,6 +76,12 @@ public class MainController {
 		return "main/categorylist";
 	}
 	
+	
+	@RequestMapping("menulistDetail")
+	public String main3(Model model, String cate1,String cate2 ) {
+		cateservice.cateDetail(model, cate1, cate2);
+		return "main/catelistDetail";
+	}
 	
 	@RequestMapping("arealist")
 	public String area(Model model, String areaname) {

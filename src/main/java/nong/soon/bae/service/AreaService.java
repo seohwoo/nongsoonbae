@@ -11,6 +11,6 @@ public interface AreaService {
 	
 	public List<AreaDTO> catelistarea(int area1); //ÁßºÐ·ù
 
-	
+
 		
 }

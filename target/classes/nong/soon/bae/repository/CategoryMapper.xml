@@ -6,9 +6,14 @@
 	<select id="catemenu" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate2=0
 	</select>
-	
 	<select id="catelist" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate1=#{cate1} and cate2>0 and cate3=0 order by cate2 asc 
+	</select>
+	<select id="cateDetail"  resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where where cate1=#{cate1} and cate2=#{cate2} 
+	</select>
+	<select id="cateCnt" parameterType="hashMap" resultType="int" >
+		select count(*) from allproduct where cate1=#{cate1} and cate2=#{cate2} 
 	</select>
 	
 </mapper>

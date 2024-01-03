@@ -14,6 +14,11 @@
     	<beans:map key-type="String" value-type="String" />
    	</beans:constructor-arg>
    </beans:bean>
+   <beans:bean id="categoryMap" class="java.util.HashMap" >
+   	<beans:constructor-arg>
+    	<beans:map key-type="String" value-type="String" />
+   	</beans:constructor-arg>
+   </beans:bean>
    <beans:bean id="date" class="java.util.Date"/>
    <beans:bean id="simpleDateFormat" class="java.text.SimpleDateFormat">
    	<beans:constructor-arg  value="yyyy/MM/dd/HH/mm"/>
