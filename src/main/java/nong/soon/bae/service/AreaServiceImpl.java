@@ -1,5 +1,6 @@
 package nong.soon.bae.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class AreaServiceImpl implements AreaService{
 
 	@Autowired
 	private AreaMapper mapper;
+	@Autowired
+	private HashMap<String, String> categoryMap;
 
 	@Override
 	public List<AreaDTO> catelist(String areaname) {

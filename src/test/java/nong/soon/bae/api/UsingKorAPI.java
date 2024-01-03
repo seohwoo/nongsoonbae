@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+
 public class UsingKorAPI extends KorServiceAPI{
 
 	private String api_key = getApi_key();
