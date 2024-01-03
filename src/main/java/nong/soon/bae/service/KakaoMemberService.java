@@ -12,4 +12,5 @@ public interface KakaoMemberService {
 	public KakaoUsersDTO findByUserId(String userid);
 	public String getgrade(String username);
 	public void setgrade(UserGradeDTO gradeDTO);
+	public String regCheck(String username);
 }

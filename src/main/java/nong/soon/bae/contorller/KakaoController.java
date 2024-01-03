@@ -102,9 +102,11 @@ public class KakaoController {
 //        roles.add(new SimpleGrantedAuthority(roleStr));
         UserGradeDTO gradeDTO = new UserGradeDTO();
         log.warn("grade : " + grade);
-        gradeDTO.setGrade(grade);
-        gradeDTO.setUsername(username);
-        memberService.setgrade(gradeDTO);
+        if(memberService.regCheck(username)==null) {
+	        gradeDTO.setGrade(grade);
+	        gradeDTO.setUsername(username);
+	        memberService.setgrade(gradeDTO);
+        }
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
         log.warn("auth : " + auth);
         SecurityContextHolder.getContext().setAuthentication(auth);

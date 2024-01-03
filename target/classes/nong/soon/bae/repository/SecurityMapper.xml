@@ -53,6 +53,9 @@
 	<select id="getgrade" resultType="String">
 		select grade from kakaousers where username=#{username}
 	</select>
+	<select id="regCheck" resultType="String">
+		select username from usergrade where username=#{username}
+	</select>
 	
 </mapper>    
     

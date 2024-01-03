@@ -35,6 +35,9 @@
 	<select id="GetByAuth" resultType="String">
 		select grade from users where username=#{username}
 	</select>
+	<select id="regCheck" resultType="String">
+		select username from usergrade where username=#{username}
+	</select>
 	
 	<select id="FindByEmail" resultType="String">
 	

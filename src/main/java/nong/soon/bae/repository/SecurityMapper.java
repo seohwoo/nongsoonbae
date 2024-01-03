@@ -18,7 +18,7 @@ public interface SecurityMapper {
 	public void remove(KakaoUsersDTO vo);                         // 회원 탈퇴
 	public int checkPw(String userid, String userpw);     // 수정 및 삭제를 위한 비밀번호 체크
 	
-	
+	String regCheck(String username);
 	public String getgrade(String username);				//등급 부여를 위한 정보 조회
 
     /* 카카오 로그인 */
