@@ -10,6 +10,11 @@
 		<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 		-->
 		<security:http>
+			<security:intercept-url pattern="/main/*" access="permitAll" />
+			<security:intercept-url pattern="/mypage/*" access="hasRole('MEMBER')" />
+			<security:intercept-url pattern="/sample/admin" access="hasRole('ADMIN')" />
+			
+			
 			<!--  LOG IN -->
 			<security:form-login login-page="/member/form" authentication-success-handler-ref="customLoginSuccess" />
 			<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800" />

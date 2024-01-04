@@ -107,4 +107,8 @@ public class MainController {
 		return "main/areasDetail";
 	}
 	
+	@RequestMapping("test")
+	public String test() {
+		return "main/test";
+	}
 }

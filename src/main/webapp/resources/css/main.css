@@ -1,0 +1,44 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+table{
+	font-family: 'SUITE-Regular';
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	text-align: center;
+	align-items: center;
+	padding-top: 500px;
+	padding-bottom: 100px;
+	margin-left:auto;
+	margin-right:auto;
+}
+table.table {
+	--table-bg: transparent;
+	margin: auto;
+	padding: 15px;
+}
+.page-header{
+	display: -ms-flexbox;
+	display: flex;
+}
+h1.page-header {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+td.title{
+	
+}
+td.season{
+	
+}
+td.chart{
+	
+}
+td.detail{
+	padding-top: 50px;
+}
