@@ -3,14 +3,30 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.AreaMapper">
-	<select id="catelist" resultType="nong.soon.bae.bean.AreaDTO">
-		select * from area where area2=0
+	<select id="arealist" resultType="nong.soon.bae.bean.AreaDTO" parameterType="hashmap">
+		<![CDATA[
+         select * from 
+         (select b.*, rownum r from 
+         (select * from area where area2=0 ) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="count" resultType="int">
+		select count(*) from area where area2=0
 	</select>
 	
 	<select id="catelistarea" resultType="nong.soon.bae.bean.AreaDTO">
 		select * from area where area1=#{area1} and area2>0
 	</select>
-	
-	
+	<select id="areaDetail"  resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where where area1=#{area1} and area2=#{area2} 
+	</select>
+	<select id="areaCnt" parameterType="hashMap" resultType="int" >
+		select count(*) from allproduct where area1=#{area1} and area2=#{area2} 
+	</select>
+	<select id="productCnt" parameterType="hashMap" resultType="int" >
+		select count(*) from allproduct where area1=#{area1} and area2=#{area2} 
+	</select>
 	
 </mapper>
+

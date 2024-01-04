@@ -10,6 +10,7 @@
 		<div style="display: flex;">
 			<c:forEach var="cate" items="${menu}" >
 				<div style="margin-right: 10px;">
+
 					<a href="menulistDetail?cate1=${cate.cate1}&cate2=${cate.cate2}">${cate.catename}</a> </br>
 				</div>
 			</c:forEach>

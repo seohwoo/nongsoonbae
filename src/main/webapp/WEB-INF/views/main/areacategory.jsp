@@ -8,12 +8,14 @@
 	</head>
 	<body>
 	<h1> 지역별 카테고리</h1>
-		<table>
+	<div style="display:flex;">
 			<c:forEach var="areas" items="${areas}" >
-				<tr>
-					<a href="category?area1=${areas.area1}">${areas.areaname}</a> </br>
-				</tr>
+				<div style=" margin-right: 10px; text-align: center;">
+					<a href="/main/areamain?area1=${areas.area1}&area2=${areas.area2}">
+					<span>${areas.areaname}</span>
+					</a>
+				</div>
 			</c:forEach>
-		</table>
+		</div>
 	</body>
 </html>
