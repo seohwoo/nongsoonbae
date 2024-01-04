@@ -34,9 +34,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("=========CustomUserDetailsService=========");
-		logger.info(username);
 		UsersDTO dto = mapper.login(username);
-		String grade = mapper.GetByAuth(username);
+/*		String grade = mapper.GetByAuth(username);
 		List<GrantedAuthority> roles = new ArrayList<>(1);
 		if(grade=="ADMIN") {
         	roles.add(new SimpleGrantedAuthority("ADMIN"));
@@ -52,7 +51,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             gradeDTO.setUsername(username);
         	mapper.saveauth(gradeDTO);
         }
-		logger.info(""+dto);
+		logger.info(""+dto);	*/
 		return dto == null ? null : new CustomUser(dto);
 	}
 }

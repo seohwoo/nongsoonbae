@@ -42,5 +42,12 @@
 		select * from users where email=#{email}
 	</select>
 	
+	<insert id="createDetails">
+		insert into userdetails(username) values(#{username})
+	</insert>
+	<update id="addDetails"  parameterType="nong.soon.bae.bean.UserDetailsDTO">
+		update userdetails set address=#{address}, phone=#{phone}, updatedate=sysdate where username=#{username}
+	</update>
+	
 </mapper>    
     

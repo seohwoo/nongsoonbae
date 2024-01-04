@@ -47,6 +47,8 @@ public class KakaoController {
 
         // 접속토큰 get
         String kakaoToken = kakaoService.getReturnAccessToken(code);
+        // 회원가입/로그인 분류
+        int status = 0;
 
         // 접속자 정보 get
         Map<String, Object> result = kakaoService.getUserInfo(kakaoToken);
@@ -77,6 +79,7 @@ public class KakaoController {
             }else {
             	usersDTO.setGender(2);
             }
+            status=1;
             memberService.save(usersDTO);
         }
 
@@ -113,8 +116,11 @@ public class KakaoController {
         /* 로그아웃 처리 시, 사용할 토큰 값 */
         session.setAttribute("kakaoToken", kakaoToken);
 
-        return "redirect:/member/test";
-
+        if(status==1) {
+        	return "redirect:/member/welcome";
+        }else {
+        	return "redirect:/member/test";
+        }
     }
 
 }
