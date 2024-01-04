@@ -83,30 +83,38 @@ public class MainController {
 		return "main/catelistDetail";
 	}
 	
-	@RequestMapping("arealist")
-	public String area(Model model, String areaname) {
-		List<AreaDTO> dto = areaservice.catelist(areaname);
-		model.addAttribute("dto",dto);
+	@RequestMapping("areamain")
+	public String area(Model model, String selectedValue) {
+		//List<AreaDTO> dto = areaservice.catelist(areaname);
+		//model.addAttribute("dto",dto);
+		if(selectedValue !=null) {
+			areaservice.arealistdetail(model, selectedValue);
+			areaservice.findareaname(model, selectedValue);
+		}
 		return "main/areamain";
 	}
 	
-	@RequestMapping("areas")
-	public String area2(Model model, int area1) {
-		List<AreaDTO> areas = areaservice.catelistarea(area1);
-		model.addAttribute("areas",areas);
-		return "main/areacategory";
+	@RequestMapping("areafind")
+	public String areafind(Model model, String area1, String area2, String areaname) {
+		//List<AreaDTO> dto = areaservice.catelist(areaname);
+		//model.addAttribute("dto",dto);
+		List<AreaDTO> list = areaservice.arealist();
+		model.addAttribute("list",list);
+		return "main/areafind";
 	}
 	
-	@RequestMapping("areasDetail")
-	public String area3(Model model, String area1, String area2) {
-		areaservice.areaDetail(model,area1,area2);
-		return "main/areasDetail";
+	
+	@RequestMapping("arearesult")
+	public String arearesult(Model model,String area1) {
+		if(area1 !=null) {
+			areaservice.arealistdetail(model, area1);
+		}
+		return "main/arearesult";
 	}
 	
 	@RequestMapping("test")
 	public String test() {
 		return "main/test";
 	}
-	
-	
+		
 }

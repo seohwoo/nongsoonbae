@@ -12,5 +12,17 @@
 	</select>
 	
 	
+	<select id="arealist" parameterType="int" resultType="nong.soon.bae.bean.AreaDTO">
+		select * from area where area2=0
+	</select>
+	<select id="arealistdetail" resultType="nong.soon.bae.bean.AreaDTO">
+		select * from allproduct where area1=#{area1} and area2>0
+	</select>
+	<select id="areaCnt" parameterType="hashMap" resultType="int">
+		select count(*) from allproduct where area1=#{area1} and area2>0
+	</select>
 	
+	<select id="findarea" parameterType="String" resultType="String">
+		select areaname from area where area1=#{selectedValue} and area2 =0
+	</select>
 </mapper>
