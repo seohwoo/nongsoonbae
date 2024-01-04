@@ -22,11 +22,6 @@
 			</td>
 			</tr>
 			<tr>
-			<td class="chart">
-				<jsp:include page="/WEB-INF/views/main/chart.jsp" />
-			</td>
-			</tr>
-			<tr>
 			<td class="detail">
 				<jsp:include page="/WEB-INF/views/main/seasonDetail.jsp" />
 			</td>

@@ -10,10 +10,10 @@
 <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">산지제철</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">실시간 차트</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">카테고리</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">전국 특산품</a></li>
+        <li class="nav-item"><a href="/main/main" class="nav-link link-dark px-2">산지제철</a></li>
+        <li class="nav-item"><a href="/main/chart" class="nav-link link-dark px-2">실시간 차트</a></li>
+        <li class="nav-item"><a href="/main/menu" class="nav-link link-dark px-2">카테고리</a></li>
+        <li class="nav-item"><a href="/main/arealist" class="nav-link link-dark px-2">전국 특산품</a></li>
       </ul>
       <ul class="nav">
 	    <sec:authorize access="isAnonymous()">
