@@ -27,13 +27,16 @@ public class ProductController {
 		return "product/createProduct";
 	}
 	
-	// 개인 상점 (테이블) 만들기222
+	// 개인 상점, 시퀀스, 리뷰, 이미지 테이블 만들기
 	@RequestMapping("createProductPro")
 	public String createProductPro(Model model, Principal principal) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
+		
 		service.createProduct(username);
 		service.createSEQ(username);
+		service.createReviews(username);
+		service.createImages(username);
 		return "redirect:/product/productMain";
 	}
 	
@@ -75,9 +78,25 @@ public class ProductController {
 	public String myProduct(Model model, Principal principal) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
+		List<ProductDTO> productDTO = service.myProduct(username);
+		model.addAttribute("productDTO", productDTO);
 		return "product/myProduct";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping("sample2")
+	public String sample2() {
+		return "product/sample2";
+	}
 	
 	@RequestMapping("sample")
 	public String sample(Model model) {
@@ -91,7 +110,6 @@ public class ProductController {
 		model.addAttribute("cate2", cate2);
 		model.addAttribute("cate3", cate3);
 		return "product/sample";
-	}
-	
-	
+	}	
 }
+

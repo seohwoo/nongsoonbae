@@ -29,6 +29,22 @@
 		create sequence ${username}_PRODUCT_SEQ
 	</insert>
 	
+	<insert id="createReviews" parameterType="String">
+		create table ${username}_reviews ( 
+			productnum varchar2(50) primary key not null,
+		    name varchar2(50) not null,
+		    productname varchar2(50),
+		    content varchar2(4000) not null,
+		    imagecount number default 0 not null,
+		    stars number default 5 not null )
+	</insert>
+	
+	<insert id="createImages" parameterType="String">
+		create table ${username}_images ( 
+			productnum varchar2(50) primary key not null,
+		    filename varchar2(4000) not null )
+	</insert>
+	
 	<!-- FINISH -->
 	
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.ProductDTO">
@@ -61,6 +77,15 @@
 	<select id="selectCate3" resultType="String">
 		select catename from productcategory where cate1>0 and cate2>0 and cate3>0
 	</select>
+	
+	<select id="myProduct" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
+		select * from ${username}_PRODUCT where username=#{username}
+	</select>
+	
+	
+	
+	
+	
 	
 </mapper>    
     

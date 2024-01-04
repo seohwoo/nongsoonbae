@@ -34,6 +34,18 @@ public class ProductServiceImpl implements ProductService {
 		mapper.createSEQ(username);
 	}
 	
+	// 개인 리뷰(테이블) 만들기
+	@Override
+	public void createReviews(String username) {
+		mapper.createReviews(username);
+	}
+	
+	// 개인 이미지(테이블) 만들기
+	@Override
+	public void createImages(String username) {
+		mapper.createImages(username);
+	}
+	
 	// FINISH
 	
 	// 판매 정보 넣기
@@ -56,5 +68,12 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductCategoryDTO> selectCate3() {
 		return mapper.selectCate3();
 	}
+
+	@Override
+	public List<ProductDTO> myProduct(String username) {
+		return mapper.myProduct(username);
+	}
+
+	
 	
 }

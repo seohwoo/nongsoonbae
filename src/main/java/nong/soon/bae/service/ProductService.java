@@ -16,6 +16,12 @@ public interface ProductService {
 	// 개인 상점 sequence 만들기
 	public void createSEQ(String username);
 	
+	// 개인 리뷰(테이블) 만들기
+	public void createReviews(String username);
+	
+	// 개인 이미지(테이블) 만들기
+	public void createImages(String username);
+	
 	// FINISH
 	
 	// 판매 정보 넣기
@@ -27,4 +33,9 @@ public interface ProductService {
 	public List<ProductCategoryDTO> selectCate2();
 	
 	public List<ProductCategoryDTO> selectCate3();
+	
+	public List<ProductDTO> myProduct(String username);
+	
+	
+	
 }
