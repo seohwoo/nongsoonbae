@@ -8,7 +8,6 @@
 		<title>실시간 차트</title>
 	</head>
 	<body>
-		<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<h1>실시간 차트</h1>
 		<div style="display: flex;">
 			<c:forEach var="dto" items="${dto}" >
@@ -39,17 +38,13 @@
 			<c:if test="${categoryNum==1}">
 				<button onclick="window.location='#'">⏸</button>
 			</c:if>
-			<c:if test="${categoryNum<maxCategoryNum && categoryNum==1}">
-				<button onclick="window.location='/main/chart?categoryNum=${categoryNum+1}&cate1=${cate1}&cate2=4&cate3=2'">⏩</button>
-			</c:if>
-			<c:if test="${categoryNum==2 && categoryNum<maxCategoryNum}">
-				<button onclick="window.location='/main/chart?categoryNum=${categoryNum+1}&cate1=${cate1}&cate2=7&cate3=3'">⏩</button>
+			<c:if test="${categoryNum<maxCategoryNum}">
+				<button onclick="window.location='/main/chart?categoryNum=${categoryNum+1}&cate1=${cate1}&cate2=${cate2}&cate3=${cate3}'">⏩</button>
 			</c:if>
 			<c:if test="${categoryNum>=maxCategoryNum}">
 				<button onclick="window.location='#'">⏸</button>
 			</c:if>
 		</c:if>
 		<jsp:include page="/WEB-INF/views/main/chart.jsp" />
-		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
