@@ -1,5 +1,6 @@
 package nong.soon.bae.contorller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class MainController {
 		return "main/seasonDetail";
 	}
 	
-	@RequestMapping("chart")
+	@RequestMapping("charts")
 	public String chart(Model model, String cate1, String cate2, String cate3) {
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.showChart(model, cate1, cate2, cate3);
@@ -63,8 +64,8 @@ public class MainController {
 	}
 	
 	@RequestMapping("menu")
-	public String main(Model model, String catename) {
-		List<ProductCategoryDTO> dto = cateservice.catemenu(catename);
+	public String main(Model model) {
+		List<ProductCategoryDTO> dto = cateservice.catemenu();
 		model.addAttribute("dto",dto);
 		return "main/categorymain";
 	}
@@ -97,6 +98,35 @@ public class MainController {
 		return "main/areacategory";
 	}
 	
+	@RequestMapping("areasDetail")
+	public String area3(Model model, String area1, String area2) {
+		areaservice.areaDetail(model,area1,area2);
+		return "main/areasDetail";
+	}
+	
+	@RequestMapping("test")
+	public String test() {
+		return "main/test";
+	}
+	
+	@RequestMapping("chart")
+	public String categoryChart(Model model, String cate1, String cate2, String cate3, String categoryNum) {
+		if(categoryNum == null) {
+			categoryNum = "1";
+		}
+		if(cate1 == null && cate2 == null && cate3 == null) {
+			cate1 = "1";
+			cate2 = "1";
+			cate3 = "1";
+		}
+		List<ProductCategoryDTO> dto = cateservice.catemenu();
+		service.showCategory(model, cate1, Integer.parseInt(categoryNum));
+		service.showChart(model, cate1, cate2, cate3);
+		
+		
+		model.addAttribute("dto", dto);
+		return "main/categoryChart";
+	}
 	
 	
 	

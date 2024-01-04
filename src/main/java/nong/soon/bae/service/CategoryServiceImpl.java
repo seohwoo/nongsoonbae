@@ -22,8 +22,8 @@ public class CategoryServiceImpl implements CategoryService{
 	private HashMap<String, String> categoryMap;
 
 	@Override
-	public List<ProductCategoryDTO> catemenu(String catename) { //대분류 카테고리 조회 
-		return mapper.catemenu(catename);
+	public List<ProductCategoryDTO> catemenu() { //대분류 카테고리 조회 
+		return mapper.catemenu();
 	}
 
 	@Override
