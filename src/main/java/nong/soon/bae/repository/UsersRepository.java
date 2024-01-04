@@ -3,6 +3,7 @@ package nong.soon.bae.repository;
 import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import nong.soon.bae.bean.UserDetailsDTO;
 import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
 
@@ -12,8 +13,9 @@ public interface UsersRepository extends JpaRepository<Member, Long> {
 	void saveauth(UserGradeDTO grade);
 	String GetByAuth(String username);
 	String regCheck(String username);
+	UsersDTO FindByUser(String username);
+	UsersDTO FindByEmail(String email);
 	
-	Member FindByEmail(String email);
-	
-
+	void createDetails(String username);
+	void addDetails(UserDetailsDTO details);
 }
