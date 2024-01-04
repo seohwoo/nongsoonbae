@@ -41,6 +41,8 @@ public class CategoryServiceImpl implements CategoryService{
 			list=mapper.cateDetail(cate1,cate2);
 		}
 		model.addAttribute("list",list);
+		System.out.println(list);
 		model.addAttribute("cnt",cnt);
+		System.out.println(cnt);
 	}
 }
