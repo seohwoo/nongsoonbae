@@ -16,4 +16,6 @@ public interface MainMapper {
 	public List<AllProductDTO> seasonProduct(HashMap<String, String> map);
 	public double productChart(HashMap<String, String> map);
 	public int maxAvgPrice(String catename);
+	public List<ProductCategoryDTO> chartCategory(HashMap<String, String> map);
+	public int chartCategoryCnt(String cate1);
 }
