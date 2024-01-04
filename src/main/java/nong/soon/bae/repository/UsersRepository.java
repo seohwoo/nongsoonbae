@@ -12,8 +12,6 @@ public interface UsersRepository extends JpaRepository<Member, Long> {
 	void saveauth(UserGradeDTO grade);
 	String GetByAuth(String username);
 	String regCheck(String username);
-	
-	Member FindByEmail(String email);
-	
-
+	UsersDTO FindByUser(String username);
+	UsersDTO FindByEmail(String email);
 }

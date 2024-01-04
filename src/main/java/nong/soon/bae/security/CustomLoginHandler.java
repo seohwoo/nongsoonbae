@@ -10,15 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.web.servlet.ModelAndView;
 
 public class CustomLoginHandler implements AuthenticationSuccessHandler {
 	
@@ -47,13 +42,12 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 		}		*/
 
 		String rdir = "/member/test";
-		if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+		if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
             rdir = "/mvc/sample/admin";
-        } else if (authorities.contains(new SimpleGrantedAuthority("ROLE_MEMBER"))) {
+        } else if (authorities.contains(new SimpleGrantedAuthority("MEMBER"))) {
             rdir = "/member/test";
         }
 		response.sendRedirect(rdir);
 	}
-
 	
 }

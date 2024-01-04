@@ -40,10 +40,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/test")
-	public String loginTest(Model model, Principal principal) {
+	public String loginTest(Model model, Principal principal, UsersDTO dto) {
 	/*	CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UsersDTO users = new UsersDTO();
-		users.setUsername(customUser.getUsername());	*/
+		users.setUsername(customUser.getUsername());	*/	
 		String username = principal.getName();
 		logger.info("===============login success================");
 	//	logger.info("==============="+users+"================");
