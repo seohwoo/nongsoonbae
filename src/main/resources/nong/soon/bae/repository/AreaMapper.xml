@@ -11,4 +11,6 @@
 		select * from area where area1=#{area1} and area2>0
 	</select>
 	
+	
+	
 </mapper>

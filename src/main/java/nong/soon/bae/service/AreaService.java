@@ -11,6 +11,5 @@ public interface AreaService {
 	
 	public List<AreaDTO> catelistarea(int area1); //ÁßºÐ·ù
 
-
-		
+	public void areaDetail(Model model, String area1,String area2);
 }

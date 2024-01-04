@@ -97,8 +97,16 @@ public class MainController {
 		return "main/areacategory";
 	}
 	
+	@RequestMapping("areasDetail")
+	public String area3(Model model, String area1, String area2) {
+		areaservice.areaDetail(model,area1,area2);
+		return "main/areasDetail";
+	}
 	
-	
+	@RequestMapping("test")
+	public String test() {
+		return "main/test";
+	}
 	
 	
 }
