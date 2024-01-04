@@ -19,7 +19,6 @@ import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.contorller.MemberController;
 import nong.soon.bae.repository.CustomUser;
-import nong.soon.bae.repository.SecurityMapper;
 import nong.soon.bae.repository.UsersRepository;
 
 
@@ -34,6 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@SuppressWarnings("null")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		logger.info("=========CustomUserDetailsService=========");
 		logger.info(username);
 		UsersDTO dto = mapper.login(username);
 		String grade = mapper.GetByAuth(username);
@@ -55,7 +55,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 		logger.info(""+dto);
 		return dto == null ? null : new CustomUser(dto);
 	}
-	
-	
 }
 

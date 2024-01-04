@@ -14,7 +14,6 @@
 	    <collection property="grade" resultMap="authMap">
 	    </collection> 
 	  </resultMap>
-	  
 	  <resultMap type="nong.soon.bae.bean.UserGradeDTO" id="authMap">
 	    <result property="grade" column="grade"/>
 	    <result property="username" column="username"/>
@@ -23,8 +22,7 @@
     
     <select id="login" resultMap="memberMap">
 		select * from users where username=#{username}
-	</select>
-    	
+	</select>    	
 	<insert id="save">
 		insert into users values(#{username}, #{password}, #{name}, 'user', #{email}, #{birth}, #{gender})
 	</insert>
@@ -37,9 +35,11 @@
 	<select id="regCheck" resultType="String">
 		select username from usergrade where username=#{username}
 	</select>
-	
-	<select id="FindByEmail" resultType="String">
-	
+	<select id="FindByUser" resultMap="memberMap">
+		select * from users where username=#{username}
+	</select>
+	<select id="FindByEmail" resultMap="memberMap">
+		select * from users where email=#{email}
 	</select>
 	
 </mapper>    

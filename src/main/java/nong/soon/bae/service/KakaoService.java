@@ -19,10 +19,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import lombok.extern.log4j.Log4j;
-import nong.soon.bae.contorller.KakaoController;
-import nong.soon.bae.contorller.MemberController;
-
 @Service
 public class KakaoService {
 	
@@ -119,7 +115,6 @@ public class KakaoService {
                 String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
                 String birthyear = kakao_account.getAsJsonObject().get("birthyear").getAsString();
                 String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
-                String phone_number = kakao_account.getAsJsonObject().get("phone_number").getAsString();
                 
                 log.warn("email:: " + email);
                 resultMap.put("nickname", nickname);
@@ -129,7 +124,6 @@ public class KakaoService {
                 resultMap.put("gender", gender);
                 resultMap.put("birthyear", birthyear);
                 resultMap.put("birthday", birthday);
-                resultMap.put("phone_number", phone_number);
                 
 
             } catch (IOException e) {

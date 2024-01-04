@@ -1,6 +1,5 @@
 package nong.soon.bae.service;
 
-import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,7 @@ public class MemberService {
     }
 
     private void validateDuplicateMember(UsersDTO users) {
-    	Member findMember = usersRepository.FindByEmail(users.getEmail());
+    	UsersDTO findMember = usersRepository.FindByEmail(users.getEmail());
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
