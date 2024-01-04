@@ -36,9 +36,23 @@
 		select avg(avgprice) from chart where regdate like #{keyword} and name=#{catename}
 	</select>
 	
-	
 	<select id="maxAvgPrice" parameterType="String" resultType="int">
 		select max(avgprice) from chart where name=#{catename}
+	</select>
+	
+	<select id="chartCategory" parameterType="hashmap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		<![CDATA[
+			select * from 
+			(select c.* , rownum r from 
+			(select * from productcategory 
+			where cate1=#{cate1} and cate3>0 
+			order by cate2 asc, cate3 asc) c) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	
+	<select id="chartCategoryCnt" parameterType="String" resultType="int">
+		select count(*) from productcategory where cate1=#{cate1} and cate3>0
 	</select>
 	
 </mapper>

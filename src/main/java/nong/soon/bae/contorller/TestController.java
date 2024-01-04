@@ -52,4 +52,9 @@ public class TestController {
 		return "/test/addressMap";
 	}
 	
+	@RequestMapping("editor")
+	public String editor() {
+		return "/test/editor";
+	}
+	
 }

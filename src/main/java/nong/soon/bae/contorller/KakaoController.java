@@ -1,9 +1,7 @@
 package nong.soon.bae.contorller;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.AllArgsConstructor;
-import nong.soon.bae.bean.KakaoUsersDTO;
 import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.CustomUser;
-import nong.soon.bae.service.KakaoMemberService;
+import nong.soon.bae.repository.UsersRepository;
+import nong.soon.bae.security.CustomLoginHandler;
 import nong.soon.bae.service.KakaoService;
 
 @Controller
@@ -40,7 +38,7 @@ public class KakaoController {
 	@Autowired
     private KakaoService kakaoService;
 	@Autowired
-    private KakaoMemberService memberService;
+    private UsersRepository memberService;
 
     @SuppressWarnings("null")
 	@RequestMapping(value = "/login/oauth2/code/kakao", method = RequestMethod.GET)
@@ -49,6 +47,8 @@ public class KakaoController {
 
         // 접속토큰 get
         String kakaoToken = kakaoService.getReturnAccessToken(code);
+        // 회원가입/로그인 분류
+        int status = 0;
 
         // 접속자 정보 get
         Map<String, Object> result = kakaoService.getUserInfo(kakaoToken);
@@ -59,63 +59,68 @@ public class KakaoController {
         String gender = (String) result.get("gender");
         String birthyear = (String)result.get("birthyear");
         String birthday = (String)result.get("birthday");
-        String phone = (String)result.get("phone_number");
-        String nickname = (String)result.get("nickname");
-        String birth = birthyear+birthday;
-        String password = birth+nickname;
-        System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+phone+","+nickname+","+password);
+        String birth = birthyear.substring(2)+birthday;
+        String password = email;
+        System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+password);
 
         // 분기
-        KakaoUsersDTO usersDTO = new KakaoUsersDTO();
+        UsersDTO usersDTO = new UsersDTO();
         // 일치하는 username 없을 시 회원가입
-        System.out.println(memberService.kakaoLogin(username));
-        if (memberService.kakaoLogin(username) == null) {
+        System.out.println(memberService.login(username));
+        if (memberService.login(username) == null) {
             log.warn("카카오로 회원가입");
             usersDTO.setUsername(username);
-            usersDTO.setNickname(nickname);
             usersDTO.setName(name);
-            usersDTO.setGender(gender);
             usersDTO.setBirth(birth);
-            usersDTO.setPhone(phone);
             usersDTO.setEmail(email);
             usersDTO.setPassword(password);
-           // usersDTO.setGrade(100);
-            memberService.kakaoJoin(usersDTO);
+            if(gender=="male") {
+            	usersDTO.setGender(1);
+            }else {
+            	usersDTO.setGender(2);
+            }
+            status=1;
+            memberService.save(usersDTO);
         }
 
        
         log.warn("카카오로 로그인");
-        KakaoUsersDTO vo = memberService.findByUserId(username);
-        String grade = memberService.getgrade(username);
+        UsersDTO vo = memberService.FindByUser(username);
+        String grade = memberService.GetByAuth(username);
         log.warn("member:: " + vo);
         log.warn("grade : " + grade);
             /*Security Authentication에 붙이는 과정*/
+        	/*CustomUserDetailsService*/
         CustomUser user = new CustomUser(vo);
         log.warn("user : " + user);
+        
         List<GrantedAuthority> roles = new ArrayList<>(1);
-//        String roleStr = username.equals("admin") ? "ADMIN" : "MEMBER";
+        String roleStr = username.equals("admin") ? "ADMIN" : "MEMBER";
         if(grade=="ADMIN") {
         	roles.add(new SimpleGrantedAuthority("ADMIN"));
         }else {
         	roles.add(new SimpleGrantedAuthority("MEMBER"));
         }
-//        roles.add(new SimpleGrantedAuthority(roleStr));
+        roles.add(new SimpleGrantedAuthority(roleStr));
         UserGradeDTO gradeDTO = new UserGradeDTO();
         log.warn("grade : " + grade);
         if(memberService.regCheck(username)==null) {
 	        gradeDTO.setGrade(grade);
 	        gradeDTO.setUsername(username);
-	        memberService.setgrade(gradeDTO);
+	        memberService.saveauth(gradeDTO);
         }
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
         log.warn("auth : " + auth);
         SecurityContextHolder.getContext().setAuthentication(auth);
-
+        
         /* 로그아웃 처리 시, 사용할 토큰 값 */
         session.setAttribute("kakaoToken", kakaoToken);
 
-        return "redirect:/member/test";
-
+        if(status==1) {
+        	return "redirect:/member/welcome";
+        }else {
+        	return "redirect:/member/test";
+        }
     }
 
 }

@@ -4,17 +4,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>카테고리별</title>
+		<meta charset="UTF-8">
 	</head>
 	<body>
-	<h1> 품목별 카테고리</h1>
-		<table>
+		<div style="display: flex;">
 			<c:forEach var="cate" items="${menu}" >
-				<tr>
+				<div style="margin-right: 10px;">
 					<a href="menulistDetail?cate1=${cate.cate1}&cate2=${cate.cate2}">${cate.catename}</a> </br>
-				</tr>
+				</div>
 			</c:forEach>
-		</table>
+		</div>
 	</body>	
 </html>
 

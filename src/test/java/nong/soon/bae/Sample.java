@@ -13,7 +13,7 @@ public class Sample {
 		UsingKorAPI api = UsingKorAPI.getInstance();
 		
 		ArrayList<HashMap<String, String>> area = api.findLocation();
-		
+		 
 		ArrayList<Integer> areacodeList = new ArrayList<Integer>();
 		
 		for (HashMap<String, String> areaMap : area) {
