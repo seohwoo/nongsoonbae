@@ -8,15 +8,16 @@
 	</head>
 	<body>
 	<h1> 품목별 카테고리</h1>
-		<div>
+		<div style="display:flex;">
 			<c:forEach var="dto" items="${dto}" >
-				<div>
+				<div style="margin-right: 10px; text-align: center;">
 					<img src="${dto.img}" border="0" width="100" height="100">
-					<a href="menulist?cate1=${dto.cate1}&cate2=${dto.cate2}&cate3=${dto.cate3}">${dto.catename}</a>
+					<a href="/main/menulist?cate1=${dto.cate1}&cate2=${dto.cate2}&cate3=${dto.cate3}">
+					<span>${dto.catename}</span>
+					</a>
 				</div>
 			</c:forEach>
 		</div>
-		<jsp:include page="/WEB-INF/views/main/catelistDetail.jsp" />
 	</body>
 </html>
 

@@ -15,5 +15,4 @@
 	<select id="cateCnt" parameterType="hashMap" resultType="int" >
 		select count(*) from allproduct where cate1=#{cate1} and cate2=#{cate2} 
 	</select>
-	
 </mapper>

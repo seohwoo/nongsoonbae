@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
@@ -62,6 +63,8 @@ public class MainController {
 		return "main/chart";
 	}
 	
+
+	//품목별
 	@RequestMapping("menu")
 	public String main(Model model, String catename) {
 		List<ProductCategoryDTO> dto = cateservice.catemenu(catename);
@@ -83,16 +86,17 @@ public class MainController {
 		return "main/catelistDetail";
 	}
 	
+	
+	//지역별
 	@RequestMapping("arealist")
-	public String area(Model model, String areaname) {
-		List<AreaDTO> dto = areaservice.catelist(areaname);
-		model.addAttribute("dto",dto);
+	public String area(Model model, @RequestParam(value="pageNum", defaultValue="1") int pageNum) {
+		//aareaservice.arealist(pageNum, model);
 		return "main/areamain";
 	}
 	
 	@RequestMapping("areas")
 	public String area2(Model model, int area1) {
-		List<AreaDTO> areas = areaservice.catelistarea(area1);
+		List<AreaDTO> areas = areaservice.arealistmore(area1);
 		model.addAttribute("areas",areas);
 		return "main/areacategory";
 	}
@@ -102,6 +106,5 @@ public class MainController {
 		areaservice.areaDetail(model,area1,area2);
 		return "main/areasDetail";
 	}
-	
 	
 }
