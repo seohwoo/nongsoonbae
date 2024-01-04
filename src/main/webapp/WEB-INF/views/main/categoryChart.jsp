@@ -8,6 +8,7 @@
 		<title>실시간 차트</title>
 	</head>
 	<body>
+		<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<h1>실시간 차트</h1>
 		<div style="display: flex;">
 			<c:forEach var="dto" items="${dto}" >
@@ -49,5 +50,6 @@
 			</c:if>
 		</c:if>
 		<jsp:include page="/WEB-INF/views/main/chart.jsp" />
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
