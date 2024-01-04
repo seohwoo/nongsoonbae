@@ -145,17 +145,11 @@ public class MainServiceImpl implements MainService {
 			cate2 = "7";
 			cate3 = "3";
 		}
-		
 		model.addAttribute("cateList", list);
 		model.addAttribute("cate1", cate1);
 		model.addAttribute("cate2", cate2);
 		model.addAttribute("cate3", cate3);
 		model.addAttribute("categoryNum", categoryNum);
 		model.addAttribute("maxCategoryNum", maxCategoryNum);
-		
 	}
-	
-	
-	
-	
 }

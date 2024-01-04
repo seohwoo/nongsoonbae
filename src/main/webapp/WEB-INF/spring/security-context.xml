@@ -11,6 +11,7 @@
 
 		<security:http>
 			<security:intercept-url pattern="/main/*" access="permitAll" />
+			<security:intercept-url pattern="/test/*" access="permitAll" />
 			<security:intercept-url pattern="/mypage/*" access="hasRole('MEMBER')" />
 			<security:intercept-url pattern="/sample/admin" access="hasRole('ADMIN')" />
 			
