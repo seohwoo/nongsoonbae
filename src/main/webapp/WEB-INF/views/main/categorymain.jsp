@@ -13,9 +13,15 @@
 			<c:forEach var="dto" items="${dto}" >
 				<div style="margin-right: 10px;">
 					<img src="${dto.img}" border="0" width="100" height="100"> <br />
-					<a href="menulist?cate1=${dto.cate1}&cate2=${dto.cate2}&cate3=${dto.cate3}">${dto.catename}</a>
+					<a href="/main/menu?cate1=${dto.cate1}&cate2=${dto.cate2}&cate3=${dto.cate3}">${dto.catename}</a>
 				</div>
 			</c:forEach>
+		</div>
+		<div style="display: flex;">
+			<jsp:include page="/WEB-INF/views/main/categorylist.jsp" />
+		</div>
+		<div style="display: flex;">
+			<jsp:include page="/WEB-INF/views/main/catelistDetail.jsp" />
 		</div>
 	</body>
 </html>

@@ -20,19 +20,14 @@ public class AreaServiceImpl implements AreaService{
 	private HashMap<String, String> categoryMap;
 
 	@Override
-	public List<AreaDTO> catelist(String areaname) {
-		return mapper.catelist(areaname);
-	}
-
-	@Override
-	public List<AreaDTO> catelistarea(int area1) {
-		return mapper.catelistarea(area1);
-	}
-
-	@Override
 	public void areaDetail(Model model, String area1, String area2) {
-	
-		
+		categoryMap.put("area1",area1);
+		categoryMap.put("area2",area2);
+		int cnt = mapper.areaCnt(categoryMap);
+		List<AllProductDTO> area = Collections.EMPTY_LIST ;
+		area = mapper.arealistdetail(area1);
+		model.addAttribute("area",area);
+		model.addAttribute("cnt",cnt);
 	}
 	@Override
 	public List<AreaDTO> arealist() {
@@ -56,7 +51,6 @@ public class AreaServiceImpl implements AreaService{
 
 	@Override
 	public void findareaname(Model model, String selectedValue) {
-		String areaname =mapper.findarea(selectedValue);
-		model.addAttribute("areaname",areaname);
+		//model.addAttribute("areaname",areaname);
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.service.AreaService;
@@ -64,16 +65,29 @@ public class MainController {
 	}
 	
 	@RequestMapping("menu")
-	public String main(Model model) {
+	public String main(Model model, String cate1, String cate2, String cate3) {
 		List<ProductCategoryDTO> dto = cateservice.catemenu();
 		model.addAttribute("dto",dto);
+		if(cate1 == null && cate2 == null && cate3 == null  ) {
+			cate1 = "0";
+			cate2 = "0";
+			cate3 = "0";
+			cateservice.cateproduct();
+		}
+		    cateservice.catelist(model, cate1, cate2, cate3);
+		    cateservice.cateDetail(model, cate1, cate2);
+		/*if(cate1 !=null && cate2 != null && cate3 != null ) {
+			cateservice.catelist(model, cate1, cate2, cate3);
+			cateservice.cateDetail(model, cate1, cate2);
+		}*/
 		return "main/categorymain";
 	}
 	
 	@RequestMapping("menulist")
-	public String main2(Model model, int cate1) {
-		List<ProductCategoryDTO> menu = cateservice.catelist(cate1);
-		model.addAttribute("menu",menu);
+	public String main2(Model model, String cate1, String cate2, String cate3) {
+		if(cate1 !=null && cate2 == "0" ) {
+		cateservice.catelist(model, cate1, cate2, cate3);
+		} 
 		return "main/categorylist";
 	}
 	
@@ -85,13 +99,16 @@ public class MainController {
 	}
 	
 	@RequestMapping("areamain")
-	public String area(Model model, String selectedValue) {
-		//List<AreaDTO> dto = areaservice.catelist(areaname);
-		//model.addAttribute("dto",dto);
-		if(selectedValue !=null) {
+	public String area(Model model, String area1, String area2) {
+		List<AreaDTO> dto = areaservice.arealist();
+		model.addAttribute("dto",dto);
+		if (area1 == null) area1 = "0";
+		if (area1 == null) area2 = "0";
+			areaservice.areaDetail(model, area1, area2);	
+		/*if(selectedValue !=null) {
 			areaservice.arealistdetail(model, selectedValue);
 			areaservice.findareaname(model, selectedValue);
-		}
+		}*/
 		return "main/areamain";
 	}
 	
