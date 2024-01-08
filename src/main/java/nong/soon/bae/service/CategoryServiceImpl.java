@@ -55,6 +55,6 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public List<AllProductDTO> cateproduct(){
-		return mapper.cateproduct();
+		return null;
 	}
 }

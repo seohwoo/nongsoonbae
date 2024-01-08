@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,7 +8,6 @@
 		<title>지역별 상품 찾기</title>
 	</head>
 	<body>
-		<h2>검색결과</h2>
 		<c:if test="${cnt == 0 }" >
 	         <h1> 상품이 없거나 검색 결과가 없습니다. </h1>
 	         </c:if>

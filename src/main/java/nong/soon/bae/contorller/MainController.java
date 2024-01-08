@@ -76,10 +76,6 @@ public class MainController {
 		}
 		    cateservice.catelist(model, cate1, cate2, cate3);
 		    cateservice.cateDetail(model, cate1, cate2);
-		/*if(cate1 !=null && cate2 != null && cate3 != null ) {
-			cateservice.catelist(model, cate1, cate2, cate3);
-			cateservice.cateDetail(model, cate1, cate2);
-		}*/
 		return "main/categorymain";
 	}
 	
@@ -91,7 +87,6 @@ public class MainController {
 		return "main/categorylist";
 	}
 	
-	
 	@RequestMapping("menulistDetail")
 	public String main3(Model model, String cate1,String cate2 ) {
 		cateservice.cateDetail(model, cate1, cate2);
@@ -100,32 +95,34 @@ public class MainController {
 	
 	@RequestMapping("areamain")
 	public String area(Model model, String area1, String area2) {
-		List<AreaDTO> dto = areaservice.arealist();
-		model.addAttribute("dto",dto);
-		if (area1 == null) area1 = "0";
-		if (area1 == null) area2 = "0";
-			areaservice.areaDetail(model, area1, area2);	
-		/*if(selectedValue !=null) {
-			areaservice.arealistdetail(model, selectedValue);
-			areaservice.findareaname(model, selectedValue);
-		}*/
+		if (area1 == null && area2 == null) {
+			
+		}
+		List<AreaDTO> area = areaservice.areaMenu();
+		model.addAttribute("area",area);
+		if (area1 != null) {
+			areaservice.arealist(model, area1);		
+		}
 		return "main/areamain";
 	}
 	
-	@RequestMapping("areafind")
-	public String areafind(Model model, String area1, String area2, String areaname) {
-		//List<AreaDTO> dto = areaservice.catelist(areaname);
-		//model.addAttribute("dto",dto);
-		List<AreaDTO> list = areaservice.arealist();
-		model.addAttribute("list",list);
-		return "main/areafind";
+	@RequestMapping("arealist")
+	public String areafind(Model model, String area1, String area2) {
+		if(area1 != null ) {
+			areaservice.arealist(model, area1); 
+		}
+		return "main/arealist";
 	}
 	
-	
 	@RequestMapping("arearesult")
-	public String arearesult(Model model,String area1) {
+	public String arearesult(Model model,String area1,String area2) {
+		if (area1 == null && area2 == null) {
+			area1 = "0";
+			area2 = "0";
+			areaservice.areaallproduct(model);
+		}
 		if(area1 !=null) {
-			areaservice.arealistdetail(model, area1);
+			areaservice.arealist(model, area1);
 		}
 		return "main/arearesult";
 	}
