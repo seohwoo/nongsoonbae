@@ -131,10 +131,20 @@ public class MainServiceImpl implements MainService {
 		int categorySize = 10;
 		int cnt = mapper.chartCategoryCnt(cate1);
 		int maxCategoryNum = (int) (cnt / categorySize) + (cnt % categorySize == 0 ? 0 : 1);
+		ProductCategoryDTO prevCate = null;
+		ProductCategoryDTO nextCate = null;
 		if(categoryNum < 1) {
 			categoryNum = 1;
 		}else if(categoryNum > maxCategoryNum) {
 			categoryNum = maxCategoryNum;
+		}
+		
+		if(categoryNum > 1) {
+			categoryNum--;
+			page(categorySize, categoryNum);
+			prevCate = mapper.nextCate(seasonCategoryMap);
+			model.addAttribute("prevCate", prevCate);
+			categoryNum++;
 		}
 		
 		List<ProductCategoryDTO> list = Collections.EMPTY_LIST;
@@ -144,20 +154,20 @@ public class MainServiceImpl implements MainService {
 			list = mapper.chartCategory(seasonCategoryMap);
 			categoryNum++;
 		}
-		page(categorySize, categoryNum);
-		ProductCategoryDTO dto = null;
-		if(mapper.nextCate(seasonCategoryMap) != null) {
-			dto = mapper.nextCate(seasonCategoryMap);
-			model.addAttribute("cate2", dto.getCate2());
-			model.addAttribute("cate3", dto.getCate3());
-		}
-		categoryNum--;
 		
+		page(categorySize, categoryNum);
+		if(mapper.nextCate(seasonCategoryMap) != null) {
+			nextCate = mapper.nextCate(seasonCategoryMap);
+			model.addAttribute("nextCate", nextCate);
+		}
+		
+		if (cnt > 0) {
+			categoryNum--;
+		}
 		model.addAttribute("cateList", list);
 		model.addAttribute("cate1", cate1);
 		model.addAttribute("categoryNum", categoryNum);
 		model.addAttribute("maxCategoryNum", maxCategoryNum);
-		
 	}
 
 	@Override

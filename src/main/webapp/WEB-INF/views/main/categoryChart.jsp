@@ -16,39 +16,64 @@
 		<tr>
 			<c:forEach var="dto" items="${catemenu}" >
 			<td>
-			<div style="display: flex;">
-				<div style="margin-right: 10px;">
-					<a href="chart?cate1=${dto.cate1}&cate2=1&cate3=1">
-						<img src="${dto.img}" border="0" width="100" height="100">
-					</a>
-					<span>${dto.catename}</span>
-				</div></div></td>
-			</c:forEach></tr>
+				<div style="display: flex;">
+					<div style="margin-right: 10px;">
+						<form action="/main/chart" method="post">
+							<input type="hidden" name="cate1" value="${dto.cate1}">
+							<input type="hidden" name="cate2" value="${dto.cate2+1}">
+							<input type="hidden" name="cate3" value="${dto.cate3+1}">
+							<button type="submit">
+								<img src="${dto.img}" border="0" width="100" height="100">
+								<br />
+								<span>${dto.catename}</span>
+							</button>
+						</form>
+					</div>
+				</div>
+			</td>
+			</c:forEach>
+		</tr>
 		
 		<tr><td>
 		<div style="display: flex;">
 			<c:forEach var="cate" items="${cateList}" >
 				<div style="margin-right: 10px;">
-					<a href="chart?cate1=${cate.cate1}&cate2=${cate.cate2}&cate3=${cate.cate3}&categoryNum=${categoryNum}">
-						<img src="${cate.img}" border="0" width="100" height="100" class="bd-placeholder-img rounded-circle">
-					</a>
-					<span>${cate.catename}</span>
+					<form action="/main/chart" method="post">
+						<input type="hidden" name="categoryNum" value="${categoryNum}">
+						<input type="hidden" name="cate1" value="${cate.cate1}">
+						<input type="hidden" name="cate2" value="${cate.cate2}">
+						<input type="hidden" name="cate3" value="${cate.cate3}">
+						<button type="submit">
+							<img src="${cate.img}" border="0" width="100" height="100" class="bd-placeholder-img rounded-circle">
+							<br />
+							<span>${cate.catename}</span>
+						</button>
+					</form>
 				</div>
 			</c:forEach>
 		</div></td></tr>	
 		<tr><td class="page">
 		<c:if test="${cate1!=null}">
 			<c:if test="${categoryNum>1}">
-				<button onclick="window.location='/main/chart?categoryNum=${categoryNum-1}&cate1=${cate1}&cate2=1&cate3=1'">⏪</button>
+				<form action="/main/chart" method="post">
+					<input type="hidden" name="categoryNum" value="${categoryNum-1}">
+					<input type="hidden" name="cate1" value="${cate1}">
+					<input type="hidden" name="cate2" value="${prevCate.cate2}">
+					<input type="hidden" name="cate3" value="${prevCate.cate3}">
+					<button type="submit">⏪</button>
+				</form>
 			</c:if>
-			<c:if test="${categoryNum==1}">
+			<c:if test="${categoryNum==1 || categoryNum>=maxCategoryNum}">
 				<button onclick="window.location='#'">⏸</button>
 			</c:if>
 			<c:if test="${categoryNum<maxCategoryNum}">
-				<button onclick="window.location='/main/chart?categoryNum=${categoryNum+1}&cate1=${cate1}&cate2=${cate2}&cate3=${cate3}'">⏩</button>
-			</c:if>
-			<c:if test="${categoryNum>=maxCategoryNum}">
-				<button onclick="window.location='#'">⏸</button>
+				<form action="/main/chart" method="post">
+					<input type="hidden" name="categoryNum" value="${categoryNum+1}">
+					<input type="hidden" name="cate1" value="${cate1}">
+					<input type="hidden" name="cate2" value="${nextCate.cate2}">
+					<input type="hidden" name="cate3" value="${nextCate.cate3}">
+					<button type="submit">⏩</button>
+				</form>
 			</c:if>
 		</c:if></td></tr><tr><td>
 		<jsp:include page="/WEB-INF/views/main/chart.jsp" />
