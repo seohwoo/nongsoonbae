@@ -57,4 +57,10 @@ public class TestController {
 		return "/test/editor";
 	}
 	
+	@RequestMapping("editorPro")
+	public String editorPro(String editordata, Model model) {
+		model.addAttribute("editordata", editordata);
+		return "/test/editorPro";
+	}
+	
 }
