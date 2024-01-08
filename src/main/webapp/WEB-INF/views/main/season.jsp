@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<div style="display: flex;">
-		<table class="table-borderless">
+		<table class="season table-borderless">
 			<tr>
 				<td>
 					<h1 class="h1 mb-4">${month}월</h1></td>
@@ -21,7 +21,7 @@
 							<input type="hidden" name="cate1" value="${dto.cate1}"/>
 							<input type="hidden" name="cate2" value="${dto.cate2}"/>
 							<input type="hidden" name="cate3" value="${dto.cate3}"/>
-							<input type="submit" value="${dto.catename}"/>
+							<input type="submit" value="${dto.catename}" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;"/>
 						</form>
 					</td>
 				</c:forEach>
