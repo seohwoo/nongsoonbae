@@ -6,6 +6,7 @@ import lombok.Data;
 public class AllProductDTO {
 	private String productnum;
 	private String productname;
+	private String username;
 	private int grade;
 	private int cate1;
 	private int cate2;

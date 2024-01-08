@@ -72,4 +72,18 @@
 		]]>
 	</select>
 	
+	<select id="searchProductCnt" parameterType="String" resultType="int">
+		select count(*) from allproduct where productname like #{keyword}
+	</select>
+	
+	<select id="searchProduct" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+			select * from 
+			(select a.* , rownum r from 
+			(select * from allproduct 
+			where productname like #{keyword}) a) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	
 </mapper>
