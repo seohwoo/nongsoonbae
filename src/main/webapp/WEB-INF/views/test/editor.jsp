@@ -22,7 +22,6 @@
 <div class="container">
 	<form action="/test/editorPro" enctype="multipart/form-data" method="post">
   		<textarea class="summernote" name="editordata"></textarea>  
-  		
   		<input type="submit" name="doit" value="저장" /> 
   	</form> 
 </div>

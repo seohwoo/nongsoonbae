@@ -58,13 +58,11 @@ public class TestController {
 	
 	@RequestMapping("editor")
 	public String editor() {
-		log.info("==========editor========");
 		return "/test/editor";
 	}
 	
 	@RequestMapping("editorPro")
 	public String editorPro(String editordata, Model model) {
-		log.info("==========editorPro========");
 		model.addAttribute("editordata", editordata);
 		System.out.println(editordata);
 		return "/test/editorPro";

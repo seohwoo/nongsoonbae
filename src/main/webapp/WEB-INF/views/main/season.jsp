@@ -8,29 +8,43 @@
 	</head>
 	<body>
 		<div style="display: flex;">
-		<table class="table-borderless">
+		<table class="season table-borderless">
 			<tr>
 				<td>
 					<h1 class="h1 mb-4">${month}월</h1></td>
 				<c:forEach var="dto" items="${categoryList}">
 					<td>
-						<img src="${dto.img}" width="100px" height="100px" class="bd-placeholder-img rounded-circle" />
-						<br />
-						<a href="/main/main?categoryNum=${categoryNum}&cate1=${dto.cate1}&cate2=${dto.cate2}&cate3=${dto.cate3}">
-							<span>${dto.catename}</span>
-						</a>
+						<form action="/main/main" method="post">
+							<input type="hidden" name="categoryNum" value="${categoryNum}"/>
+							<input type="hidden" name="cate1" value="${dto.cate1}"/>
+							<input type="hidden" name="cate2" value="${dto.cate2}"/>
+							<input type="hidden" name="cate3" value="${dto.cate3}"/>
+							<button type="submit">
+								<img src="${dto.img}" width="100px" height="100px" class="bd-placeholder-img rounded-circle" />
+								<br />
+								<span>${dto.catename}</span>						
+							</button>
+						</form>
 					</td>
 				</c:forEach>
 				</tr>
 				<tr>
 					<td class="page">
 					<c:if test="${categoryNum>1}">
-						<button onclick="window.location='/main/main?categoryNum=${categoryNum-1}'">⏪</button>
+						<form action="/main/main" method="post">
+							<input type="hidden" name="categoryNum" value="${categoryNum-1}"/>
+							<button type="submit">⏪</button>
+						</form>
 					</c:if>
-					<c:if test="${categoryNum==1}">
-						<button onclick="window.location='/main/main?categoryNum=${categoryNum-1}'">⏸</button>
+					<c:if test="${categoryNum==1 || categoryNum>=maxCategoryNum}">
+						<button onclick="window.location='#'">⏸</button>
 					</c:if>
-					<button onclick="window.location='/main/main?categoryNum=${categoryNum+1}'">⏩</button>
+					<c:if test="${categoryNum<maxCategoryNum}">
+						<form action="/main/main" method="post">
+							<input type="hidden" name="categoryNum" value="${categoryNum+1}"/>
+							<button type="submit">⏩</button>
+						</form>
+					</c:if>
 					</td>
 				</tr>		
 		</table>			
