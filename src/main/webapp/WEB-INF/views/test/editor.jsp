@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,13 +16,13 @@
   <script src="/resources/summernote/summernote-lite.js"></script>
   <script src="/resources/summernote/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
-  <!--  -->
-  
+ 
 </head>
 <body>
 <div class="container">
-	<form action="editorPro" enctype="multipart/form-data">
+	<form action="/test/editorPro" enctype="multipart/form-data" method="post">
   		<textarea class="summernote" name="editordata"></textarea>  
+  		
   		<input type="submit" name="doit" value="저장" /> 
   	</form> 
 </div>

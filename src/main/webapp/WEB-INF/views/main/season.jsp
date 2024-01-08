@@ -8,8 +8,7 @@
 	</head>
 	<body>
 		<div style="display: flex;">
-		<table class="table table-hover">
-			<thead>
+		<table class="table-borderless">
 			<tr>
 				<td>
 					<h1 class="h1 mb-4">${month}월</h1></td>
@@ -23,10 +22,8 @@
 					</td>
 				</c:forEach>
 				</tr>
-			</thead>
-			<tbody>
 				<tr>
-					<td>
+					<td class="page">
 					<c:if test="${categoryNum>1}">
 						<button onclick="window.location='/main/main?categoryNum=${categoryNum-1}'">⏪</button>
 					</c:if>
@@ -35,12 +32,9 @@
 					</c:if>
 					<button onclick="window.location='/main/main?categoryNum=${categoryNum+1}'">⏩</button>
 					</td>
-				</tr>
-			</tbody>
-		</table>
-			
+				</tr>		
+		</table>			
 		</div>
-		<br />
-		
+		<br />		
 	</body>
 </html>
