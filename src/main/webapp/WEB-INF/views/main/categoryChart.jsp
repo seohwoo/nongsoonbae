@@ -10,7 +10,7 @@
 	<body>
 		<h1>실시간 차트</h1>
 		<div style="display: flex;">
-			<c:forEach var="dto" items="${dto}" >
+			<c:forEach var="dto" items="${catemenu}" >
 				<div style="margin-right: 10px;">
 					<a href="chart?cate1=${dto.cate1}&cate2=1&cate3=1">
 						<img src="${dto.img}" border="0" width="100" height="100"> <br />

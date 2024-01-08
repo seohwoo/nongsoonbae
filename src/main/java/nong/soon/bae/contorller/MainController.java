@@ -146,12 +146,9 @@ public class MainController {
 			cate2 = "1";
 			cate3 = "1";
 		}
-		List<ProductCategoryDTO> dto = cateservice.catemenu();
-		service.showCategory(model, cate1, Integer.parseInt(categoryNum));
+		service.cateMenu(model);
+		service.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
 		service.showChart(model, cate1, cate2, cate3);
-		
-		
-		model.addAttribute("dto", dto);
 		return "main/categoryChart";
 	}
 }
