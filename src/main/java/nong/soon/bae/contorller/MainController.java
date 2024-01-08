@@ -63,6 +63,9 @@ public class MainController {
 		return "main/chart";
 	}
 	
+	
+	
+	
 	@RequestMapping("menu")
 	public String main(Model model, String cate1, String cate2, String cate3) {
 		List<ProductCategoryDTO> dto = cateservice.catemenu();
