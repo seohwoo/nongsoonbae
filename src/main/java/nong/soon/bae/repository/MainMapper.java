@@ -18,4 +18,6 @@ public interface MainMapper {
 	public int maxAvgPrice(String catename);
 	public List<ProductCategoryDTO> chartCategory(HashMap<String, String> map);
 	public int chartCategoryCnt(String cate1);
+	public List<ProductCategoryDTO> cateMenu();
+	public ProductCategoryDTO nextCate(HashMap<String, String> map);
 }
