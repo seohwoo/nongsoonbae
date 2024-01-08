@@ -61,6 +61,7 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("categoryList", list);
 		model.addAttribute("month", month);
 		model.addAttribute("categoryNum", categoryNum);
+		model.addAttribute("maxCategoryNum", maxCategoryNum);
 	}
 
 	@Override

@@ -33,7 +33,6 @@ public class MainController {
 		}
 		service.seasonCategory(model, Integer.parseInt(categoryNum));
 		if(cate1!=null && cate2!=null && cate3!=null ) {
-			service.showChart(model, cate1, cate2, cate3);
 			service.detailSeasonCategory(model, cate1, cate2, cate3);
 		}
 		return "main/main";
