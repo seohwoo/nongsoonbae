@@ -3,22 +3,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 		<meta charset="UTF-8">
 		<title>차트</title>
 	</head>
 	<body>
-	<%@include file="/WEB-INF/views/include/header.jsp"%>
-	<div style="display: flex;">
-	<table>
-		<tbody>
-			<tr><td class="title">
-				<h1>${catename}</h1></td></tr>
-			<tr><td>
-		  		<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
-				</td></tr>
-			</tbody>
-		</table>
+		<h1>${catename}</h1>
+		  	<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>		
 		<script>
 		  const ctx = document.getElementById('myChart');
@@ -53,7 +43,5 @@
 		    }
 		  });
 		</script>
-		</div>
-	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
