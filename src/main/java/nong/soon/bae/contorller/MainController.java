@@ -27,7 +27,7 @@ public class MainController {
 	private CategoryService cateservice;
 		
 	@RequestMapping("main")
-	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3) {
+	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch) {
 		if (categoryNum==null) {
 			categoryNum = "1";
 		}
@@ -112,12 +112,6 @@ public class MainController {
 		return "main/arearesult";
 	}
 	
-	@RequestMapping("test")
-	public String test() {
-		return "main/test";
-	}
-
-	
 	@RequestMapping("chart")
 	public String categoryChart(Model model, String cate1, String cate2, String cate3, String categoryNum) {
 		if(categoryNum == null) {
@@ -132,5 +126,19 @@ public class MainController {
 		service.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
 		service.showChart(model, cate1, cate2, cate3);
 		return "main/categoryChart";
+	}
+	
+	@RequestMapping("search")
+	public String search() {
+		return "/main/search";
+	}
+	
+	@RequestMapping("result")
+	public String result(Model model, String userSearch, String searchNum) {
+		if(searchNum == null) {
+			searchNum = "1";
+		}
+		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
+		return "/main/result";
 	}
 }
