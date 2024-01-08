@@ -30,6 +30,25 @@ $('.summernote').summernote({
 	  height: 450,
 	  lang: "ko-KR"
 	});
+	
+function sendFile(file, editor){
+	var data = new FormData();
+	data.append("file", file);
+	console.log(file);
+	$.ajax({
+		data : data,
+		type : "POST",
+		url : "SummerNoteImageFile",
+		contentType : false,
+		processData : false,
+		success : function(data){
+			console.log(data);
+			console.log(editor);
+			$(editor).summernote("insertImage",data.url);
+		}
+	});
+}
+	
 </script>
 </body>
 </html>

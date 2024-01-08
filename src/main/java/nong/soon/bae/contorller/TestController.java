@@ -60,6 +60,7 @@ public class TestController {
 	@RequestMapping("editorPro")
 	public String editorPro(String editordata, Model model) {
 		model.addAttribute("editordata", editordata);
+		System.out.println(editordata);
 		return "/test/editorPro";
 	}
 	
