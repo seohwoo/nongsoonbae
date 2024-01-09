@@ -9,14 +9,15 @@ import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 
 public interface AreaService {
-
-	public void areaDetail(Model model, String area1,String area2);
 	
-	public void arealist(Model model,String area1); 
-	public void arealistdetail(Model model,String area1,String area2);
-	public void findareaname(Model model,String selectedValue);	
+	public List<AreaDTO> areaMenu(Model model); 
+	public void allproductlist(Model model);
+	public void arealistdeatil(Model model,String area1);
+	public void areaprodutlist (Model model,String area1);
+	public void areaprodictlistdetail(Model model, String area1, String area2);
 	
-	public void areaallproduct (Model model);
 	
-	public List<AreaDTO> areaMenu();
+	
+	
+	
 }

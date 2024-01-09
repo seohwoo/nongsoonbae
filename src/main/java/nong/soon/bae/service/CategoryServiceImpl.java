@@ -22,8 +22,8 @@ public class CategoryServiceImpl implements CategoryService{
 	private HashMap<String, String> categoryMap;
 
 	@Override
-	public List<ProductCategoryDTO> catemenu() { //대분류 카테고리 조회 
-		return mapper.catemenu();
+	public List<ProductCategoryDTO> catemenu(Model model) { //대분류 카테고리 조회 
+		return mapper.catelist();
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService{
 		categoryMap.put("cate3",cate3);
 		int cnt = mapper.cateCnt(categoryMap);
 		List<ProductCategoryDTO> menu = Collections.EMPTY_LIST ;
-		menu = mapper.catelist(cate1);
+		//menu = mapper.catelist(cate1);
 		model.addAttribute("menu",menu);
 		model.addAttribute("cnt",cnt);
 	}

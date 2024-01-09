@@ -62,14 +62,27 @@ public class MainController {
 		}
 		return "main/chart";
 	}
-	
-	
-	
-	
+
 	@RequestMapping("menu")
 	public String main(Model model, String cate1, String cate2, String cate3) {
-		List<ProductCategoryDTO> dto = cateservice.catemenu();
-		model.addAttribute("dto",dto);
+		/*
+		List<AreaDTO> arealist = areaservice.areaMenu(model);
+		model.addAttribute("arealist",arealist);
+		if (area1 == null && area2 == null) { //전체항목리스트 
+			areaservice.allproductlist(model); 
+		} 
+		if (area1 != null && area2 == null) {
+			areaservice.arealistdeatil(model, area1);  //area1 리스트
+			areaservice.areaprodutlist (model, area1); //area1  상품리스트
+		}
+		if(area1 != null && area2 != null ){
+			areaservice.arealistdeatil(model, area1);
+			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
+		}
+		return "main/areamain";
+		*/		
+		//List<ProductCategoryDTO> catelist = cateservice.cateMenu(model);
+		//model.addAttribute("dto",dto);
 		if(cate1 == null && cate2 == null && cate3 == null  ) {
 			cate1 = "0";
 			cate2 = "0";
@@ -96,35 +109,36 @@ public class MainController {
 	}
 	
 	@RequestMapping("areamain")
-	public String area(Model model, String area1, String area2) {
-		if (area1 == null && area2 == null) {
-			
+	public String area(Model model, String area1, String area2 ) {
+		List<AreaDTO> arealist = areaservice.areaMenu(model);
+		model.addAttribute("arealist",arealist);
+		if (area1 == null && area2 == null) { //전체항목리스트 
+			areaservice.allproductlist(model); 
+		} 
+		if (area1 != null && area2 == null) {
+			areaservice.arealistdeatil(model, area1);  //area1 리스트
+			areaservice.areaprodutlist (model, area1); //area1  상품리스트
 		}
-		List<AreaDTO> area = areaservice.areaMenu();
-		model.addAttribute("area",area);
-		if (area1 != null) {
-			areaservice.arealist(model, area1);		
+		if(area1 != null && area2 != null ){
+			areaservice.arealistdeatil(model, area1);
+			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
 		}
 		return "main/areamain";
 	}
 	
 	@RequestMapping("arealist")
 	public String areafind(Model model, String area1, String area2) {
-		if(area1 != null ) {
-			areaservice.arealist(model, area1); 
+		if (area1 != null && area2 == null) {
+			areaservice.arealistdeatil(model, area1);  //area1 리스트
+			areaservice.areaprodutlist (model, area1); //area1  상품리스트
 		}
 		return "main/arealist";
 	}
 	
 	@RequestMapping("arearesult")
-	public String arearesult(Model model,String area1,String area2) {
-		if (area1 == null && area2 == null) {
-			area1 = "0";
-			area2 = "0";
-			areaservice.areaallproduct(model);
-		}
-		if(area1 !=null) {
-			areaservice.arealist(model, area1);
+	public String arearesult(Model model , String area1,String area2) {
+		if(area1 != null && area2 != null ){
+			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
 		}
 		return "main/arearesult";
 	}

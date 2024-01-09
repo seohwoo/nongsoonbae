@@ -12,7 +12,7 @@
     <c:forEach var="dto" items="${dto}">
         <div style="margin-right: 10px;">
             <img src="${dto.img}" border="0" width="100" height="100"> <br />
-           <form action="/main/menu" method="get">
+           <form action="/main/menu" method="post">
                 <input type="hidden" name="cate1" value="${dto.cate1}" />
                 <input type="hidden" name="cate2" value="${dto.cate2}" />
                 <input type="hidden" name="cate3" value="${dto.cate3}" />

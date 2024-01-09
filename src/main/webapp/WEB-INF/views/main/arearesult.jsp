@@ -8,11 +8,12 @@
 		<title>지역별 상품 찾기</title>
 	</head>
 	<body>
-		<c:if test="${cnt == 0 }" >
-	         <h1> 상품이 없거나 검색 결과가 없습니다. </h1>
+	<div style="display: flex;">
+		<c:if test="${cntDetail == 0 }" >
+	         <h1> 상품 없음! </h1>
 	         </c:if>
-	         <c:if test="${cnt >  0 }" >
-	            <c:forEach var="dto" items="${list}">
+	         <c:if test="${cntDetail >  0 }" >
+	            <c:forEach var="dto" items="${productlistdetail}">
 	               <h1>${dto.productname}</h1>
 	            </c:forEach>
 	         </c:if>	

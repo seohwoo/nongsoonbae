@@ -8,7 +8,7 @@
 	</head>
 	<body>
 	<div style="display: flex;">
-    <c:forEach var="area" items="${list}">
+    <c:forEach var="area" items="${arealistdetail}">
         <div style="margin-right: 10px;">
             <form action="/main/areamain" method="get">
                 <input type="hidden" name="area1" value="${area.area1}" />
@@ -17,6 +17,19 @@
             </form>
         </div>
     </c:forEach>
+	</div> 
+	</br>
+	<div style="display: flex;">
+	<c:if test="${cnt == 0 }" >
+		   <h1> 없음 </h1>
+	</c:if>
+	</div>
+	<div style="display: flex;">
+	<c:if test="${cnt >  0 }" >
+		    <c:forEach var="dto" items="${productlist}">
+		            <h1>${dto.productname}</h1>
+		     </c:forEach>  
+	</c:if>	
 	</div>
 	</body>	
 </html>
