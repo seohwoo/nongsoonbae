@@ -64,47 +64,32 @@ public class MainController {
 	}
 
 	@RequestMapping("menu")
-	public String main(Model model, String cate1, String cate2, String cate3) {
-		/*
-		List<AreaDTO> arealist = areaservice.areaMenu(model);
-		model.addAttribute("arealist",arealist);
-		if (area1 == null && area2 == null) { //전체항목리스트 
-			areaservice.allproductlist(model); 
-		} 
-		if (area1 != null && area2 == null) {
-			areaservice.arealistdeatil(model, area1);  //area1 리스트
-			areaservice.areaprodutlist (model, area1); //area1  상품리스트
-		}
-		if(area1 != null && area2 != null ){
-			areaservice.arealistdeatil(model, area1);
-			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
-		}
-		return "main/areamain";
-		*/		
-		//List<ProductCategoryDTO> catelist = cateservice.cateMenu(model);
-		//model.addAttribute("dto",dto);
-		if(cate1 == null && cate2 == null && cate3 == null  ) {
-			cate1 = "0";
-			cate2 = "0";
-			cate3 = "0";
-			cateservice.cateproduct();
-		}
-		    cateservice.catelist(model, cate1, cate2, cate3);
-		    cateservice.cateDetail(model, cate1, cate2);
+	public String main(Model model, String cate1, String cate2) {
+		
+		List<ProductCategoryDTO> catelist = cateservice.cateMenu(model);
+		model.addAttribute("catelist",catelist);
+		/*  if (cate1 == null && cate2 == null) { //전체항목리스트 
+			cateservice.allproductlist(model); 
+		} if (cate1 != null && cate2 == null) {
+			cateservice.catelistdeatil(model, cate1);  
+			cateservice.cateprodutlist (model, cate1); 
+		} if(cate1 != null && cate2 != null ){
+			cateservice.catelistdeatil(model, cate1);
+			cateservice.cateprodictlistdetail (model, cate1,cate2); // cate2 상품리스트 
+		}*/
+		
 		return "main/categorymain";
 	}
 	
 	@RequestMapping("menulist")
-	public String main2(Model model, String cate1, String cate2, String cate3) {
-		if(cate1 !=null && cate2 == "0" ) {
-		cateservice.catelist(model, cate1, cate2, cate3);
-		} 
+	public String main2(Model model, String cate1, String cate2) {
+		
 		return "main/categorylist";
 	}
 	
 	@RequestMapping("menulistDetail")
 	public String main3(Model model, String cate1,String cate2 ) {
-		cateservice.cateDetail(model, cate1, cate2);
+		
 		return "main/catelistDetail";
 	}
 	

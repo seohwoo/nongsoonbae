@@ -16,6 +16,7 @@ public interface AreaMapper {
 	public List<AllProductDTO> allproductList ();
 	public List<AreaDTO> arealistdetail (String area1);
 	public List<AllProductDTO>productlist (String area1);
+	
 	public int productCnt(int area1);
 	public int cntDetail(HashMap<String, String> map);
 	public List<AllProductDTO> productlistdetail(HashMap<String, String> map);
