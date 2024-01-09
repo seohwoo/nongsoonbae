@@ -23,11 +23,13 @@
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<input type="text" name="username" class="form-control" placeholder="ID" required autofocus>
 	<input type="password" name="password" class="form-control" placeholder="Password" required>
-	자동 로그인 : <input type="checkbox" name="remember-me" /><p></p>
-	<button class="btn btn-primary col-6" type="submit">LOGIN</button>
 	<c:if test="${param.err == true}">
-		<p style="color: red">ID와 Password를 확인해주세요.</p>
+		<p style="color: red">ID 혹은 Password를 확인해주세요.</p>
 	</c:if>
+	자동 로그인 : <input type="checkbox" name="remember-me" /><p></p>
+	<button class="btn btn-primary col-6" type="submit">LOGIN</button><br />
+	<p><a id="findIDPW" class="link-secondary" href="/member/find">아이디/비밀번호 찾기</a></p>
+	
 	<p class="mt-3 mb-3"> -------------------또는-------------------- </p>
 	<div>
 		<a id="kakao-login-btn" href="javascript:loginWithKakao()">

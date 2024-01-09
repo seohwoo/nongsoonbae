@@ -41,7 +41,7 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 			e.printStackTrace();
 		}		*/
 
-		String rdir = "/member/test";
+		String rdir = "/main/main";
 		if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
             rdir = "/mvc/sample/admin";
         } else if (authorities.contains(new SimpleGrantedAuthority("MEMBER"))) {
