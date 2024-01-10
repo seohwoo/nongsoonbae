@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	public void allproductlist(Model model) {
+	public void allproductlist(Model model) { //전체 품목 뽑기
 		int allCnt = mapper.allCnt();
 		List<AllProductDTO> allprocuctList = Collections.EMPTY_LIST ;
 		if(allCnt >0 ) {
@@ -36,10 +36,9 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 		model.addAttribute("allprocuctList",allprocuctList);
 		model.addAttribute("allCnt",allCnt);
-	}
 		
-	
-	
+	}
+
 	@Override
 	public void catelistdeatil(Model model, String cate1) {
 		List<ProductCategoryDTO> catelistdetail = mapper.catelistdetail(cate1);
@@ -54,56 +53,30 @@ public class CategoryServiceImpl implements CategoryService{
 		if(cnt>0){
 			productlist = mapper.productlist(cate1);
 		}
-		
 		model.addAttribute("cnt",cnt);
 		System.out.println(cnt);
 		model.addAttribute("productlist",productlist);
 		System.out.println(productlist);
+		
 	}
-	
-	
+
 	@Override
 	public void cateprodictlistdetail(Model model, String cate1, String cate2) {
 		categoryMap.put("cate1", cate1);
 		categoryMap.put("cate2", cate2);
 		int cntDetail = mapper.cntDetail(categoryMap);
-	}
-	
-	@Override
-	public void catelist(Model model, String cate1, String cate2, String cate3 ){ 
-		categoryMap.put("cate1",cate1);
-		categoryMap.put("cate2",cate2);
-		categoryMap.put("cate3",cate3);
-		int cnt = mapper.cateCnt(categoryMap);
-		List<ProductCategoryDTO> menu = Collections.EMPTY_LIST ;
-		//menu = mapper.catelist(cate1);
-		model.addAttribute("menu",menu);
-		model.addAttribute("cnt",cnt);
-	}
-
-	@Override
-	public void cateDetail( Model model, String cate1, String cate2) {
-		categoryMap.put("cate1",cate1);
-		categoryMap.put("cate2",cate2);
-		int cnt = mapper.cateCnt(categoryMap);
-		List<AllProductDTO> list = Collections.EMPTY_LIST ;
-		if(cnt >0) {
-			list=mapper.cateDetail(cate1,cate2);
+		List<AllProductDTO> productlistdetail = Collections.EMPTY_LIST ; 
+		if (cntDetail >0 ) {
+			productlistdetail = mapper.productlistdetail(categoryMap);
 		}
-		model.addAttribute("list",list);
-		System.out.println(list);
-		model.addAttribute("cnt",cnt);
-		System.out.println(cnt);
+		model.addAttribute("cntDetail", cntDetail);
+		System.out.println(cntDetail);
+		model.addAttribute("productlistdetail",productlistdetail);
+		System.out.println(productlistdetail);
 	}
-
-	@Override
-	public List<AllProductDTO> cateproduct(){
-		return null;
+		
 	}
 
 	
-
 	
 
-	
-}

@@ -70,4 +70,69 @@ public class AreaServiceImpl implements AreaService{
 		model.addAttribute("cntDetail", cntDetail);
 		model.addAttribute("productlistdetail",productlistdetail);
 	}
+	
+	@Override
+	public void arealist(int areaNum, Model model) {
+		int pageSize = 8;
+	    int startRow = (areaNum - 1) * pageSize + 1;
+	    int endRow = areaNum * pageSize;
+	    int count = mapper.allCnt();
+	    List<AreaDTO> arealist = Collections.EMPTY_LIST;
+	    if(count > 0 ) {
+	    	categoryMap.put("start", String.valueOf(startRow));
+	    	categoryMap.put("end", String.valueOf(endRow));
+	    	arealist = mapper.arealistall(categoryMap); 			
+	    }
+	    model.addAttribute("arealist",arealist);
+	    model.addAttribute("count",count);
+	    model.addAttribute("areaNum",areaNum);
+	    model.addAttribute("pageSize",pageSize);
+	    
+	    int pageCount = count / pageSize + ( count % pageSize == 0 ? 0 : 1);
+		 
+        int startPage = (int)(areaNum/10)*10+1;
+		int pageBlock=10;
+        int endPage = startPage + pageBlock-1;
+        if (endPage > pageCount) {
+			endPage = pageCount;
+        }				
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("pageBlock",pageBlock);
+        model.addAttribute("endPage",endPage);
+		
+	}
+	/*@Override
+	public void arealistpage(int areaNum, Model model, String area1) {
+		int listpageSize = 8;
+	    int startRow = (areaNum - 1) * listpageSize + 1;
+	    int endRow = areaNum * listpageSize;
+		int areacnt = mapper.productCnt(Integer.parseInt(area1));
+		List<AreaDTO> arealistdetail = Collections.EMPTY_LIST;
+		if(areacnt > 0) {
+			categoryMap.put("area", area1);
+			categoryMap.put("start", String.valueOf(startRow));
+	    	categoryMap.put("end", String.valueOf(endRow));
+	    	arealistdetail = mapper.arealistdetailpage(categoryMap);
+	    	
+		}
+		 	model.addAttribute("arealistdetail",arealistdetail);
+		    model.addAttribute("areacnt",areacnt);
+		    model.addAttribute("areaNum",areaNum);
+		    model.addAttribute("listpageSize",listpageSize);
+		
+		    int pageCount = areacnt / listpageSize + ( areacnt % listpageSize == 0 ? 0 : 1);
+			 
+	        int startPage = (int)(areaNum/10)*10+1;
+			int pageBlock=10;
+	        int endPage = startPage + pageBlock-1;
+	        if (endPage > pageCount) {
+				endPage = pageCount;
+	        }				
+	        model.addAttribute("pageCount",pageCount);
+	        model.addAttribute("startPage",startPage);
+	        model.addAttribute("pageBlock",pageBlock);
+	        model.addAttribute("endPage",endPage);
+		
+	}*/
 }

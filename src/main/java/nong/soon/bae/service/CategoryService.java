@@ -10,8 +10,4 @@ public interface CategoryService {
 	public void catelistdeatil(Model model,String cate1);
 	public void cateprodutlist (Model model,String cate1);
 	public void cateprodictlistdetail(Model model, String cate1, String cate2);
-
-	public void catelist(Model model, String cate1, String cate2,String cate3 ); //소분류 조회 
-	public void cateDetail(Model model, String cate1,String cate2);
-	public List<AllProductDTO >cateproduct();
 }

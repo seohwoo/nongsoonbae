@@ -17,5 +17,6 @@
 	               <h1>${dto.productname}</h1>
 	            </c:forEach>
 	         </c:if>	
+	     </div>
 	</body>
 </html>

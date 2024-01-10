@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
@@ -64,19 +65,19 @@ public class MainController {
 	}
 
 	@RequestMapping("menu")
-	public String main(Model model, String cate1, String cate2) {
-		
+	public String main(Model model, String cate1, String cate2) {	
 		List<ProductCategoryDTO> catelist = cateservice.cateMenu(model);
 		model.addAttribute("catelist",catelist);
-		/*  if (cate1 == null && cate2 == null) { //전체항목리스트 
+		if (cate1 == null && cate2 == null) { //전체항목리스트 
 			cateservice.allproductlist(model); 
 		} if (cate1 != null && cate2 == null) {
-			cateservice.catelistdeatil(model, cate1);  
-			cateservice.cateprodutlist (model, cate1); 
-		} if(cate1 != null && cate2 != null ){
+			cateservice.catelistdeatil(model, cate1);  //cate1 리스트
+			cateservice.cateprodutlist (model, cate1); //cate1  상품리스트
+		}if(cate1 != null && cate2 != null ){
 			cateservice.catelistdeatil(model, cate1);
-			cateservice.cateprodictlistdetail (model, cate1,cate2); // cate2 상품리스트 
-		}*/
+			cateservice.cateprodictlistdetail (model,cate1 ,cate2); // cate2 상품리스트 
+		}
+	
 		
 		return "main/categorymain";
 	}
@@ -94,13 +95,16 @@ public class MainController {
 	}
 	
 	@RequestMapping("areamain")
-	public String area(Model model, String area1, String area2 ) {
-		List<AreaDTO> arealist = areaservice.areaMenu(model);
-		model.addAttribute("arealist",arealist);
+	public String area(Model model, @RequestParam(value="areaNum", defaultValue="1") int areaNum,  
+											String area1, String area2 ) {
+		areaservice.arealist(areaNum,model);
+		//List<AreaDTO> arealist = areaservice.areaMenu(model);
+		//model.addAttribute("arealist",arealist);
 		if (area1 == null && area2 == null) { //전체항목리스트 
 			areaservice.allproductlist(model); 
 		} 
 		if (area1 != null && area2 == null) {
+			//areaservice.arealistpage (areaNum,model,area1);
 			areaservice.arealistdeatil(model, area1);  //area1 리스트
 			areaservice.areaprodutlist (model, area1); //area1  상품리스트
 		}
