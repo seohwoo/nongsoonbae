@@ -13,4 +13,5 @@ public class UsersDTO {
 	private String email;
 	private String birth;
 	private int gender;
+	private int regsite;
 }

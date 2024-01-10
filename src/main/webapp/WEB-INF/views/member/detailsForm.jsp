@@ -59,7 +59,7 @@ $(document).ready(function(){
 	<h1 class="h3 mb-3 font-weight-normal">회원정보 입력</h1>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	아이디<input type="text" class="form-control" placeholder="${username}" readonly>
-	비밀번호<input type="button" name="password" class="form-control" value="비밀번호 변경" onclick="">
+	비밀번호<input type="text" class="form-control" readonly><input type="button" class="btn" id="renameP" value="비밀번호 변경" />
 	이름<input type="text" class="form-control" placeholder="NAME" readonly>
 	이메일<input type="text" class="form-control" placeholder="EMAIL" readonly>
 	주민등록번호<div class="birth"><input type="number" class="form-control" placeholder="000000" > - <input type="number" class="form-control" placeholder="1/3 or 2/4" readonly></div>

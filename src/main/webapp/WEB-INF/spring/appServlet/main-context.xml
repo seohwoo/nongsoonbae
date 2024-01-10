@@ -33,6 +33,7 @@
    		<beans:list value-type="Double"/>
    	</beans:constructor-arg>
    </beans:bean>
+   
    <beans:bean id="areaDTO" class="nong.soon.bae.bean.AreaDTO" />
    <beans:bean id="productcategoryDTO" class="nong.soon.bae.bean.ProductCategoryDTO" />
 

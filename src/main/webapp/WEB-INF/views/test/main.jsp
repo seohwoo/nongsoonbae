@@ -12,6 +12,6 @@
 	<body>
 		<h1>This is Main</h1>
 		<h1>users count is <label>${count}</label></h1>
-		<img alt="" src="https://www.nongnet.or.kr/image.do?file=upload/pumImage/64/20230223095813_76410944.png&size=419x267&pos=C">
+		<img alt="" src="https://kkukowiki.kr/images/c/c4/%EB%86%8D%EC%88%98%EC%82%B0%EB%AC%BC.png">
 	</body>
 </html>

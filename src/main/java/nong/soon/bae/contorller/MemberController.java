@@ -16,8 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import nong.soon.bae.bean.UserDetailsDTO;
 import nong.soon.bae.bean.UserGradeDTO;
@@ -25,6 +27,7 @@ import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.CustomUser;
 import nong.soon.bae.repository.UsersRepository;
 import nong.soon.bae.security.CustomUserDetailsService;
+import nong.soon.bae.service.MailSendService;
 
 @Controller
 @RequestMapping("/member/*")
@@ -34,6 +37,8 @@ public class MemberController {
 	
 	@Autowired
 	UsersRepository usersRepository;
+	@Autowired
+	private MailSendService mailService;
 	
 	@RequestMapping("/form")
 	public String loginForm() {
@@ -138,6 +143,58 @@ public class MemberController {
 	public String logout() {
 		logger.info("post custom logout");
 		return "member/logout";
+	}
+	
+	@RequestMapping("/find")
+	public String findIDPW() {
+		return"member/find";
+	}
+	
+	@GetMapping("/mailCheck")
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println("이메일 인증 요청이 들어옴!");
+		System.out.println("이메일 인증 이메일 : " + email);
+		return mailService.joinEmail(email);
+	}
+	
+	@PostMapping("/checkSuccess")
+	public String mail(String userEmail1, String userEmail2, Model model) {
+		String email = userEmail1+userEmail2;
+		int result;
+		UsersDTO vo = usersRepository.FindByEmail(email);		
+		if(vo == null) {
+			result = 0;
+			model.addAttribute("result", result);
+			model.addAttribute("email", email);
+		}else {
+			result = 1;
+			int site = vo.getRegsite();
+			String username = vo.getUsername();
+			model.addAttribute("result", result);
+			model.addAttribute("username", username);
+			model.addAttribute("email", email);
+			model.addAttribute("site", site);
+		}
+		return "member/mail";
+	}
+	
+	@PostMapping("/renamePass")
+	public String renamePass(Model model, String username) {
+		model.addAttribute("username", username);
+		return "member/renamePass";
+	}
+	
+	@PostMapping("/passPro")
+	@ResponseBody
+	public String passPro(String password, String username) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		password = passwordEncoder.encode(password);
+		logger.info("=============controll============");
+		logger.info("============="+password+"============");
+		logger.info("============="+username+"============");
+		usersRepository.changePass(password, username);
+		return "success";
 	}
 
 }

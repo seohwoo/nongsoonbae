@@ -21,7 +21,7 @@
 	<h1 class="h4 mb-4"> 회원 가입을 축하드립니다!</h1><br />
 	<h1 class="h6 mb-5 font-weight-normal">농순배를 이용하기 위해 <br/> 추가 정보를 미리 등록해주세요.</h1>
 	<a href="/member/detailsForm" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">등록하기</a>
-	<a href="" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">지금은 됐어요</a>
+	<a href="/main/main" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">지금은 됐어요</a>
 	<p class="mt-5 mb-3 text-muted">welcome.jsp</p>
 </form>
 <%@include file="/WEB-INF/views/include/footer.jsp"%>

@@ -61,6 +61,7 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("categoryList", list);
 		model.addAttribute("month", month);
 		model.addAttribute("categoryNum", categoryNum);
+		model.addAttribute("maxCategoryNum", maxCategoryNum);
 	}
 
 	@Override
@@ -116,43 +117,63 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("thislist", thislist);
 		model.addAttribute("lastlist", lastlist);
 	}
+	
+	public void page(int pageSize, int pageNum) {
+		int start = (pageNum-1)*pageSize+1;
+		int end = pageNum * pageSize;
+		seasonCategoryMap.put("start", String.valueOf(start));
+		seasonCategoryMap.put("end", String.valueOf(end));
+	}
+	
 
 	@Override
-	public void showCategory(Model model, String cate1, int categoryNum) {
+	public void showCategory(Model model, String cate1, String cate2, String cate3, int categoryNum) {
 		int categorySize = 10;
 		int cnt = mapper.chartCategoryCnt(cate1);
 		int maxCategoryNum = (int) (cnt / categorySize) + (cnt % categorySize == 0 ? 0 : 1);
+		ProductCategoryDTO prevCate = null;
+		ProductCategoryDTO nextCate = null;
 		if(categoryNum < 1) {
 			categoryNum = 1;
 		}else if(categoryNum > maxCategoryNum) {
 			categoryNum = maxCategoryNum;
 		}
+		
+		if(categoryNum > 1) {
+			categoryNum--;
+			page(categorySize, categoryNum);
+			prevCate = mapper.nextCate(seasonCategoryMap);
+			model.addAttribute("prevCate", prevCate);
+			categoryNum++;
+		}
+		
 		List<ProductCategoryDTO> list = Collections.EMPTY_LIST;
 		if (cnt > 0) {
-			int start = (categoryNum-1)*categorySize+1;
-			int end = categoryNum * categorySize;
 			seasonCategoryMap.put("cate1", cate1);
-			seasonCategoryMap.put("start", String.valueOf(start));
-			seasonCategoryMap.put("end", String.valueOf(end));
+			page(categorySize, categoryNum);
 			list = mapper.chartCategory(seasonCategoryMap);
-		}
-		String cate2 = "1";
-		String cate3 = "1";
-		if(categoryNum==1) {
-			cate2 = "4";
-			cate3 = "2";
-		}else if(categoryNum==2) {
-			cate2 = "7";
-			cate3 = "3";
+			categoryNum++;
 		}
 		
+		page(categorySize, categoryNum);
+		if(mapper.nextCate(seasonCategoryMap) != null) {
+			nextCate = mapper.nextCate(seasonCategoryMap);
+			model.addAttribute("nextCate", nextCate);
+		}
+		
+		if (cnt > 0) {
+			categoryNum--;
+		}
 		model.addAttribute("cateList", list);
 		model.addAttribute("cate1", cate1);
-		model.addAttribute("cate2", cate2);
-		model.addAttribute("cate3", cate3);
 		model.addAttribute("categoryNum", categoryNum);
 		model.addAttribute("maxCategoryNum", maxCategoryNum);
-		
+	}
+
+	@Override
+	public void cateMenu(Model model) {
+		List<ProductCategoryDTO> list = mapper.cateMenu();
+		model.addAttribute("catemenu", list);
 	}
 	
 	

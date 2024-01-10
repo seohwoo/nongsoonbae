@@ -7,13 +7,9 @@
 		<title>차트</title>
 	</head>
 	<body>
-		<center><h1>${catename}</h1></center>
-		<div>
-		  <canvas id="myChart" style="width: 100%; height: 500px"></canvas>
-		</div>
-		
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		
+		<h1>${catename}</h1>
+		  	<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>		
 		<script>
 		  const ctx = document.getElementById('myChart');
 		

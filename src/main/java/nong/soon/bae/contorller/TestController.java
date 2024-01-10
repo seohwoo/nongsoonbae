@@ -1,5 +1,7 @@
 package nong.soon.bae.contorller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +13,9 @@ import nong.soon.bae.service.TestService;
 @Controller
 @RequestMapping("/test/*")
 public class TestController {
- 
+	
+	private static final Logger log = LoggerFactory.getLogger(TestController.class);
+	
 	@Autowired
 	private TestService service;
 	
@@ -54,7 +58,16 @@ public class TestController {
 	
 	@RequestMapping("editor")
 	public String editor() {
+		log.info("==========editor========");
 		return "/test/editor";
+	}
+	
+	@RequestMapping("editorPro")
+	public String editorPro(String editordata, Model model) {
+		log.info("==========editorPro========");
+		model.addAttribute("editordata", editordata);
+		System.out.println(editordata);
+		return "/test/editorPro";
 	}
 	
 }
