@@ -1,11 +1,34 @@
 package nong.soon.bae.contorller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 
 import nong.soon.bae.service.TestService;
 
@@ -62,10 +85,56 @@ public class TestController {
 	}
 	
 	@RequestMapping("editorPro")
-	public String editorPro(String editordata, Model model) {
-		model.addAttribute("editordata", editordata);
-		System.out.println(editordata);
+	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
+		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
+		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
+		int cnt = 1;
+		for (String filename : fileNames) {
+			try {
+		        File sourceFile = new File(fileRoot+filename);
+		        File targetDirectory = new File(realRoot);
+		        String ext = filename.substring(filename.lastIndexOf("."));
+		        Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(""+cnt+ext), StandardCopyOption.REPLACE_EXISTING);
+		        cnt++;
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+		
+		
+		model.addAttribute("content", content);
 		return "/test/editorPro";
+	}
+	
+	@RequestMapping("summer")
+	public String summer() {
+		return "/test/summer";
+	}
+	
+	@RequestMapping(value = "uploadSummernoteImageFile", produces = "application/json", consumes = "multipart/form-data")
+	public ResponseEntity<JsonNode> uploadSummernoteImageFile(@RequestPart("file") MultipartFile multipartFile,
+	      HttpServletRequest request) {
+	   ObjectMapper objectMapper = new ObjectMapper();
+	   JsonNode responseJson;
+	   String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
+		
+	   try {
+	      String originalFileName = multipartFile.getOriginalFilename();
+	      String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+	      String savedFileName = UUID.randomUUID() + extension;
+	      Path targetPath = Path.of(fileRoot, savedFileName);
+	      Files.copy(multipartFile.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+		
+	      String imageUrl = request.getContextPath() + "/resources/summernoteImage/" + savedFileName;
+	      responseJson = objectMapper.createObjectNode()
+	            .put("url", imageUrl)
+	            .put("responseCode", "success")
+	            .put("fileName", savedFileName);
+	      return ResponseEntity.ok(responseJson);
+	   } catch (IOException e) {
+	      responseJson = objectMapper.createObjectNode().put("responseCode", "error");
+	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
+	   }
 	}
 	
 }
