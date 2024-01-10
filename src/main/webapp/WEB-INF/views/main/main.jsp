@@ -27,7 +27,7 @@
 			</td>
 			</tr>
 		</tbody>
-	</table>	
+	</table>
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
