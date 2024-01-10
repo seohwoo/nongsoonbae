@@ -23,4 +23,5 @@ public class ProductDTO {
 	private Date enddate;
 	private int optionstatus;
 	private String username;
+	private String seqnum;
 }

@@ -3,15 +3,11 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.ProductMapper">
-	
-	<select id="selectProductcategory" resultType="nong.soon.bae.bean.ProductCategoryDTO">
-		select * from productcategory
-	</select>
-	
+	<!-- 개인 상점(테이블) 만들기 -->
 	<insert id="createProduct" parameterType="String">
 		create table ${username}_PRODUCT ( 
 			productnum varchar2(50) primary key not null,
-		    productname varchar2(200) not null,
+		    productname varchar2(1000) not null,
 		    wishcount number default 0,
 		    totalprice number not null,
 		    productcount number not null,
@@ -21,24 +17,10 @@
 		    readcount number default 0 not null,
 		    startdate date default sysdate not null,
 		    enddate date,
-		    optionstatus number,
-		    username varchar2(50) )
+		    optionstatus number )
 	</insert>
-	
-	<insert id="createSEQ" parameterType="String">
-		create sequence ${username}_PRODUCT_SEQ
-	</insert>
-	
-	<insert id="createReviews" parameterType="String">
-		create table ${username}_reviews ( 
-			productnum varchar2(50) primary key not null,
-		    name varchar2(50) not null,
-		    productname varchar2(50),
-		    content varchar2(4000) not null,
-		    imagecount number default 0 not null,
-		    stars number default 5 not null )
-	</insert>
-	
+
+	<!-- // 개인 이미지(테이블) 만들기 -->
 	<insert id="createImages" parameterType="String">
 		create table ${username}_images ( 
 			productnum varchar2(50) primary key not null,
@@ -47,43 +29,58 @@
 	
 	<!-- FINISH -->
 	
+	<!-- // 판매 정보 넣기 -->
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.ProductDTO">
-    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
-    productcount, imagecount, content, startdate, enddate, optionstatus, username) 
-    values(
-        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || LPAD(${username}_product_seq.nextval, 5, '0')),
-        #{productname}, 
-        #{totalprice}, 
-        #{productcount},
-        #{imagecount},
-        #{content}, 
-        sysdate, 
-        #{enddate}, 
-        #{optionstatus},
-        #{username}
-    )
+	    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
+	    productcount, imagecount, content, startdate, enddate, optionstatus) 
+	    values(
+	        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || #{productnum} || LPAD(${seqnum}_seq.nextval, 5, '0')),
+	        #{productname}, 
+	        #{totalprice}, 
+	        #{productcount},
+	        #{imagecount},
+	        #{content}, 
+	        sysdate, 
+	        #{enddate}, 
+	        #{optionstatus}
+	    )
+	</insert>
+	
+	<insert id="allproduct" parameterType="nong.soon.bae.bean.AllProductDTO">
+		insert into ALLPRODUCT (productnum, productname, cate1, cate2, cate3,
+		area1, area2, username) values (
+		 	#{productnum},
+		 	#{productname},
+		 	#{cate1}, #{cate2}, #{cate3}, 
+		 	1, 1, 
+		 	#{username}		 
+		 )		 
 	</insert>
 	
 	<!-- TEST -->
 	
-	<select id="selectCate1" resultType="String">
-		select catename from productcategory where cate1>0 and cate2=0 and cate3=0
-	</select>
-	
-	<select id="selectCate2" resultType="String">
-		select catename from productcategory where cate1>0 and cate2>0 and cate3=0
-	</select>
-	
-	<select id="selectCate3" resultType="String">
-		select catename from productcategory where cate1>0 and cate2>0 and cate3>0
-	</select>
-	
 	<select id="myProduct" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
-		select * from ${username}_PRODUCT where username=#{username}
+		select * from ${username}_PRODUCT
 	</select>
 	
+
+	<!-- 가장 최근에 상품등록한 productnum값 가져오기 -->
+	<select id="selectProductnum" resultType="String" parameterType="String">
+		<![CDATA[
+			select * from 
+				(select c.* , rownum r from 
+				(select productnum from ${username}_product order by startdate desc) c) 
+				where r = 1
+		]]>
+	</select>
 	
-	
+	<!-- TEST0110 -->
+	<insert id="imagesInsert" parameterType="String">
+		insert into ${username}_images values (
+			#{productnum},
+			#{filename}
+		)
+	</insert>
 	
 	
 	

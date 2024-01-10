@@ -12,4 +12,6 @@ public class AllProductDTO {
 	private int cate3;
 	private int area1;
 	private int area2;
+	private String username;
+	private String seqnum;
 }
