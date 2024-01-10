@@ -36,13 +36,13 @@ public class ProductServiceImpl implements ProductService {
 	// 판매 정보 넣기
 	@Override
 	public int productInsert(ProductDTO product, List<MultipartFile> filelist, String path) {
-		int files = 0;
+		int imagecount = 0;
 		for (MultipartFile file : filelist) {
 			if(!file.getOriginalFilename().equals("")) {
-				files++;
+				imagecount++;
 			}
 		}
-		product.setImagecount(files);
+		product.setImagecount(imagecount);
 		
 		return mapper.productInsert(product);
 	}
@@ -66,17 +66,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int imagesInsert(List<MultipartFile> filelist, String path, String username) {
+	public int imagesInsert(List<MultipartFile> files, String path, String username) {
 		int result = 0;
 		String productnum = mapper.selectProductnum(username);
-		for (int i = 1; i <= filelist.size(); i++) {
-			MultipartFile file = filelist.get(i-1);
+		for (int i = 1; i <= files.size(); i++) {
+			MultipartFile file = files.get(i-1);
 			String filename = file.getOriginalFilename();
 			if(!filename.equals("")) {
 				String ext = filename.substring(filename.lastIndexOf("."));
 				filename = "file_"+productnum+"_"+i+ext;
 				File copy = new File(path+filename);
-				result = mapper.imagesInsert(productnum, filename);
+				result = mapper.imagesInsert(productnum, filename, username);
 				try {
 					file.transferTo(copy);
 				} catch (Exception e) {
@@ -85,6 +85,11 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void createReviews(String productnum) {
+		mapper.createReviews(productnum);
 	}
 
 	

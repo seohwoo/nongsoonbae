@@ -236,7 +236,7 @@
 			    <tr> 
 					<td width="200">사진</td>
 					<td width="400"> 
-						<input type="file" name="imagecount" multiple="multiple" onchange="displayFileCount()" required="required">
+						<input type="file" name="files" multiple="multiple" onchange="displayFileCount()" required="required">
 					</td>
 			    </tr>
 			    

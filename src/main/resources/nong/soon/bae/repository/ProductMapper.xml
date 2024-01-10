@@ -23,7 +23,7 @@
 	<!-- // 개인 이미지(테이블) 만들기 -->
 	<insert id="createImages" parameterType="String">
 		create table ${username}_images ( 
-			productnum varchar2(50) primary key not null,
+			productnum varchar2(50) not null,
 		    filename varchar2(4000) not null )
 	</insert>
 	
@@ -67,7 +67,7 @@
 	<!-- 가장 최근에 상품등록한 productnum값 가져오기 -->
 	<select id="selectProductnum" resultType="String" parameterType="String">
 		<![CDATA[
-			select * from 
+			select productnum from 
 				(select c.* , rownum r from 
 				(select productnum from ${username}_product order by startdate desc) c) 
 				where r = 1
@@ -82,7 +82,17 @@
 		)
 	</insert>
 	
-	
-	
+
+	<insert id="createReviews" parameterType="String">
+		create table ${productnum}_reviews ( 
+			username varchar2(50),
+			productnum varchar2(50),
+			content varchar2(4000),
+			imagecount number default 0,
+			stars number default 5,
+			regdate date default sysdate
+		)
+	</insert>
+
 </mapper>    
     

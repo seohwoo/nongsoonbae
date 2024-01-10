@@ -32,4 +32,6 @@ public interface ProductService {
 	public String selectProductnum(String username);
 	
 	public int imagesInsert(List<MultipartFile> files, String path, String username);
+
+	public void createReviews(String productnum);
 }

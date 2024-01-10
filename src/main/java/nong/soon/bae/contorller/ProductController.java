@@ -73,7 +73,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("productWritePro")
-	public String productWritePro(HttpServletRequest request, List<MultipartFile> filelist, Model model, Principal principal, ProductDTO product, AllProductDTO dto, String cate3) {
+	public String productWritePro(HttpServletRequest request, List<MultipartFile> files, Model model, Principal principal, ProductDTO product, AllProductDTO dto, String cate3, String productnum) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
 		product.setUsername(username);
@@ -81,26 +81,26 @@ public class ProductController {
 		product.setSeqnum("C_"+cate3);	
 		
 		String path = request.getServletContext().getRealPath("/resources/file/product/");
-		int cnt = service.productInsert(product, filelist, path);
-		int result = service.imagesInsert(filelist, path, username);
+		int cnt = service.productInsert(product, files, path);
+		int result = service.imagesInsert(files, path, username);
 		
 		int catego1 = cate3.charAt(0)-48;
 		int catego2 = cate3.charAt(1)-48;
-		int catego3 = cate3.charAt(2)-48;
-		
+		int catego3 = cate3.charAt(2)-48;		
+	
 		dto.setCate1(catego1);
 		dto.setCate2(catego2);
-		dto.setCate3(catego3);
-		
-		
+		dto.setCate3(catego3);				
+	
 		if(cnt >0) {
 			dto.setProductnum(service.selectProductnum(username));
 			service.allproduct(dto);
-		}
+		}		
 		
+		productnum = "P_"+service.selectProductnum(username);
+		service.createReviews(productnum);
 		model.addAttribute("cnt", cnt);
-		model.addAttribute("result", result);
-		
+		model.addAttribute("result", result);		
 		return "product/productWritePro";
 	}
 	 

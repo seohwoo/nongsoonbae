@@ -32,7 +32,9 @@ public interface ProductMapper {
 	public String selectProductnum(String username);
 	
 	// TEST0110
-	public int imagesInsert(@Param("username") String username,
-							@Param("filename") String filename);
+	public int imagesInsert(@Param("productnum") String productnum,
+							@Param("filename") String filename,
+							@Param("username") String username);
 	
+	public void createReviews(String productnum);
 }
