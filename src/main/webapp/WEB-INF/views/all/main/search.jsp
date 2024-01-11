@@ -7,7 +7,7 @@
 		<script type="text/javascript" src="/resources/js/jquery-3.7.1.min.js"></script>
 	</head>
 	<body>
-		<form action="/main/result" method="post">
+		<form action="/nsb/result" method="post">
 			<input type="text" name="userSearch" id="userSearch" placeholder="검색어를 입력하세요😁😁😁"/>
 			<input type="submit" id="searchButton" value="🔎">
 		</form>

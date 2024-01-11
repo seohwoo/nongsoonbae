@@ -44,6 +44,10 @@ public class TestController {
 	
 	@Autowired
 	private TestService service;
+	@Autowired
+	private ArrayList<String> srcValues;
+	@Autowired
+	private ArrayList<String> realFiles;
 	
 	@RequestMapping("main")
 	public String test(Model model) {
@@ -87,53 +91,66 @@ public class TestController {
 		return "/test/editor";
 	}
 	
+	@RequestMapping("summer")
+	public String summer() {
+		return "/test/summer";
+	}
+	
+	//써머노트 사용할려면 여기부터....
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
-		
 		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-		ArrayList<String> srcValues = extractSrcValues(content);
-	    // 출력
-	    for (String src : srcValues) {
-	    	src = src.replaceAll("/resources/realImage/", "");
-	    	System.out.println(src);
-	    }
-		
-		for (String filename : fileNames) {
+	    isFile(fileNames, content);
+		for (String filename : realFiles) {
 			try {
-		        File sourceFile = new File(fileRoot+filename);
-		        File targetDirectory = new File(realRoot);
-		        String ext = filename.substring(filename.lastIndexOf("."));
-		        Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(""+cnt+ext), StandardCopyOption.REPLACE_EXISTING);
-		        cnt++;
-		        
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+				File sourceFile = new File(fileRoot+filename);
+				File targetDirectory = new File(realRoot);
+				String ext = filename.substring(filename.lastIndexOf("."));
+				String realname = "productnum_"+cnt+ext;
+				Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
+				cnt++;
+				content = content.replace(filename, realname);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		
+		for (String filename : fileNames) {
+			File sourceFile = new File(fileRoot+filename);
+			sourceFile.delete();
+		}
 		model.addAttribute("content", content);
 		return "/test/editorPro";
 	}
-	
-	 public ArrayList<String> extractSrcValues(String jspCode) {
-	     Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
-	     Matcher matcher = pattern.matcher(jspCode);
-
-	     ArrayList<String> srcValues = new ArrayList<String>();
+	 
+	 public void isFile(String[] filenames, String content) {
+		 srcValues.clear();
+		 realFiles.clear();
+		 Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
+	     Matcher matcher = pattern.matcher(content);
 	     while (matcher.find()) {
 	         srcValues.add(matcher.group(1));
 	     }
-	     return srcValues;
+		 for (int i = 0; i < srcValues.size(); i++) {
+			int lastSlashIndex = srcValues.get(i).lastIndexOf('/');
+			if (lastSlashIndex != -1 && lastSlashIndex < srcValues.get(i).length() - 1) {
+				srcValues.set(i, srcValues.get(i).substring(lastSlashIndex + 1));
+			}
+		 }
+		 if(filenames.length != srcValues.size()) {
+			 for (int i = 0; i < srcValues.size(); i++) {
+				for (String filename : filenames) {
+					if(filename.equals(srcValues.get(i))) {
+						realFiles.add(srcValues.get(i));
+					}
+				}
+			}
+		 }else {
+			 realFiles = srcValues;
+		 }
 	 }
-	
-	
-	@RequestMapping("summer")
-	public String summer() {
-		return "/test/summer";
-	}
 	
 	@RequestMapping(value = "uploadSummernoteImageFile", produces = "application/json", consumes = "multipart/form-data")
 	public ResponseEntity<JsonNode> uploadSummernoteImageFile(@RequestPart("file") MultipartFile multipartFile,
@@ -160,5 +177,5 @@ public class TestController {
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	
+	//...여기까지
 }

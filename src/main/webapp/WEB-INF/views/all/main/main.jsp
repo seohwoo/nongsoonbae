@@ -20,21 +20,21 @@
 			</tr>
 			<tr>
 				<td class="search">
-					<jsp:include page="/WEB-INF/views/main/search.jsp" />
+					<jsp:include page="/WEB-INF/views/all/main/search.jsp" />
 				</td>
 			</tr>
 			<tr>
 				<td class="season">
-					<jsp:include page="/WEB-INF/views/main/season.jsp" />
+					<jsp:include page="/WEB-INF/views/all/main/season.jsp" />
 				</td>
 			</tr>
 			<tr>
 				<td class="detail">
-					<jsp:include page="/WEB-INF/views/main/seasonDetail.jsp" />
+					<jsp:include page="/WEB-INF/views/all/main/seasonDetail.jsp" />
 				</td>
 			</tr>
 		</tbody>
-	</table>
+	</table>	
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>

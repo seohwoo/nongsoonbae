@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
-import nong.soon.bae.contorller.MemberController;
 import nong.soon.bae.repository.CustomUser;
 import nong.soon.bae.repository.UsersRepository;
 
@@ -25,7 +24,7 @@ import nong.soon.bae.repository.UsersRepository;
 
 public class CustomUserDetailsService implements UserDetailsService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 	
 	@Autowired
 	private UsersRepository mapper;

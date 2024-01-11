@@ -8,18 +8,28 @@
 	</head>
 	<body>
 	<div style="display: flex;">
-    <c:forEach var="cate" items="${menu}">
+    <c:forEach var="cate" items="${catelistdetail}">
         <div style="margin-right: 10px;">
-            <form action="/main/menu" method="get">
+            <form action="/nsb/menu" method="get">
                 <input type="hidden" name="cate1" value="${cate.cate1}" />
                 <input type="hidden" name="cate2" value="${cate.cate2}" />
-                <input type="hidden" name="cate3" value="${cate.cate3}" />
-
                 <button type="submit">${cate.catename}</button>
             </form>
         </div>
     </c:forEach>
-</div>
+	</div>
+		<div style="display: flex;">
+			<c:if test="${cnt == 0 }" >
+				   <h1> 없음 </h1>
+			</c:if>
+			</div>
+			<div style="display: flex;">
+			<c:if test="${cnt >  0 }" >
+				    <c:forEach var="dto" items="${productlist}">
+				            <h1>${dto.productname}</h1>
+				     </c:forEach>  
+			</c:if>	
+		</div>
 	</body>	
 </html>
 

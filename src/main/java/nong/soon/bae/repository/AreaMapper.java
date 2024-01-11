@@ -11,17 +11,18 @@ import nong.soon.bae.bean.ProductCategoryDTO;
 
 public interface AreaMapper {
 
-	public int areaCnt (HashMap<String, String> map);
-	public int areaallCnt ();
 	public List<AreaDTO> arealist();
-	public List<AllProductDTO> arealistdetailpro(String area1);
+	public int allCnt();
+	public List<AllProductDTO> allproductList ();
 	public List<AreaDTO> arealistdetail (String area1);
+	public List<AllProductDTO>productlist (String area1);
+	public int productCnt(int area1);
 	
-	public List<AreaDTO> areaallList ();
+	public int cntDetail(HashMap<String, String> map);
+	public List<AllProductDTO> productlistdetail(HashMap<String, String> map);
 	
-	public List<AreaDTO> areaMenu();
-	
-	public int countAllProduct();
+	public List<AreaDTO>arealistall(HashMap<String, String> map);
+	public List<AreaDTO>arealistdetailpage(HashMap<String, String> map);
 	
 }
  

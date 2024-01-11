@@ -10,10 +10,10 @@
 <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">
-        <li class="nav-item"><a href="/main/main" class="nav-link link-dark px-2">산지제철</a></li>
-        <li class="nav-item"><a href="/main/chart" class="nav-link link-dark px-2">실시간 차트</a></li>
-        <li class="nav-item"><a href="/main/menu" class="nav-link link-dark px-2">카테고리</a></li>
-        <li class="nav-item"><a href="/main/arealist" class="nav-link link-dark px-2">전국 특산품</a></li>
+        <li class="nav-item"><a href="/nsb/main" class="nav-link link-dark px-2">산지제철</a></li>
+        <li class="nav-item"><a href="/nsb/chart" class="nav-link link-dark px-2">실시간 차트</a></li>
+        <li class="nav-item"><a href="/nsb/menu" class="nav-link link-dark px-2">카테고리</a></li>
+        <li class="nav-item"><a href="/nsb/area" class="nav-link link-dark px-2">전국 특산품</a></li>
       </ul>
       <ul class="nav">
 	    <sec:authorize access="isAnonymous()">
@@ -24,7 +24,7 @@
 		<sec:authorize access="isAuthenticated()">
 			<!-- 로그인(인증된) 사용자인 경우 -->	
 			<li class="nav-item"><a href="/product/productMain" class="nav-link link-dark px-2">상품등록</a></li>
-			<li class="nav-item"><a href="/mypage/main" class="nav-link link-dark px-2">마이페이지</a></li>
+			<li class="nav-item"><a href="/user/mypage" class="nav-link link-dark px-2">마이페이지</a></li>
 			<li class="nav-item"><a href="/member/logout" class="nav-link link-dark px-2">로그아웃</a></li>
 		</sec:authorize>
 	</ul>
@@ -32,7 +32,7 @@
   </nav>
   <header class="py-3 mb-4 border-bottom">
     <div class="container d-flex flex-wrap justify-content-center">
-      <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+      <a href="/nsb/main" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
         <img alt="nongsoonbae" src="/resources/img/logo.png" width="100%" height="40px">
       </a>
       <form class="col-12 col-lg-auto mb-3 mb-lg-0">
