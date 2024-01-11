@@ -21,7 +21,7 @@
 			<td>
 				<div style="display: flex;">
 					<div style="margin-right: 10px;">
-						<form action="/main/chart" method="post">
+						<form action="/nsb/chart" method="get">
 							<input type="hidden" name="cate1" value="${dto.cate1}">
 							<input type="hidden" name="cate2" value="${dto.cate2+1}">
 							<input type="hidden" name="cate3" value="${dto.cate3+1}">
@@ -42,7 +42,7 @@
 				<div style="display: flex;">
 					<c:forEach var="cate" items="${cateList}" >
 						<div style="margin-right: 10px;">
-							<form action="/main/chart" method="post">
+							<form action="/nsb/chart" method="get">
 								<input type="hidden" name="categoryNum" value="${categoryNum}">
 								<input type="hidden" name="cate1" value="${cate.cate1}">
 								<input type="hidden" name="cate2" value="${cate.cate2}">
@@ -62,7 +62,7 @@
 			<td class="page">
 				<c:if test="${cate1!=null}">
 					<c:if test="${categoryNum>1}">
-						<form action="/main/chart" method="post">
+						<form action="/nsb/chart" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum-1}">
 							<input type="hidden" name="cate1" value="${cate1}">
 							<input type="hidden" name="cate2" value="${prevCate.cate2}">
@@ -74,7 +74,7 @@
 						<button onclick="window.location='#'">⏸</button>
 					</c:if>
 					<c:if test="${categoryNum<maxCategoryNum}">
-						<form action="/main/chart" method="post">
+						<form action="/nsb/chart" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum+1}">
 							<input type="hidden" name="cate1" value="${cate1}">
 							<input type="hidden" name="cate2" value="${nextCate.cate2}">
@@ -87,7 +87,7 @@
 		</tr>
 		<tr>
 			<td>
-				<jsp:include page="/WEB-INF/views/main/chart.jsp" />
+				<jsp:include page="/WEB-INF/views/all/main/chart.jsp" />
 			</td>
 		</tr>
 	</table>

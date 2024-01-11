@@ -9,7 +9,7 @@
 		<script type="text/javascript">
             function checkAndRedirect(area1Value) {
                 if (area1Value === '0') {
-                    window.location.href = '/main/areamain';
+                    window.location.href = '/nsb/area';
                     return false; 
                 }
                 return true; // 폼 제출 허용
@@ -19,12 +19,12 @@
 	<body>
 	<h1> 지역별 카테고리</h1>
 	<div style="display: flex;">
-			<form action="/main/areamain" method="get" >
+			<form action="/nsb/area" method="get" >
         		<button type="submit">전체</button>
         	</form>
     <c:forEach var="dto" items="${arealist}">
         <div style="margin-right: 10px;">
-           <form action="/main/areamain" method="get" onsubmit="return checkAndRedirect('${dto.area1}')">
+           <form action="/nsb/area" method="get" onsubmit="return checkAndRedirect('${dto.area1}')">
            		<input type="hidden" name="areaNum" value="${areaNum}" />
                 <input type="hidden" name="area1" value="${dto.area1}" />
                 <button type="submit">${dto.areaname}</button>
@@ -33,11 +33,11 @@
     </c:forEach>  
 	</div>
 		<c:if test="${count > 0}">
-		    <form action="/main/areamain" method="post">
+		    <form action="/nsb/area" method="get">
 		        <input type="hidden" name="areaNum" value="1"/>
 		        <button type="submit">👈</button>
 		    </form>
-		    <form action="/main/areamain" method="get">
+		    <form action="/nsb/area" method="get">
 		        <input type="hidden" name="areaNum" value="2"/>
 		        <button type="submit">👉</button>
 		    </form>
@@ -50,10 +50,10 @@
 			     </c:forEach>
 		</c:if>		
 		<div>
-			<jsp:include page="/WEB-INF/views/main/arealist.jsp" />
+			<jsp:include page="/WEB-INF/views/all/main/arealist.jsp" />
 		</div>	
 		<div >
-			<jsp:include page="/WEB-INF/views/main/arearesult.jsp" />
+			<jsp:include page="/WEB-INF/views/all/main/arearesult.jsp" />
 		</div>	
 		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,8 +15,8 @@ import nong.soon.bae.service.AreaService;
 import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
 
+@RequestMapping("/nsb/*")
 @Controller
-@RequestMapping("/main/*")
 public class MainController {
 	@Autowired
 	private MainService service;
@@ -35,33 +36,34 @@ public class MainController {
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.detailSeasonCategory(model, cate1, cate2, cate3);
 		}
-		return "main/main";
+		return "all/main/main";
 	}
 	
-	@RequestMapping("season")
-	public String season(Model model, String categoryNum) {
-		if (categoryNum==null) {
+	@RequestMapping("result")
+	public String result(Model model, String userSearch, String searchNum) {
+		if(searchNum == null) {
+			searchNum = "1";
+		}
+		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
+		return "/main/result";
+	}
+	
+	@RequestMapping("chart")
+	public String categoryChart(Model model, String cate1, String cate2, String cate3, String categoryNum) {
+		if(categoryNum == null) {
 			categoryNum = "1";
 		}
-		service.seasonCategory(model, Integer.parseInt(categoryNum));
-		return "main/season";
-	}
-	
-	@RequestMapping("detail")
-	public String seasonDetail(Model model, String cate1, String cate2, String cate3) {
-		service.detailSeasonCategory(model, cate1, cate2, cate3);
-		
-		return "main/seasonDetail";
-	}
-	
-	@RequestMapping("charts")
-	public String chart(Model model, String cate1, String cate2, String cate3) {
-		if(cate1!=null && cate2!=null && cate3!=null ) {
-			service.showChart(model, cate1, cate2, cate3);
+		if(cate1 == null && cate2 == null && cate3 == null) {
+			cate1 = "1";
+			cate2 = "1";
+			cate3 = "1";
 		}
-		return "main/chart";
+		service.cateMenu(model);
+		service.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
+		service.showChart(model, cate1, cate2, cate3);
+		return "all/main/categoryChart";
 	}
-
+	
 	@RequestMapping("menu")
 	public String main(Model model, String cate1, String cate2) {	
 		List<ProductCategoryDTO> catelist = cateservice.cateMenu(model);
@@ -75,24 +77,10 @@ public class MainController {
 			cateservice.catelistdeatil(model, cate1);
 			cateservice.cateprodictlistdetail (model,cate1 ,cate2); // cate2 상품리스트 
 		}
-	
-		
-		return "main/categorymain";
+		return "all/main/categorymain";
 	}
 	
-	@RequestMapping("menulist")
-	public String main2(Model model, String cate1, String cate2) {
-		
-		return "main/categorylist";
-	}
-	
-	@RequestMapping("menulistDetail")
-	public String main3(Model model, String cate1,String cate2 ) {
-		
-		return "main/catelistDetail";
-	}
-	
-	@RequestMapping("areamain")
+	@RequestMapping("area")
 	public String area(Model model, @RequestParam(value="areaNum", defaultValue="1") int areaNum,  
 											String area1, String area2 ) {
 		areaservice.arealist(areaNum,model);
@@ -110,53 +98,7 @@ public class MainController {
 			areaservice.arealistdeatil(model, area1);
 			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
 		}
-		return "main/areamain";
+		return "all/main/areamain";
 	}
 	
-	@RequestMapping("arealist")
-	public String areafind(Model model, String area1, String area2) {
-		if (area1 != null && area2 == null) {
-			areaservice.arealistdeatil(model, area1);  //area1 리스트
-			areaservice.areaprodutlist (model, area1); //area1  상품리스트
-		}
-		return "main/arealist";
-	}
-	
-	@RequestMapping("arearesult")
-	public String arearesult(Model model , String area1,String area2) {
-		if(area1 != null && area2 != null ){
-			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
-		}
-		return "main/arearesult";
-	}
-	
-	@RequestMapping("chart")
-	public String categoryChart(Model model, String cate1, String cate2, String cate3, String categoryNum) {
-		if(categoryNum == null) {
-			categoryNum = "1";
-		}
-		if(cate1 == null && cate2 == null && cate3 == null) {
-			cate1 = "1";
-			cate2 = "1";
-			cate3 = "1";
-		}
-		service.cateMenu(model);
-		service.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
-		service.showChart(model, cate1, cate2, cate3);
-		return "main/categoryChart";
-	}
-	
-	@RequestMapping("search")
-	public String search() {
-		return "/main/search";
-	}
-	
-	@RequestMapping("result")
-	public String result(Model model, String userSearch, String searchNum) {
-		if(searchNum == null) {
-			searchNum = "1";
-		}
-		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
-		return "/main/result";
-	}
 }

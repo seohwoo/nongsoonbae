@@ -10,7 +10,7 @@
 	<div style="display: flex;">
     <c:forEach var="area" items="${arealistdetail}">
         <div style="margin-right: 10px;">
-            <form action="/main/areamain" method="get">
+            <form action="/nsb/area" method="get">
             	<input type="hidden" name="areaNum" value="${areaNum}" />
                 <input type="hidden" name="area1" value="${area.area1}" />
                 <input type="hidden" name="area2" value="${area.area2}" />
@@ -21,11 +21,11 @@
 	</div> 
 	</br>
 		<c:if test="${areacnt > 0}">
-		    <form action="/main/areamain" method="post">
+		    <form action="/nsb/area" method="get">
 		        <input type="hidden" name="areaNum" value="1"/>
 		        <button type="submit">👈</button>
 		    </form>
-		    <form action="/main/areamain" method="get">
+		    <form action="/nsb/area" method="get">
 		        <input type="hidden" name="areaNum" value="2"/>
 		        <button type="submit">👉</button>
 		    </form>

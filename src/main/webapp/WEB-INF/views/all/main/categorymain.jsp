@@ -9,7 +9,7 @@
 		<script type="text/javascript">
             function checkAndRedirect(cate1Value) {
                 if (cate1Value === '0') {
-                    window.location.href = '/main/menu';
+                    window.location.href = '/nsb/menu';
                     return false; 
                 }
                 return true; // 폼 제출 허용
@@ -22,7 +22,7 @@
     <c:forEach var="dto" items="${catelist}">
         <div style="margin-right: 10px;">
             <img src="${dto.img}" border="0" width="100" height="100"> <br />
-           <form action="/main/menu" method="post" onsubmit="return checkAndRedirect('${dto.cate1}')">
+           <form action="/nsb/menu" method="get" onsubmit="return checkAndRedirect('${dto.cate1}')">
                 <input type="hidden" name="cate1" value="${dto.cate1}" />
                 <button type="submit">${dto.catename}</button>
             </form>
@@ -35,10 +35,10 @@
 				     </c:forEach>
 			</c:if>	
 		<div>
-			<jsp:include page="/WEB-INF/views/main/categorylist.jsp" />
+			<jsp:include page="/WEB-INF/views/all/main/categorylist.jsp" />
 		</div>	
 		<div >
-			<jsp:include page="/WEB-INF/views/main/catelistDetail.jsp" />
+			<jsp:include page="/WEB-INF/views/all/main/catelistDetail.jsp" />
 		</div>	
 	</body>
 </html>
