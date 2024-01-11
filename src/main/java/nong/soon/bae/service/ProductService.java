@@ -34,4 +34,6 @@ public interface ProductService {
 	public int imagesInsert(List<MultipartFile> files, String path, String username);
 
 	public void createReviews(String productnum);
+	
+	public ProductDTO productInfo(ProductDTO productDTO);
 }

@@ -187,8 +187,16 @@
 	   form.cate3.options[i] = new Option(num[i],vnum[i]);
 	  }
 	 }
+ 
+ 	$(function(){
+ 		$("#option").on("click",function(){
+ 			$("#op").append("<input type='text' name='optionname' />");
+ 			$("#op").append("<input type='number' name='optiontotalprice' /> <br />");
+ 		}); 		
+ 	});
+
 </script>
-	
+	<!-- <!-- <!-- <!-- <!-- <!-- <!-- <!-- <!--  -->
 	<!--  -->
 	<!--  --><!--  --><!--  --><!--  --><!--  --><!--  -->
 	<body>
@@ -222,14 +230,14 @@
 			    <tr> 
 					<td width="200">가격</td>
 					<td width="400"> 
-						<input type="text" name="totalprice" size="15" required="required">
+						<input type="number" name="totalprice" size="15" required="required">
 					</td>
 			    </tr>
 			    
 			    <tr> 
 					<td width="200">상품재고</td>
 					<td width="400"> 
-						<input type="text" name="productcount" size="15" required="required">
+						<input type="number" name="productcount" size="15" required="required">
 					</td>
 			    </tr>
 			    
@@ -255,13 +263,10 @@
 			    </tr>
 			    
 			    <tr> 
-				    <td width="200">옵션상태</td>
+				    <td width="200">옵션</td>
 				    <td width="400"> 
-				        <select name="optionstatus" required="required">
-				            <option value="1">1박스</option>
-				            <option value="2">2박스</option>
-				            <option value="3">3박스</option>
-				        </select>
+				   		<input type="button" value="추가" id="option">
+				   		<div id="op"></div>
 				    </td>
 				</tr>
 			    

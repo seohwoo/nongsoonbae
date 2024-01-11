@@ -9,7 +9,7 @@
 	</head>
 	
 	<body>
-		<h3>${username} 상점 정보</h3>
+		<h3>${username} 상품 정보</h3>
 		<hr />
 		<table border="1px" style="text-align: center;">
 			<tr>
@@ -29,7 +29,7 @@
 			
 			<c:forEach var="productDTO" items="${productDTO}">
 				<tr>
-					<td>${productDTO.productnum}</td>
+					<td><a href="/product/productInfo?productnum=${productDTO.productnum}">${productDTO.productnum}</a></td>
 					<td>${productDTO.productname}</td>			
 					<td>${productDTO.wishcount}</td>			
 					<td>${productDTO.totalprice}</td>			

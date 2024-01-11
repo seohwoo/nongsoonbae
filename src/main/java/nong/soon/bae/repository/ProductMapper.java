@@ -37,4 +37,6 @@ public interface ProductMapper {
 							@Param("username") String username);
 	
 	public void createReviews(String productnum);
+	
+	public ProductDTO productInfo(ProductDTO productDTO);
 }

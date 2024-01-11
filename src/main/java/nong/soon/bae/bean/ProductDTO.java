@@ -1,6 +1,7 @@
 package nong.soon.bae.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,4 +25,7 @@ public class ProductDTO {
 	private int optionstatus;
 	private String username;
 	private String seqnum;
+	
+	private List<String> optionname;
+    private List<Integer> optionprice;
 }

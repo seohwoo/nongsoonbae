@@ -2,6 +2,7 @@ package nong.soon.bae.contorller;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,24 +74,56 @@ public class ProductController {
 	}
 	
 	@RequestMapping("productWritePro")
-	public String productWritePro(HttpServletRequest request, List<MultipartFile> files, Model model, Principal principal, ProductDTO product, AllProductDTO dto, String cate3, String productnum) {
+	public String productWritePro(HttpServletRequest request, List<MultipartFile> files, Model model, 
+								  Principal principal, ProductDTO product, AllProductDTO dto, String cate3, 
+								  String productnum, 
+								  @RequestParam("optionname") String[] optionname, 
+								  @RequestParam("optiontotalprice") int[] optiontotalprice) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
 		product.setUsername(username);
 		product.setProductnum(cate3); 		
-		product.setSeqnum("C_"+cate3);	
+		product.setSeqnum("C_"+cate3 );	
 		
 		String path = request.getServletContext().getRealPath("/resources/file/product/");
 		int cnt = service.productInsert(product, files, path);
 		int result = service.imagesInsert(files, path, username);
 		
+		// cate3 값을 cate1,2,3 으로 나눠서 AllproductDTO 에 넣는 코드
 		int catego1 = cate3.charAt(0)-48;
 		int catego2 = cate3.charAt(1)-48;
-		int catego3 = cate3.charAt(2)-48;		
-	
+		int catego3 = cate3.charAt(2)-48;				
 		dto.setCate1(catego1);
 		dto.setCate2(catego2);
-		dto.setCate3(catego3);				
+		dto.setCate3(catego3);
+		
+		/*
+		logger.info("Received optionname: {}", optionname[0]);
+		logger.info("Received optionname: {}", optionname[1]);
+		logger.info("Received optionname: {}", optionname[2]);
+		*/
+		
+		// 옵션으로 적은 name price 값들 받아서 넣어두기
+		List<String> name = new ArrayList<String>();
+		List<Integer> price = new ArrayList<Integer>();
+		
+		for (int i = 0; i < optionname.length; i++) {
+		    name.add(optionname[i]);
+		    price.add(optiontotalprice[i]);
+		    
+		    product.setProductname(name.get(i));
+		    product.setTotalprice(price.get(i));
+		    String productnum2 = service.selectProductnum(username);
+		    // productnum2 을 subString 으로 짜르고
+		    // 연도+카테고리 값을 검색하는 쿼리문을 여기 쓰고. service. ~~~
+		    // 나온 값에 +1 
+		    
+		}
+		
+		//
+		
+        //logger.info("Received optiontotalprice: {}", optiontotalprice);
+				
 	
 		if(cnt >0) {
 			dto.setProductnum(service.selectProductnum(username));
@@ -101,6 +134,7 @@ public class ProductController {
 		service.createReviews(productnum);
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("result", result);		
+		
 		return "product/productWritePro";
 	}
 	 
@@ -114,8 +148,15 @@ public class ProductController {
 		return "product/myProduct";
 	}
 	
-	
-	
+	@RequestMapping("productInfo")
+	public String productInfo(Model model, Principal principal, ProductDTO productDTO, String productnum) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		productDTO.setUsername(username);
+		productDTO = service.productInfo(productDTO);
+		model.addAttribute("productDTO", productDTO);
+		return "product/productInfo";
+	}
 	
 	
 	

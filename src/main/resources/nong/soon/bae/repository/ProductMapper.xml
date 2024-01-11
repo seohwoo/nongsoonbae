@@ -29,6 +29,18 @@
 	
 	<!-- FINISH -->
 	
+	<!-- 상품 등록할 때 상품 번호로 리뷰테이블 만들기 -->
+	<insert id="createReviews" parameterType="String">
+		create table ${productnum}_reviews ( 
+			username varchar2(50),
+			productnum varchar2(50),
+			content varchar2(4000),
+			imagecount number default 0,
+			stars number default 5,
+			regdate date default sysdate
+		)
+	</insert>
+	
 	<!-- // 판매 정보 넣기 -->
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.ProductDTO">
 	    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
@@ -82,17 +94,9 @@
 		)
 	</insert>
 	
-
-	<insert id="createReviews" parameterType="String">
-		create table ${productnum}_reviews ( 
-			username varchar2(50),
-			productnum varchar2(50),
-			content varchar2(4000),
-			imagecount number default 0,
-			stars number default 5,
-			regdate date default sysdate
-		)
-	</insert>
-
+	<select id="productInfo" parameterType="nong.soon.bae.bean.ProductDTO" resultType="nong.soon.bae.bean.ProductDTO">
+		select * from ${username}_product where productnum=#{productnum}
+	</select>
+	
 </mapper>    
     

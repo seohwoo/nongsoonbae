@@ -92,6 +92,11 @@ public class ProductServiceImpl implements ProductService {
 		mapper.createReviews(productnum);
 	}
 
+	@Override
+	public ProductDTO productInfo(ProductDTO productDTO) {
+		return mapper.productInfo(productDTO);
+	}
+
 	
 
 	
