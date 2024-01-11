@@ -12,6 +12,7 @@
 	    <result property="email" column="email"/>
 	    <result property="birth" column="birth"/>
 	    <result property="gender" column="gender"/>
+	    <result property="regsite" column="regsite"/>
 	    <collection property="grade" resultMap="authMap">
 	    </collection> 
 	  </resultMap>
@@ -25,7 +26,7 @@
 		select * from users where username=#{username}
 	</select>    	
 	<insert id="save">
-		insert into users values(#{username}, #{password}, #{name}, 'user', #{email}, #{birth}, #{gender})
+		insert into users values(#{username}, #{password}, #{name}, 'ROLE_USER', #{email}, #{birth}, #{gender}, #{regsite})
 	</insert>
 	<insert id="saveauth">
 		insert into usergrade values(#{username}, #{grade})
@@ -50,5 +51,8 @@
 		update userdetails set address=#{address}, phone=#{phone}, updatedate=sysdate where username=#{username}
 	</update>
 	
+	<update id="changePass" parameterType="hashMap">
+		update users set password=#{password} where username=#{username}
+	</update>
 </mapper>    
     

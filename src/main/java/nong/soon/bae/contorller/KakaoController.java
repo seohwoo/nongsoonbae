@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,7 +61,8 @@ public class KakaoController {
         String birthyear = (String)result.get("birthyear");
         String birthday = (String)result.get("birthday");
         String birth = birthyear.substring(2)+birthday;
-        String password = email;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();	//password 인코딩
+        String password = passwordEncoder.encode(email);
         System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+password);
 
         // 분기
@@ -74,6 +76,7 @@ public class KakaoController {
             usersDTO.setBirth(birth);
             usersDTO.setEmail(email);
             usersDTO.setPassword(password);
+            usersDTO.setRegsite(2);
             if(gender=="male") {
             	usersDTO.setGender(1);
             }else {
@@ -95,7 +98,7 @@ public class KakaoController {
         log.warn("user : " + user);
         
         List<GrantedAuthority> roles = new ArrayList<>(1);
-        String roleStr = username.equals("admin") ? "ADMIN" : "MEMBER";
+        String roleStr = grade.equals("ADMIN") ? "ADMIN" : "MEMBER";
         if(grade=="ADMIN") {
         	roles.add(new SimpleGrantedAuthority("ADMIN"));
         }else {
@@ -116,10 +119,10 @@ public class KakaoController {
         /* 로그아웃 처리 시, 사용할 토큰 값 */
         session.setAttribute("kakaoToken", kakaoToken);
 
-        if(status==1) {
-        	return "redirect:/member/welcome";
-        }else {
-        	return "redirect:/member/test";
+        if(status==1) {	//회원가입 시
+        	return "redirect:/user/welcome";
+        }else {			//로그인
+        	return "redirect:/main/main";
         }
     }
 

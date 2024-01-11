@@ -4,8 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>loginTest</title>
-
+<title>welcome!!</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -17,10 +16,14 @@
 </head>
 <body>
 <%@include file="/WEB-INF/views/include/header.jsp"%>
-<form class="form-signin" action="/login/pro" method="POST">
-	<img src="/resources/img/spring.png" style="width: 200px; height: 95px">
-	<h1 class="h3 mb-3 font-weight-normal">${username}</h1>
-	<p class="mt-5 mb-3 text-muted">loginTest.jsp</p>
+<form class="form-signin" action="" method="POST">
+	<h1 class="h1 mb-1">${username}님</h1>
+	<h1 class="h4 mb-4"> 회원 가입을 축하드립니다!</h1><br />
+	<h1 class="h6 mb-5 font-weight-normal">농순배를 이용하기 위해 <br/> 추가 정보를 미리 등록해주세요.</h1>
+	<a href="/member/detailsForm" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">등록하기</a>
+	<a href="/main/main" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">지금은 됐어요</a>
+	<p class="mt-5 mb-3 text-muted">welcome.jsp</p>
 </form>
+<%@include file="/WEB-INF/views/include/footer.jsp"%>
 </body>
 </html>

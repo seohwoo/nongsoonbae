@@ -26,7 +26,10 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		logger.info("=========CustomLoginHandler=========");
+		
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		
+		logger.info("========="+authorities+"=========");
 		
 	/*	String username = authentication.getName();
 		logger.info("========="+username+"=========");
@@ -41,11 +44,11 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 			e.printStackTrace();
 		}		*/
 
-		String rdir = "/member/test";
+		String rdir = "/main/main";
 		if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-            rdir = "/mvc/sample/admin";
+            rdir = "/main/main";
         } else if (authorities.contains(new SimpleGrantedAuthority("MEMBER"))) {
-            rdir = "/member/test";
+            rdir = "/main/main";
         }
 		response.sendRedirect(rdir);
 	}

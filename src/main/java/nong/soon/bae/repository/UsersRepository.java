@@ -1,5 +1,6 @@
 package nong.soon.bae.repository;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,4 +19,6 @@ public interface UsersRepository extends JpaRepository<Member, Long> {
 	
 	void createDetails(String username);
 	void addDetails(UserDetailsDTO details);
+	
+	void changePass(@Param("password") String password,@Param("username") String username);
 }
