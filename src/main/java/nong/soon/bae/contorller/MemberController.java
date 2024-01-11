@@ -43,34 +43,20 @@ public class MemberController {
 	@RequestMapping("/form")
 	public String loginForm() {
 		logger.info("===============form================");
-		return "member/loginForm";
+		return "all/loginForm";
 	}
 	
 	@RequestMapping("/error")
 	public String loginError() {
 		logger.info("===============error================");
-		return "member/loginError";
+		return "all/loginError";
 	}
 	
-	@RequestMapping("/test")
-	public String loginTest(Model model, Principal principal, UsersDTO dto) {
-	/*	CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UsersDTO users = new UsersDTO();
-		users.setUsername(customUser.getUsername());	*/	
-		String username = principal.getName();
-		logger.info("===============login success================");
-	//	logger.info("==============="+users+"================");
-	//	String username = users.getUsername();
-		logger.info("==============="+username+"================");
-		
-		model.addAttribute("username", username);
-		return "member/loginTest";
-	}
 	
 	@RequestMapping("/regForm")
 	public String regForm() {
 		logger.info("===============reg================");
-		return "member/regForm";
+		return "all/regForm";
 	}
 	
 	@RequestMapping("/reg")
@@ -93,7 +79,7 @@ public class MemberController {
         logger.warn("user : " + user);
         
         List<GrantedAuthority> roles = new ArrayList<>(1);
-        String roleStr = username.equals("admin") ? "ADMIN" : "MEMBER";
+        String roleStr = grade.equals("admin") ? "ADMIN" : "MEMBER";
         if(grade=="ADMIN") {
         	roles.add(new SimpleGrantedAuthority("ADMIN"));
         }else {
@@ -110,7 +96,7 @@ public class MemberController {
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
         logger.warn("auth : " + auth);
         SecurityContextHolder.getContext().setAuthentication(auth);
-		return "redirect:/member/regSuccess";
+		return "redirect:/user/regSuccess";
 	}
 	
 	@RequestMapping("/regSuccess")
@@ -120,34 +106,39 @@ public class MemberController {
 		logger.info("==============="+username+"================");
 		
 		model.addAttribute("username", username);
-		return "member/welcome";
+		return "user/welcome";
 	}
 	
 	@RequestMapping("/detailsForm")
 	public String detailsForm(Model model, Principal principal) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
-		return "member/detailsForm";
+		return "user/detailsForm";
 	}
 	
 	@RequestMapping("/details")
-	public String detailPro(Model model, Principal principal, UserDetailsDTO dto) {
+	public String detailPro(Model model, Principal principal, String address, String phone) {
+		UserDetailsDTO dto = new UserDetailsDTO();
 		String username = principal.getName();
-		logger.info("=========="+username+"==========");
 		dto.setUsername(username);
+		dto.setAddress(address);
+		dto.setPhone(phone);
+		logger.info("=========="+username+"==========");
+		logger.info("=========="+address+"==========");
+		logger.info("=========="+phone+"==========");
 		usersRepository.addDetails(dto);
-		return "redirect:/member/detailsForm";
+		return "redirect:/user/detailsForm";
 	}
 	
 	@RequestMapping("/logout")
 	public String logout() {
 		logger.info("post custom logout");
-		return "member/logout";
+		return "user/logout";
 	}
 	
 	@RequestMapping("/find")
 	public String findIDPW() {
-		return"member/find";
+		return"all/find";
 	}
 	
 	@GetMapping("/mailCheck")
@@ -176,13 +167,13 @@ public class MemberController {
 			model.addAttribute("email", email);
 			model.addAttribute("site", site);
 		}
-		return "member/mail";
+		return "user/mail";
 	}
 	
 	@PostMapping("/renamePass")
 	public String renamePass(Model model, String username) {
 		model.addAttribute("username", username);
-		return "member/renamePass";
+		return "user/renamePass";
 	}
 	
 	@PostMapping("/passPro")
