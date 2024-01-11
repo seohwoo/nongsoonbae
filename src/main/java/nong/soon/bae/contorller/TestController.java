@@ -6,8 +6,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -89,6 +92,15 @@ public class TestController {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
+		
+		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
+		ArrayList<String> srcValues = extractSrcValues(content);
+	    // Ãâ·Â
+	    for (String src : srcValues) {
+	    	src = src.replaceAll("/resources/realImage/", "");
+	    	System.out.println(src);
+	    }
+		
 		for (String filename : fileNames) {
 			try {
 		        File sourceFile = new File(fileRoot+filename);
@@ -96,15 +108,27 @@ public class TestController {
 		        String ext = filename.substring(filename.lastIndexOf("."));
 		        Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(""+cnt+ext), StandardCopyOption.REPLACE_EXISTING);
 		        cnt++;
+		        
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
 		}
 		
-		
 		model.addAttribute("content", content);
 		return "/test/editorPro";
 	}
+	
+	 public ArrayList<String> extractSrcValues(String jspCode) {
+	     Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
+	     Matcher matcher = pattern.matcher(jspCode);
+
+	     ArrayList<String> srcValues = new ArrayList<String>();
+	     while (matcher.find()) {
+	         srcValues.add(matcher.group(1));
+	     }
+	     return srcValues;
+	 }
+	
 	
 	@RequestMapping("summer")
 	public String summer() {
