@@ -8,32 +8,15 @@
 	</head>
 	<body>
 	<div style="display: flex;">
-    <c:forEach var="cate" items="${menu}">
+    <c:forEach var="area" items="${list}">
         <div style="margin-right: 10px;">
-            <form action="/main/menu" method="get">
-                <input type="hidden" name="cate1" value="${cate.cate1}" />
-                <input type="hidden" name="cate2" value="${cate.cate2}" />
-                <input type="hidden" name="cate3" value="${cate.cate3}" />
-
-                <button type="submit">${cate.catename}</button>
+            <form action="/main/areamain" method="get">
+                <input type="hidden" name="area1" value="${area.area1}" />
+                <input type="hidden" name="area2" value="${area.area2}" />
+                <button type="submit">${area.areaname}</button>
             </form>
         </div>
     </c:forEach>
-</div>
+	</div>
 	</body>	
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

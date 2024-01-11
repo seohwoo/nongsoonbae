@@ -10,7 +10,7 @@
 		select * from productcategory where cate1=#{cate1} and cate2>0 and cate3=0 order by cate2 asc 
 	</select>
 	<select id="cateDetail"  resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct where where cate1=#{cate1} and cate2=#{cate2} 
+		select * from allproduct where where cate1=#{cate1} and cate2=#{cate2} and cate3=0 order by cate2 asc
 	</select>
 	<select id="cateCnt" parameterType="hashMap" resultType="int" >
 		select count(*) from allproduct where cate1=#{cate1} and cate2=#{cate2} 

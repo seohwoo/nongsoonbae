@@ -6,7 +6,8 @@ import nong.soon.bae.bean.ProductCategoryDTO;
 
 public interface CategoryService {
 	public List<ProductCategoryDTO> catemenu(); //대분류 조회
-	public List<ProductCategoryDTO> catelist(int cate1); //소분류 조회 
+	public void catelist(Model model, String cate1, String cate2,String cate3 ); //소분류 조회 
 	
 	public void cateDetail(Model model, String cate1,String cate2);
+	public List<AllProductDTO >cateproduct();
 }

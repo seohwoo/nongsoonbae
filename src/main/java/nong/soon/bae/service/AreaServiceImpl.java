@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
+import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.repository.AreaMapper;
 
 @Service
@@ -20,34 +21,36 @@ public class AreaServiceImpl implements AreaService{
 	private HashMap<String, String> categoryMap;
 
 	@Override
-	public List<AreaDTO> catelist(String areaname) {
-		return mapper.catelist(areaname);
-	}
-
-	@Override
-	public List<AreaDTO> catelistarea(int area1) {
-		return mapper.catelistarea(area1);
-	}
-
-	@Override
 	public void areaDetail(Model model, String area1, String area2) {
-	
-		
+		categoryMap.put("area1",area1);
+		categoryMap.put("area2",area2);
+		int cnt = mapper.areaCnt(categoryMap);
+		List<AreaDTO> list = Collections.EMPTY_LIST ;
+		if (cnt > 0 ) {
+		list = mapper.arealistdetail(area1);
+		}
+		model.addAttribute("area",list);
+		model.addAttribute("cnt",cnt);
 	}
 	@Override
-	public List<AreaDTO> arealist() {
-		
-		return mapper.arealist();
-	}
+	public void arealist(Model model,String area1) {
+		List<AreaDTO> list = mapper.arealistdetail(area1);
+		model.addAttribute("list",list);
+		//int totalProductCount = mapper.countAllProduct();
+			}
 
 	@Override
-	public void arealistdetail(Model model, String area1) {
+	public void arealistdetail(Model model, String area1, String area2) {
 		categoryMap.put("area1",area1);
 		int cnt = mapper.areaCnt(categoryMap);
 		List<AllProductDTO> list = Collections.EMPTY_LIST ;
+		List<AreaDTO> area = Collections.EMPTY_LIST ;
 		if (cnt > 0 ) {
-			list = mapper.arealistdetail(area1);
+			area = mapper.arealistdetail(area1);
+			list = mapper.arealistdetailpro(area1);
 		}	
+		model.addAttribute("area",area);
+		System.out.println(area);
 		model.addAttribute("list",list);
 		System.out.println(list);
 		model.addAttribute("cnt",cnt);
@@ -56,7 +59,17 @@ public class AreaServiceImpl implements AreaService{
 
 	@Override
 	public void findareaname(Model model, String selectedValue) {
-		String areaname =mapper.findarea(selectedValue);
-		model.addAttribute("areaname",areaname);
+		//model.addAttribute("areaname",areaname);
 	}
+	
+	@Override
+	public void areaallproduct(Model model) {
+		List<AreaDTO> list = mapper.areaMenu();
+		model.addAttribute("areamenu", list);
+		
+	}
+	@Override
+	public List<AreaDTO> areaMenu() {
+		return mapper.areaMenu();
+	}	
 }

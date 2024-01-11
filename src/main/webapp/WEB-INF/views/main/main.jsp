@@ -12,19 +12,26 @@
 	<table class="table-borderless">
 		<tbody>
 			<tr>
-			<td class="title">
-				<h1>메인입니당</h1>
-			</td>
+				<td class="title">
+					<h1>🍒🍓🍅 농순배 🥑🥒🥬</h1>
+					<h1>🌺🌻🌼🌷🥀🌱🌲🌳🌴</h1>
+					<br />
+				</td>
 			</tr>
 			<tr>
-			<td class="season">
-				<jsp:include page="/WEB-INF/views/main/season.jsp" />
-			</td>
+				<td class="search">
+					<jsp:include page="/WEB-INF/views/main/search.jsp" />
+				</td>
 			</tr>
 			<tr>
-			<td class="detail">
-				<jsp:include page="/WEB-INF/views/main/seasonDetail.jsp" />
-			</td>
+				<td class="season">
+					<jsp:include page="/WEB-INF/views/main/season.jsp" />
+				</td>
+			</tr>
+			<tr>
+				<td class="detail">
+					<jsp:include page="/WEB-INF/views/main/seasonDetail.jsp" />
+				</td>
 			</tr>
 		</tbody>
 	</table>

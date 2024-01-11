@@ -28,6 +28,7 @@
     </script>
 </head>
 <body>
+<!--  a 태그 써서 가져오는 방식으로 해야 하나..........그래서 옆에 띄워지는 방식으로..? -->
     <form method="post" action="/main/areamain" id="areaForm">
         <c:forEach var="item" items="${list}">
             <input type="radio" name="area1" value="${item.area1}" id="${item.areaname}">

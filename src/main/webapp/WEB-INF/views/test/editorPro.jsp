@@ -8,6 +8,6 @@
 		<title>editorPro</title>
 	</head>
 	<body>
-		${editordata}
+		${content}
 	</body>
 </html>

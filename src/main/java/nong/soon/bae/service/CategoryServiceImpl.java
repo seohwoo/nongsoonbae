@@ -27,8 +27,15 @@ public class CategoryServiceImpl implements CategoryService{
 	}
 
 	@Override
-	public List<ProductCategoryDTO> catelist(int cate1) { //대분류 값 매개변수 두어 중분류 조회 
-		return mapper.catelist(cate1);
+	public void catelist(Model model, String cate1, String cate2, String cate3 ){ 
+		categoryMap.put("cate1",cate1);
+		categoryMap.put("cate2",cate2);
+		categoryMap.put("cate3",cate3);
+		int cnt = mapper.cateCnt(categoryMap);
+		List<ProductCategoryDTO> menu = Collections.EMPTY_LIST ;
+		menu = mapper.catelist(cate1);
+		model.addAttribute("menu",menu);
+		model.addAttribute("cnt",cnt);
 	}
 
 	@Override
@@ -44,5 +51,10 @@ public class CategoryServiceImpl implements CategoryService{
 		System.out.println(list);
 		model.addAttribute("cnt",cnt);
 		System.out.println(cnt);
+	}
+
+	@Override
+	public List<AllProductDTO> cateproduct(){
+		return null;
 	}
 }

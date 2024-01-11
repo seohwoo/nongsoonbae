@@ -9,4 +9,5 @@ public interface MainService {
 	public void showChart(Model model, String cate1, String cate2, String cate3);
 	public void showCategory(Model model, String cate1, String cate2, String cate3, int categoryNum);
 	public void cateMenu(Model model);
+	public void findProduct(Model model, String userSearch, int searchNum);
 }
