@@ -6,27 +6,42 @@
 	<select id="arealist" resultType="nong.soon.bae.bean.AreaDTO">
 		select * from area where area2 = 0 order by area1 asc
 	</select>
-	<select id="arealistdetailpro" resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct where area1=#{area1} and area2>0 order by area2 asc 
+	<select id="allCnt" parameterType="hashMap" resultType="int" >
+			select count(*) from allproduct
+	</select>
+	<select id="allproductList" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct order by area1 asc
 	</select>
 	<select id="arealistdetail" resultType="nong.soon.bae.bean.AreaDTO">
 		select * from area where area1=#{area1} and area2>0 order by area2 asc 
 	</select>
-	<select id="areaCnt" parameterType="hashMap" resultType="int">
-		select count(*) from allproduct where area1=#{area1} and area2>0
+	<select id="productlist" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where area1=#{area1} order by area1 asc 
 	</select>
-	<select id="areaallCnt" parameterType="hashMap" resultType="int">
-		select count(*) from allproduct 
+	<select id="productCnt" parameterType="int" resultType="int">
+		select count(*)from allproduct where area1=#{area1} 
 	</select>
-	<select id="areaallList"  resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct  
+	<select id="cntDetail" parameterType="hashMap" resultType="int">
+		select count(*)from allproduct where area1=#{area1} and area2=#{area2} 
 	</select>
-
-	<select id="findarea" parameterType="String" resultType="String">
-		select areaname from area where area1=#{selectedValue} and area2 =0
+	<select id="productlistdetail" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where area1=#{area1} and area2=#{area2} order by area2 asc 
 	</select>
-	<select id="areaMenu" resultType="nong.soon.bae.bean.AreaDTO">
-		select * from area where area2 = 0 order by area1 asc
+	<select id="arealistall" parameterType="hashMap"  resultType="nong.soon.bae.bean.AreaDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from area where area2=0 ) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="arealistdetailpage" parameterType="hashMap"  resultType="nong.soon.bae.bean.AreaDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from area where area1=#{area1} and area2>0 ) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
 	</select>
 	
 	
