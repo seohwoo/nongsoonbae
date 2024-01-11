@@ -17,6 +17,11 @@
         </script>
 	</head>
 	<body>
+	<%@include file="/WEB-INF/views/include/header.jsp"%>
+	<div style="display: flex; flex-direction: column;">
+	<c:if test="${area1==0}">
+		<div style="height: 2500px;"></div>
+	</c:if>
 	<h1> 지역별 카테고리</h1>
 	<div style="display: flex;">
 			<form action="/nsb/area" method="get" >
@@ -54,6 +59,7 @@
 		</div>	
 		<div >
 			<jsp:include page="/WEB-INF/views/all/main/arearesult.jsp" />
+		</div>
 		</div>	
 		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>

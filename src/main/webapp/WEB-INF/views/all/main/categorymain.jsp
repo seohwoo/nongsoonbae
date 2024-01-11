@@ -17,28 +17,38 @@
         </script>
 	</head>
 	<body>
-	<h1>카테고리</h1>
-	<div style="display: flex;">
-    <c:forEach var="dto" items="${catelist}">
-        <div style="margin-right: 10px;">
-            <img src="${dto.img}" border="0" width="100" height="100"> <br />
-           <form action="/nsb/menu" method="get" onsubmit="return checkAndRedirect('${dto.cate1}')">
-                <input type="hidden" name="cate1" value="${dto.cate1}" />
-                <button type="submit">${dto.catename}</button>
-            </form>
-        </div>
-    </c:forEach>
-</div>
-	<c:if test="${allCnt >  0 }" >
-				    <c:forEach var="dto" items="${allprocuctList}">
-				            <h1>${dto.productname}</h1>
-				     </c:forEach>
+		<%@include file="/WEB-INF/views/include/header.jsp"%>
+		<div style="display: flex; flex-direction: column;">
+			<c:if test="${cate1==0}">
+				<div style="height: 2500px;"></div>
+			</c:if>
+			<h1>카테고리</h1>
+			<div style="display: flex;">
+		    <c:forEach var="dto" items="${catelist}">
+		        <div style="margin-right: 10px;">
+		           <form action="/nsb/menu" method="get" onsubmit="return checkAndRedirect('${dto.cate1}')">
+			            <input type="hidden" name="cate1" value="${dto.cate1}" />
+		 	            <button type="submit">
+			 	            <img src="${dto.img}" border="0" width="100" height="100">
+			 	            <br />
+			                <span>${dto.catename}</span>
+		                </button>
+		            </form>
+		        </div>
+		    </c:forEach>
+			</div>
+			<c:if test="${allCnt >  0 }" >
+				<c:forEach var="dto" items="${allprocuctList}">
+					<h1>${dto.productname}</h1>
+				</c:forEach>
 			</c:if>	
-		<div>
-			<jsp:include page="/WEB-INF/views/all/main/categorylist.jsp" />
-		</div>	
-		<div >
-			<jsp:include page="/WEB-INF/views/all/main/catelistDetail.jsp" />
+			<div>
+				<jsp:include page="/WEB-INF/views/all/main/categorylist.jsp" />
+			</div>	
+			<div>
+				<jsp:include page="/WEB-INF/views/all/main/catelistDetail.jsp" />
+			</div>
+			<%@include file="/WEB-INF/views/include/footer.jsp"%>
 		</div>	
 	</body>
 </html>
