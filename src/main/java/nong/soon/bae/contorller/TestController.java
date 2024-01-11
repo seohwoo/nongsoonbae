@@ -44,6 +44,10 @@ public class TestController {
 	
 	@Autowired
 	private TestService service;
+	@Autowired
+	private ArrayList<String> srcValues;
+	@Autowired
+	private ArrayList<String> realFiles;
 	
 	@RequestMapping("main")
 	public String test(Model model) {
@@ -99,7 +103,7 @@ public class TestController {
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
 		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-	    ArrayList<String> realFiles = isFile(fileNames, content);
+	    isFile(fileNames, content);
 		for (String filename : realFiles) {
 			try {
 				File sourceFile = new File(fileRoot+filename);
@@ -121,11 +125,11 @@ public class TestController {
 		return "/test/editorPro";
 	}
 	 
-	 public ArrayList<String> isFile(String[] filenames, String content) {
+	 public void isFile(String[] filenames, String content) {
+		 srcValues.clear();
+		 realFiles.clear();
 		 Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
 	     Matcher matcher = pattern.matcher(content);
-
-	     ArrayList<String> srcValues = new ArrayList<String>();
 	     while (matcher.find()) {
 	         srcValues.add(matcher.group(1));
 	     }
@@ -135,19 +139,17 @@ public class TestController {
 				srcValues.set(i, srcValues.get(i).substring(lastSlashIndex + 1));
 			}
 		 }
-		 ArrayList<String> result = new ArrayList<String>();
 		 if(filenames.length != srcValues.size()) {
 			 for (int i = 0; i < srcValues.size(); i++) {
 				for (String filename : filenames) {
 					if(filename.equals(srcValues.get(i))) {
-						result.add(srcValues.get(i));
+						realFiles.add(srcValues.get(i));
 					}
 				}
 			}
 		 }else {
-			 result = srcValues;
+			 realFiles = srcValues;
 		 }
-		 return result;
 	 }
 	
 	@RequestMapping(value = "uploadSummernoteImageFile", produces = "application/json", consumes = "multipart/form-data")
