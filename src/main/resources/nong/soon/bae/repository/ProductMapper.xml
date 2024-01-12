@@ -71,14 +71,21 @@
 		]]>
 	</select>
 	
+	<!-- 전체 상품 테이블에 상품 등록할 때 넣을 유저의 주소 찾기 -->
+	<select id="selectAddress" resultType="nong.soon.bae.bean.AreaDTO" parameterType="String">
+		SELECT AREA.AREA1, AREA.AREA2 FROM USERDETAILS 
+		JOIN AREA ON USERDETAILS.ADDRESS LIKE '%' || AREA.AREANAME || '%'
+		WHERE USERDETAILS.USERNAME = #{username}
+	</select>
+	
 	<!-- 전체 상품 테이블에 상품 등록하기 -->
-	<insert id="allproduct" parameterType="nong.soon.bae.bean.AllProductDTO">
+	<insert id="allProductInsert" parameterType="nong.soon.bae.bean.AllProductDTO">
 		insert into ALLPRODUCT (productnum, productname, cate1, cate2, cate3,
 		area1, area2, username) values (
 		 	#{productnum},
 		 	#{productname},
 		 	#{cate1}, #{cate2}, #{cate3}, 
-		 	1, 1, 
+		 	#{area1}, #{area2},
 		 	#{username}	) 	 
 	</insert>
 	
@@ -97,8 +104,12 @@
 	
 	
 	
-	
-	
+
+	<select id="allProduct" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct 
+	</select>
+
+
 	
 	
 	

@@ -12,6 +12,7 @@
 			<input type="submit" value="나의 상점 만들기">
 			<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm'">
 			<input type="button" value="나의 상점 관리" onclick="javascript:window.location='/product/myProduct'">
+			<input type="button" value="전체 상품 조회" onclick="javascript:window.location='/product/allProduct'">
 			
 			
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

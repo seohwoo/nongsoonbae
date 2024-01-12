@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.UsersDTO;
@@ -111,6 +112,21 @@ public class ProductController {
 		dto.setCate2(catego2);
 		dto.setCate3(catego3);
 		
+		// username의 주소를 AllProduct 테이블에 넣기
+		List<AreaDTO> selectAddress = service.selectAddress(username);
+		for (AreaDTO area : selectAddress) {
+            if (area.getArea1() >= 1 && area.getArea2() >= 1) {
+            	dto.setArea1(area.getArea1());
+            	dto.setArea2(area.getArea2());
+            }
+        }
+ 	
+		// 가장 최근에 등록한 productnum값 allproduct에 넣기
+		if(cnt >0) {
+			dto.setProductnum(service.selectProductnum(username));
+			service.allProductInsert(dto);
+		}
+		
 		// 옵션 값만큼 상품 등록하기 
 		for (int i = 0; i < optionname.length; i++) {
 		    product.setProductname(optionname[i]);
@@ -118,12 +134,6 @@ public class ProductController {
 		    product.setProductcount(optionProductCount[i]);
 		    product.setProductnum(cate3);
 		    service.optionInsert(product);		    
-		}
-		
-		// 가장 최근에 등록한 productnum값 allproduct에 넣기
-		if(cnt >0) {
-			dto.setProductnum(service.selectProductnum(username));
-			service.allproduct(dto);
 		}		
 		
 		// productnum값으로 리뷰 테이블 만들기
@@ -161,7 +171,15 @@ public class ProductController {
 		return "product/productInfo";
 	}
 	
-
+	
+	@RequestMapping("allProduct")
+	public String allProduct(Model model) {
+		List<AllProductDTO> allProductDTO = service.allProduct();
+		model.addAttribute("allProductDTO", allProductDTO);
+		return "product/allProduct";
+	}
+	
+	
 	@PostMapping("sample2")
 	public String sample2(@RequestParam("files") List<MultipartFile> files) {
 		return "product/sample2";

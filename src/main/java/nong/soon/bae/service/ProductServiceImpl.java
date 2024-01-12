@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.UsersDTO;
@@ -80,10 +81,16 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectProductnum(username);
 	}
 	
+	// 전체 상품 테이블에 상품 등록할 때 넣을 유저의 주소 찾기
+	@Override
+	public List<AreaDTO> selectAddress(String username) {
+		return mapper.selectAddress(username);
+	}
+	
 	// 전체 상품 테이블에 상품 등록하기
 	@Override
-	public void allproduct(AllProductDTO dto) {
-		mapper.allproduct(dto);
+	public void allProductInsert(AllProductDTO dto) {
+		mapper.allProductInsert(dto);
 	}
 	
 	// 상품 등록할 때 상품 번호로 리뷰테이블 만들기
@@ -96,7 +103,10 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	
-	
+	@Override
+	public List<AllProductDTO> allProduct() {
+		return mapper.allProduct();
+	}	
 	
 	// TEST
 	
@@ -110,6 +120,10 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDTO productInfo(ProductDTO productDTO) {
 		return mapper.productInfo(productDTO);
 	}
+	
+
+
+
 	
 	
 }
