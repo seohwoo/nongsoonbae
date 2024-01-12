@@ -190,8 +190,9 @@
  
  	$(function(){
  		$("#option").on("click",function(){
- 			$("#op").append("<input type='text' name='optionname' />");
- 			$("#op").append("<input type='number' name='optiontotalprice' /> <br />");
+ 			$("#op").append("<input type='text' name='optionname' placeholder='상품명' />"); 			
+ 			$("#op").append("<input type='number' name='optiontotalprice' placeholder='상품가격' />");
+ 			$("#op").append("<input type='number' name='optionProductCount' placeholder='상품재고' /> <br />");
  		}); 		
  	});
 
@@ -202,7 +203,7 @@
 	<body>
 		<h3>${username} 페이지</h3>
 		<form action="/product/productWritePro" method="post" name="form" enctype="multipart/form-data">
-			<table width="600" border="1">
+			<table width="850" border="1">
 				 		
 				<select name='Step1' onchange='changes1Step(value)'>
 					<option value="-----">-----</option>
@@ -224,20 +225,6 @@
 					<td width="200">상품이름</td>
 					<td width="400"> 
 						<input type="text" name="productname" size="15" required="required">
-					</td>
-			    </tr>
-			    
-			    <tr> 
-					<td width="200">가격</td>
-					<td width="400"> 
-						<input type="number" name="totalprice" size="15" required="required">
-					</td>
-			    </tr>
-			    
-			    <tr> 
-					<td width="200">상품재고</td>
-					<td width="400"> 
-						<input type="number" name="productcount" size="15" required="required">
 					</td>
 			    </tr>
 			    
@@ -264,9 +251,13 @@
 			    
 			    <tr> 
 				    <td width="200">옵션</td>
-				    <td width="400"> 
-				   		<input type="button" value="추가" id="option">
+				    <td width="400">				   		
+				   		<input type="button" value="추가" id="option" >
 				   		<div id="op"></div>
+				   		
+				   		<input type="text" name="optionname" placeholder="상품명" /> 			
+			 			<input type="number" name="optiontotalprice" placeholder="상품가격" />
+			 			<input type="number" name="optionProductCount" placeholder="상품재고" /> <br />
 				    </td>
 				</tr>
 			    

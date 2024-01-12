@@ -16,24 +16,38 @@ public interface ProductService {
 	// 개인 이미지(테이블) 만들기
 	public void createImages(String username);
 	
+	// 상품 등록하기
+	public int productInsert(ProductDTO product, List<MultipartFile> files, String path);
+	
+	// 이미지 파일 넣기
+	public int imagesInsert(List<MultipartFile> files, String path, String username);
+	
+	// 상품 옵션 추가
+	public void optionInsert(ProductDTO product);
+	
+	// 가장 최근에 상품등록한 productnum값 가져오기
+	public String selectProductnum(String username);
+	
+	// 전체 상품 테이블에 상품 등록하기
+	public void allproduct(AllProductDTO dto);
+	
+	// 상품 등록할 때 상품 번호로 리뷰테이블 만들기
+	public void createReviews(String productnum);
+	
 	// FINISH
 	
-	// 판매 정보 넣기
-	public int productInsert(ProductDTO product, List<MultipartFile> files, String path);
+	
 	
 	// TEST
 	
 	public List<ProductDTO> myProduct(String username);
 	
-	
-	public void allproduct(AllProductDTO dto);
-	
-	// 가장 최근에 상품등록한 productnum값 가져오기
-	public String selectProductnum(String username);
-	
-	public int imagesInsert(List<MultipartFile> files, String path, String username);
 
-	public void createReviews(String productnum);
+	
+	
+	
 	
 	public ProductDTO productInfo(ProductDTO productDTO);
+	
+	
 }

@@ -30,10 +30,8 @@ public class ProductServiceImpl implements ProductService {
 	public void createImages(String username) {
 		mapper.createImages(username);
 	}
-	
-	// FINISH
-	
-	// 판매 정보 넣기
+		
+	// 상품 등록하기
 	@Override
 	public int productInsert(ProductDTO product, List<MultipartFile> filelist, String path) {
 		int imagecount = 0;
@@ -46,25 +44,8 @@ public class ProductServiceImpl implements ProductService {
 		
 		return mapper.productInsert(product);
 	}
-
-
-	@Override
-	public List<ProductDTO> myProduct(String username) {
-		return mapper.myProduct(username);
-	}
-
-
-	@Override
-	public void allproduct(AllProductDTO dto) {
-		mapper.allproduct(dto);
-	}
 	
-	// 가장 최근에 상품등록한 productnum값 가져오기
-	@Override
-	public String selectProductnum(String username) {
-		return mapper.selectProductnum(username);
-	}
-
+	// 이미지 파일 넣기
 	@Override
 	public int imagesInsert(List<MultipartFile> files, String path, String username) {
 		int result = 0;
@@ -85,20 +66,50 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		return result;
-	}
+	}		
 
+	// 상품 옵션 추가
+	@Override
+	public void optionInsert(ProductDTO product) {
+		mapper.optionInsert(product);
+	}
+	
+	// 가장 최근에 상품등록한 productnum값 가져오기
+	@Override
+	public String selectProductnum(String username) {
+		return mapper.selectProductnum(username);
+	}
+	
+	// 전체 상품 테이블에 상품 등록하기
+	@Override
+	public void allproduct(AllProductDTO dto) {
+		mapper.allproduct(dto);
+	}
+	
+	// 상품 등록할 때 상품 번호로 리뷰테이블 만들기
 	@Override
 	public void createReviews(String productnum) {
 		mapper.createReviews(productnum);
 	}
+	
+	// FINISH
+	
+	
+	
+	
+	
+	// TEST
+	
+	@Override
+	public List<ProductDTO> myProduct(String username) {
+		return mapper.myProduct(username);
+	}
+
 
 	@Override
 	public ProductDTO productInfo(ProductDTO productDTO) {
 		return mapper.productInfo(productDTO);
 	}
-
-	
-
 	
 	
 }

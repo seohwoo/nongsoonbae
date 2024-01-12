@@ -3,6 +3,7 @@ package nong.soon.bae.contorller;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,32 +61,45 @@ public class ProductController {
 		return "redirect:/product/productMain";
 	}
 	
-
-	
-	// FINISH
-	
-	// 상품 등록
+	// 상품 등록하기
 	@RequestMapping("productWriteForm")
-	public String productWriteForm(HttpServletRequest request, Model model, Principal principal, String cate4, @RequestParam(value="productnum", defaultValue="0")String productnum) {
+	public String productWriteForm(HttpServletRequest request, Model model, Principal principal, 
+								   @RequestParam(value="productnum", defaultValue="0")String productnum) {
+		
 		String username = principal.getName();
 		model.addAttribute("username", username);
 		model.addAttribute("productnum", productnum);
 		return "product/productWriteForm";
 	}
 	
+	// 상품 등록하기
 	@RequestMapping("productWritePro")
 	public String productWritePro(HttpServletRequest request, List<MultipartFile> files, Model model, 
 								  Principal principal, ProductDTO product, AllProductDTO dto, String cate3, 
-								  String productnum, 
 								  @RequestParam("optionname") String[] optionname, 
-								  @RequestParam("optiontotalprice") int[] optiontotalprice) {
+								  @RequestParam("optiontotalprice") int[] optiontotalprice,
+								  @RequestParam("optionProductCount") int[] optionProductCount) {
+		
+		String productnum = "";
 		String username = principal.getName();
-		model.addAttribute("username", username);
+		
 		product.setUsername(username);
 		product.setProductnum(cate3); 		
 		product.setSeqnum("C_"+cate3 );	
-		
 		String path = request.getServletContext().getRealPath("/resources/file/product/");
+		
+		// 상품재고수 다 더한 코드	
+		int count = Arrays.stream(optionProductCount).sum();
+		product.setProductcount(count);
+		
+		// 상품 추가된 옵션값 구한 코드
+		int optionstatus = optionname.length;
+		product.setOptionstatus(optionstatus);
+		
+		// 판매자가 입력한 가격 중 최저가격 구하기
+		int minValue = Arrays.stream(optiontotalprice).min().orElse(0);
+		product.setTotalprice(minValue);
+		
 		int cnt = service.productInsert(product, files, path);
 		int result = service.imagesInsert(files, path, username);
 		
@@ -97,47 +111,36 @@ public class ProductController {
 		dto.setCate2(catego2);
 		dto.setCate3(catego3);
 		
-		/*
-		logger.info("Received optionname: {}", optionname[0]);
-		logger.info("Received optionname: {}", optionname[1]);
-		logger.info("Received optionname: {}", optionname[2]);
-		*/
-		
-		// 옵션으로 적은 name price 값들 받아서 넣어두기
-		List<String> name = new ArrayList<String>();
-		List<Integer> price = new ArrayList<Integer>();
-		
+		// 옵션 값만큼 상품 등록하기 
 		for (int i = 0; i < optionname.length; i++) {
-		    name.add(optionname[i]);
-		    price.add(optiontotalprice[i]);
-		    
-		    product.setProductname(name.get(i));
-		    product.setTotalprice(price.get(i));
-		    String productnum2 = service.selectProductnum(username);
-		    // productnum2 을 subString 으로 짜르고
-		    // 연도+카테고리 값을 검색하는 쿼리문을 여기 쓰고. service. ~~~
-		    // 나온 값에 +1 
-		    
+		    product.setProductname(optionname[i]);
+		    product.setTotalprice(optiontotalprice[i]);
+		    product.setProductcount(optionProductCount[i]);
+		    product.setProductnum(cate3);
+		    service.optionInsert(product);		    
 		}
 		
-		//
-		
-        //logger.info("Received optiontotalprice: {}", optiontotalprice);
-				
-	
+		// 가장 최근에 등록한 productnum값 allproduct에 넣기
 		if(cnt >0) {
 			dto.setProductnum(service.selectProductnum(username));
 			service.allproduct(dto);
 		}		
 		
+		// productnum값으로 리뷰 테이블 만들기
 		productnum = "P_"+service.selectProductnum(username);
 		service.createReviews(productnum);
+		
+		model.addAttribute("username", username);
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("result", result);		
 		
 		return "product/productWritePro";
 	}
 	 
+	// FINISH
+	
+	// TEST
+	
 	@RequestMapping("myProduct")
 	public String myProduct(Model model, Principal principal, ProductDTO dto) {
 		String username = principal.getName();
@@ -158,17 +161,12 @@ public class ProductController {
 		return "product/productInfo";
 	}
 	
-	
-	
-	
-	////////////////////////
 
 	@PostMapping("sample2")
 	public String sample2(@RequestParam("files") List<MultipartFile> files) {
 		return "product/sample2";
 	}
-			
-			
+						
 	@RequestMapping("sample")
 	public String sample() {
 		return "product/sample";

@@ -13,11 +13,11 @@
 		    productcount number not null,
 		    sellcount number default 0 not null,
 		    imagecount number default 0 not null,
-		    content varchar2(4000) not null,
+		    content CLOB,
 		    readcount number default 0 not null,
 		    startdate date default sysdate not null,
 		    enddate date,
-		    optionstatus number )
+		    optionstatus number default 0 )
 	</insert>
 
 	<!-- // 개인 이미지(테이블) 만들기 -->
@@ -27,21 +27,7 @@
 		    filename varchar2(4000) not null )
 	</insert>
 	
-	<!-- FINISH -->
-	
-	<!-- 상품 등록할 때 상품 번호로 리뷰테이블 만들기 -->
-	<insert id="createReviews" parameterType="String">
-		create table ${productnum}_reviews ( 
-			username varchar2(50),
-			productnum varchar2(50),
-			content varchar2(4000),
-			imagecount number default 0,
-			stars number default 5,
-			regdate date default sysdate
-		)
-	</insert>
-	
-	<!-- // 판매 정보 넣기 -->
+	<!-- // 상품 등록하기 -->
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.ProductDTO">
 	    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
 	    productcount, imagecount, content, startdate, enddate, optionstatus) 
@@ -54,28 +40,27 @@
 	        #{content}, 
 	        sysdate, 
 	        #{enddate}, 
-	        #{optionstatus}
-	    )
+	        #{optionstatus} )
 	</insert>
 	
-	<insert id="allproduct" parameterType="nong.soon.bae.bean.AllProductDTO">
-		insert into ALLPRODUCT (productnum, productname, cate1, cate2, cate3,
-		area1, area2, username) values (
-		 	#{productnum},
-		 	#{productname},
-		 	#{cate1}, #{cate2}, #{cate3}, 
-		 	1, 1, 
-		 	#{username}		 
-		 )		 
+	<!-- 이미지 파일 넣기 -->
+	<insert id="imagesInsert" parameterType="String">
+		insert into ${username}_images values (
+			#{productnum},
+			#{filename} )
 	</insert>
 	
-	<!-- TEST -->
+	<!-- 상품 옵션 추가 -->
+	<insert id="optionInsert" parameterType="nong.soon.bae.bean.ProductDTO">
+	    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
+	    productcount) 
+	    values(
+	        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || #{productnum} || LPAD(${seqnum}_seq.nextval, 5, '0')),
+	        #{productname}, 
+	        #{totalprice}, 
+	        #{productcount} )
+	</insert>
 	
-	<select id="myProduct" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
-		select * from ${username}_PRODUCT
-	</select>
-	
-
 	<!-- 가장 최근에 상품등록한 productnum값 가져오기 -->
 	<select id="selectProductnum" resultType="String" parameterType="String">
 		<![CDATA[
@@ -86,13 +71,44 @@
 		]]>
 	</select>
 	
-	<!-- TEST0110 -->
-	<insert id="imagesInsert" parameterType="String">
-		insert into ${username}_images values (
-			#{productnum},
-			#{filename}
-		)
+	<!-- 전체 상품 테이블에 상품 등록하기 -->
+	<insert id="allproduct" parameterType="nong.soon.bae.bean.AllProductDTO">
+		insert into ALLPRODUCT (productnum, productname, cate1, cate2, cate3,
+		area1, area2, username) values (
+		 	#{productnum},
+		 	#{productname},
+		 	#{cate1}, #{cate2}, #{cate3}, 
+		 	1, 1, 
+		 	#{username}	) 	 
 	</insert>
+	
+	<!-- 상품 등록할 때 상품 번호로 리뷰테이블 만들기 -->
+	<insert id="createReviews" parameterType="String">
+		create table ${productnum}_reviews ( 
+			username varchar2(50),
+			productnum varchar2(50),
+			content varchar2(4000),
+			imagecount number default 0,
+			stars number default 5,
+			regdate date default sysdate )
+	</insert>
+	
+	<!-- FINISH -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- TEST -->
+	
+	<select id="myProduct" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
+		select * from ${username}_PRODUCT
+	</select>
+	
 	
 	<select id="productInfo" parameterType="nong.soon.bae.bean.ProductDTO" resultType="nong.soon.bae.bean.ProductDTO">
 		select * from ${username}_product where productnum=#{productnum}
