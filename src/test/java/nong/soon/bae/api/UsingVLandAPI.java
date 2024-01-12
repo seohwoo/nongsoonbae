@@ -9,11 +9,13 @@ import java.nio.charset.StandardCharsets;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import nong.soon.bae.data.ApiKeys;
 
-public class UsingVLandAPI extends VlandAPI{
+
+public class UsingVLandAPI implements ApiKeys{
 	
 	public void usingVLandXY() {
-		String apikey = getApi_key();
+		String apikey = vLandKey;
 		String searchType = "road";
 		String searchAddr = "경기도 고양시 덕양구 충경로 156 (행신동, 서정마을5단지아파트)";
 		String epsg = "epsg:4326";
