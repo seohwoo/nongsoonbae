@@ -18,10 +18,6 @@
 	</head>
 	<body>
 		<%@include file="/WEB-INF/views/include/header.jsp"%>
-		<div style="display: flex; flex-direction: column;">
-			<c:if test="${cate1==0}">
-				<div style="height: 2500px;"></div>
-			</c:if>
 			<h1>카테고리</h1>
 			<div style="display: flex;">
 		    <c:forEach var="dto" items="${catelist}">
@@ -49,7 +45,6 @@
 				<jsp:include page="/WEB-INF/views/all/main/catelistDetail.jsp" />
 			</div>
 			<%@include file="/WEB-INF/views/include/footer.jsp"%>
-		</div>	
 	</body>
 </html>
 

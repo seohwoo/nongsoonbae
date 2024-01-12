@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.AreaService;
 import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
 
 @RequestMapping("/nsb/*")
 @Controller
-public class MainController {
+public class MainController implements ApiKeys{
 	@Autowired
 	private MainService service;
 	
@@ -36,6 +37,7 @@ public class MainController {
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.detailSeasonCategory(model, cate1, cate2, cate3);
 		}
+		model.addAttribute("pluginKey", pluginKey);
 		return "all/main/main";
 	}
 	
