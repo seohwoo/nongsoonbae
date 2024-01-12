@@ -41,6 +41,7 @@ pom.properties
 # api_key
 KorServiceAPI.java
 VlandAPI.java
+ApiKeys.java
 
 
 # sbteclipse plugin
