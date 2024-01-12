@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
-import nong.soon.bae.contorller.MemberController;
 import nong.soon.bae.repository.CustomUser;
 import nong.soon.bae.repository.UsersRepository;
 
@@ -25,7 +24,7 @@ import nong.soon.bae.repository.UsersRepository;
 
 public class CustomUserDetailsService implements UserDetailsService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 	
 	@Autowired
 	private UsersRepository mapper;
@@ -35,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("=========CustomUserDetailsService=========");
 		UsersDTO dto = mapper.login(username);
-/*		String grade = mapper.GetByAuth(username);
+		String grade = mapper.GetByAuth(username);
 		List<GrantedAuthority> roles = new ArrayList<>(1);
 		if(grade=="ADMIN") {
         	roles.add(new SimpleGrantedAuthority("ADMIN"));
@@ -51,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             gradeDTO.setUsername(username);
         	mapper.saveauth(gradeDTO);
         }
-		logger.info(""+dto);	*/
+		logger.info(""+dto);
 		return dto == null ? null : new CustomUser(dto);
 	}
 }

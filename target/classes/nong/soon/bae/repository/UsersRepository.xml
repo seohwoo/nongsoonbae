@@ -26,7 +26,7 @@
 		select * from users where username=#{username}
 	</select>    	
 	<insert id="save">
-		insert into users values(#{username}, #{password}, #{name}, 'user', #{email}, #{birth}, #{gender}, #{regsite})
+		insert into users values(#{username}, #{password}, #{name}, 'ROLE_USER', #{email}, #{birth}, #{gender}, #{regsite})
 	</insert>
 	<insert id="saveauth">
 		insert into usergrade values(#{username}, #{grade})

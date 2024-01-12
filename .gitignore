@@ -42,7 +42,10 @@ pom.properties
 KorServiceAPI.java
 VlandAPI.java
 ApiKeys.java
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'shw/3' of https://github.com/seohwoo/nongsoonbae.git
 
 # sbteclipse plugin
 .target

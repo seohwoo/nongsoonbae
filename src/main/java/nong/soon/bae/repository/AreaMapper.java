@@ -3,17 +3,26 @@ package nong.soon.bae.repository;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.ui.Model;
+
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
+import nong.soon.bae.bean.ProductCategoryDTO;
 
 public interface AreaMapper {
-	public List<AreaDTO> catelist(String areaname); //대분류
-	public List<AreaDTO> catelistarea(int area1); //중분류
-	public int areaCnt (HashMap<String, String> map);
-	
+
 	public List<AreaDTO> arealist();
-	public List<AllProductDTO> arealistdetail(String area1);
+	public int allCnt();
+	public List<AllProductDTO> allproductList ();
+	public List<AreaDTO> arealistdetail (String area1);
+	public List<AllProductDTO>productlist (String area1);
+	public int productCnt(int area1);
 	
-	public String findarea(String selectedValue);
+	public int cntDetail(HashMap<String, String> map);
+	public List<AllProductDTO> productlistdetail(HashMap<String, String> map);
+	
+	public List<AreaDTO>arealistall(HashMap<String, String> map);
+	public List<AreaDTO>arealistdetailpage(HashMap<String, String> map);
 	
 }
+ 

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.MainProductDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.repository.MainMapper;
 
@@ -175,8 +176,34 @@ public class MainServiceImpl implements MainService {
 		List<ProductCategoryDTO> list = mapper.cateMenu();
 		model.addAttribute("catemenu", list);
 	}
+
+	@Override
+	public void findProduct(Model model, String userSearch, int searchNum) {
+		int searchPageSize = 10;
+		String keyword = "%" + userSearch + "%";
+		seasonCategoryMap.put("keyword", keyword);
+		int cnt = mapper.searchProductCnt(keyword);
+		List<AllProductDTO> alprList = Collections.EMPTY_LIST;
+		if(cnt > 0) {
+			page(searchPageSize, searchNum);
+			alprList = mapper.searchProduct(seasonCategoryMap);
+		}
+		model.addAttribute("userSearch", userSearch);
+		model.addAttribute("searchCnt", cnt);
+		model.addAttribute("searchList", alprList);
+	}
 	
-	
-	
+	/**
+	 * main에 보여줄 값을 한번에 저장하기 위해 사용(일단보류)
+	 * */
+	public List<MainProductDTO> showProduct(List<AllProductDTO> alprList) {
+		List<MainProductDTO> list = Collections.EMPTY_LIST;
+		MainProductDTO dto = null;
+		for (AllProductDTO alprDTO : alprList) {
+			
+		}
+		return list;
+	}
+
 	
 }

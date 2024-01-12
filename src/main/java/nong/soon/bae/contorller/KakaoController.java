@@ -98,7 +98,7 @@ public class KakaoController {
         log.warn("user : " + user);
         
         List<GrantedAuthority> roles = new ArrayList<>(1);
-        String roleStr = username.equals("admin") ? "ADMIN" : "MEMBER";
+        String roleStr = grade.equals("ADMIN") ? "ADMIN" : "MEMBER";
         if(grade=="ADMIN") {
         	roles.add(new SimpleGrantedAuthority("ADMIN"));
         }else {
@@ -120,9 +120,9 @@ public class KakaoController {
         session.setAttribute("kakaoToken", kakaoToken);
 
         if(status==1) {	//회원가입 시
-        	return "redirect:/member/welcome";
+        	return "redirect:/user/welcome";
         }else {			//로그인
-        	return "redirect:/member/test";
+        	return "redirect:/main/main";
         }
     }
 

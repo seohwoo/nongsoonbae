@@ -14,14 +14,16 @@
 					<h1 class="h1 mb-4">${month}월</h1></td>
 				<c:forEach var="dto" items="${categoryList}">
 					<td>
-						<img src="${dto.img}" width="100px" height="100px" class="bd-placeholder-img rounded-circle" />
-						<br />
-						<form action="/main/main" method="post">
+						<form action="/nsb/main" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum}"/>
 							<input type="hidden" name="cate1" value="${dto.cate1}"/>
 							<input type="hidden" name="cate2" value="${dto.cate2}"/>
 							<input type="hidden" name="cate3" value="${dto.cate3}"/>
-							<input type="submit" value="${dto.catename}" class="btn btn-outline-success" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;"/>
+							<button type="submit">
+								<img src="${dto.img}" width="100px" height="100px" class="bd-placeholder-img rounded-circle" />
+								<br />
+								<span>${dto.catename}</span>						
+							</button>
 						</form>
 					</td>
 				</c:forEach>
@@ -29,7 +31,7 @@
 				<tr>
 					<td class="page">
 					<c:if test="${categoryNum>1}">
-						<form action="/main/main" method="post">
+						<form action="/nsb/main" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum-1}"/>
 							<button type="submit">⏪</button>
 						</form>
@@ -38,7 +40,7 @@
 						<button onclick="window.location='#'">⏸</button>
 					</c:if>
 					<c:if test="${categoryNum<maxCategoryNum}">
-						<form action="/main/main" method="post">
+						<form action="/nsb/main" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum+1}"/>
 							<button type="submit">⏩</button>
 						</form>

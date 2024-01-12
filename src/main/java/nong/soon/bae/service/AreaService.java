@@ -6,16 +6,21 @@ import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
+import nong.soon.bae.bean.ProductCategoryDTO;
 
 public interface AreaService {
-	public List<AreaDTO> catelist(String areaname); //대분류
 	
-	public List<AreaDTO> catelistarea(int area1); //중분류
+	public List<AreaDTO> areaMenu(Model model);
+	public void allproductlist(Model model);
+	
+	public void arealistdeatil(Model model,String area1);
+	public void areaprodutlist (Model model,String area1);
+	public void areaprodictlistdetail(Model model, String area1, String area2);
+	
+	public void arealist(int areaNum,Model model);
+	//public void arealistpage(int areaNum,Model model,String area1);
 
-	public void areaDetail(Model model, String area1,String area2);
 	
 	
-	public List<AreaDTO> arealist(); 
-	public void arealistdetail(Model model,String area1);
-	public void findareaname(Model model,String selectedValue);	
+	
 }
