@@ -105,24 +105,26 @@ public class TestController implements ApiKeys{
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
 		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-	    isFile(fileNames, content);
-		for (String filename : realFiles) {
-			try {
-				File sourceFile = new File(fileRoot+filename);
-				File targetDirectory = new File(realRoot);
-				String ext = filename.substring(filename.lastIndexOf("."));
-				String realname = "productnum_"+cnt+ext;
-				Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
-				cnt++;
-				content = content.replace(filename, realname);
-			} catch (IOException e) {
-				e.printStackTrace();
+	    if(fileNames != null) {
+	    	isFile(fileNames, content);
+			for (String filename : realFiles) {
+				try {
+					File sourceFile = new File(fileRoot+filename);
+					File targetDirectory = new File(realRoot);
+					String ext = filename.substring(filename.lastIndexOf("."));
+					String realname = "productnum_"+cnt+ext;
+					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
+					cnt++;
+					content = content.replace(filename, realname);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-		}
-		for (String filename : fileNames) {
-			File sourceFile = new File(fileRoot+filename);
-			sourceFile.delete();
-		}
+			for (String filename : fileNames) {
+				File sourceFile = new File(fileRoot+filename);
+				sourceFile.delete();
+			}
+	    }
 		model.addAttribute("content", content);
 		return "/test/editorPro";
 	}
