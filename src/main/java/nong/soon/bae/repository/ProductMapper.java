@@ -8,6 +8,7 @@ import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface ProductMapper {
@@ -44,7 +45,8 @@ public interface ProductMapper {
 	
 	public List<AllProductDTO> allProduct();
 	
-
+	// 모든 상점 정보 테이블
+	public void allShopList(ShopListDTO dto);
 	
 	// TEST
 	

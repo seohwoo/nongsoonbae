@@ -23,6 +23,7 @@ import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.service.ProductService;
 
@@ -53,10 +54,12 @@ public class ProductController {
 	
 	// 개인 상점, 이미지 테이블 만들기
 	@RequestMapping("createProductPro")
-	public String createProductPro(Model model, Principal principal) {
+	public String createProductPro(Model model, Principal principal, ShopListDTO dto) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
+		dto.setUsername(username);
 		
+		service.allShopList(dto);
 		service.createProduct(username);
 		service.createImages(username);
 		return "redirect:/product/productMain";

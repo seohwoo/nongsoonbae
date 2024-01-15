@@ -11,6 +11,7 @@ import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.ProductMapper;
 
@@ -119,6 +120,13 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductDTO productInfo(ProductDTO productDTO) {
 		return mapper.productInfo(productDTO);
+	}
+	
+	// 모든 상점 정보 테이블
+	@Override
+	public void allShopList(ShopListDTO dto) {
+		mapper.allShopList(dto);
+		
 	}
 	
 

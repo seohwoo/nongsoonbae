@@ -102,7 +102,17 @@
 	
 	<!-- FINISH -->
 	
-	
+	<!-- 모든 상점 정보 테이블 -->
+	<insert id="allShopList" parameterType="nong.soon.bae.bean.ShopListDTO">
+		insert into shoplist (username, shopname, shopcontent, 
+	    regdate, address) 
+	    values(
+	        #{username},
+	        #{shopname}, 
+	        #{shopcontent}, 
+	        sysdate,
+	        #{address} )
+	</insert>
 	
 
 	<select id="allProduct" resultType="nong.soon.bae.bean.AllProductDTO">

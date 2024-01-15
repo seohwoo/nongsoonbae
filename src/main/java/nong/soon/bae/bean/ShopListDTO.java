@@ -12,7 +12,5 @@ public class ShopListDTO {
 	private Date regdate;
 	private int visitcount;
 	private String address;
-	private String locx;
-	private String locy;
 	private int grade;
 }
