@@ -5,68 +5,38 @@
 <head>
 <meta charset="UTF-8">
 <title>mypage</title>
+<link href="/resources/css/mypage.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-	<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 260px; align-items : center;">
-	    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-	      <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-	      <span class="fs-4">마이페이지</span>
-	    </a>
-	    <hr>
-	    <ul class="nav nav-pills flex-column mb-auto" style="width : 180px;">
-	      <li class="nav-item" style="align-items : center;">
-	        <a href="#" class="nav-link active" aria-current="page">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-	          메인페이지
-	        </a>
-	      </li>
-	      <li style="align-items : center;">
-	        <a href="#" class="nav-link link-body-emphasis">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-	          농부 구독 / 찜
-	        </a>
-	      </li>
-	      <li style="align-items : center;">
-	        <a href="#" class="nav-link link-body-emphasis">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-	          장바구니
-	        </a>
-	      </li>
-	      <li style="align-items : center;">
-	        <a href="#" class="nav-link link-body-emphasis">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-	          내 상점
-	        </a>
-	      </li>
-	      <li style="align-items : center;">
-	        <a href="#" class="nav-link link-body-emphasis">
-	          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-	          Customers
-	        </a>
-	      </li>
-	    </ul>
-	    <hr>
-	    <div class="dropdown">
-	      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-	        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-	        <strong>${username}</strong>
-	      </a>
-	      <ul class="dropdown-menu text-small shadow">
-	        <li><a class="dropdown-item" href="#">New project...</a></li>
-	        <li><a class="dropdown-item" href="#">Settings</a></li>
-	        <li><a class="dropdown-item" href="#">Profile</a></li>
-	        <li><hr class="dropdown-divider"></li>
-	        <li><a class="dropdown-item" href="#">Sign out</a></li>
-	      </ul>
-	    </div>
-	  </div>
-	  
-	  <div class="container" style="width: auto;">
-	  	
-	  
-	  
-	  </div>
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <div class="col-3 bd-sidebar">
+      <ul class="nav">
+        <li><a>Side 1</a></li>
+        <li><a>Side 2</a></li>
+        <li><a>Side 3</a></li>
+        <li><a>Side 4</a></li>
+        <li><a>Side 5</a></li>
+        <li><a>Side 6</a></li>
+        <li><a>Side 7</a></li>
+        <li><a>Side 8</a></li>
+      </ul>
+      <br>
+    </div>
+    <main class="col-9 py-md-3 pl-md-5 bd-content" role="main">
+      <h1>Main 1</h1>
+      <h1>Main 2</h1>
+      <h1>Main 3</h1>
+      <h1>Main 4</h1>
+      <h1>Main 5</h1>
+      <h1>Main 6</h1>
+      <h1>Main 7</h1>
+      <h1>Main 8</h1>
+    </main>
+  </div>
+</div>
+<%@include file="/WEB-INF/views/include/footer.jsp"%>
 
 </body>
 </html>
