@@ -12,6 +12,7 @@ public class UsersDTO {
 	private List<UserGradeDTO> grade;
 	private String email;
 	private String birth;
+	private String phone;
 	private int gender;
 	private int regsite;
 }

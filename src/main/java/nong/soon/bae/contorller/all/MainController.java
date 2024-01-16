@@ -20,8 +20,6 @@ import nong.soon.bae.service.MainService;
 @Controller
 public class MainController{
 	
-	private ApiKeys apikeys = ApiKeys.getApiKeys();
-	
 	@Autowired
 	private MainService service;
 	
@@ -40,7 +38,6 @@ public class MainController{
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.detailSeasonCategory(model, cate1, cate2, cate3);
 		}
-		model.addAttribute("pluginKey", apikeys.getPluginkey());
 		return "all/main/main";
 	}
 	

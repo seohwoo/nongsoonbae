@@ -6,13 +6,17 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -33,6 +37,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 
+import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.TestService;
 
@@ -51,6 +57,7 @@ public class TestController{
 	private ArrayList<String> srcValues;
 	@Autowired
 	private ArrayList<String> realFiles;
+	
 	
 	@RequestMapping("main")
 	public String test(Model model) {
@@ -89,9 +96,32 @@ public class TestController{
 		return "/test/addressMap";
 	}
 	
+	public static String encode(String memberId, String secretKey, String algorithms) {
+		  try {
+		    Mac mac = Mac.getInstance(algorithms);
+		    mac.init(new SecretKeySpec(hexify(secretKey), algorithms));
+
+		    byte[] hash = mac.doFinal(memberId.getBytes());
+
+		    StringBuilder sb = new StringBuilder(hash.length * 2);
+		    for (byte b: hash) {
+		      sb.append(String.format("%02x", b));
+		    }
+
+		    return sb.toString();
+		  }catch (Exception e) {
+		    throw new RuntimeException(e);
+		  }
+		}
+
+		private static byte[] hexify(String string) {
+		  return DatatypeConverter.parseHexBinary(string);
+		}
+	
 	@RequestMapping("channel")
 	public String channel(Model model) {
 		model.addAttribute("pluginKey", apikey.getPluginkey());
+		model.addAttribute("secretKey", apikey.getChaSecretKey());
 		return "/test/channelTalk";
 	}
 	

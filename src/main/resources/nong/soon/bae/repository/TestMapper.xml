@@ -6,4 +6,7 @@
 	<select id="count" resultType="int">
 		select count(*) from users
 	</select>
+	<select id="findUsers" parameterType="String" resultType="nong.soon.bae.bean.UsersDTO">
+		select * from users where username=#{username}
+	</select>
 </mapper>
