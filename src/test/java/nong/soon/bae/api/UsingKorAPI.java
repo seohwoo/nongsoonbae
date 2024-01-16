@@ -10,10 +10,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import nong.soon.bae.data.ApiKeys;
 
-public class UsingKorAPI extends KorServiceAPI{
 
-	private String api_key = getApi_key();
+public class UsingKorAPI implements ApiKeys{
+
+	private String api_key = korServiceKey;
 	private URL url;
 	BufferedReader bf;
 	String result;

@@ -17,6 +17,7 @@
         </script>
 	</head>
 	<body>
+	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<h1> 지역별 카테고리</h1>
 	<div style="display: flex;">
 			<form action="/nsb/area" method="get" >
@@ -54,7 +55,7 @@
 		</div>	
 		<div >
 			<jsp:include page="/WEB-INF/views/all/main/arearesult.jsp" />
-		</div>	
+		</div>
 		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
