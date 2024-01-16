@@ -12,9 +12,23 @@
 <link href="/resources/css/login.css" rel="stylesheet" type="text/css">
 
 <script>
+$(document).ready(function () {
+    $("#username").on("blur", function () {
+        var username = $(this).val();
+        $.ajax({
+            type: "GET",
+            url: "/checkUsernameAvailability?username=" + username,
+            success: function (data) {
+                if (data) {
+                    alert("이미 존재하는 아이디입니다.");
+                }
+            }
+        });
+    });
+});
 $(document).ready(function(){
 	$(".btn").on("click",function(){
-	//	var idresult =$(".userid").val(); //id 값
+	//	var idresult =$(".userid").val();
 	//	var passresult = $(".userpass").val(); //password값
 	//	var repassresult = $(".reuserpass").val(); //password확인값
 		var num1 = $("birth").val();

@@ -1,13 +1,16 @@
 package nong.soon.bae.contorller.all;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,16 +22,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.UserDetailsDTO;
 import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.CustomUser;
 import nong.soon.bae.repository.UsersRepository;
-import nong.soon.bae.security.CustomUserDetailsService;
 import nong.soon.bae.service.MailSendService;
+import nong.soon.bae.service.MemberService;
 
 @Controller
 @RequestMapping("/member/*")
@@ -40,6 +44,8 @@ public class MemberController {
 	UsersRepository usersRepository;
 	@Autowired
 	private MailSendService mailService;
+	@Autowired
+	MemberService memberservice;
 	
 	@RequestMapping("/form")
 	public String loginForm() {
@@ -60,14 +66,21 @@ public class MemberController {
 		return "all/regForm";
 	}
 	
+	@GetMapping("/checkUsernameAvailability")
+    public ResponseEntity<Boolean> checkUsernameAvailability(@RequestParam String username) {
+        boolean isAvailable = memberservice.isUsernameAvailable(username);
+        return ResponseEntity.ok(isAvailable);
+    }
+	
 	@RequestMapping("/reg")
 	public String register(UsersDTO users) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		users.setPassword(passwordEncoder.encode(users.getPassword()));
+		String username = users.getUsername();
 		logger.info("===============register================");
 		usersRepository.save(users);
 		logger.info("===============createDetails================");
-		String username = users.getUsername();
+		
 		usersRepository.createDetails(username);
 		
 		logger.warn("회원가입 후 로그인");
@@ -118,18 +131,36 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/details")
-	public String detailPro(Model model, Principal principal, String address, String phone) {
+	public String detailPro(MultipartFile image, HttpServletRequest request, Model model, Principal principal, String address, String phone) {
 		UserDetailsDTO dto = new UserDetailsDTO();
 		String username = principal.getName();
 		
+		String path = request.getServletContext().getRealPath("/resources/file/profile/");
+		String filename = image.getOriginalFilename();
+		if(!filename.equals("")) {
+			String ext = filename.substring(filename.lastIndexOf("."));
+			filename = username+"_profile"+ext;
+			File copy = new File(path+filename);
+			dto.setImage(filename);
+			try {
+				image.transferTo(copy);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			dto.setImage("default.png");
+		}
 		dto.setUsername(username);
 		dto.setAddress(address);
 		dto.setPhone(phone);
 		logger.info("=========="+username+"==========");
 		logger.info("=========="+address+"==========");
 		logger.info("=========="+phone+"==========");
+		logger.info("=========="+filename+"==========");
 		usersRepository.addDetails(dto);
-		return "redirect:/user/detailsForm";
+		
+		
+		return "redirect:/user/mypage";
 	}
 	
 	@RequestMapping("/logout")

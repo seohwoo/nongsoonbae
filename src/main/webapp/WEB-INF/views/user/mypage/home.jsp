@@ -21,7 +21,7 @@
 		          <div class="mb-1 text-muted"><hr></div>
 		          <div></div>
 		          <p class="card-text mb-auto">사이트 이용을 위한 주소지, 전화번호 입력, 비밀번호 변경이 가능합니다.</p>
-		          <a href="">이동하기 ></a>
+		          <a href="../member/detailsForm">이동하기 ></a>
 		        </div>
       		</td>
       		<td>
