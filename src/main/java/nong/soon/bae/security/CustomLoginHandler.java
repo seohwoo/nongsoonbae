@@ -44,11 +44,11 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 			e.printStackTrace();
 		}		*/
 
-		String rdir = "/main/main";
+		String rdir = "/nsb/main";
 		if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-            rdir = "/main/main";
+            rdir = "/nsb/main";
         } else if (authorities.contains(new SimpleGrantedAuthority("MEMBER"))) {
-            rdir = "/main/main";
+            rdir = "/nsb/main";
         }
 		response.sendRedirect(rdir);
 	}
