@@ -22,7 +22,7 @@ public class ProductDTO {
 	private Date startdate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date enddate;
-	private int optionstatus;
+	private String optionstatus;
 	private String username;
 	private String seqnum;
 	

@@ -65,12 +65,13 @@
 	<!-- 상품 옵션 추가 -->
 	<insert id="optionInsert" parameterType="nong.soon.bae.bean.ProductDTO">
 	    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
-	    productcount) 
+	    productcount, optionstatus) 
 	    values(
 	        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || #{productnum} || LPAD(${seqnum}_seq.nextval, 5, '0')),
 	        #{productname}, 
 	        #{totalprice}, 
-	        #{productcount} )
+	        #{productcount}, 
+	        #{optionstatus} )
 	</insert>
 	
 	<!-- 가장 최근에 상품등록한 productnum값 가져오기 -->

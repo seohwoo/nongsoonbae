@@ -117,7 +117,7 @@ public class ProductController {
 		product.setProductcount(count);
 		
 		// 상품 추가된 옵션값 구한 코드
-		int optionstatus = optionname.length;
+		String optionstatus = String.valueOf(optionname.length);
 		product.setOptionstatus(optionstatus);
 		
 		// 판매자가 입력한 가격 중 최저가격 구하기
@@ -176,6 +176,8 @@ public class ProductController {
             }
         }
  	
+		
+		
 		// 가장 최근에 등록한 productnum값 allproduct에 넣기
 		if(cnt >0) {
 			dto.setProductnum(service.selectProductnum(username));
@@ -183,11 +185,13 @@ public class ProductController {
 		}
 		
 		// 옵션 값만큼 상품 등록하기 
+		String OptionProductnum = service.selectProductnum(username);
 		for (int i = 0; i < optionname.length; i++) {
 		    product.setProductname(optionname[i]);
 		    product.setTotalprice(optiontotalprice[i]);
 		    product.setProductcount(optionProductCount[i]);
 		    product.setProductnum(cate3);
+		    product.setOptionstatus(OptionProductnum);
 		    service.optionInsert(product);		    
 		}		
 		
