@@ -10,13 +10,12 @@
 	<script src="/resources/js/jquery-3.7.1.min.js"></script>
 
 	<script>
-	num = null;
-	vnum = null;
- function changes1Step(fr) {
-  if(fr=="-----"){
-	  console.log("ififif");
-	  num=new Array("-----");
-	  vnum=new Array("-----");
+		num = null;
+		vnum = null;
+ 		function changes1Step(fr) {
+ 			if(fr=="-----"){
+			num=new Array("-----");
+			vnum=new Array("-----");
   }
   else if(fr=="과일") {
 	  console.log("else111");
@@ -196,10 +195,8 @@
  		}); 		
  	});
 
-</script>
-	<!-- <!-- <!-- <!-- <!-- <!-- <!-- <!-- <!--  -->
-	<!--  -->
-	<!--  --><!--  --><!--  --><!--  --><!--  --><!--  -->
+	</script>
+
 	<body>
 		<h3>${username} 페이지</h3>
 		<form action="/product/productWritePro" method="post" name="form" enctype="multipart/form-data">

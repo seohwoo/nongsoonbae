@@ -45,7 +45,17 @@ public interface ProductService {
 	// FINISH
 		
 	// 상품 상세정보 보기
-	public ProductDTO productDetail(String productname, String username);		
+	public ProductDTO productDetail(String productnum, String username);		
+	
+	public AreaDTO selectArea(String productnum, String username);
+	
+	public String selectAreaName1(AreaDTO areaDTO);
+	
+	public String selectAreaName2(AreaDTO areaDTO);
+	
+	public String selectName(String username);
+	
+	public List<ProductDTO> selectOption(String productnum, String username);
 	
 	public List<AllProductDTO> allProduct();
 	

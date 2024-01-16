@@ -10,7 +10,11 @@
 	
 	<body>
 		<h3>${productDTO.productname} 상품 정보</h3>
+		<td>${areaName1}</td>
+		<td>${areaName2}</td>
+		<td>${name}</td>
 		<hr />
+		
 		<table border="1px" style="text-align: center;">
 			<tr>
 				<td>상품넘버</td>

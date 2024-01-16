@@ -130,8 +130,33 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 상품 상세정보 보기
 	@Override
-	public ProductDTO productDetail(String productname, String username) {
-		return mapper.productDetail(productname, username);
+	public ProductDTO productDetail(String productnum, String username) {
+		return mapper.productDetail(productnum, username);
+	}
+
+	@Override
+	public AreaDTO selectArea(String productnum, String username) {
+		return mapper.selectArea(productnum, username);
+	}
+
+	@Override
+	public String selectAreaName1(AreaDTO areaDTO) {
+		return mapper.selectAreaName1(areaDTO);
+	}
+
+	@Override
+	public String selectAreaName2(AreaDTO areaDTO) {
+		return mapper.selectAreaName2(areaDTO);
+	}
+
+	@Override
+	public String selectName(String username) {
+		return mapper.selectName(username);
+	}
+
+	@Override
+	public List<ProductDTO> selectOption(String productnum, String username) {
+		return mapper.selectOption(productnum, username);
 	}
 	
 
