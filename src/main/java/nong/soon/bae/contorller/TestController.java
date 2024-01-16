@@ -39,9 +39,11 @@ import nong.soon.bae.service.TestService;
 
 @Controller
 @RequestMapping("/test/*")
-public class TestController implements ApiKeys{
+public class TestController{
 	
 	private static final Logger log = LoggerFactory.getLogger(TestController.class);
+	
+	private ApiKeys apikey = ApiKeys.getApiKeys();
 	
 	@Autowired
 	private TestService service;
@@ -89,7 +91,7 @@ public class TestController implements ApiKeys{
 	
 	@RequestMapping("channel")
 	public String channel(Model model) {
-		model.addAttribute("pluginKey", pluginKey);
+		model.addAttribute("pluginKey", apikey.getPluginkey());
 		return "/test/channelTalk";
 	}
 	
