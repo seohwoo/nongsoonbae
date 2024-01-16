@@ -14,6 +14,7 @@ public class UserController {
 	public String mypage(Principal principal, Model model) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
-		return "/user/mypage";
+		return "/user/mypage/mypage";
 	}
+	
 }
