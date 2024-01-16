@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import nong.soon.bae.bean.UserDetailsDTO;
 import nong.soon.bae.bean.UserGradeDTO;
@@ -120,6 +121,7 @@ public class MemberController {
 	public String detailPro(Model model, Principal principal, String address, String phone) {
 		UserDetailsDTO dto = new UserDetailsDTO();
 		String username = principal.getName();
+		
 		dto.setUsername(username);
 		dto.setAddress(address);
 		dto.setPhone(phone);
