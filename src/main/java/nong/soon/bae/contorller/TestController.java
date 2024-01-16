@@ -33,12 +33,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 
+import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.TestService;
 
 
 @Controller
 @RequestMapping("/test/*")
-public class TestController {
+public class TestController implements ApiKeys{
 	
 	private static final Logger log = LoggerFactory.getLogger(TestController.class);
 	
@@ -86,9 +87,10 @@ public class TestController {
 		return "/test/addressMap";
 	}
 	
-	@RequestMapping("editor")
-	public String editor() {
-		return "/test/editor";
+	@RequestMapping("channel")
+	public String channel(Model model) {
+		model.addAttribute("pluginKey", pluginKey);
+		return "/test/channelTalk";
 	}
 	
 	@RequestMapping("summer")

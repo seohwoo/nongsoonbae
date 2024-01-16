@@ -9,7 +9,7 @@
 	</head>
 	
 	<body>
-		<h3>${username} 상점 정보</h3>
+		<h3>${username} 상품 정보</h3>
 		<hr />
 		<table border="1px" style="text-align: center;">
 			<tr>
@@ -26,20 +26,27 @@
 				<td>판매종료일</td>
 				<td>옵션상태유무</td>
 			</tr>
-			<tr>
-				<td>${productDTO.productnum}</td>
-				<td>${productDTO.productname}</td>
-				<td>${productDTO.wishcount}</td>
-				<td>${productDTO.totalprice}</td>
-				<td>${productDTO.productcount}</td>
-				<td>${productDTO.sellcount}</td>
-				<td>${productDTO.imagecount}</td>
-				<td>${productDTO.content}</td>
-				<td>${productDTO.readcount}</td>
-				<td><fmt:formatDate value="${productDTO.startdate}" dateStyle="short" type="date"/></td>
-				<td><fmt:formatDate value="${productDTO.enddate}" dateStyle="short" type="date"/></td>
-				<td>${productDTO.optionstatus}</td>
-			</tr>
+			
+			<c:forEach var="productDTO" items="${productDTO}">
+				<tr>
+					<td><a href="/product/productInfo?productnum=${productDTO.productnum}">${productDTO.productnum}</a></td>
+					<td>${productDTO.productname}</td>			
+					<td>${productDTO.wishcount}</td>			
+					<td>${productDTO.totalprice}</td>			
+					<td>${productDTO.productcount}</td>			
+					<td>${productDTO.sellcount}</td>			
+					<td>${productDTO.imagecount}</td>			
+					<td>${productDTO.content}</td>			
+					<td>${productDTO.readcount}</td>
+					<td><fmt:formatDate value="${productDTO.startdate}" dateStyle="short" type="date"/></td>
+					<td><fmt:formatDate value="${productDTO.enddate}" dateStyle="short" type="date"/></td>
+					<td>${productDTO.optionstatus}</td>			
+				</tr>				
+			</c:forEach>
+			
+			
+			
+			
 		</table>
 		<p>	
 			<a href="/product/productMain">상품 메인</a>

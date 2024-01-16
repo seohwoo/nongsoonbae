@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.AreaService;
 import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
 
 @RequestMapping("/nsb/*")
 @Controller
-public class MainController {
+public class MainController implements ApiKeys{
 	@Autowired
 	private MainService service;
 	
@@ -36,6 +37,7 @@ public class MainController {
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.detailSeasonCategory(model, cate1, cate2, cate3);
 		}
+		model.addAttribute("pluginKey", pluginKey);
 		return "all/main/main";
 	}
 	
@@ -45,7 +47,7 @@ public class MainController {
 			searchNum = "1";
 		}
 		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
-		return "/main/result";
+		return "all/main/result";
 	}
 	
 	@RequestMapping("chart")
@@ -77,6 +79,10 @@ public class MainController {
 			cateservice.catelistdeatil(model, cate1);
 			cateservice.cateprodictlistdetail (model,cate1 ,cate2); // cate2 상품리스트 
 		}
+		if(cate1==null) {
+			cate1 = "0";
+			model.addAttribute("cate1", Integer.parseInt(cate1));
+		}
 		return "all/main/categorymain";
 	}
 	
@@ -97,6 +103,10 @@ public class MainController {
 		if(area1 != null && area2 != null ){
 			areaservice.arealistdeatil(model, area1);
 			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
+		}
+		if(area1==null) {
+			area1 = "0";
+			model.addAttribute("area1", Integer.parseInt(area1));
 		}
 		return "all/main/areamain";
 	}
