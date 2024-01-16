@@ -1,23 +1,37 @@
 package nong.soon.bae.contorller.user;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
@@ -35,7 +49,13 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService service;
-
+	
+	@Autowired
+	private ArrayList<String> srcValues;
+	
+	@Autowired
+	private ArrayList<String> realFiles;
+	
 	// 일단 상점 메인
 	@RequestMapping("productMain")
 	public String productMain(Model model, Principal principal) {
@@ -75,10 +95,10 @@ public class ProductController {
 		model.addAttribute("productnum", productnum);
 		return "product/productWriteForm";
 	}
-	
+
 	// 상품 등록하기
 	@RequestMapping("productWritePro")
-	public String productWritePro(HttpServletRequest request, List<MultipartFile> files, Model model, 
+	public String productWritePro(String content, String[] fileNames, HttpServletRequest request, List<MultipartFile> files, Model model, 
 								  Principal principal, ProductDTO product, AllProductDTO dto, String cate3, 
 								  @RequestParam("optionname") String[] optionname, 
 								  @RequestParam("optiontotalprice") int[] optiontotalprice,
@@ -103,6 +123,38 @@ public class ProductController {
 		// 판매자가 입력한 가격 중 최저가격 구하기
 		int minValue = Arrays.stream(optiontotalprice).min().orElse(0);
 		product.setTotalprice(minValue);
+		
+		
+		
+		/////////////////////////////////////////
+		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
+		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
+		int cnt2 = 1;
+		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
+	    if(fileNames != null) {
+	    	isFile(fileNames, content);
+			for (String filename : realFiles) {
+				try {
+					File sourceFile = new File(fileRoot+filename);
+					File targetDirectory = new File(realRoot);
+					String ext = filename.substring(filename.lastIndexOf("."));
+					String filenum = service.selectProductnum(username);
+					String realname = filenum+"_"+cnt2+ext;
+					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
+					cnt2++;
+					content = content.replace(filename, realname);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			for (String filename : fileNames) {
+				File sourceFile = new File(fileRoot+filename);
+				sourceFile.delete();
+			}
+	    }
+		model.addAttribute("content", content);
+		///////////////////////////////////////
+		
 		
 		int cnt = service.productInsert(product, files, path);
 		int result = service.imagesInsert(files, path, username);
@@ -153,6 +205,62 @@ public class ProductController {
 	// FINISH
 	
 	// TEST
+	////////////////////////////////////////////////////////
+	 public void isFile(String[] filenames, String content) {
+		 srcValues.clear();
+		 realFiles.clear();
+		 Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
+	     Matcher matcher = pattern.matcher(content);
+	     while (matcher.find()) {
+	         srcValues.add(matcher.group(1));
+	     }
+		 for (int i = 0; i < srcValues.size(); i++) {
+			int lastSlashIndex = srcValues.get(i).lastIndexOf('/');
+			if (lastSlashIndex != -1 && lastSlashIndex < srcValues.get(i).length() - 1) {
+				srcValues.set(i, srcValues.get(i).substring(lastSlashIndex + 1));
+			}
+		 }
+		 if(filenames.length != srcValues.size()) {
+			 for (int i = 0; i < srcValues.size(); i++) {
+				for (String filename : filenames) {
+					if(filename.equals(srcValues.get(i))) {
+						realFiles.add(srcValues.get(i));
+					}
+				}
+			}
+		 }else {
+			 realFiles = srcValues;
+		 }
+	 }
+	
+	@RequestMapping(value = "uploadSummernoteImageFile", produces = "application/json", consumes = "multipart/form-data")
+	public ResponseEntity<JsonNode> uploadSummernoteImageFile(@RequestPart("file") MultipartFile multipartFile,
+	      HttpServletRequest request) {
+	   ObjectMapper objectMapper = new ObjectMapper();
+	   JsonNode responseJson;
+	   String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
+		
+	   try {
+	      String originalFileName = multipartFile.getOriginalFilename();
+	      String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+	      String savedFileName = UUID.randomUUID() + extension;
+	      Path targetPath = Path.of(fileRoot, savedFileName);
+	      Files.copy(multipartFile.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+		
+	      String imageUrl = request.getContextPath() + "/resources/summernoteImage/" + savedFileName;
+	      responseJson = objectMapper.createObjectNode()
+	            .put("url", imageUrl)
+	            .put("responseCode", "success")
+	            .put("fileName", savedFileName);
+	      return ResponseEntity.ok(responseJson);
+	   } catch (IOException e) {
+	      responseJson = objectMapper.createObjectNode().put("responseCode", "error");
+	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
+	   }
+	}
+	////////////////////////////////////////////////////////////////////////////
+	
+	
 	
 	@RequestMapping("myProduct")
 	public String myProduct(Model model, Principal principal, ProductDTO dto) {
@@ -176,15 +284,31 @@ public class ProductController {
 	
 	// 상품 상세보기 
 	@RequestMapping("productDetail")
-	public String productDetail(String productname, Model model, Principal principal, ProductDTO productDTO) {
+	public String productDetail(String productnum, Model model, Principal principal, ProductDTO productDTO, AreaDTO areaDTO) {
 		String username = principal.getName();
-		model.addAttribute("username", username);
+		model.addAttribute("username", username);	
 		productDTO.setUsername(username);
 		
-		productDTO = service.productDetail(productname, username);
+		productDTO = service.productDetail(productnum, username);
+		
+		areaDTO = service.selectArea(productnum, username);
+		
+		areaDTO.setArea1(areaDTO.getArea1());
+		areaDTO.setArea2(areaDTO.getArea2());
+		String areaName2 = service.selectAreaName2(areaDTO);
+		
+		areaDTO.setArea1(areaDTO.getArea1());
+		areaDTO.setArea2(0);
+		String areaName1 = service.selectAreaName1(areaDTO);
+		
+		String name = service.selectName(username);
+
+		model.addAttribute("name", name);
+		model.addAttribute("areaName1", areaName1);
+		model.addAttribute("areaName2", areaName2);
+		model.addAttribute("areaDTO", areaDTO);
 		model.addAttribute("productDTO", productDTO);
 		
-		logger.info("DTO : "+productDTO);
 		return "product/productDetail";
 	}
 	

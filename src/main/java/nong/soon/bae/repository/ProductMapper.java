@@ -49,8 +49,20 @@ public interface ProductMapper {
 	public List<AllProductDTO> allProduct();
 	
 	// 상품 상세정보 보기
-	public ProductDTO productDetail(@Param("productname") String productname,
+	public ProductDTO productDetail(@Param("productnum") String productnum,
 								    @Param("username") String username);
+	
+	public AreaDTO selectArea(@Param("productnum") String productnum,
+							  @Param("username") String username);
+	
+	public String selectAreaName1(AreaDTO areaDTO);
+	
+	public String selectAreaName2(AreaDTO areaDTO);
+	
+	public String selectName(String username);
+	
+	public List<ProductDTO> selectOption(@Param("productnum") String productnum,
+		    							 @Param("username") String username);
 	// TEST
 	
 	public List<ProductDTO> myProduct(String username);
