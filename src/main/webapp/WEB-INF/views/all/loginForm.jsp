@@ -23,7 +23,7 @@
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<input type="text" name="username" class="form-control" placeholder="ID" required autofocus>
 	<input type="password" name="password" class="form-control" placeholder="Password" required>
-	<c:if test="${param.err == true}">
+	<c:if test="${param.error == true}">
 		<p style="color: red">ID 혹은 Password를 확인해주세요.</p>
 	</c:if>
 	자동 로그인 : <input type="checkbox" name="remember-me" /><p></p>

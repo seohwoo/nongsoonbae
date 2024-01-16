@@ -77,9 +77,11 @@
 <body>
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<form class="form-signin" action="/member/details" method="POST" id="detailsForm" >
+<form class="form-signin" action="/member/details" method="POST" id="detailsForm" enctype="multipart/form-data" >
 	<h1 class="h3 mb-3 font-weight-normal">회원정보 입력</h1>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<img src="/resources/img/default.png" style=" max-width: 50%;  height: auto;"> <br />
+	프로필 사진 <input type="file" class="form-control" onchange="chooseImage(this)" required />
 	주소<input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
 		<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
 		<input type="text" class="form-control" id="roadAddress" placeholder="도로명주소" readonly>

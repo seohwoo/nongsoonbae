@@ -13,35 +13,30 @@
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 <div class="container-fluid" id="wrapper">
   <div class="row flex-nowrap">
-    <div class="col-3 bd-sidebar" style="width: 400px;">
-      <ul class="nav nav-pills flex-column mb-auto" style="position: static;">
+    <div class="col-2 bd-sidebar align-items">
+      <ul class="nav nav-pills flex-column mb-auto" style="margin-top: 100px;">
 	      <li class="nav-item">
-	        <a href="#" class="nav-link active" aria-current="page">
-	          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+	        <a href="/user/mypage" class="nav-link active" aria-current="page" id="home">  
 	          내 정보
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark">
-	          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+	        <a href="#" class="nav-link link-dark" id="like">
 	          찜/구독
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark">
-	          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+	        <a href="#" class="nav-link link-dark" id="store">
 	          내 상점
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark">
-	          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+	        <a href="#" class="nav-link link-dark" id="cart">       
 	          장바구니
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark">
-	          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+	        <a href="#" class="nav-link link-dark" id="buylist"> 
 	          구매내역
 	        </a>
 	      </li>
