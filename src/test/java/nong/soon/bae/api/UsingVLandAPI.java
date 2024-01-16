@@ -12,10 +12,11 @@ import org.json.simple.parser.JSONParser;
 import nong.soon.bae.data.ApiKeys;
 
 
-public class UsingVLandAPI implements ApiKeys{
+public class UsingVLandAPI{
+	
+	private ApiKeys apikeys = ApiKeys.getApiKeys();
 	
 	public void usingVLandXY() {
-		String apikey = vLandKey;
 		String searchType = "road";
 		String searchAddr = "경기도 고양시 덕양구 충경로 156 (행신동, 서정마을5단지아파트)";
 		String epsg = "epsg:4326";
@@ -25,7 +26,7 @@ public class UsingVLandAPI implements ApiKeys{
 		sb.append("&request=getCoord");
 		sb.append("&format=json");
 		sb.append("&crs=" + epsg);
-		sb.append("&key=" + apikey);
+		sb.append("&key=" + apikeys.getVlandkey());
 		sb.append("&type=" + searchType);
 		sb.append("&address=" + URLEncoder.encode(searchAddr, StandardCharsets.UTF_8));
 
