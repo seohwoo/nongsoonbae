@@ -21,6 +21,12 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductMapper mapper;
 	
+	// 내 상점 정보 등록하기 
+	@Override
+	public void allShopList(ShopListDTO dto) {
+		mapper.allShopList(dto);		
+	}	
+	
 	// 개인 상점(테이블) 만들기
 	@Override
 	public void createProduct(String username) {
@@ -122,12 +128,13 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.productInfo(productDTO);
 	}
 	
-	// 모든 상점 정보 테이블
+	// 상품 상세정보 보기
 	@Override
-	public void allShopList(ShopListDTO dto) {
-		mapper.allShopList(dto);
-		
+	public ProductDTO productDetail(String productname, String username) {
+		return mapper.productDetail(productname, username);
 	}
+	
+
 	
 
 

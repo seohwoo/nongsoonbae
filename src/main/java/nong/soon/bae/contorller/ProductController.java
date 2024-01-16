@@ -52,7 +52,7 @@ public class ProductController {
 		return "product/createProduct";
 	}
 	
-	// 개인 상점, 이미지 테이블 만들기
+	// 내 상점 정보 등록하기, 개인 상점, 이미지 테이블 만들기
 	@RequestMapping("createProductPro")
 	public String createProductPro(Model model, Principal principal, ShopListDTO dto) {
 		String username = principal.getName();
@@ -115,7 +115,7 @@ public class ProductController {
 		dto.setCate2(catego2);
 		dto.setCate3(catego3);
 		
-		// username의 주소를 AllProduct 테이블에 넣기
+		// 상점의 주소를 AllProduct 테이블에 넣기
 		List<AreaDTO> selectAddress = service.selectAddress(username);
 		for (AreaDTO area : selectAddress) {
             if (area.getArea1() >= 1 && area.getArea2() >= 1) {
@@ -174,9 +174,25 @@ public class ProductController {
 		return "product/productInfo";
 	}
 	
+	// 상품 상세보기 
+	@RequestMapping("productDetail")
+	public String productDetail(String productname, Model model, Principal principal, ProductDTO productDTO) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		productDTO.setUsername(username);
+		
+		productDTO = service.productDetail(productname, username);
+		model.addAttribute("productDTO", productDTO);
+		
+		logger.info("DTO : "+productDTO);
+		return "product/productDetail";
+	}
 	
 	@RequestMapping("allProduct")
-	public String allProduct(Model model) {
+	public String allProduct(Model model, Principal principal, String productName) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		
 		List<AllProductDTO> allProductDTO = service.allProduct();
 		model.addAttribute("allProductDTO", allProductDTO);
 		return "product/allProduct";
@@ -191,6 +207,10 @@ public class ProductController {
 	@RequestMapping("sample")
 	public String sample() {
 		return "product/sample";
-	}	
+	}
+	
+
+	
+	
 }
 

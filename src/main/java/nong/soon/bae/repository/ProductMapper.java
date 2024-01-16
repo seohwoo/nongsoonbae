@@ -11,7 +11,10 @@ import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 
-public interface ProductMapper {
+public interface ProductMapper {	
+	// 내 상점 정보 등록하기 
+	public void allShopList(ShopListDTO dto);
+	
 	// 개인 상점(테이블) 만들기
 	public void createProduct(String username);
 
@@ -45,9 +48,9 @@ public interface ProductMapper {
 	
 	public List<AllProductDTO> allProduct();
 	
-	// 모든 상점 정보 테이블
-	public void allShopList(ShopListDTO dto);
-	
+	// 상품 상세정보 보기
+	public ProductDTO productDetail(@Param("productname") String productname,
+								    @Param("username") String username);
 	// TEST
 	
 	public List<ProductDTO> myProduct(String username);

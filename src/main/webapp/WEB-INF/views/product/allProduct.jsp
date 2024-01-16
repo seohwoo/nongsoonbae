@@ -19,7 +19,7 @@
 			<c:forEach var="dto" items="${allProductDTO}">
 				<tr>
 					<td>${dto.productnum}</td>
-					<td>${dto.productname}</td>			
+					<td><a href="/product/productDetail?productname=${dto.productname}">${dto.productname}</a></td>
 					<td>${dto.username}</td>			
 				</tr>				
 			</c:forEach>

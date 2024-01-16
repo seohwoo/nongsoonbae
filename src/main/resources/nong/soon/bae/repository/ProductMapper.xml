@@ -3,6 +3,18 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.ProductMapper">
+	<!-- 내 상점 정보 등록하기 -->
+	<insert id="allShopList" parameterType="nong.soon.bae.bean.ShopListDTO">
+		insert into shoplist (username, shopname, shopcontent, 
+	    regdate, address) 
+	    values(
+	        #{username},
+	        #{shopname}, 
+	        #{shopcontent}, 
+	        sysdate,
+	        #{address} )
+	</insert>	
+	
 	<!-- 개인 상점(테이블) 만들기 -->
 	<insert id="createProduct" parameterType="String">
 		create table ${username}_PRODUCT ( 
@@ -73,9 +85,9 @@
 	
 	<!-- 전체 상품 테이블에 상품 등록할 때 넣을 유저의 주소 찾기 -->
 	<select id="selectAddress" resultType="nong.soon.bae.bean.AreaDTO" parameterType="String">
-		SELECT AREA.AREA1, AREA.AREA2 FROM USERDETAILS 
-		JOIN AREA ON USERDETAILS.ADDRESS LIKE '%' || AREA.AREANAME || '%'
-		WHERE USERDETAILS.USERNAME = #{username}
+		SELECT AREA.AREA1, AREA.AREA2 FROM shoplist 
+		JOIN AREA ON shoplist.ADDRESS LIKE '%' || AREA.AREANAME || '%'
+		WHERE shoplist.USERNAME = #{username}
 	</select>
 	
 	<!-- 전체 상품 테이블에 상품 등록하기 -->
@@ -101,26 +113,15 @@
 	</insert>
 	
 	<!-- FINISH -->
-	
-	<!-- 모든 상점 정보 테이블 -->
-	<insert id="allShopList" parameterType="nong.soon.bae.bean.ShopListDTO">
-		insert into shoplist (username, shopname, shopcontent, 
-	    regdate, address) 
-	    values(
-	        #{username},
-	        #{shopname}, 
-	        #{shopcontent}, 
-	        sysdate,
-	        #{address} )
-	</insert>
-	
 
 	<select id="allProduct" resultType="nong.soon.bae.bean.AllProductDTO">
 		select * from allproduct 
 	</select>
 
-
-	
+	<!-- 상품 상세정보 보기 --> 
+	<select id="productDetail" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
+		select * from ${username}_product where productname=#{productname}
+	</select>
 	
 	
 	

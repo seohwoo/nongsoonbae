@@ -12,6 +12,9 @@ import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface ProductService {
+	// 내 상점 정보 등록하기 
+	public void allShopList(ShopListDTO dto);
+	
 	// 개인 상점(테이블) 만들기
 	public void createProduct(String username);
 
@@ -40,10 +43,9 @@ public interface ProductService {
 	public void createReviews(String productnum);
 	
 	// FINISH
-	
-	// 모든 상점 정보 테이블
-	public void allShopList(ShopListDTO dto);	
 		
+	// 상품 상세정보 보기
+	public ProductDTO productDetail(String productname, String username);		
 	
 	public List<AllProductDTO> allProduct();
 	
