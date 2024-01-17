@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.io.FileUtils;
@@ -38,6 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 
 import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.ChatDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.TestService;
@@ -129,6 +133,51 @@ public class TestController{
 	public String summer() {
 		return "/test/summer";
 	}
+	
+	
+	@RequestMapping("roomList")
+	public String roomList(Model model, Principal pri) {
+		
+		String username = pri.getName();
+		List<ChatDTO> chatList = service.userChatList(username);
+		model.addAttribute("chatList", chatList);
+		return "/test/roomList";
+	}
+	
+	@RequestMapping("room")
+	public String chatRoom(Model model, Principal pri, String sendname, String num) throws Exception {
+		String username = pri.getName();
+		String chat = "";
+		String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
+		String filePath = "";
+		if(username!=null && sendname!=null) {
+			try {
+				// 채팅 파일 내용 읽기
+				filePath = fileRoot+"\\"+username+"_to_"+sendname+".txt";
+				Path path = Paths.get(filePath);
+				if(!Files.exists(path)) {
+					filePath = fileRoot+"\\"+sendname+"_to_"+username+".txt";
+					path = Paths.get(filePath);
+					if(!Files.exists(path)) {
+						Files.createFile(path);
+					}
+				}
+				File file = new File(filePath);
+				Scanner sc = new Scanner(file);
+				while (sc.hasNextLine()) {
+					chat += sc.nextLine();
+				}
+			} catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+		}
+		model.addAttribute("chat", chat);
+		model.addAttribute("num", num);
+		model.addAttribute("username", username);
+		model.addAttribute("sendname", sendname);
+		return "test/room";
+	}
+	
 	
 	//써머노트 사용할려면 여기부터....
 	@RequestMapping("editorPro")

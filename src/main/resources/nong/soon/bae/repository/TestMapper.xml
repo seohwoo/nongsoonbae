@@ -9,4 +9,7 @@
 	<select id="findUsers" parameterType="String" resultType="nong.soon.bae.bean.UsersDTO">
 		select * from users where username=#{username}
 	</select>
+	<select id="userChatList" parameterType="String" resultType="chatDTO">
+		select * from chat where username=#{username}
+	</select>
 </mapper>

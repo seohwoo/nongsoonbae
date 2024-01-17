@@ -37,5 +37,6 @@
    <beans:bean id="areaDTO" class="nong.soon.bae.bean.AreaDTO" />
    <beans:bean id="productcategoryDTO" class="nong.soon.bae.bean.ProductCategoryDTO" />
    <beans:bean id="MainProductDTO" class="nong.soon.bae.bean.MainProductDTO" />
+   <beans:bean id="portMove" class="nong.soon.bae.contorller.PortMove"/>
 
 </beans:beans>
