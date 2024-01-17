@@ -22,6 +22,7 @@
 				<td class="title">
 					<h1>🍒🍓🍅 농순배 🥑🥒🥬</h1>
 					<h1>🌺🌻🌼🌷🥀🌱🌲🌳🌴</h1>
+					<h5>최신공지 <jsp:include page="/WEB-INF/views/all/main/newNotice.jsp" /></h5>
 					<br />
 				</td>
 			</tr>

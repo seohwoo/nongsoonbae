@@ -15,5 +15,6 @@ public interface NoticeMapper {
 	public int maxNum(); //가장 최신글 번호  
 
 	public int delete(int num); //글 삭제하기
+	public NoticeBoardDTO showNewNotice(); //가장 최신글 
 
 }

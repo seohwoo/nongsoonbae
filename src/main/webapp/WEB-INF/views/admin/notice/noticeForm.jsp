@@ -17,6 +17,7 @@
 			<input type="hidden" value="${num}" name="num" />
 			<textarea id="summernote" name="content"></textarea>
 			<input type="submit" name="doit" value="작성하기" />	
+			<button type="button" onclick="location.href='/admin/noticeList'">돌아가기</button>
 		</form>
 	<script>
 		 $(document).ready(function () {

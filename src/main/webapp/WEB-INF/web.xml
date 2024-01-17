@@ -29,6 +29,7 @@
 				/WEB-INF/spring/appServlet/mail-context.xml
 				/WEB-INF/spring/appServlet/test-context.xml
 				/WEB-INF/spring/appServlet/notice-context.xml
+				/WEB-INF/spring/appServlet/usercheck-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

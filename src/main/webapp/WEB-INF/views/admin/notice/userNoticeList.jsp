@@ -31,12 +31,11 @@
 			<div class="container">
 				<div class="header">
 					<h1>🍓🍓 공지게시판 🍓🍓</h1>
-					<button class="btn"><input type="button" value="글쓰기" onclick="window.location='/admin/noticeForm'"></button>
 				</div>
 				<c:if test="${count > 0}">
 					<c:forEach var="article" items="${list}">
 						<div class="notice">
-						<form action="/admin/noticeView" method="get">
+						<form action="/nsb/noticeView" method="post">
 						    <input type="hidden" name="num" value="${article.num}">
 						    <input type="hidden" name="pageNum" value="${pageNum}">
 						    <button type="submit" style="background:none; border:none; padding:0; margin:0; font: inherit; color: blue; text-decoration: underline; cursor: pointer;">
@@ -52,19 +51,19 @@
 				</c:if>
 				<div class="pagination">
 				    <c:if test="${startPage > 10}">
-				        <form action="/admin/noticeList" method="post">
+				        <form action="/nsb/noticeList" method="post">
 				            <input type="hidden" name="pageNum" value="${startPage-10}">
 				            <button type="submit">[이전]</button>
 				        </form>
 				    </c:if>
 				    <c:forEach var="i" begin="${startPage}" end="${endPage}">
-				        <form action="/admin/noticeList" method="post">
+				        <form action="/nsb/noticeList" method="post">
 				            <input type="hidden" name="pageNum" value="${i}">
 				            <button type="submit">[${i}]</button>
 				        </form>
 				    </c:forEach>
 				    <c:if test="${endPage < pageCount}">
-				        <form action="/admin/noticeList" method="post">
+				        <form action="/nsb/noticeList" method="post">
 				            <input type="hidden" name="pageNum" value="${startPage+10}">
 				            <button type="submit">[다음]</button>
 				        </form>

@@ -7,35 +7,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import nong.soon.bae.bean.UsersDTO;
+import nong.soon.bae.repository.UserCheckMapper;
 
-import nong.soon.bae.bean.NoticeBoardDTO;
-import nong.soon.bae.repository.NoticeMapper;
-
-@Service 
-public class NoticeServiceImpl implements NoticeService {
+@Service
+public class UserCheckServiceImpl implements UserCheckService{
 	
 	@Autowired
-	private NoticeMapper mapper;
-	
+	private UserCheckMapper mapper;
 	@Autowired
-	private HashMap noticeMap;
-
+	private HashMap checkMap;
+	
+	
+	
 	@Override
-	public void insert(NoticeBoardDTO dto) { //작성한글 인서트
-		mapper.insert(dto);	
-	}
-
-	@Override
-	public void list(int pageNum, Model model) { //작성글 목록 
+	public void userlist(int pageNum, Model model) {
 		int pageSize = 10;
 	    int startRow = (pageNum - 1) * pageSize + 1;
 	    int endRow = pageNum * pageSize;
-	    int count = mapper.count();
-	    List<NoticeBoardDTO> list = Collections.EMPTY_LIST;
+	    int count = mapper.count();	    
+	    List<UsersDTO> list = Collections.EMPTY_LIST;
 	    if(count > 0) {
-	    	noticeMap.put("start", startRow);
-	    	noticeMap.put("end", endRow);
-	    	list = mapper.list(noticeMap);
+	    	checkMap.put("start", startRow);
+	    	checkMap.put("end", endRow);
+	    	list = mapper.userlist(checkMap);
 	    }	
 	    model.addAttribute("list",list);
 	    model.addAttribute("count",count);
@@ -57,28 +52,6 @@ public class NoticeServiceImpl implements NoticeService {
 	    
 	}
 
-	@Override
-	public NoticeBoardDTO readContent(int num) {
-		mapper.updateCountUp(num);
-		return mapper.readContent(num);
 	}
 
 
-	@Override
-	public int maxNum() {
-		return mapper.maxNum();
-	}
-
-	@Override
-	public int delete(int num) {
-		return mapper.delete(num);
-	}
-
-	@Override
-	public NoticeBoardDTO showNewNotice() {
-		return mapper.showNewNotice();
-	}
-
-
-	
-}
