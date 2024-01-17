@@ -35,6 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
+import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
@@ -117,7 +118,7 @@ public class ProductController {
 		product.setProductcount(count);
 		
 		// 상품 추가된 옵션값 구한 코드
-		int optionstatus = optionname.length;
+		String optionstatus = String.valueOf(optionname.length);
 		product.setOptionstatus(optionstatus);
 		
 		// 판매자가 입력한 가격 중 최저가격 구하기
@@ -176,6 +177,8 @@ public class ProductController {
             }
         }
  	
+		
+		
 		// 가장 최근에 등록한 productnum값 allproduct에 넣기
 		if(cnt >0) {
 			dto.setProductnum(service.selectProductnum(username));
@@ -183,11 +186,13 @@ public class ProductController {
 		}
 		
 		// 옵션 값만큼 상품 등록하기 
+		String OptionProductnum = service.selectProductnum(username);
 		for (int i = 0; i < optionname.length; i++) {
 		    product.setProductname(optionname[i]);
 		    product.setTotalprice(optiontotalprice[i]);
 		    product.setProductcount(optionProductCount[i]);
 		    product.setProductnum(cate3);
+		    product.setOptionstatus(OptionProductnum);
 		    service.optionInsert(product);		    
 		}		
 		
@@ -291,18 +296,29 @@ public class ProductController {
 		
 		productDTO = service.productDetail(productnum, username);
 		
+		// 상점 주소 가져오는 코드
 		areaDTO = service.selectArea(productnum, username);
 		
+		// area1 가져오는 코드
 		areaDTO.setArea1(areaDTO.getArea1());
 		areaDTO.setArea2(areaDTO.getArea2());
 		String areaName2 = service.selectAreaName2(areaDTO);
 		
+		// area2 가져오는 코드
 		areaDTO.setArea1(areaDTO.getArea1());
 		areaDTO.setArea2(0);
 		String areaName1 = service.selectAreaName1(areaDTO);
 		
+		// 닉네임 가져오는 코드
 		String name = service.selectName(username);
 
+		// 상품의 옵션값 가져오는 코드
+		String optionstatus = productnum;
+		List<ProductDTO> option = service.selectOption(username, optionstatus);
+
+
+		model.addAttribute("productnum", productnum);
+		model.addAttribute("option", option);
 		model.addAttribute("name", name);
 		model.addAttribute("areaName1", areaName1);
 		model.addAttribute("areaName2", areaName2);
@@ -313,7 +329,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping("allProduct")
-	public String allProduct(Model model, Principal principal, String productName) {
+	public String allProduct(Model model, Principal principal, String productName, ProductDTO productDTO) {
 		String username = principal.getName();
 		model.addAttribute("username", username);
 		
@@ -333,8 +349,29 @@ public class ProductController {
 		return "product/sample";
 	}
 	
-
+	// 찜하기
+	@RequestMapping("productPick")
+	public String productPick(Principal principal, String productnum) {
+		String username = principal.getName();
+		
+		int count = service.selectProductPickCount(username, productnum);
+		if(count == 0) {
+			service.productPick(username, productnum);
+			service.updateProductWishcount(username, productnum);
+		}else {
+			service.productPickDelete(username, productnum);
+			service.deleteProductWishcount(username, productnum);
+		}
+		return "redirect:/product/productMain"; 
+	}	
 	
+	// 장바구니
+	@RequestMapping("productShoppingCart")
+	public String productShoppingCart(Principal principal, String productnum) {
+		String username = principal.getName();
+		service.productShoppingCart(username, productnum);
+		return "redirect:/product/productMain"; 
+	}	
 	
 }
 
