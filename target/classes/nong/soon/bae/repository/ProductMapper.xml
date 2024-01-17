@@ -146,6 +146,13 @@
 	<select id="selectOption" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
 		SELECT * FROM ${username}_product WHERE optionstatus = #{optionstatus}
 	</select>
+
+
+	<!-- 찜하기 유무 -->
+	<select id="selectProductPickCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage
+		where productnum=#{productnum} and wishstatus=1
+	</select>
 	
 	<!-- 찜하기 -->
 	<insert id="productPick" parameterType="String">
@@ -154,17 +161,23 @@
 	        #{username}, #{productnum}, 1 )
 	</insert>
 	
-	<!-- 찜하기 누를 때마다 1씩 증가  -->
+	<!-- 찜하기 누를 때마다 상품 찜 1씩 증가  -->
 	<update id="updateProductWishcount" parameterType="String">
 		update ${username}_product set wishcount = wishcount + 1
 		where productnum=#{productnum}
 	</update>
 
-	<!-- 찜하기 유무 -->
-	<select id="selectProductPickCount" resultType="int" parameterType="String">
-		select count(*) from ${username}_mypage
-		where productnum=#{productnum} and wishstatus=1
-	</select>
+	<!-- 찜 삭제하기 -->
+	<delete id="productPickDelete" parameterType="String">
+		delete from ${username}_mypage where productnum=#{productnum} and wishstatus=1
+	</delete>
+
+	<!-- 찜 삭제하기 누를 때마다 상품 찜 1씩 감소  -->
+	<update id="deleteProductWishcount" parameterType="String">
+		update ${username}_product set wishcount = wishcount - 1
+		where productnum=#{productnum}
+	</update>
+	
 	
 	<!-- 장바구니 -->
 	<insert id="productShoppingCart" parameterType="String">

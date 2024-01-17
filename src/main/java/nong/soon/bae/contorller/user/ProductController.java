@@ -353,8 +353,15 @@ public class ProductController {
 	@RequestMapping("productPick")
 	public String productPick(Principal principal, String productnum) {
 		String username = principal.getName();
-		service.productPick(username, productnum);
-		service.updateProductWishcount(username, productnum);
+		
+		int count = service.selectProductPickCount(username, productnum);
+		if(count == 0) {
+			service.productPick(username, productnum);
+			service.updateProductWishcount(username, productnum);
+		}else {
+			service.productPickDelete(username, productnum);
+			service.deleteProductWishcount(username, productnum);
+		}
 		return "redirect:/product/productMain"; 
 	}	
 	
