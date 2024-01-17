@@ -12,4 +12,6 @@ public interface NoticeService {
 	public int maxNum();
 	public int delete(int num);
 	
+	
+	public NoticeBoardDTO showNewNotice (); // 최신글 하나 
 }

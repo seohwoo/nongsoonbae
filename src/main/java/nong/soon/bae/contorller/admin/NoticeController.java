@@ -31,7 +31,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import nong.soon.bae.bean.NoticeBoardDTO;
 import nong.soon.bae.service.NoticeService;
 @Controller
-@RequestMapping("/admin/*")
 public class NoticeController  {
 	
 	private static final Logger log = LoggerFactory.getLogger(NoticeController.class);
@@ -45,15 +44,14 @@ public class NoticeController  {
 	
 	
 	
-	@RequestMapping("noticeForm")
+	@RequestMapping("/admin/noticeForm")
 	public String notice(Model model) {
 		int maxNum = service.maxNum();
 		model.addAttribute("num", maxNum);
-		System.out.println(maxNum);
 		return "admin/notice/noticeForm";
 	}
 	
-	@RequestMapping("noticePro")
+	@RequestMapping("/admin/noticePro")
 	public String noticePro(String content, String title,  Model model,String[] fileNames, HttpServletRequest request,
 							@RequestParam(value="num") int num) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
@@ -144,13 +142,13 @@ public class NoticeController  {
 		   }
 		}
 	 
-	 @RequestMapping("noticeList")
+	 @RequestMapping("/admin/noticeList")
 	 public String noticeList(Model model, @RequestParam(value="pageNum", defaultValue="1") int pageNum) {
 			service.list(pageNum, model);
 			return "admin/notice/noticeList";
 		}
 	 
-	 @RequestMapping("noticeView")
+	 @RequestMapping("/admin/noticeView")
 	 public String noticeView(Model model, int num, int pageNum) {
 		 	NoticeBoardDTO dto = service.readContent(num);
 		 
@@ -159,7 +157,7 @@ public class NoticeController  {
 			return "admin/notice/noticeView";
 		}
 	 
-	 @RequestMapping("noticeDeletePro")
+	 @RequestMapping("/admin/noticeDeletePro")
 	 public String noticeDeletePro(Model model, int num,HttpServletRequest request) {
 		 	NoticeBoardDTO dto = service.readContent(num); // 공지사항 내용 조회
 		    String content = dto.getContent(); // 공지사항의 내용
@@ -175,10 +173,26 @@ public class NoticeController  {
 		            imageFile.delete(); // 파일 삭제
 		        }
 		    }
-
 		    service.delete(num); 
 		    return "redirect:/admin/noticeList";
 		}
+	 
+	
+	 //일반 유저들이 볼 수 있는 페이지 분류 
+	 @RequestMapping("/nsb/noticeList")
+	 public String userNoticeList(Model model, @RequestParam(value="pageNum", defaultValue="1") int pageNum) {
+			service.list(pageNum, model);
+			return "admin/notice/userNoticeList";
+		}
+	 
+	 @RequestMapping("/nsb/noticeView")
+	 public String userNoticeView(Model model, int num, int pageNum) {
+		 	NoticeBoardDTO dto = service.readContent(num);
+		 	model.addAttribute("dto",dto);
+		 	model.addAttribute("pageNum",pageNum);
+			return "admin/notice/userNoticeView";
+		}
+	 
 }
 	
 	

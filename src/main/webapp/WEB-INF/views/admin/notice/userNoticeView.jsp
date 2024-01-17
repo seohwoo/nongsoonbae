@@ -6,11 +6,6 @@
     <head>
         <meta charset="UTF-8">
         <title>공지읽기</title>
-        <script>
-		    function confirmDelete() {
-		        return confirm('삭제하시겠습니까?');
-		    }
-		</script>
         <style>
             /* 기존 CSS 스타일 */
             body {
@@ -66,11 +61,7 @@
         <div class="container">
             <div class="header">
                 <h2>${dto.title}</h2>
-                <a href="/admin/noticeList" class="back-button">전체글보기</a>
-                <form action="/admin/noticeDeletePro" method="post" style="display: inline;" onsubmit="return confirmDelete();">
-   					 <input type="hidden" value="${dto.num}" name="num" />
-   					 <button type="submit" class="delete-button">삭제하기</button>
-				</form>
+                <a href="/nsb/noticeList" class="back-button">전체글보기</a>
             </div>
             <div class="notice-details">
                 <h3>작성자: 관리자</h3>
