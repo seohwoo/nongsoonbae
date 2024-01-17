@@ -55,9 +55,22 @@ public interface ProductService {
 	
 	public String selectName(String username);
 	
-	public List<ProductDTO> selectOption(String productnum, String username);
+	public List<ProductDTO> selectOption(String username, String optionstatus);
 	
 	public List<AllProductDTO> allProduct();
+	
+	// 찜하기
+	public void productPick(String username, String productnum);
+	
+	// 장바구니
+	public void productShoppingCart(String username, String productnum);	
+	
+	// 찜하기 누를 때마다 1씩 증가
+	public void updateProductWishcount(String username, String productnum);
+	
+	// 찜하기 유무
+	public int selectProductPickCount(String username, String productnum);
+	
 	
 	// TEST
 	

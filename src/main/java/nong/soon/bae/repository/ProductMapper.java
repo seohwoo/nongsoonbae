@@ -61,8 +61,26 @@ public interface ProductMapper {
 	
 	public String selectName(String username);
 	
-	public List<ProductDTO> selectOption(@Param("productnum") String productnum,
-		    							 @Param("username") String username);
+	public List<ProductDTO> selectOption(
+										 @Param("username") String username,
+										 @Param("optionstatus") String optionstatus);
+	// 찜하기
+	public void productPick(@Param("username") String username, 
+							@Param("productnum") String productnum);
+
+	// 장바구니
+	public void productShoppingCart(@Param("username") String username, 
+									@Param("productnum") String productnum);
+	
+	// 찜하기 누를 때마다 1씩 증가
+	public void updateProductWishcount(@Param("username") String username, 
+									   @Param("productnum") String productnum);
+	
+	// 찜하기 유무
+	public int selectProductPickCount(@Param("username") String username, 
+			   						  @Param("productnum") String productnum);
+	
+	
 	// TEST
 	
 	public List<ProductDTO> myProduct(String username);

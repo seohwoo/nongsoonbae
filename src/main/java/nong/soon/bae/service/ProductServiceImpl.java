@@ -155,8 +155,31 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDTO> selectOption(String productnum, String username) {
-		return mapper.selectOption(productnum, username);
+	public List<ProductDTO> selectOption(String username, String optionstatus) {
+		return mapper.selectOption(username, optionstatus);
+	}
+	
+	// 찜하기
+	@Override
+	public void productPick(String username, String productnum) {
+		mapper.productPick(username, productnum);
+	}
+
+	// 장바구니
+	@Override
+	public void productShoppingCart(String username, String productnum) {
+		mapper.productShoppingCart(username, productnum);
+	}
+	
+	// 찜하기 누를 때마다 1씩 증가
+	@Override
+	public void updateProductWishcount(String username, String productnum) {
+		mapper.updateProductWishcount(username, productnum);
+	}
+
+	@Override
+	public int selectProductPickCount(String username, String productnum) {
+		return mapper.selectProductPickCount(username, productnum);
 	}
 	
 
