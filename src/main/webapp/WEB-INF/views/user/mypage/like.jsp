@@ -7,7 +7,7 @@
       <table>
       	<tr>
       		<td colspan="4">
-      		<h1>${username}님! 어서오세요.</h1>
+      		<h1>찜/구독 리스트</h1>
       		</td>
       	</tr>
       	<tr><td colspan="4"></td></tr>

@@ -21,32 +21,49 @@
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark" id="like">
+	        <a href="/user/like" class="nav-link link-dark" id="like">
 	          찜/구독
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark" id="store">
-	          내 상점
-	        </a>
-	      </li>
-	      <li>
-	        <a href="#" class="nav-link link-dark" id="cart">       
+	        <a href="/user/cart" class="nav-link link-dark" id="cart">       
 	          장바구니
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark" id="buylist"> 
+	        <a href="/user/buyList" class="nav-link link-dark" id="buylist"> 
 	          구매내역
 	        </a>
 	      </li>
     </ul>
       <br>
     </div>
-    <jsp:include page="/WEB-INF/views/user/mypage/home.jsp"/>
+    <div id="content">
+   		<jsp:include page="/WEB-INF/views/user/mypage/home.jsp"/>
+    </div>
   </div>
 </div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle sidebar menu clicks
+            $('.nav-link').on('click', function (e) {
+                e.preventDefault();
 
+                // Remove 'active' class from all sidebar links
+                $('.nav-link').removeClass('active');
+
+                // Add 'active' class to the clicked sidebar link
+                $(this).addClass('active');
+
+                // Get the ID of the clicked sidebar link
+                var contentId = $(this).attr('id');
+
+                // Load content based on the clicked menu
+                $('#content').load(contentId);
+            });
+        });
+    </script>
+<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

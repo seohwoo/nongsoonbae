@@ -24,7 +24,7 @@
 		        <div style="margin-right: 10px;">
 		           <form action="/nsb/menu" method="get" onsubmit="return checkAndRedirect('${dto.cate1}')">
 			            <input type="hidden" name="cate1" value="${dto.cate1}" />
-		 	            <button type="submit">
+		 	            <button class="btn" type="submit">
 			 	            <img src="${dto.img}" border="0" width="100" height="100">
 			 	            <br />
 			                <span>${dto.catename}</span>

@@ -21,6 +21,8 @@ table.table {
 	padding: 15px;
 }
 table.chart{
+	padding-top: 550px;
+	padding-bottom: 200px;
 }
 table.season{
 	padding-top: 100px;
@@ -49,4 +51,9 @@ td.page{
 	display: flex;
 	margin-left: auto; 
 	margin-right: auto;
+}
+.bton {
+	padding-left : 0px;
+	padding-right : 0px;
+	border: none;
 }

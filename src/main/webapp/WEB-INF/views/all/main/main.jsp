@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
 		<meta charset="UTF-8">
 		<title>메인입니당</title>		
 		<script type="text/javascript">
