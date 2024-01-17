@@ -1,7 +1,6 @@
 @charset "UTF-8";
 .container-fluid{
-	padding-top : 10%;
-	
+	padding-top : 160px;
 }
 .bd-navbar {
   position: sticky;
@@ -12,7 +11,6 @@
 }
 .bd-sidebar {
   position: sticky;
-  top: 4rem;
   z-index: 1000;
   height: calc(100vh - 4rem);
   background: #eee;

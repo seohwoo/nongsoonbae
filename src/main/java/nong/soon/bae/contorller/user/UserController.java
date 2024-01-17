@@ -17,4 +17,16 @@ public class UserController {
 		model.addAttribute("username", username);
 		return "user/mypage/mypage";
 	}
+	
+	@RequestMapping("home")
+	public String home(String username,  Model model) {
+		model.addAttribute("username", username);
+		return "user/mypage/home";
+	}
+	
+	@RequestMapping("like")
+	public String like(Principal principal) {
+		
+		return "user/mypage/like";
+	}
 }
