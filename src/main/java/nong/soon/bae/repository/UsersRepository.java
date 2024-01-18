@@ -17,6 +17,9 @@ public interface UsersRepository extends JpaRepository<Member, Long> {
 	UsersDTO FindByEmail(String email);
 	
 	void createDetails(String username);
+	void createReviews(String username);
+	void createMypage(String username);
+	void createPayment(String username);
 	void addDetails(UserDetailsDTO details);
 	
 	void changePass(@Param("password") String password,@Param("username") String username);

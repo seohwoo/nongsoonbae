@@ -8,7 +8,7 @@
 table{
 	font-family: 'SUITE-Regular';
 	display: -ms-flexbox;
-	display: flex;
+	
 	-ms-flex-align: center;
 	text-align: center;
 	align-items: center;
@@ -21,8 +21,11 @@ table.table {
 	padding: 15px;
 }
 table.chart{
-	padding-top: 550px;
-	padding-bottom: 200px;
+	width : 80%;
+	margin-top: 550px;
+	margin-bottom: 200px;
+	margin-left: auto;
+	margin-right: auto;
 }
 table.season{
 	padding-top: 100px;

@@ -80,9 +80,9 @@ public class MemberController {
 		logger.info("===============register================");
 		usersRepository.save(users);
 		usersRepository.createDetails(username);
-		//usersRepository.createReviews(username);
-		//usersRepository.createMypage(username);
-		//usersRepository.createPayment(username);
+		usersRepository.createReviews(username);
+		usersRepository.createMypage(username);
+		usersRepository.createPayment(username);
 		
 		logger.warn("회원가입 후 로그인");
         UsersDTO vo = usersRepository.FindByUser(username);
