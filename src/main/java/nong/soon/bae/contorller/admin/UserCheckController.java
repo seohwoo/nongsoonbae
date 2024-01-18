@@ -22,5 +22,11 @@ public class UserCheckController {
 		return "admin/usercheck/userall";
 	}
 	
+	@RequestMapping("/stopPro") //회원 정지하기 
+	public String stopPro(@RequestParam("username") String username, 
+            				@RequestParam("reason") String reason) {
+		service.userstop(username,reason);
+		return "redirect:/admin/userall";
+	}
 
 }

@@ -54,9 +54,7 @@ public class CategoryServiceImpl implements CategoryService{
 			productlist = mapper.productlist(cate1);
 		}
 		model.addAttribute("cnt",cnt);
-		System.out.println(cnt);
 		model.addAttribute("productlist",productlist);
-		System.out.println(productlist);
 		
 	}
 
@@ -70,9 +68,8 @@ public class CategoryServiceImpl implements CategoryService{
 			productlistdetail = mapper.productlistdetail(categoryMap);
 		}
 		model.addAttribute("cntDetail", cntDetail);
-		System.out.println(cntDetail);
 		model.addAttribute("productlistdetail",productlistdetail);
-		System.out.println(productlistdetail);
+		
 	}
 		
 	}

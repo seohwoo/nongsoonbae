@@ -52,6 +52,13 @@ public class UserCheckServiceImpl implements UserCheckService{
 	    
 	}
 
+
+
+	@Override
+	public String userstop(String username, String reason) {
+		return mapper.userstop(reason,username);	
 	}
+
+}
 
 

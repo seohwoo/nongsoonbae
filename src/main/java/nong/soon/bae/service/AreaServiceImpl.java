@@ -51,11 +51,8 @@ public class AreaServiceImpl implements AreaService{
 		if(cnt>0){
 			productlist = mapper.productlist(area1);
 		}
-		
-		model.addAttribute("cnt",cnt);
-		System.out.println(cnt);
+		model.addAttribute("cnt",cnt);		
 		model.addAttribute("productlist",productlist);
-		System.out.println(productlist);
 	}
 	
 	@Override
