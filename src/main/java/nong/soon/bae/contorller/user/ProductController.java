@@ -310,7 +310,7 @@ public class ProductController {
 		String areaName1 = service.selectAreaName1(areaDTO);
 		
 		// 닉네임 가져오는 코드
-		String name = service.selectName(username);
+		String name = service.selectName(otherUsername);
 
 		// 상품의 옵션값 가져오는 코드
 		String optionstatus = productnum;

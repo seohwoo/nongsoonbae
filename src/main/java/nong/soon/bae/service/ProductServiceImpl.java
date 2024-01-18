@@ -150,8 +150,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String selectName(String username) {
-		return mapper.selectName(username);
+	public String selectName(String otherUsername) {
+		return mapper.selectName(otherUsername);
 	}
 
 	@Override

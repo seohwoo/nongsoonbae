@@ -145,7 +145,7 @@
 	</select>
 	
 	<select id="selectName" resultType="String" parameterType="String">
-		select name from users where username=#{username}
+		select name from users where username=#{otherUsername}
 	</select>
 	
 	<select id="selectOption" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">

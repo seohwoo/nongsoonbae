@@ -56,7 +56,7 @@ public interface ProductService {
 	
 	public String selectAreaName2(AreaDTO areaDTO);
 	
-	public String selectName(String username);
+	public String selectName(String otherUsername);
 	
 	public List<ProductDTO> selectOption(String username, String optionstatus, String otherUsername);
 	

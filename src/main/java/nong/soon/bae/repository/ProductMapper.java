@@ -64,7 +64,7 @@ public interface ProductMapper {
 	
 	public String selectAreaName2(AreaDTO areaDTO);
 	
-	public String selectName(String username);
+	public String selectName(String otherUsername);
 	
 	public List<ProductDTO> selectOption(@Param("username") String username,
 										 @Param("optionstatus") String optionstatus,
