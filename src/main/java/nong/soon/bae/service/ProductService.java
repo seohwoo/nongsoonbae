@@ -59,25 +59,29 @@ public interface ProductService {
 	
 	public List<AllProductDTO> allProduct();
 
-	// 찜하기 유무
+	// 상품 찜하기 유무
 	public int selectProductPickCount(String username, String productnum);	
 		
-	// 찜하기
+	// 상품 찜하기
 	public void productPick(String username, String productnum);
 
 	// 찜하기 누를 때마다 상품 찜 1씩 증가
 	public void updateProductWishcount(String username, String productnum);	
 
-	// 찜 삭제하기
+	// 상품 찜 삭제하기
 	public void productPickDelete(String username, String productnum);
 	
 	// 찜 삭제하기 누를 때마다 상품 찜 1씩 감소
 	public void deleteProductWishcount(String username, String productnum);	
 	
-	// 장바구니
+	// 장바구니 상품 유무
+	public int selectProductShoppingCartCount(String username, String productnum);
+	
+	// 장바구니 상품 담기
 	public void productShoppingCart(String username, String productnum);	
 	
-
+	// 장바구니 상품 삭제하기
+	public void productShoppingCartDelete(String username, String productnum);
 	
 
 	

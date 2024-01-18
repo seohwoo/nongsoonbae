@@ -24,11 +24,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -208,64 +210,57 @@ public class ProductController {
 	}
 	 
 	// FINISH
-	
-	// TEST
-	////////////////////////////////////////////////////////
-	 public void isFile(String[] filenames, String content) {
-		 srcValues.clear();
-		 realFiles.clear();
-		 Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
-	     Matcher matcher = pattern.matcher(content);
-	     while (matcher.find()) {
-	         srcValues.add(matcher.group(1));
-	     }
-		 for (int i = 0; i < srcValues.size(); i++) {
-			int lastSlashIndex = srcValues.get(i).lastIndexOf('/');
-			if (lastSlashIndex != -1 && lastSlashIndex < srcValues.get(i).length() - 1) {
-				srcValues.set(i, srcValues.get(i).substring(lastSlashIndex + 1));
-			}
-		 }
-		 if(filenames.length != srcValues.size()) {
-			 for (int i = 0; i < srcValues.size(); i++) {
-				for (String filename : filenames) {
-					if(filename.equals(srcValues.get(i))) {
-						realFiles.add(srcValues.get(i));
-					}
-				}
-			}
-		 }else {
-			 realFiles = srcValues;
-		 }
-	 }
+
+	public void isFile(String[] filenames, String content) {
+		srcValues.clear();
+		realFiles.clear();
+		Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
+	    Matcher matcher = pattern.matcher(content);
+	    while (matcher.find()) {
+	    	srcValues.add(matcher.group(1));
+	    }
+	    for (int i = 0; i < srcValues.size(); i++) {
+	    	int lastSlashIndex = srcValues.get(i).lastIndexOf('/');
+	    	if (lastSlashIndex != -1 && lastSlashIndex < srcValues.get(i).length() - 1) {
+	    		srcValues.set(i, srcValues.get(i).substring(lastSlashIndex + 1));
+	    	}
+	    }
+	    if(filenames.length != srcValues.size()) {
+	    	for (int i = 0; i < srcValues.size(); i++) {
+	    		for (String filename : filenames) {
+	    			if(filename.equals(srcValues.get(i))) {
+	    				realFiles.add(srcValues.get(i));
+	    			}
+	    		}
+	    	}
+	    }else {
+	    	realFiles = srcValues;
+	    }
+	}
 	
 	@RequestMapping(value = "uploadSummernoteImageFile", produces = "application/json", consumes = "multipart/form-data")
 	public ResponseEntity<JsonNode> uploadSummernoteImageFile(@RequestPart("file") MultipartFile multipartFile,
 	      HttpServletRequest request) {
-	   ObjectMapper objectMapper = new ObjectMapper();
-	   JsonNode responseJson;
-	   String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
-		
-	   try {
-	      String originalFileName = multipartFile.getOriginalFilename();
-	      String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-	      String savedFileName = UUID.randomUUID() + extension;
-	      Path targetPath = Path.of(fileRoot, savedFileName);
-	      Files.copy(multipartFile.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-		
-	      String imageUrl = request.getContextPath() + "/resources/summernoteImage/" + savedFileName;
-	      responseJson = objectMapper.createObjectNode()
-	            .put("url", imageUrl)
-	            .put("responseCode", "success")
-	            .put("fileName", savedFileName);
-	      return ResponseEntity.ok(responseJson);
-	   } catch (IOException e) {
-	      responseJson = objectMapper.createObjectNode().put("responseCode", "error");
-	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
-	   }
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode responseJson;
+		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
+		try {
+			String originalFileName = multipartFile.getOriginalFilename();
+			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+			String savedFileName = UUID.randomUUID() + extension;
+			Path targetPath = Path.of(fileRoot, savedFileName);
+			Files.copy(multipartFile.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+			String imageUrl = request.getContextPath() + "/resources/summernoteImage/" + savedFileName;
+			responseJson = objectMapper.createObjectNode()
+					.put("url", imageUrl)
+					.put("responseCode", "success")
+					.put("fileName", savedFileName);
+			return ResponseEntity.ok(responseJson);
+		} catch (IOException e) {
+			responseJson = objectMapper.createObjectNode().put("responseCode", "error");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
+		}
 	}
-	////////////////////////////////////////////////////////////////////////////
-	
-	
 	
 	@RequestMapping("myProduct")
 	public String myProduct(Model model, Principal principal, ProductDTO dto) {
@@ -354,11 +349,15 @@ public class ProductController {
 	public String productPick(Principal principal, String productnum) {
 		String username = principal.getName();
 		
+		// 상품 찜하기 유무
 		int count = service.selectProductPickCount(username, productnum);
+		
+		// 상품 찜 안돼있으면(0) 내 테이블에 상품 찜하고 판매자 상품 찜한 갯수에 +1
 		if(count == 0) {
 			service.productPick(username, productnum);
 			service.updateProductWishcount(username, productnum);
 		}else {
+			// 상품 찜 돼있으면 내 테이블에 상품 찜 삭제하고 판매자 상품 찜한 갯수에 -1 
 			service.productPickDelete(username, productnum);
 			service.deleteProductWishcount(username, productnum);
 		}
@@ -369,7 +368,17 @@ public class ProductController {
 	@RequestMapping("productShoppingCart")
 	public String productShoppingCart(Principal principal, String productnum) {
 		String username = principal.getName();
-		service.productShoppingCart(username, productnum);
+		
+		// 장바구니 상품 유무
+		int count = service.selectProductShoppingCartCount(username, productnum);
+		
+		// 장바구니에 상품 없으면(0) 장바구니에 상품 담기
+		if(count == 0) {
+			service.productShoppingCart(username, productnum);
+		}else {
+			// 장바구니에 상품 있으면 장바구니에 상품 삭제하기
+			service.productShoppingCartDelete(username, productnum);
+		}
 		return "redirect:/product/productMain"; 
 	}	
 	

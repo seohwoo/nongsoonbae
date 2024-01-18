@@ -159,13 +159,13 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectOption(username, optionstatus);
 	}
 
-	// 찜하기 유무
+	// 상품 찜하기 유무
 	@Override
 	public int selectProductPickCount(String username, String productnum) {
 		return mapper.selectProductPickCount(username, productnum);
 	}	
 	
-	// 찜하기
+	// 상품 찜하기
 	@Override
 	public void productPick(String username, String productnum) {
 		mapper.productPick(username, productnum);
@@ -177,7 +177,7 @@ public class ProductServiceImpl implements ProductService {
 		mapper.updateProductWishcount(username, productnum);
 	}
 
-	// 찜 삭제하기
+	// 상품 찜 삭제하기
 	@Override
 	public void productPickDelete(String username, String productnum) {
 		mapper.productPickDelete(username, productnum);
@@ -189,14 +189,25 @@ public class ProductServiceImpl implements ProductService {
 		mapper.deleteProductWishcount(username, productnum);
 	}
 	
-
+	// 장바구니 상품 유무
+	@Override
+	public int selectProductShoppingCartCount(String username, String productnum) {
+		return mapper.selectProductShoppingCartCount(username, productnum);
+	}
 	
-	
-	// 장바구니
+	// 장바구니 상품 담기
 	@Override
 	public void productShoppingCart(String username, String productnum) {
 		mapper.productShoppingCart(username, productnum);
 	}
+	
+	// 장바구니 상품 삭제하기
+	@Override
+	public void productShoppingCartDelete(String username, String productnum) {
+		mapper.productShoppingCartDelete(username, productnum);
+	}
+
+
 	
 
 

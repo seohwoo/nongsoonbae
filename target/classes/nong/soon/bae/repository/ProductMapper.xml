@@ -148,13 +148,13 @@
 	</select>
 
 
-	<!-- 찜하기 유무 -->
+	<!-- 상품 찜하기 유무 -->
 	<select id="selectProductPickCount" resultType="int" parameterType="String">
 		select count(*) from ${username}_mypage
 		where productnum=#{productnum} and wishstatus=1
 	</select>
 	
-	<!-- 찜하기 -->
+	<!-- 상품 찜하기 -->
 	<insert id="productPick" parameterType="String">
 		insert into ${username}_mypage (username, productnum, wishstatus) 
 	    values(
@@ -167,7 +167,7 @@
 		where productnum=#{productnum}
 	</update>
 
-	<!-- 찜 삭제하기 -->
+	<!-- 상품 찜 삭제하기 -->
 	<delete id="productPickDelete" parameterType="String">
 		delete from ${username}_mypage where productnum=#{productnum} and wishstatus=1
 	</delete>
@@ -178,13 +178,26 @@
 		where productnum=#{productnum}
 	</update>
 	
+	<!-- 장바구니 상품 유무 -->
+	<select id="selectProductShoppingCartCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage
+		where productnum=#{productnum} and wishstatus=2
+	</select>	
 	
-	<!-- 장바구니 -->
+	<!-- 장바구니 상품 담기 -->
 	<insert id="productShoppingCart" parameterType="String">
 		insert into ${username}_mypage (username, productnum, wishstatus) 
 	    values(
 	        #{username}, #{productnum}, 2 )			
 	</insert>
+	
+	<!-- 장바구니 상품 삭제하기 -->
+		<delete id="productShoppingCartDelete" parameterType="String">
+		delete from ${username}_mypage where productnum=#{productnum} and wishstatus=2
+	</delete>
+	
+
+	
 	
 	
 	<!-- TEST -->
