@@ -49,20 +49,20 @@ public class MemberController {
 	
 	@RequestMapping("/form")
 	public String loginForm() {
-		logger.info("===============form================");
+		
 		return "all/loginForm";
 	}
 	
 	@RequestMapping("/error")
 	public String loginError() {
-		logger.info("===============error================");
+		
 		return "all/loginError";
 	}
 	
 	
 	@RequestMapping("/regForm")
 	public String regForm() {
-		logger.info("===============reg================");
+		
 		return "all/regForm";
 	}
 	
@@ -79,19 +79,18 @@ public class MemberController {
 		String username = users.getUsername();
 		logger.info("===============register================");
 		usersRepository.save(users);
-		logger.info("===============createDetails================");
-		
 		usersRepository.createDetails(username);
+		//usersRepository.createReviews(username);
+		//usersRepository.createMypage(username);
+		//usersRepository.createPayment(username);
 		
 		logger.warn("회원가입 후 로그인");
         UsersDTO vo = usersRepository.FindByUser(username);
         String grade = usersRepository.GetByAuth(username);
-        logger.warn("member:: " + vo);
-        logger.warn("grade : " + grade);
+        
         	/*CustomUserDetailsService*/
         CustomUser user = new CustomUser(vo);
-        logger.warn("user : " + user);
-        
+        logger.warn("user : " + user); 
         List<GrantedAuthority> roles = new ArrayList<>(1);
         String roleStr = grade.equals("admin") ? "ADMIN" : "MEMBER";
         if(grade=="ADMIN") {
@@ -100,13 +99,6 @@ public class MemberController {
         	roles.add(new SimpleGrantedAuthority("MEMBER"));
         }
         roles.add(new SimpleGrantedAuthority(roleStr));
-        UserGradeDTO gradeDTO = new UserGradeDTO();
-        logger.warn("grade : " + grade);
-        if(usersRepository.regCheck(username)==null) {
-	        gradeDTO.setGrade(grade);
-	        gradeDTO.setUsername(username);
-	        usersRepository.saveauth(gradeDTO);
-        }
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
         logger.warn("auth : " + auth);
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -153,10 +145,6 @@ public class MemberController {
 		dto.setUsername(username);
 		dto.setAddress(address);
 		dto.setPhone(phone);
-		logger.info("=========="+username+"==========");
-		logger.info("=========="+address+"==========");
-		logger.info("=========="+phone+"==========");
-		logger.info("=========="+filename+"==========");
 		usersRepository.addDetails(dto);
 		
 		
@@ -214,9 +202,6 @@ public class MemberController {
 	public String passPro(String password, String username) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		password = passwordEncoder.encode(password);
-		logger.info("=============controll============");
-		logger.info("============="+password+"============");
-		logger.info("============="+username+"============");
 		usersRepository.changePass(password, username);
 		return "success";
 	}
