@@ -9,6 +9,7 @@
    
   
    <beans:bean id="checkMap" class="java.util.HashMap" />
-   <beans:bean id="usersDTO" class="nong.soon.bae.bean.UsersDTO"/>
+   <beans:bean id="userCheckDTO" class="nong.soon.bae.bean.UserCheckDTO"/>
+   <beans:bean id="blackListDTO" class="nong.soon.bae.bean.BlackListDTO"/>
   
 </beans:beans>

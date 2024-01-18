@@ -52,13 +52,14 @@
     </style>
 	</head>
 	<body>
-		<h2>일반 회원 목록 (${count} 명)</h2>
+	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+		<h2>일반 회원 목록 (${count} 명)</h2>	
 			<c:forEach var="list" items="${list}">
 				<div class="userlist">
 					<form action="/admin/stopPro" method="post" onsubmit="return confirmSubmission(this)">
-		                <input type="hidden" name="userId" value="${list.username}"> 
-			            <h2>${list.username}</h2>
-			            <h3>${list.name}</h3>
+		                <input type="hidden" name="username" value="${list.username}"> 
+			            <h2>💟 ID : ${list.username}</h2>
+			            <h3>이름 : ${list.name}</h3>
 		                <input type="button" value="정지하기" onclick="toggleOptions(this)"/>
 		                <div class="options" style="display:none;">
 		                    <select name="reason">
@@ -97,6 +98,7 @@
 				            <button type="submit">[다음]</button>
 				        </form>
 				    </c:if>
+				   </div>
 	</body>
 	<script>
 	    function toggleOptions(button) {
@@ -106,17 +108,18 @@
 	        optionsDiv.style.display = "block";
 	    } else {
 	        optionsDiv.style.display = "none";
-	    }
-	}
+	    	}
+		}
+	    
 	    function confirmSubmission(form) {
 	        var reasonSelect = form.querySelector('select[name="reason"]');
 	        var reasonValue = reasonSelect.value;
-
+	        var username = form.querySelector('input[name="username"]').value;
 	        if (reasonValue === "notReason") {
 	            alert("사유를 선택해주세요!");
 	            return false; 
 	        } else {
-	            return confirm("정지하시겠습니까?"); 
+	            return confirm(username + '님을 정지하시겠습니까?'); 
 	        }
 	    }
 
