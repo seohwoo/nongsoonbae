@@ -66,7 +66,7 @@
             <div class="notice-details">
                 <h3>작성자: 관리자</h3>
                 <h3>조회수: ${dto.readcount}</h3>
-                <p>작성일: <fmt:formatDate value="${dto.regdate}" type="date" dateStyle="short" /></p>
+                <p>작성일: <fmt:formatDate value="${dto.regdate}" pattern="yyyy년 MM월 dd일" /></p>
             </div>
             <div class="content">
                 ${dto.content}    

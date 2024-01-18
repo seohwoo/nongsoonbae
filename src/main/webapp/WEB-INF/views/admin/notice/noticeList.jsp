@@ -44,7 +44,7 @@
 						    </button>
 						</form>
 						<div class="notice-meta">
-							<p>작성일: <fmt:formatDate value="${article.regdate}" type="date" dateStyle="short" /></p>
+							<p>작성일: <fmt:formatDate value="${article.regdate}" pattern="yyyy년 MM월 dd일" /></p>
 							<p>조회수: ${article.readcount}</p>
 						</div>
 						</div>

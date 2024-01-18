@@ -6,7 +6,7 @@
 	<select id="count" resultType="int">
 		select count(*) from users where grade='ROLE_USER'
 	</select>
-	<select id="userlist" resultType="nong.soon.bae.bean.UsersDTO" >
+	<select id="userlist" resultType="nong.soon.bae.bean.UserCheckDTO" >
 		<![CDATA[
          SELECT * FROM 
     		(SELECT b.*, rownum r FROM 
@@ -14,9 +14,35 @@
 				WHERE r >= #{start} AND r <= #{end}
       ]]>
 	</select>
-	<update id="userstop" parameterType="String">
-		update users set grade='ROLE_STOP', ban=#{reason} where username=#{username}
+	<update id="userstop" parameterType="hashMap" >
+		update users set grade='ROLE_STOP' where username=#{username}
 	</update>
-	
-	
+	<insert id="blacklistInsert" parameterType="hashMap"  >
+		insert into blacklist values (
+				#{username},
+				#{reason},
+				sysdate
+		)
+	</insert>
+	<select id="blackcount" resultType="int">
+		select count(*) from users where grade='ROLE_STOP'
+	</select>
+	<select id="blacklist" resultType="nong.soon.bae.bean.UserCheckDTO" >
+		<![CDATA[
+         SELECT * FROM 
+    		(SELECT a.*, rownum r FROM 
+       			 (SELECT u.username AS u_username,u.name AS u_name,u.email AS u_email, b.reason AS b_reason, b.bandate AS b_bandate
+         			FROM users u 
+         				JOIN blacklist b ON u.username = b.username 
+        					 ORDER BY b.bandate DESC) a) 
+			WHERE r >= #{start} AND r <= #{end}
+
+      ]]>
+	</select>
+	<update id="reuser" parameterType="hashMap">
+		update users set grade='ROLE_USER' where username=#{username}
+	</update>
+	<delete id="deleteblacklist" parameterType="hashMap">
+		delete from blacklist where username=#{username}
+	</delete>
 </mapper>
