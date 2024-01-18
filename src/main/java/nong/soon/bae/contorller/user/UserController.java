@@ -30,4 +30,10 @@ public class UserController {
 		
 		return "user/mypage/like";
 	}
+	
+	@RequestMapping("cart")
+public String cart(Principal principal) {
+		
+		return "user/mypage/cart";
+	}
 }

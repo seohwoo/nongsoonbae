@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<main class="col-9 py-md-3 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right: auto;">
+	<main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
       <table>
       	<tr>
       		<td colspan="4">

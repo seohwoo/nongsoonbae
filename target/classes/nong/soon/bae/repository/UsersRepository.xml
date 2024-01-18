@@ -44,6 +44,33 @@
 	<insert id="createDetails">
 		insert into userdetails(username) values(#{username})
 	</insert>
+	<insert id="createReviews">
+		create table #{username}_reviews ( 
+			productnum varchar2(50) primary key,
+			content varchar2(4000) not null,
+			imagecount number default 0,
+			stars number default 5,
+			regdate dae default sysdate)
+	</insert>
+	<insert id="createMypage">
+		create table #{username}_mypage ( 
+			username varchar2(50) not null,
+			productnum varchar2(50),
+			wishstatus number not null)
+	</insert>
+	<insert id="createPayment">
+		create table #{username}_payment (
+			username varchar2(50) not null,
+			price number not null,
+			totalprice number not null,
+			productnum varchar2(50) not null,
+			address varchar2(1000) not null,
+			count number not null,
+			orderdate date default sysdate,
+			payment number not null,
+			phone varchar2(50) not null)
+	</insert>
+	
 	<update id="addDetails"  parameterType="nong.soon.bae.bean.UserDetailsDTO">
 		update userdetails set image=#{image}, address=#{address}, phone=#{phone}, updatedate=sysdate where username=#{username}
 	</update>
