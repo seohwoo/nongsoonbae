@@ -84,10 +84,11 @@
 				
 				<tr> 
 					<td colspan="2" align="center"> 
-						<input type="submit" name="confirm" value="리뷰쓰기" >
+						<input type="submit" name="confirm" value="결제하기" >
 																			
-						<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPick?productnum=${productnum}'">
-						<input type="button" value="장바구니" onclick="javascript:window.location='/product/productShoppingCart?productnum=${productnum}'">
+						<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPick?productnum=${productnum}&otherUsername=${otherUsername}'">
+						<input type="button" value="장바구니" onclick="javascript:window.location='/product/productShoppingCart?productnum=${productnum}&otherUsername=${otherUsername}'">
+						<input type="button" value="리뷰쓰기" onclick="javascript:window.location='#'">
 					</td>
 				</tr>			
 			</table>

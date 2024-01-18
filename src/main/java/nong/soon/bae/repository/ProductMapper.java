@@ -47,13 +47,18 @@ public interface ProductMapper {
 	// FINISH
 	
 	public List<AllProductDTO> allProduct();
+
+	// 상품넘버로 유저네임찾기
+	public String selectUsername(String productnum);
 	
 	// 상품 상세정보 보기
 	public ProductDTO productDetail(@Param("productnum") String productnum,
-								    @Param("username") String username);
+								    @Param("username") String username,
+									@Param("otherUsername") String otherUsername);
 	
 	public AreaDTO selectArea(@Param("productnum") String productnum,
-							  @Param("username") String username);
+							  @Param("username") String username,
+							  @Param("otherUsername") String otherUsername);
 	
 	public String selectAreaName1(AreaDTO areaDTO);
 	
@@ -61,9 +66,9 @@ public interface ProductMapper {
 	
 	public String selectName(String username);
 	
-	public List<ProductDTO> selectOption(
-										 @Param("username") String username,
-										 @Param("optionstatus") String optionstatus);
+	public List<ProductDTO> selectOption(@Param("username") String username,
+										 @Param("optionstatus") String optionstatus,
+										 @Param("otherUsername") String otherUsername);
 
 	// 상품 찜하기 유무
 	public int selectProductPickCount(@Param("username") String username, 
@@ -71,10 +76,11 @@ public interface ProductMapper {
 	
 	// 상품 찜하기
 	public void productPick(@Param("username") String username, 
-							@Param("productnum") String productnum);
+							@Param("productnum") String productnum,
+							@Param("otherUsername") String otherUsername);
 
 	// 찜하기 누를 때마다 상품 찜 1씩 증가
-	public void updateProductWishcount(@Param("username") String username, 
+	public void updateProductWishcount(@Param("otherUsername") String otherUsername, 
 									   @Param("productnum") String productnum);	
 	
 	// 상품 찜 삭제하기
@@ -82,7 +88,7 @@ public interface ProductMapper {
 								  @Param("productnum") String productnum);
 	
 	// 찜 삭제하기 누를 때마다 상품 찜 1씩 감소
-	public void deleteProductWishcount(@Param("username") String username, 
+	public void deleteProductWishcount(@Param("otherUsername") String otherUsername, 
 									   @Param("productnum") String productnum);
 	
 	// 장바구니 상품 유무
@@ -91,14 +97,25 @@ public interface ProductMapper {
 	
 	// 장바구니 상품 담기
 	public void productShoppingCart(@Param("username") String username, 
-									@Param("productnum") String productnum);	
+									@Param("productnum") String productnum,
+									@Param("otherUsername") String otherUsername);
 	
 	// 장바구니 상품 삭제하기
 	public void productShoppingCartDelete(@Param("username") String username, 
 			  							  @Param("productnum") String productnum);	
 	
+	// 상품 클릭시 조회수 증가
+	public void updateReadcount(@Param("username") String username, 
+								@Param("productnum") String productnum);
 	
+	// 상품 조회한 유저
+	public void productReadcountInsert(@Param("username") String username, 
+									   @Param("productnum") String productnum);
 	
+	// 오늘 상품 조회한 사람 찾기
+	public int todayProductReadcount(@Param("username") String username, 
+									 @Param("productnum") String productnum,
+									 @Param("todaydate") String todaydate);
 	
 	// TEST
 	

@@ -6,9 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -40,6 +42,7 @@ import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ProductReadcountDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.service.ProductService;
@@ -284,15 +287,17 @@ public class ProductController {
 	
 	// 상품 상세보기 
 	@RequestMapping("productDetail")
-	public String productDetail(String productnum, Model model, Principal principal, ProductDTO productDTO, AreaDTO areaDTO) {
+	public String productDetail(String productnum, Model model, Principal principal, ProductDTO productDTO, AreaDTO areaDTO, ProductReadcountDTO PRcDTO) {
 		String username = principal.getName();
 		model.addAttribute("username", username);	
 		productDTO.setUsername(username);
-		
-		productDTO = service.productDetail(productnum, username);
+		String otherUsername = service.selectUsername(productnum);
+		productDTO.setOtherUsername(otherUsername);
+		productDTO = service.productDetail(productnum, username, otherUsername);
 		
 		// 상점 주소 가져오는 코드
-		areaDTO = service.selectArea(productnum, username);
+		areaDTO.setOtherUsername(otherUsername);
+		areaDTO = service.selectArea(productnum, username, otherUsername);
 		
 		// area1 가져오는 코드
 		areaDTO.setArea1(areaDTO.getArea1());
@@ -309,9 +314,25 @@ public class ProductController {
 
 		// 상품의 옵션값 가져오는 코드
 		String optionstatus = productnum;
-		List<ProductDTO> option = service.selectOption(username, optionstatus);
-
-
+		List<ProductDTO> option = service.selectOption(username, optionstatus, otherUsername);
+		
+		
+		// 오늘 날짜 가져오는 코드
+	    Date date = new Date();
+	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd");
+	    String todaydate = simpleDateFormat.format(date);
+	    PRcDTO.setTodaydate(todaydate);
+		
+	    // 조회한 상품 날짜랑 오늘 날짜 비교하는 코드 
+		int count = service.todayProductReadcount(username, productnum, todaydate);
+		
+		// 오늘 상품조회 안했으면 상품조회수+1 , 상품조회 테이블 정보넣기
+		if(count == 0) {
+			service.updateReadcount(username, productnum);
+			service.productReadcountInsert(username, productnum);			
+		}
+		
+		model.addAttribute("otherUsername", otherUsername);
 		model.addAttribute("productnum", productnum);
 		model.addAttribute("option", option);
 		model.addAttribute("name", name);
@@ -346,7 +367,7 @@ public class ProductController {
 	
 	// 찜하기
 	@RequestMapping("productPick")
-	public String productPick(Principal principal, String productnum) {
+	public String productPick(Principal principal, String productnum, String otherUsername) {
 		String username = principal.getName();
 		
 		// 상품 찜하기 유무
@@ -354,19 +375,19 @@ public class ProductController {
 		
 		// 상품 찜 안돼있으면(0) 내 테이블에 상품 찜하고 판매자 상품 찜한 갯수에 +1
 		if(count == 0) {
-			service.productPick(username, productnum);
-			service.updateProductWishcount(username, productnum);
+			service.productPick(username, productnum, otherUsername);
+			service.updateProductWishcount(otherUsername, productnum);
 		}else {
 			// 상품 찜 돼있으면 내 테이블에 상품 찜 삭제하고 판매자 상품 찜한 갯수에 -1 
 			service.productPickDelete(username, productnum);
-			service.deleteProductWishcount(username, productnum);
+			service.deleteProductWishcount(otherUsername, productnum);
 		}
 		return "redirect:/product/productMain"; 
 	}	
 	
 	// 장바구니
 	@RequestMapping("productShoppingCart")
-	public String productShoppingCart(Principal principal, String productnum) {
+	public String productShoppingCart(Principal principal, String productnum, String otherUsername) {
 		String username = principal.getName();
 		
 		// 장바구니 상품 유무
@@ -374,7 +395,7 @@ public class ProductController {
 		
 		// 장바구니에 상품 없으면(0) 장바구니에 상품 담기
 		if(count == 0) {
-			service.productShoppingCart(username, productnum);
+			service.productShoppingCart(username, productnum, otherUsername);
 		}else {
 			// 장바구니에 상품 있으면 장바구니에 상품 삭제하기
 			service.productShoppingCartDelete(username, productnum);
