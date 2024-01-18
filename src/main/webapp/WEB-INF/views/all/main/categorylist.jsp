@@ -13,7 +13,7 @@
             <form action="/nsb/menu" method="post">
                 <input type="hidden" name="cate1" value="${cate.cate1}" />
                 <input type="hidden" name="cate2" value="${cate.cate2}" />
-                <button type="submit">${cate.catename}</button>
+                <button class="btn" type="submit">${cate.catename}</button>
             </form>
         </div>
     </c:forEach>

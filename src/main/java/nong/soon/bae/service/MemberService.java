@@ -24,4 +24,9 @@ public class MemberService {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
+    
+    public boolean isUsernameAvailable(String username) {
+        UsersDTO existingUser = usersRepository.FindByUser(username);
+        return existingUser == null;
+    }
 }

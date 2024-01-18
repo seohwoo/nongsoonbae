@@ -11,7 +11,6 @@ import nong.soon.bae.bean.UsersDTO;
 public interface UsersRepository extends JpaRepository<Member, Long> {
 	public UsersDTO login(String username);
 	void save(UsersDTO users);
-	void saveauth(UserGradeDTO grade);
 	String GetByAuth(String username);
 	String regCheck(String username);
 	UsersDTO FindByUser(String username);

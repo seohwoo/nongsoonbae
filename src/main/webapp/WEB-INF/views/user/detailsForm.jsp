@@ -64,14 +64,33 @@
             }
         }).open();
 	}	
-	$(function(){
-		$("#update").on("click",function(){
-			const address = $('#roadAddress').val() + " " + $('#detailAddress').val() + $('#extraAddress').val();
-            $('#address').val(address);    
-			$("#detailsForm").submit();
-			alert("변경이 완료되었습니다.");
-		});
-	});
+	function chooseImage(input) {
+        var file = input.files[0];
+
+        if (!file.type.match("image.*")) {
+            alert("이미지를 등록해야 합니다.");
+            $('#image').val(null);
+        }
+
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            $('#imagePreview').attr("src", e.target.result);
+        }
+    }
+	
+	 $(function() {   
+	        $("#detailsForm").on("submit", function() {
+	            if (!validateForm()) {
+	                return false; // 폼 제출을 막음
+	            }
+	            const address = $('#roadAddress').val() + " " + $('#detailAddress').val() + $('#extraAddress').val();
+	            $('#address').val(address);
+
+	            return true;
+	        });
+	    }); 
+
 </script>
 </head>
 <body>
@@ -80,8 +99,8 @@
 <form class="form-signin" action="/member/details" method="POST" id="detailsForm" enctype="multipart/form-data" >
 	<h1 class="h3 mb-3 font-weight-normal">회원정보 입력</h1>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	<img src="/resources/img/default.png" style=" max-width: 50%;  height: auto;"> <br />
-	프로필 사진 <input type="file" class="form-control" onchange="chooseImage(this)" required />
+	<img src="/resources/img/default.png" id="imagePreview" style=" max-width: 50%;  height: auto;"> <br />
+	<input type="file" class="form-control" onchange="chooseImage(this)" id="image" name="image" required />
 	주소<input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
 		<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
 		<input type="text" class="form-control" id="roadAddress" placeholder="도로명주소" readonly>
@@ -93,7 +112,7 @@
 	전화번호<input type="text" name="phone" class="form-control" placeholder="PHONE NUMBER" required>
 	<br />
 	<div class="d-grid gap-2  mx-auto">
-	  <input class="btn btn-lg btn-primary btn-block" type="button" id="update" value="UPDATE" />
+	  <input class="btn btn-lg btn-primary btn-block" type="submit" id="update" value="UPDATE" />
 	</div>
 	
 	<p class="mt-5 mb-3 text-muted">detailsForm.jsp</p>

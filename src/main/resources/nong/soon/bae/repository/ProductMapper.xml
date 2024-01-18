@@ -29,7 +29,7 @@
 		    readcount number default 0 not null,
 		    startdate date default sysdate not null,
 		    enddate date,
-		    optionstatus number default 0 )
+		    optionstatus varchar(50) default 0 )
 	</insert>
 
 	<!-- // 개인 이미지(테이블) 만들기 -->
@@ -65,12 +65,13 @@
 	<!-- 상품 옵션 추가 -->
 	<insert id="optionInsert" parameterType="nong.soon.bae.bean.ProductDTO">
 	    insert into ${username}_PRODUCT (productnum, productname, totalprice, 
-	    productcount) 
+	    productcount, optionstatus) 
 	    values(
 	        TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || #{productnum} || LPAD(${seqnum}_seq.nextval, 5, '0')),
 	        #{productname}, 
 	        #{totalprice}, 
-	        #{productcount} )
+	        #{productcount}, 
+	        #{optionstatus} )
 	</insert>
 	
 	<!-- 가장 최근에 상품등록한 productnum값 가져오기 -->
@@ -120,9 +121,70 @@
 
 	<!-- 상품 상세정보 보기 --> 
 	<select id="productDetail" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
-		select * from ${username}_product where productname=#{productname}
+		select * from ${username}_product where productnum=#{productnum}
 	</select>
 	
+	
+	<select id="selectArea" resultType="nong.soon.bae.bean.AreaDTO" parameterType="String">
+		select a.area1, a.area2 from allproduct a, ${username}_product p
+		where a.productnum = p.productnum 
+		and a.productnum = #{productnum}
+	</select>
+	
+	<select id="selectAreaName1" resultType="String" parameterType="nong.soon.bae.bean.AreaDTO">
+		select areaname from area where area1=#{area1} and area2=#{area2}
+	</select>
+	
+	<select id="selectAreaName2" resultType="String" parameterType="nong.soon.bae.bean.AreaDTO">
+		select areaname from area where area1=#{area1} and area2=#{area2}
+	</select>
+	
+	<select id="selectName" resultType="String" parameterType="String">
+		select name from users where username=#{username}
+	</select>
+	
+	<select id="selectOption" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
+		SELECT * FROM ${username}_product WHERE optionstatus = #{optionstatus}
+	</select>
+
+
+	<!-- 찜하기 유무 -->
+	<select id="selectProductPickCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage
+		where productnum=#{productnum} and wishstatus=1
+	</select>
+	
+	<!-- 찜하기 -->
+	<insert id="productPick" parameterType="String">
+		insert into ${username}_mypage (username, productnum, wishstatus) 
+	    values(
+	        #{username}, #{productnum}, 1 )
+	</insert>
+	
+	<!-- 찜하기 누를 때마다 상품 찜 1씩 증가  -->
+	<update id="updateProductWishcount" parameterType="String">
+		update ${username}_product set wishcount = wishcount + 1
+		where productnum=#{productnum}
+	</update>
+
+	<!-- 찜 삭제하기 -->
+	<delete id="productPickDelete" parameterType="String">
+		delete from ${username}_mypage where productnum=#{productnum} and wishstatus=1
+	</delete>
+
+	<!-- 찜 삭제하기 누를 때마다 상품 찜 1씩 감소  -->
+	<update id="deleteProductWishcount" parameterType="String">
+		update ${username}_product set wishcount = wishcount - 1
+		where productnum=#{productnum}
+	</update>
+	
+	
+	<!-- 장바구니 -->
+	<insert id="productShoppingCart" parameterType="String">
+		insert into ${username}_mypage (username, productnum, wishstatus) 
+	    values(
+	        #{username}, #{productnum}, 2 )			
+	</insert>
 	
 	
 	<!-- TEST -->
@@ -135,6 +197,9 @@
 	<select id="productInfo" parameterType="nong.soon.bae.bean.ProductDTO" resultType="nong.soon.bae.bean.ProductDTO">
 		select * from ${username}_product where productnum=#{productnum}
 	</select>
+	
+	
+	
 	
 </mapper>    
     

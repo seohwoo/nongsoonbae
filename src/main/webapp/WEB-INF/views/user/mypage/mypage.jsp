@@ -16,37 +16,48 @@
     <div class="col-2 bd-sidebar align-items">
       <ul class="nav nav-pills flex-column mb-auto" style="margin-top: 100px;">
 	      <li class="nav-item">
-	        <a href="/user/mypage" class="nav-link active" aria-current="page" id="home">  
+	        <a href="/user/mypage" class="nav-link active navitem" aria-current="page" id="home">  
 	          내 정보
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark" id="like">
+	        <a href="/user/like" class="nav-link link-dark navitem" id="like">
 	          찜/구독
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark" id="store">
-	          내 상점
-	        </a>
-	      </li>
-	      <li>
-	        <a href="#" class="nav-link link-dark" id="cart">       
+	        <a href="/user/cart" class="nav-link link-dark navitem" id="cart">       
 	          장바구니
 	        </a>
 	      </li>
 	      <li>
-	        <a href="#" class="nav-link link-dark" id="buylist"> 
+	        <a href="/user/buyList" class="nav-link link-dark navitem" id="buylist"> 
 	          구매내역
 	        </a>
 	      </li>
     </ul>
       <br>
     </div>
-    <jsp:include page="/WEB-INF/views/user/mypage/home.jsp"/>
+    <div id="content">
+   		<jsp:include page="/WEB-INF/views/user/mypage/home.jsp"/>
+    </div>
   </div>
 </div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle sidebar menu clicks
+            $('.navitem').on('click', function (e) {
+                e.preventDefault();
+                $('.navitem').removeClass('active');
+                $(this).addClass('active');
 
+                var contentId = $(this).attr('id');
+
+                $('#content').load(contentId);
+            });
+        });
+    </script>
+<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 </body>
 </html>

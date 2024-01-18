@@ -130,11 +130,73 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 상품 상세정보 보기
 	@Override
-	public ProductDTO productDetail(String productname, String username) {
-		return mapper.productDetail(productname, username);
+	public ProductDTO productDetail(String productnum, String username) {
+		return mapper.productDetail(productnum, username);
+	}
+
+	@Override
+	public AreaDTO selectArea(String productnum, String username) {
+		return mapper.selectArea(productnum, username);
+	}
+
+	@Override
+	public String selectAreaName1(AreaDTO areaDTO) {
+		return mapper.selectAreaName1(areaDTO);
+	}
+
+	@Override
+	public String selectAreaName2(AreaDTO areaDTO) {
+		return mapper.selectAreaName2(areaDTO);
+	}
+
+	@Override
+	public String selectName(String username) {
+		return mapper.selectName(username);
+	}
+
+	@Override
+	public List<ProductDTO> selectOption(String username, String optionstatus) {
+		return mapper.selectOption(username, optionstatus);
+	}
+
+	// 찜하기 유무
+	@Override
+	public int selectProductPickCount(String username, String productnum) {
+		return mapper.selectProductPickCount(username, productnum);
+	}	
+	
+	// 찜하기
+	@Override
+	public void productPick(String username, String productnum) {
+		mapper.productPick(username, productnum);
+	}
+	
+	// 찜하기 누를 때마다 상품 찜 1씩 증가
+	@Override
+	public void updateProductWishcount(String username, String productnum) {
+		mapper.updateProductWishcount(username, productnum);
+	}
+
+	// 찜 삭제하기
+	@Override
+	public void productPickDelete(String username, String productnum) {
+		mapper.productPickDelete(username, productnum);
+	}
+	
+	// 찜 삭제하기 누를 때마다 상품 찜 1씩 감소
+	@Override
+	public void deleteProductWishcount(String username, String productnum) {
+		mapper.deleteProductWishcount(username, productnum);
 	}
 	
 
+	
+	
+	// 장바구니
+	@Override
+	public void productShoppingCart(String username, String productnum) {
+		mapper.productShoppingCart(username, productnum);
+	}
 	
 
 

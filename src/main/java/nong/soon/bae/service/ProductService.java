@@ -45,9 +45,43 @@ public interface ProductService {
 	// FINISH
 		
 	// 상품 상세정보 보기
-	public ProductDTO productDetail(String productname, String username);		
+	public ProductDTO productDetail(String productnum, String username);		
+	
+	public AreaDTO selectArea(String productnum, String username);
+	
+	public String selectAreaName1(AreaDTO areaDTO);
+	
+	public String selectAreaName2(AreaDTO areaDTO);
+	
+	public String selectName(String username);
+	
+	public List<ProductDTO> selectOption(String username, String optionstatus);
 	
 	public List<AllProductDTO> allProduct();
+
+	// 찜하기 유무
+	public int selectProductPickCount(String username, String productnum);	
+		
+	// 찜하기
+	public void productPick(String username, String productnum);
+
+	// 찜하기 누를 때마다 상품 찜 1씩 증가
+	public void updateProductWishcount(String username, String productnum);	
+
+	// 찜 삭제하기
+	public void productPickDelete(String username, String productnum);
+	
+	// 찜 삭제하기 누를 때마다 상품 찜 1씩 감소
+	public void deleteProductWishcount(String username, String productnum);	
+	
+	// 장바구니
+	public void productShoppingCart(String username, String productnum);	
+	
+
+	
+
+	
+
 	
 	// TEST
 	
