@@ -6,52 +6,68 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>room</title>
+		<link href="/resources/css/chat.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="/resources/js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="/resources/js/socket.io.js"></script>
 		<script type="text/javascript">
 			$(function () {
-				var socket = io.connect("http://192.168.219.149:9999")	
-					
-				// 채팅 내용 받는 부분
+				var socket = io.connect("http://192.168.219.149:9999");
+				socket.emit("joinRoom", { username: '${username}', sendname: '${sendname}' });
 				socket.on("response", function (message) {
-					$("#msgs").append(message.msg);	// append 추가
-				})			
-				// 채팅 내용 보내는 부분				
+					var arr = message.msg.split(',');
+					var side = "left";
+					// 마지막 빈 문자열 제거
+					if (arr[arr.length - 1] === '') {
+					  arr.pop();
+					}
+					if(arr[0] === `${username}`) {
+						side = "right";
+					}
+					var msgHTML =
+						  '<div class=\'msg ' + side + '-msg\'>' +
+						  '  <div class=\'msg-img\' style=\'background-image: url()\'></div>' +
+						  '' +
+						  '  <div class=\'msg-bubble\'>' +
+						  '    <div class=\'msg-info\'>' +
+						  '      <div class=\'msg-info-name\'>' + arr[0] + '</div>' +
+						  '      <div class=\'msg-info-time\'>' + arr[2] + '</div>' +
+						  '    </div>' +
+						  '    <div class=\'msg-text\'>' + arr[1] + '</div>' +
+						  '  </div>' +
+						  '</div>';
+					$("#msgs").append(msgHTML);
+				});
 				$("#sendBtn").on("click", function () {
 					var m = $("#chat").val();
-					if(m !== "") {
-						socket.emit("chatMsg", {msg : '${username}' + " : " + m +"<br />" 
-							, username : '${username}', sendname : '${sendname}', num : '${num}'});	// 보내기
+					if (m !== "") {
+						socket.emit("chatMsg", { msg: '${username}' + "," + m + "," + '${todayTime}' +"," , username: '${username}', sendname: '${sendname}' });
 					}
-				})
-			})
-			$(document).ready(function(){
-		        $('#sendBtn').click(function(){
-		            $('#chat').val('');	// chat input의 값을 지움
-		        });
-		    });
-			
-			document.getElementById('sendBtn').addEventListener('click', function() {
-			    var numValue = ${num};
-
-			    var xhr = new XMLHttpRequest();
-			    xhr.open("POST", "MessageChat", true);
-			    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			    xhr.send("num=" + encodeURIComponent(numValue));
+				});
+				$(document).ready(function () {
+					$('#sendBtn').click(function () {
+						$('#chat').val('');
+					});
+				});
 			});
 		</script>
 	</head>
 	<body>
-		<h1>chat..!!${num}</h1>
-		<div class="fixed-element">
-			<input type="text" name="chat" id="chat"/>
-			<input type="button" value="send" id="sendBtn" />
-		</div>
-		<hr color="red"/>
-		<div id="msgs">
-			<span>==chat start==</span> 
-			<br />
-			<span>${chat}</span>
-		</div>
+		<section class="msger">
+		  <header class="msger-header">
+		    <div class="msger-header-title">
+		      <i class="fas fa-comment-alt"></i> ${sendname}
+		    </div>
+		    <div class="msger-header-options">
+		      <span><i class="fas fa-cog"></i></span>
+		    </div>
+		  </header>
+			<main class="msger-chat" id="msgs">
+				${chat}
+			</main>
+			<div class="msger-inputarea">
+			    <input type="text" class="msger-input" name="chat" id="chat" placeholder="Enter your message...">
+			    <button type="submit" id="sendBtn" class="msger-send-btn">Send</button>
+			</div>    
+		</section>
 	</body>
 </html>

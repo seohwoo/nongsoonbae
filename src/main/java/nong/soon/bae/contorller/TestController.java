@@ -8,12 +8,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -61,6 +65,10 @@ public class TestController{
 	private ArrayList<String> srcValues;
 	@Autowired
 	private ArrayList<String> realFiles;
+	@Autowired
+	private Date date;
+	@Autowired
+	private SimpleDateFormat simpleDateFormat;
 	
 	
 	@RequestMapping("main")
@@ -144,23 +152,32 @@ public class TestController{
 		return "/test/roomList";
 	}
 	
+	private String todayTime() {
+		String formatDate = simpleDateFormat.format(date);
+		String[] today = formatDate.split("/");
+		if(Integer.parseInt(today[3]) > 12 ) {
+			today[3] = "Ïò§ÌõÑ" + (Integer.parseInt(today[3])-12);
+		}else {
+			today[3] = "Ïò§Ï†Ñ" + today[3];
+		}
+		String result = today[3] + ":" + today[4];
+		return result;
+	}
+	
+	
 	@RequestMapping("room")
 	public String chatRoom(Model model, Principal pri, String sendname, String num) throws Exception {
 		String username = pri.getName();
 		String chat = "";
 		String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
 		String filePath = "";
+		String todayTime = todayTime();
 		if(username!=null && sendname!=null) {
 			try {
-				// √§∆√ ∆ƒ¿œ ≥ªøÎ ¿–±‚
-				filePath = fileRoot+"\\"+username+"_to_"+sendname+".txt";
+				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname)+".txt";
 				Path path = Paths.get(filePath);
 				if(!Files.exists(path)) {
-					filePath = fileRoot+"\\"+sendname+"_to_"+username+".txt";
-					path = Paths.get(filePath);
-					if(!Files.exists(path)) {
-						Files.createFile(path);
-					}
+					Files.createFile(path);
 				}
 				File file = new File(filePath);
 				Scanner sc = new Scanner(file);
@@ -171,15 +188,49 @@ public class TestController{
 	        	e.printStackTrace();
 	        }
 		}
+		chat = changeChat(chat, username, sendname);
 		model.addAttribute("chat", chat);
 		model.addAttribute("num", num);
 		model.addAttribute("username", username);
 		model.addAttribute("sendname", sendname);
+		model.addAttribute("todayTime", todayTime);
 		return "test/room";
 	}
 	
+	private String getRoomIdentifier(String username, String sendname) {
+        String sortedNames = Stream.of(username, sendname)
+                .sorted()
+                .collect(Collectors.joining("_to_"));
+        return sortedNames;
+    }
 	
-	//Ω·∏”≥Î∆Æ ªÁøÎ«“∑¡∏È ø©±‚∫Œ≈Õ....
+	// Ï±ÑÌåÖ UI Î≥ÄÍ≤Ω
+	private String changeChat(String chat, String username, String sendname) {
+		String result = "";
+		String time = todayTime();
+		String[] arChat = chat.split(",");
+		
+		for (int i = 0; i < arChat.length; i++) {
+			if(i%3==2) {
+				if(arChat[i-2].equals(username)) {
+					result += "<div class='msg right-msg'><div class='msg-img' style='background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+ username +"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
+				}else {
+					result += "<div class='msg left-msg'><div class='msg-img' style='background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+sendname+"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
+				}
+			}
+		}
+		return result;
+	}
+	
+	@RequestMapping("roomdesign")
+	public String roomdesign(Model model) {
+		Date date = new Date();
+		model.addAttribute("date", date);
+		return "/test/roomdesign";
+	}
+	
+	
+	//Ïç®Î®∏ÎÖ∏Ìä∏ ÏÇ¨Ïö©Ìï†Î†§Î©¥ Ïó¨Í∏∞Î∂ÄÌÑ∞....
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
@@ -262,5 +313,5 @@ public class TestController{
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	//...ø©±‚±Ó¡ˆ
+	//...Ïó¨Í∏∞ÍπåÏßÄ
 }

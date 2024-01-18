@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,49 +21,52 @@ import com.nhncorp.mods.socket.io.SocketIOSocket;
 import com.nhncorp.mods.socket.io.impl.DefaultSocketIOServer;
 import com.nhncorp.mods.socket.io.spring.DefaultEmbeddableVerticle;
 
-public class MessageChat extends DefaultEmbeddableVerticle{	
-	private SocketIOServer io = null;
-	
-	@Autowired
-	private PortMove portMove;
-	private int num = 0;
-	
-	
-	
-	@Override
-	public void start(Vertx arg0) {
-		HttpServer server = arg0.createHttpServer();	//서버생성
-		io = new DefaultSocketIOServer(arg0, server);
-		io.sockets().onConnection(new Handler<SocketIOSocket>() {
-			@Override
-			public void handle(SocketIOSocket socket) {
-				socket.on("chatMsg", new Handler<JsonObject>() {
-					@Override
-					public void handle(JsonObject event) {
-						String msg = event.getString("msg"); // 받은 대화 내용
-						String username = event.getString("username"); // 유저네임
-						String sendname = event.getString("sendname"); // 상대이름
-						num = Integer.parseInt(event.getString("num"));
-						String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
-						String filename = fileRoot+"\\"+username+"_to_"+sendname+".txt";
-						Path path = Paths.get(filename);
-						if(!Files.exists(path)) {
-							filename = fileRoot+"\\"+sendname+"_to_"+username+".txt";
-						}
-						FileWriter writer = null;
-						try {
-							writer = new FileWriter(filename, true);
-							writer.write(msg);
-							writer.flush();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						// 연결된 모든 사용자에게 대화 보내기
-						io.sockets().emit("response", event); 
-					}
-				});
-			}
-		});
-		server.listen(9999);
-	}
+public class MessageChat extends DefaultEmbeddableVerticle {
+
+    private SocketIOServer io = null;
+
+    @Override
+    public void start(Vertx vertx) {
+        HttpServer server = vertx.createHttpServer();    // 서버 생성
+        io = new DefaultSocketIOServer(vertx, server);
+
+        io.sockets().onConnection(socket -> {
+            socket.on("joinRoom", roomJoinEvent -> {
+                String username = roomJoinEvent.getString("username");
+                String sendname = roomJoinEvent.getString("sendname");
+                String roomIdentifier = getRoomIdentifier(username, sendname);
+                socket.join(roomIdentifier);
+            });
+
+            socket.on("chatMsg", chatMsgEvent -> {
+                String msg = chatMsgEvent.getString("msg");
+                String sender = chatMsgEvent.getString("username");
+                String receiver = chatMsgEvent.getString("sendname");
+                String roomIdentifier = getRoomIdentifier(sender, receiver);
+                createChatFile(roomIdentifier, msg);
+                io.sockets().in(roomIdentifier).emit("response", chatMsgEvent);
+            });
+        });
+
+        server.listen(9999);
+    }
+
+    private String getRoomIdentifier(String username, String sendname) {
+        String sortedNames = Stream.of(username, sendname)
+                .sorted()
+                .collect(Collectors.joining("_to_"));
+        return sortedNames;
+    }
+
+    private void createChatFile(String roomIdentifier, String msg) {
+        String filename = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\" + roomIdentifier + ".txt";
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filename, true);
+            writer.write(msg);
+            writer.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
