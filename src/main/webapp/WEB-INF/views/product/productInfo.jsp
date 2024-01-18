@@ -40,6 +40,7 @@
 				<td><fmt:formatDate value="${productDTO.startdate}" dateStyle="short" type="date"/></td>
 				<td><fmt:formatDate value="${productDTO.enddate}" dateStyle="short" type="date"/></td>
 				<td>${productDTO.optionstatus}</td>			
-			</tr>	
+			</tr>
+		</table>	
 	</body>
 </html>
