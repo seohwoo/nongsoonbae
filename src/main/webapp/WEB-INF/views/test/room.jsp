@@ -10,8 +10,15 @@
 		<script type="text/javascript" src="/resources/js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="/resources/js/socket.io.js"></script>
 		<script type="text/javascript">
+
 			$(function () {
+				function get(selector, root = document) {
+					  return root.querySelector(selector);
+				}
+				const msgerChat = get(".msger-chat");
+				// 문서 전체의 스크롤바를 가장 아래로 이동
 				var socket = io.connect("http://192.168.219.149:9999");
+				msgerChat.scrollTop = msgerChat.scrollHeight;
 				socket.emit("joinRoom", { username: '${username}', sendname: '${sendname}' });
 				socket.on("response", function (message) {
 					var arr = message.msg.split(',');
@@ -36,11 +43,21 @@
 						  '  </div>' +
 						  '</div>';
 					$("#msgs").append(msgHTML);
+					msgerChat.scrollTop = msgerChat.scrollHeight;
+					
 				});
 				$("#sendBtn").on("click", function () {
 					var m = $("#chat").val();
 					if (m !== "") {
-						socket.emit("chatMsg", { msg: '${username}' + "," + m + "," + '${todayTime}' +"," , username: '${username}', sendname: '${sendname}' });
+						var currentDate = new Date();
+						var options = {
+						  hour: '2-digit',
+						  minute: '2-digit',
+						  hour12: true, // 12시간 형식
+						};
+						var formattedTime = new Intl.DateTimeFormat('ko-KR', options).format(currentDate);
+						msgerChat.scrollTop = msgerChat.scrollHeight;
+						socket.emit("chatMsg", { msg: '${username}' + "," + m + "," + formattedTime +"," , username: '${username}', sendname: '${sendname}' });
 					}
 				});
 				$(document).ready(function () {

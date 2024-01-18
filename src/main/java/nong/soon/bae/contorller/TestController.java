@@ -2,13 +2,11 @@ package nong.soon.bae.contorller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,10 +20,8 @@ import java.util.stream.Stream;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +29,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 
-import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.ChatDTO;
-import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.TestService;
 
@@ -65,10 +55,6 @@ public class TestController{
 	private ArrayList<String> srcValues;
 	@Autowired
 	private ArrayList<String> realFiles;
-	@Autowired
-	private Date date;
-	@Autowired
-	private SimpleDateFormat simpleDateFormat;
 	
 	
 	@RequestMapping("main")
@@ -152,26 +138,12 @@ public class TestController{
 		return "/test/roomList";
 	}
 	
-	private String todayTime() {
-		String formatDate = simpleDateFormat.format(date);
-		String[] today = formatDate.split("/");
-		if(Integer.parseInt(today[3]) > 12 ) {
-			today[3] = "오후" + (Integer.parseInt(today[3])-12);
-		}else {
-			today[3] = "오전" + today[3];
-		}
-		String result = today[3] + ":" + today[4];
-		return result;
-	}
-	
-	
 	@RequestMapping("room")
 	public String chatRoom(Model model, Principal pri, String sendname, String num) throws Exception {
 		String username = pri.getName();
 		String chat = "";
 		String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
 		String filePath = "";
-		String todayTime = todayTime();
 		if(username!=null && sendname!=null) {
 			try {
 				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname)+".txt";
@@ -190,10 +162,8 @@ public class TestController{
 		}
 		chat = changeChat(chat, username, sendname);
 		model.addAttribute("chat", chat);
-		model.addAttribute("num", num);
 		model.addAttribute("username", username);
 		model.addAttribute("sendname", sendname);
-		model.addAttribute("todayTime", todayTime);
 		return "test/room";
 	}
 	
@@ -207,7 +177,6 @@ public class TestController{
 	// 채팅 UI 변경
 	private String changeChat(String chat, String username, String sendname) {
 		String result = "";
-		String time = todayTime();
 		String[] arChat = chat.split(",");
 		
 		for (int i = 0; i < arChat.length; i++) {
