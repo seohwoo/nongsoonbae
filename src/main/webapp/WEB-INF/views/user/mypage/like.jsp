@@ -3,37 +3,57 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<main class="col-9 py-md-3 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right: auto;">
-      <table>
-      	<tr>
-      		<td colspan="4">
-      		<h1>찜/구독 리스트</h1>
-      		</td>
-      	</tr>
-      	<tr><td colspan="4"></td></tr>
-      	<tr>
-      		<td>
-	      		<div class="col p-4 m-4 d-flex flex-column position-static bg-body-tertiary border rounded-3">
-		          <strong class="d-inline-block mb-2 text-primary">Modify</strong>
-		          <h3 class="mb-0">내 정보 수정</h3>
-		          <div class="mb-1 text-muted"><hr></div>
-		          <div></div>
-		          <p class="card-text mb-auto">사이트 이용을 위한 주소지, 전화번호 입력, 비밀번호 변경이 가능합니다.</p>
-		          <a href="../member/detailsForm">이동하기 ></a>
-		        </div>
-      		</td>
-      		<td>
-	      		<div class="col p-4 m-4 d-flex flex-column position-static bg-body-tertiary border rounded-3">
-		          <strong class="d-inline-block mb-2 text-primary">My Shop</strong>
-		          <h3 class="mb-0">내 상점 정보</h3>
-		          <div class="mb-1 text-muted"><hr></div>
-		          <div></div>
-		          <p class="card-text mb-auto">개인 상점 개설부터 관리까지. 지금 바로 농순배에서 직거래 시작.</p>
-		          <a href="../product/productMain">이동하기 ></a>
-		        </div>
-      		</td>
-      	</tr>
-      </table>
+	<main class="col-9 py-md-3 pl-md-5 bd-content" role="main" style="margin-top: 30px;">
+	<div class="container like">
+      <h1>찜/구독 리스트</h1>
+	    <div class='tabbed skin-nephritis round' id='skinable'>
+			<ul>
+				<li>내가 구독한 농부</li>
+				<li class='active'>내가 찜한 상품</li>
+			</ul>
+		</div>
+    </div>
     </main>
+    <script>
+   		document.addEventListener("DOMContentLoaded", function() {
+    	  var tabs = document.querySelectorAll('.tabbed li');
+    	  var switchers = document.querySelectorAll('.switcher-box a');
+    	  var skinable = document.getElementById('skinable');
+
+    	  for (var i = 0, len = tabs.length; i < len; i++) {
+    	    tabs[i].addEventListener("click", function() {
+    	      if (this.classList.contains('active'))
+    	        return;
+
+    	      var parent = this.parentNode,
+    	          innerTabs = parent.querySelectorAll('li');
+
+    	      for (var index = 0, iLen = innerTabs.length; index < iLen; index++) {
+    	        innerTabs[index].classList.remove('active');
+    	      }
+
+    	      this.classList.add('active');
+    	    });
+    	  }
+
+    	  for (var i = 0, len = switchers.length; i < len; i++) {
+    	    switchers[i].addEventListener("click", function() {
+    	      if (this.classList.contains('active'))
+    	        return;
+
+    	      var parent = this.parentNode,
+    	          innerSwitchers = parent.querySelectorAll('a'),
+    	          skinName = this.getAttribute('skin');
+
+    	      for (var index = 0, iLen = innerSwitchers.length; index < iLen; index++) {
+    	        innerSwitchers[index].classList.remove('active');
+    	      }
+
+    	      this.classList.add('active');
+    	      skinable.className = 'tabbed round ' + skinName;
+    	    });
+    	  }
+    	});
+    </script>
 </body>
 </html>

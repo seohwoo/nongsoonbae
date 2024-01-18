@@ -19,7 +19,8 @@ public class UserController {
 	}
 	
 	@RequestMapping("home")
-	public String home(String username,  Model model) {
+	public String home(Principal principal, Model model) {
+		String username = principal.getName();
 		model.addAttribute("username", username);
 		return "user/mypage/home";
 	}

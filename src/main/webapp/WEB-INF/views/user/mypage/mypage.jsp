@@ -16,22 +16,22 @@
     <div class="col-2 bd-sidebar align-items">
       <ul class="nav nav-pills flex-column mb-auto" style="margin-top: 100px;">
 	      <li class="nav-item">
-	        <a href="/user/mypage" class="nav-link active" aria-current="page" id="home">  
+	        <a href="/user/mypage" class="nav-link active navitem" aria-current="page" id="home">  
 	          내 정보
 	        </a>
 	      </li>
 	      <li>
-	        <a href="/user/like" class="nav-link link-dark" id="like">
+	        <a href="/user/like" class="nav-link link-dark navitem" id="like">
 	          찜/구독
 	        </a>
 	      </li>
 	      <li>
-	        <a href="/user/cart" class="nav-link link-dark" id="cart">       
+	        <a href="/user/cart" class="nav-link link-dark navitem" id="cart">       
 	          장바구니
 	        </a>
 	      </li>
 	      <li>
-	        <a href="/user/buyList" class="nav-link link-dark" id="buylist"> 
+	        <a href="/user/buyList" class="nav-link link-dark navitem" id="buylist"> 
 	          구매내역
 	        </a>
 	      </li>
@@ -47,19 +47,13 @@
     <script>
         $(document).ready(function () {
             // Handle sidebar menu clicks
-            $('.nav-link').on('click', function (e) {
+            $('.navitem').on('click', function (e) {
                 e.preventDefault();
-
-                // Remove 'active' class from all sidebar links
-                $('.nav-link').removeClass('active');
-
-                // Add 'active' class to the clicked sidebar link
+                $('.navitem').removeClass('active');
                 $(this).addClass('active');
 
-                // Get the ID of the clicked sidebar link
                 var contentId = $(this).attr('id');
 
-                // Load content based on the clicked menu
                 $('#content').load(contentId);
             });
         });

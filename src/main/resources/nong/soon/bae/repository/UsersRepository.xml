@@ -28,9 +28,6 @@
 	<insert id="save">
 		insert into users values(#{username}, #{password}, #{name}, 'ROLE_USER', #{email}, #{birth}, #{gender}, #{regsite})
 	</insert>
-	<insert id="saveauth">
-		insert into usergrade values(#{username}, #{grade})
-	</insert>
 	<select id="GetByAuth" resultType="String">
 		select grade from users where username=#{username}
 	</select>
