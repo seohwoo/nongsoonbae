@@ -27,6 +27,7 @@ public class UserController {
 	
 	@RequestMapping("like")
 	public String like(Principal principal) {
+		String username = principal.getName();
 		
 		return "user/mypage/like";
 	}

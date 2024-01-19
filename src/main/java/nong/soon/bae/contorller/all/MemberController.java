@@ -128,6 +128,7 @@ public class MemberController {
 		String username = principal.getName();
 		
 		String path = request.getServletContext().getRealPath("/resources/file/profile/");
+		logger.info("==============="+path+"================");
 		String filename = image.getOriginalFilename();
 		if(!filename.equals("")) {
 			String ext = filename.substring(filename.lastIndexOf("."));
