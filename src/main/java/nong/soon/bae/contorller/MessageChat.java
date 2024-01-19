@@ -37,6 +37,7 @@ public class MessageChat extends DefaultEmbeddableVerticle {
                 String chatno = roomJoinEvent.getString("chatno");
                 String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
                 socket.join(roomIdentifier);
+                io.sockets().in(roomIdentifier).emit("join", roomJoinEvent);
             });
 
             socket.on("chatMsg", chatMsgEvent -> {

@@ -37,4 +37,24 @@ public class TestServiceImpl implements TestService{
 		return mapper.chatInfo(chatno, username);
 	}
 
+	@Override
+	public ChatDTO findChat(String chatno, String username) {
+		return mapper.findChat(chatno, username);
+	}
+
+	@Override
+	public void updateNoRead(int cnt, int chatno, String username) {
+		mapper.updateNoRead(cnt, chatno, username);
+	}
+
+	@Override
+	public void zeroNoRead(int chatno, String username) {
+		mapper.zeroNoRead(chatno, username);
+	}
+
+	@Override
+	public ChatDTO findSenduser(String chatno, String username) {
+		return mapper.findSenduser(chatno, username);
+	}
+
 }

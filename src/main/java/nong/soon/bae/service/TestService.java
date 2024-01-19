@@ -11,5 +11,9 @@ public interface TestService {
 	public UsersDTO findUsers(String username);
 	public List<ChatDTO> userChatList(String username);
 	public ChatDTO chatInfo(String chatno, String username);
+	public ChatDTO findChat(String chatno, String username);
+	public ChatDTO findSenduser(String chatno, String username);
+	public void updateNoRead(int cnt, int chatno, String username);
+	public void zeroNoRead(int chatno, String username);
 }
    

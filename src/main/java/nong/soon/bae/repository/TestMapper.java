@@ -13,4 +13,8 @@ public interface TestMapper {
 	public UsersDTO findUsers(String username);
 	public List<ChatDTO> userChatList(String username);
 	public ChatDTO chatInfo(@Param("chatno") String chatno, @Param("username") String username);
+	public ChatDTO findChat(@Param("chatno") String chatno, @Param("username") String username);
+	public ChatDTO findSenduser(@Param("chatno") String chatno, @Param("username") String username);
+	public void updateNoRead(@Param("cnt") int cnt, @Param("chatno") int chatno, @Param("username") String username);
+	public void zeroNoRead(@Param("chatno") int chatno, @Param("username") String username);
 }

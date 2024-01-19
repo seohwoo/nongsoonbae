@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>채팅방목록</title>
+		<link href="/resources/css/chat.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<table border="1">
@@ -15,8 +16,12 @@
 			<c:forEach var="dto" items="${chatList}">
 				<tr>
 					<td>
-						<img src="/resources/img/${dto.sendname_img}" width="100px" height="100px">
+						<div class='msg-img' style='background-image: url(/resources/file/profile/${dto.sendname_img})'></div>
 						<a href="room?sendname=${dto.sendname}&chatno=${dto.chatno}">${dto.sendname_name}</a>
+						<br />
+						<c:if test="${dto.noread>0}">
+							<span>${dto.noread}</span>
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>

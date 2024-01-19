@@ -30,8 +30,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -56,7 +59,6 @@ public class TestController{
 	private ArrayList<String> srcValues;
 	@Autowired
 	private ArrayList<String> realFiles;
-	
 	
 	@RequestMapping("main")
 	public String test(Model model) {
@@ -146,13 +148,14 @@ public class TestController{
 		String filePath = "";
 		String ip = "";
 		ChatDTO dto = service.chatInfo(chatno, username);
+		service.zeroNoRead(Integer.parseInt(chatno), username);
+		int sendnoread = service.findSenduser(chatno, username).getNoread();
 		try {
 			InetAddress localhost = InetAddress.getLocalHost();
 			ip = localhost.getHostAddress();
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    }
-
 		if(username!=null && sendname!=null) {
 			try {
 				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname, chatno)+".txt";
@@ -173,6 +176,7 @@ public class TestController{
 		model.addAttribute("chat", chat);
 		model.addAttribute("dto", dto);
 		model.addAttribute("ip", ip);
+		model.addAttribute("sendnoread", sendnoread);
 		return "test/room";
 	}
 	
@@ -207,6 +211,27 @@ public class TestController{
 		model.addAttribute("date", date);
 		return "/test/roomdesign";
 	}
+	
+	
+	@PostMapping("/increaseCount")
+    @ResponseBody
+    public String increaseCount(@RequestParam("cnt") String cnt, 
+    		@RequestParam("chatno") String chatno, Principal pri) {
+        int DBcnt = Integer.parseInt(cnt);
+        int DBchatno = Integer.parseInt(chatno);
+        DBcnt++; // 카운터 증가
+        String username = pri.getName();
+        service.updateNoRead(DBcnt, DBchatno, username);
+        return String.valueOf(DBcnt); // 증가된 값을 문자열로 변환하여 반환
+    }
+
+	@RequestMapping("sampleCnt")
+	public String sampleCnt(Model model, Principal pri) {
+		model.addAttribute("username", pri.getName());
+		return "/test/sampleCnt";
+	}
+	
+	
 	
 	
 	//써머노트 사용하려면 여기부터...

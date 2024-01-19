@@ -18,8 +18,12 @@
 				const msgerChat = get(".msger-chat");
 				// 문서 전체의 스크롤바를 가장 아래로 이동
 				var socket = io.connect("http://${ip}:9999");
+				var cnt = '${sendnoread}';
 				msgerChat.scrollTop = msgerChat.scrollHeight;
 				socket.emit("joinRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
+				socket.on("join", function (join) {
+					cnt=0;
+				});
 				socket.on("response", function (message) {
 					var arr = message.msg.split(',');
 					var side = "left";
@@ -42,7 +46,7 @@
 						  '      <div class=\'msg-info-time\'>' + arr[2] + '</div>' +
 						  '    </div>' +
 						  '    <div class=\'msg-text\'>' + arr[1] + '</div>' +
-						  '  </div>' +
+						  '  </div>' + 
 						  '</div>';
 					$("#msgs").append(msgHTML);
 					msgerChat.scrollTop = msgerChat.scrollHeight;
@@ -67,6 +71,21 @@
 						$('#chat').val('');
 					});
 				});
+				$(document).ready(function() {
+		            $('#sendBtn').click(function() {
+		                $.ajax({
+		                    type: 'POST',
+		                    url: '/test/increaseCount',
+		                    data: {
+		                    		cnt: cnt,
+		                    		chatno: '${dto.chatno}'
+		                    	},
+			                success: function(response) {
+			                	cnt = parseInt(response);
+			                } 	
+		                });
+		            });
+		        });
 			});
 		</script>
 	</head>
@@ -84,8 +103,8 @@
 				${chat}
 			</main>
 			<div class="msger-inputarea">
-			    <input type="text" class="msger-input" name="chat" id="chat" placeholder="Enter your message...">
-			    <button type="submit" id="sendBtn" class="msger-send-btn">Send</button>
+			    <input type="text" class="msger-input" name="chat" id="chat" placeholder="메세지를 입력하세요...">
+			    <button type="submit" id="sendBtn" class="msger-send-btn">전송</button>
 			</div>    
 		</section>
 	</body>

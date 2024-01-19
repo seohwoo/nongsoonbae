@@ -37,5 +37,16 @@
 		JOIN userdetails sdetails ON chat.sendname = sdetails.username
 		WHERE chat.chatno = #{chatno} AND chat.username = #{username}
 	</select>
-	
+	<select id="findChat" resultType="chatDTO">
+		select * from chat where username=#{username} and chatno=#{chatno}
+	</select>
+	<select id="findSenduser" resultType="chatDTO">
+		select * from chat where sendname=#{username} and chatno=#{chatno}
+	</select>
+	<update id="updateNoRead">
+		update chat set noread=#{cnt} where chatno=#{chatno} and sendname=#{username}
+	</update>
+	<update id="zeroNoRead">
+		update chat set noread=0 where chatno=#{chatno} and username=#{username}
+	</update>
 </mapper>
