@@ -39,7 +39,7 @@ public class MessageChat extends DefaultEmbeddableVerticle {
                 socket.join(roomIdentifier);
                 io.sockets().in(roomIdentifier).emit("join", roomJoinEvent);
             });
-
+            
             socket.on("chatMsg", chatMsgEvent -> {
                 String msg = chatMsgEvent.getString("msg");
                 String sender = chatMsgEvent.getString("username");
@@ -49,6 +49,16 @@ public class MessageChat extends DefaultEmbeddableVerticle {
                 createChatFile(roomIdentifier, msg);
                 io.sockets().in(roomIdentifier).emit("response", chatMsgEvent);
             });
+            
+            socket.on("outRoom", roomOutEvent -> {
+            	String username = roomOutEvent.getString("username");
+            	String sendname = roomOutEvent.getString("sendname");
+            	String chatno = roomOutEvent.getString("chatno");
+            	String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
+            	socket.leave(roomIdentifier);
+            	io.sockets().in(roomIdentifier).emit("out", roomOutEvent);
+            });
+
         });
 
         server.listen(9999);

@@ -24,6 +24,12 @@
 				socket.on("join", function (join) {
 					cnt=0;
 				});
+				$("#outRoomBtn").on("click", function () {
+					socket.emit("outRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
+				});
+				socket.on("out", function (out) {
+					cnt=0;
+				});
 				socket.on("response", function (message) {
 					var arr = message.msg.split(',');
 					var side = "left";
@@ -95,6 +101,7 @@
 		    <div class="msger-header-title">
 		      <i class="fas fa-comment-alt"></i> ${dto.sendname_name}
 		    </div>
+		    <button id="outRoomBtn">❌</button>
 		    <div class="msger-header-options">
 		      <span><i class="fas fa-cog"></i></span>
 		    </div>
