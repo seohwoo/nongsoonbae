@@ -2,6 +2,7 @@ package nong.soon.bae.contorller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -131,7 +132,6 @@ public class TestController{
 	
 	@RequestMapping("roomList")
 	public String roomList(Model model, Principal pri) {
-		
 		String username = pri.getName();
 		List<ChatDTO> chatList = service.userChatList(username);
 		model.addAttribute("chatList", chatList);
@@ -139,14 +139,23 @@ public class TestController{
 	}
 	
 	@RequestMapping("room")
-	public String chatRoom(Model model, Principal pri, String sendname, String num) throws Exception {
+	public String chatRoom(Model model, Principal pri, String sendname, String chatno) throws Exception {
 		String username = pri.getName();
 		String chat = "";
 		String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
 		String filePath = "";
+		String ip = "";
+		ChatDTO dto = service.chatInfo(chatno, username);
+		try {
+			InetAddress localhost = InetAddress.getLocalHost();
+			ip = localhost.getHostAddress();
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }
+
 		if(username!=null && sendname!=null) {
 			try {
-				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname)+".txt";
+				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname, chatno)+".txt";
 				Path path = Paths.get(filePath);
 				if(!Files.exists(path)) {
 					Files.createFile(path);
@@ -160,31 +169,32 @@ public class TestController{
 	        	e.printStackTrace();
 	        }
 		}
-		chat = changeChat(chat, username, sendname);
+		chat = changeChat(chat, dto);
 		model.addAttribute("chat", chat);
-		model.addAttribute("username", username);
-		model.addAttribute("sendname", sendname);
+		model.addAttribute("dto", dto);
+		model.addAttribute("ip", ip);
 		return "test/room";
 	}
 	
-	private String getRoomIdentifier(String username, String sendname) {
+	private String getRoomIdentifier(String username, String sendname, String chatno) {
         String sortedNames = Stream.of(username, sendname)
                 .sorted()
                 .collect(Collectors.joining("_to_"));
+        sortedNames = sortedNames + "_" + chatno;
         return sortedNames;
     }
 	
-	// 채팅 UI 변경
-	private String changeChat(String chat, String username, String sendname) {
+	// 채팅 UI 생성
+	private String changeChat(String chat, ChatDTO dto) {
 		String result = "";
 		String[] arChat = chat.split(",");
 		
 		for (int i = 0; i < arChat.length; i++) {
 			if(i%3==2) {
-				if(arChat[i-2].equals(username)) {
-					result += "<div class='msg right-msg'><div class='msg-img' style='background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+ username +"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
+				if(arChat[i-2].equals(dto.getUsername_name())) {
+					result += "<div class='msg right-msg'><div class='msg-img' style='background-image: url(/resources/file/profile/"+dto.getUsername_img()+")'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+ arChat[i-2] +"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
 				}else {
-					result += "<div class='msg left-msg'><div class='msg-img' style='background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+sendname+"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
+					result += "<div class='msg left-msg'><div class='msg-img' style='background-image: url(/resources/file/profile/"+dto.getSendname_img()+")'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+arChat[i-2]+"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
 				}
 			}
 		}
@@ -199,7 +209,7 @@ public class TestController{
 	}
 	
 	
-	//써머노트 사용할려면 여기부터....
+	//써머노트 사용하려면 여기부터...
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");

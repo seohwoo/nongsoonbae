@@ -34,7 +34,8 @@ public class MessageChat extends DefaultEmbeddableVerticle {
             socket.on("joinRoom", roomJoinEvent -> {
                 String username = roomJoinEvent.getString("username");
                 String sendname = roomJoinEvent.getString("sendname");
-                String roomIdentifier = getRoomIdentifier(username, sendname);
+                String chatno = roomJoinEvent.getString("chatno");
+                String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
                 socket.join(roomIdentifier);
             });
 
@@ -42,7 +43,8 @@ public class MessageChat extends DefaultEmbeddableVerticle {
                 String msg = chatMsgEvent.getString("msg");
                 String sender = chatMsgEvent.getString("username");
                 String receiver = chatMsgEvent.getString("sendname");
-                String roomIdentifier = getRoomIdentifier(sender, receiver);
+                String chatno = chatMsgEvent.getString("chatno");
+                String roomIdentifier = getRoomIdentifier(sender, receiver, chatno);
                 createChatFile(roomIdentifier, msg);
                 io.sockets().in(roomIdentifier).emit("response", chatMsgEvent);
             });
@@ -51,10 +53,11 @@ public class MessageChat extends DefaultEmbeddableVerticle {
         server.listen(9999);
     }
 
-    private String getRoomIdentifier(String username, String sendname) {
+    private String getRoomIdentifier(String username, String sendname, String chatno) {
         String sortedNames = Stream.of(username, sendname)
                 .sorted()
                 .collect(Collectors.joining("_to_"));
+        sortedNames = sortedNames + "_" + chatno;
         return sortedNames;
     }
 

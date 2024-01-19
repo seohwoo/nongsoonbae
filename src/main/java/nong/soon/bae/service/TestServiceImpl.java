@@ -32,4 +32,9 @@ public class TestServiceImpl implements TestService{
 		return mapper.userChatList(username);
 	}
 
+	@Override
+	public ChatDTO chatInfo(String chatno, String username) {
+		return mapper.chatInfo(chatno, username);
+	}
+
 }

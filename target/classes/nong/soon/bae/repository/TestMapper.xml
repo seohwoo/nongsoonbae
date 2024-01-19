@@ -10,6 +10,32 @@
 		select * from users where username=#{username}
 	</select>
 	<select id="userChatList" parameterType="String" resultType="chatDTO">
-		select * from chat where username=#{username}
+		SELECT
+		    chat.*,
+		    users.name AS username_name,
+		    receiver_users.name AS sendname_name,
+		    udetails.image AS username_img,
+		    sdetails.image AS sendname_img
+		FROM chat
+		JOIN users ON chat.username = users.username
+		JOIN users receiver_users ON chat.sendname = receiver_users.username
+		JOIN userdetails udetails ON chat.username = udetails.username
+		JOIN userdetails sdetails ON chat.sendname = sdetails.username
+		WHERE chat.username = #{username}
 	</select>
+	<select id="chatInfo">
+		SELECT
+		    chat.*,
+		    users.name AS username_name,
+		    receiver_users.name AS sendname_name,
+		    udetails.image AS username_img,
+		    sdetails.image AS sendname_img
+		FROM chat
+		JOIN users ON chat.username = users.username
+		JOIN users receiver_users ON chat.sendname = receiver_users.username
+		JOIN userdetails udetails ON chat.username = udetails.username
+		JOIN userdetails sdetails ON chat.sendname = sdetails.username
+		WHERE chat.chatno = #{chatno} AND chat.username = #{username}
+	</select>
+	
 </mapper>

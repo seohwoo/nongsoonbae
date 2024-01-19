@@ -10,5 +10,6 @@ public interface TestService {
 	public int count();
 	public UsersDTO findUsers(String username);
 	public List<ChatDTO> userChatList(String username);
+	public ChatDTO chatInfo(String chatno, String username);
 }
    
