@@ -78,6 +78,7 @@ public class MemberController {
 		users.setPassword(passwordEncoder.encode(users.getPassword()));
 		String username = users.getUsername();
 		logger.info("===============register================");
+		logger.info("==============="+username+"================");
 		usersRepository.save(users);
 		usersRepository.createDetails(username);
 		usersRepository.createReviews(username);
