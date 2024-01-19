@@ -101,6 +101,9 @@
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<img src="/resources/img/default.png" id="imagePreview" style=" max-width: 50%;  height: auto;"> <br />
 	<input type="file" class="form-control" onchange="chooseImage(this)" id="image" name="image" required />
+	
+	비밀변호 변경 <input type="button" onclick="/member/passPro" value="변경하러 이동" />
+
 	주소<input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
 		<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
 		<input type="text" class="form-control" id="roadAddress" placeholder="도로명주소" readonly>
