@@ -17,22 +17,24 @@
 				}
 				const msgerChat = get(".msger-chat");
 				// 문서 전체의 스크롤바를 가장 아래로 이동
-				var socket = io.connect("http://192.168.219.149:9999");
+				var socket = io.connect("http://${ip}:9999");
 				msgerChat.scrollTop = msgerChat.scrollHeight;
-				socket.emit("joinRoom", { username: '${username}', sendname: '${sendname}' });
+				socket.emit("joinRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
 				socket.on("response", function (message) {
 					var arr = message.msg.split(',');
 					var side = "left";
+					var img = '${dto.sendname_img}';
 					// 마지막 빈 문자열 제거
 					if (arr[arr.length - 1] === '') {
 					  arr.pop();
 					}
-					if(arr[0] === `${username}`) {
+					if(arr[0] === `${dto.username_name}`) {
 						side = "right";
+						img = '${dto.username_img}';
 					}
 					var msgHTML =
 						  '<div class=\'msg ' + side + '-msg\'>' +
-						  '  <div class=\'msg-img\' style=\'background-image: url()\'></div>' +
+						  '  <div class=\'msg-img\' style=\'background-image: url(/resources/file/profile/'+img+')\'></div>' +
 						  '' +
 						  '  <div class=\'msg-bubble\'>' +
 						  '    <div class=\'msg-info\'>' +
@@ -57,7 +59,7 @@
 						};
 						var formattedTime = new Intl.DateTimeFormat('ko-KR', options).format(currentDate);
 						msgerChat.scrollTop = msgerChat.scrollHeight;
-						socket.emit("chatMsg", { msg: '${username}' + "," + m + "," + formattedTime +"," , username: '${username}', sendname: '${sendname}' });
+						socket.emit("chatMsg", { msg: '${dto.username_name}' + "," + m + "," + formattedTime +"," , username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
 					}
 				});
 				$(document).ready(function () {
@@ -72,7 +74,7 @@
 		<section class="msger">
 		  <header class="msger-header">
 		    <div class="msger-header-title">
-		      <i class="fas fa-comment-alt"></i> ${sendname}
+		      <i class="fas fa-comment-alt"></i> ${dto.sendname_name}
 		    </div>
 		    <div class="msger-header-options">
 		      <span><i class="fas fa-cog"></i></span>

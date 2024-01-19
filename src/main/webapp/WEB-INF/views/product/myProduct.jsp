@@ -43,10 +43,6 @@
 					<td>${productDTO.optionstatus}</td>			
 				</tr>				
 			</c:forEach>
-			
-			
-			
-			
 		</table>
 		<p>	
 			<a href="/product/productMain">상품 메인</a>

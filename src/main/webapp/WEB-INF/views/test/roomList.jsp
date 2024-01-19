@@ -14,7 +14,10 @@
 			</tr>
 			<c:forEach var="dto" items="${chatList}">
 				<tr>
-					<td><a href="room?sendname=${dto.sendname}&num=${dto.num}">${dto.sendname}</a></td>
+					<td>
+						<img src="/resources/img/${dto.sendname_img}" width="100px" height="100px">
+						<a href="room?sendname=${dto.sendname}&chatno=${dto.chatno}">${dto.sendname_name}</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
