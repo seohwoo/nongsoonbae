@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import nong.soon.bae.bean.AreaDTO;
+import nong.soon.bae.bean.NoticeBoardDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.AreaService;
 import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
+import nong.soon.bae.service.NoticeService;
 
 @RequestMapping("/nsb/*")
 @Controller
 public class MainController{
-	
-	private ApiKeys apikeys = ApiKeys.getApiKeys();
 	
 	@Autowired
 	private MainService service;
@@ -30,9 +30,15 @@ public class MainController{
 
 	@Autowired
 	private CategoryService cateservice;
+	
+	@Autowired
+	private NoticeService noticeservice;
+	
 		
 	@RequestMapping("main")
 	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch) {
+		NoticeBoardDTO notice = noticeservice.showNewNotice();
+		model.addAttribute("notice",notice);
 		if (categoryNum==null) {
 			categoryNum = "1";
 		}
@@ -40,9 +46,9 @@ public class MainController{
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.detailSeasonCategory(model, cate1, cate2, cate3);
 		}
-		model.addAttribute("pluginKey", apikeys.getPluginkey());
 		return "all/main/main";
 	}
+	
 	
 	@RequestMapping("result")
 	public String result(Model model, String userSearch, String searchNum) {

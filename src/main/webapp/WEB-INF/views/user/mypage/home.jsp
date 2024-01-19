@@ -34,6 +34,7 @@
       		</td>
       	</tr>
       </table>
+      <a class="mt-5 mb-3 text-muted" href="/user/delete">회원 탈퇴</a>
     </main>
 </body>
 </html>

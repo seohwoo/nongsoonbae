@@ -10,7 +10,7 @@
 	<div style="display: flex;">
     <c:forEach var="cate" items="${catelistdetail}">
         <div style="margin-right: 10px;">
-            <form action="/nsb/menu" method="get">
+            <form action="/nsb/menu" method="post">
                 <input type="hidden" name="cate1" value="${cate.cate1}" />
                 <input type="hidden" name="cate2" value="${cate.cate2}" />
                 <button class="btn" type="submit">${cate.catename}</button>

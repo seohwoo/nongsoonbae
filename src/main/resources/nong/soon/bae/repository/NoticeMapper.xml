@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.NoticeMapper">
+	<insert id="insert" parameterType="nong.soon.bae.bean.NoticeBoardDTO">
+			insert into noticeboard(num,title,content,
+						regdate,files) values(
+						noticeboard_seq.NEXTVAL,
+						#{title},
+						#{content},
+						sysdate,
+			            #{files}
+					)
+	      	
+	</insert>
+	<select id="count">
+		select count(*) from noticeboard
+	</select>
+	<select id="list" resultType="nong.soon.bae.bean.NoticeBoardDTO" >
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from noticeboard order by regdate desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<update id="updateCountUp">
+		update noticeboard set readcount=readcount+1 where num = #{num}
+	</update>
+	<select id="readContent" resultType="nong.soon.bae.bean.NoticeBoardDTO">
+		select * from noticeboard where num = #{num}
+	</select>
+	<select id="maxNum" >
+		SELECT MAX(num) FROM noticeboard
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from noticeboard where num=#{num}
+	</delete>
+	<select id="showNewNotice" resultType="nong.soon.bae.bean.NoticeBoardDTO">
+		SELECT * FROM noticeboard WHERE num = (SELECT MAX(num) FROM noticeboard)
+	</select>
+	
+	
+	
+</mapper>

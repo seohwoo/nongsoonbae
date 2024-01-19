@@ -22,8 +22,6 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private MainMapper mapper;
 	@Autowired
-	private Date date;
-	@Autowired
 	private SimpleDateFormat simpleDateFormat;
 	@Autowired
 	private HashMap<String, String> seasonCategoryMap;
@@ -33,6 +31,7 @@ public class MainServiceImpl implements MainService {
 	private ArrayList<Double> lastlist;
 
 	public String[] todayInfo() {
+		Date date = new Date();
 		String formatDate = simpleDateFormat.format(date);
 		String[] today = formatDate.split("/");
 		return today;

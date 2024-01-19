@@ -35,9 +35,11 @@
 		<beans:property name="maxInMemorySize" value="1048576" /> 
 		<!-- uploadTempDir : 임시폴더경로 -->
 
-	<beans:property name="uploadTempDir" value="file:/d:/upload/temp" /> 
-	<!--<beans:property name="uploadTempDir" value="file:/c:/upload/temp" /> -->
+	<!--<beans:property name="uploadTempDir" value="file:/d:/upload/temp" />  -->
+	<beans:property name="uploadTempDir" value="file:/c:/upload/temp" />
 	</beans:bean>
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
+	
+	<beans:bean id="messageChat" class="nong.soon.bae.contorller.MessageChat" />
 	 
 </beans:beans>

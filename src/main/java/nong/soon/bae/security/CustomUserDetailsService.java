@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if(grade=="ADMIN") {
         	roles.add(new SimpleGrantedAuthority("ADMIN"));
         }else {
-        	roles.add(new SimpleGrantedAuthority("MEMBER"));
+        	roles.add(new SimpleGrantedAuthority("USER"));
         }
 		Authentication auth = new UsernamePasswordAuthenticationToken(username, dto.getPassword(), roles);
 		logger.warn("auth : " + auth);

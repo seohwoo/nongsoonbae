@@ -2,14 +2,20 @@ package nong.soon.bae.contorller.user;
 
 import java.security.Principal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import nong.soon.bae.service.MypageService;
+
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
+	
+	@Autowired
+	MypageService service;
 	
 	@RequestMapping("mypage")
 	public String mypage(Principal principal, Model model) {
@@ -27,7 +33,8 @@ public class UserController {
 	
 	@RequestMapping("like")
 	public String like(Principal principal) {
-		
+		String username = principal.getName();
+		service.selectLike(username);
 		return "user/mypage/like";
 	}
 	

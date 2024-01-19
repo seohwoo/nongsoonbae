@@ -2,19 +2,26 @@ package nong.soon.bae.contorller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +29,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 
+import nong.soon.bae.bean.ChatDTO;
 import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.service.TestService;
 
@@ -51,6 +55,7 @@ public class TestController{
 	private ArrayList<String> srcValues;
 	@Autowired
 	private ArrayList<String> realFiles;
+	
 	
 	@RequestMapping("main")
 	public String test(Model model) {
@@ -89,9 +94,32 @@ public class TestController{
 		return "/test/addressMap";
 	}
 	
+	public static String encode(String memberId, String secretKey, String algorithms) {
+		  try {
+		    Mac mac = Mac.getInstance(algorithms);
+		    mac.init(new SecretKeySpec(hexify(secretKey), algorithms));
+
+		    byte[] hash = mac.doFinal(memberId.getBytes());
+
+		    StringBuilder sb = new StringBuilder(hash.length * 2);
+		    for (byte b: hash) {
+		      sb.append(String.format("%02x", b));
+		    }
+
+		    return sb.toString();
+		  }catch (Exception e) {
+		    throw new RuntimeException(e);
+		  }
+		}
+
+		private static byte[] hexify(String string) {
+		  return DatatypeConverter.parseHexBinary(string);
+		}
+	
 	@RequestMapping("channel")
 	public String channel(Model model) {
 		model.addAttribute("pluginKey", apikey.getPluginkey());
+		model.addAttribute("secretKey", apikey.getChaSecretKey());
 		return "/test/channelTalk";
 	}
 	
@@ -100,7 +128,78 @@ public class TestController{
 		return "/test/summer";
 	}
 	
-	//Ω·∏”≥Î∆Æ ªÁøÎ«“∑¡∏È ø©±‚∫Œ≈Õ....
+	
+	@RequestMapping("roomList")
+	public String roomList(Model model, Principal pri) {
+		
+		String username = pri.getName();
+		List<ChatDTO> chatList = service.userChatList(username);
+		model.addAttribute("chatList", chatList);
+		return "/test/roomList";
+	}
+	
+	@RequestMapping("room")
+	public String chatRoom(Model model, Principal pri, String sendname, String num) throws Exception {
+		String username = pri.getName();
+		String chat = "";
+		String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
+		String filePath = "";
+		if(username!=null && sendname!=null) {
+			try {
+				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname)+".txt";
+				Path path = Paths.get(filePath);
+				if(!Files.exists(path)) {
+					Files.createFile(path);
+				}
+				File file = new File(filePath);
+				Scanner sc = new Scanner(file);
+				while (sc.hasNextLine()) {
+					chat += sc.nextLine();
+				}
+			} catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+		}
+		chat = changeChat(chat, username, sendname);
+		model.addAttribute("chat", chat);
+		model.addAttribute("username", username);
+		model.addAttribute("sendname", sendname);
+		return "test/room";
+	}
+	
+	private String getRoomIdentifier(String username, String sendname) {
+        String sortedNames = Stream.of(username, sendname)
+                .sorted()
+                .collect(Collectors.joining("_to_"));
+        return sortedNames;
+    }
+	
+	// Ï±ÑÌåÖ UI Î≥ÄÍ≤Ω
+	private String changeChat(String chat, String username, String sendname) {
+		String result = "";
+		String[] arChat = chat.split(",");
+		
+		for (int i = 0; i < arChat.length; i++) {
+			if(i%3==2) {
+				if(arChat[i-2].equals(username)) {
+					result += "<div class='msg right-msg'><div class='msg-img' style='background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+ username +"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
+				}else {
+					result += "<div class='msg left-msg'><div class='msg-img' style='background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)'></div><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>"+sendname+"</div><div class='msg-info-time'>"+arChat[i]+"</div></div><div class='msg-text'>"+arChat[i-1]+"</div></div></div>";
+				}
+			}
+		}
+		return result;
+	}
+	
+	@RequestMapping("roomdesign")
+	public String roomdesign(Model model) {
+		Date date = new Date();
+		model.addAttribute("date", date);
+		return "/test/roomdesign";
+	}
+	
+	
+	//Ïç®Î®∏ÎÖ∏Ìä∏ ÏÇ¨Ïö©Ìï†Î†§Î©¥ Ïó¨Í∏∞Î∂ÄÌÑ∞....
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
@@ -183,5 +282,5 @@ public class TestController{
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	//...ø©±‚±Ó¡ˆ
+	//...Ïó¨Í∏∞ÍπåÏßÄ
 }

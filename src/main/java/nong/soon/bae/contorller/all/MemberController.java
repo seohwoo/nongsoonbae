@@ -78,40 +78,20 @@ public class MemberController {
 		users.setPassword(passwordEncoder.encode(users.getPassword()));
 		String username = users.getUsername();
 		logger.info("===============register================");
+		logger.info("==============="+username+"================");
 		usersRepository.save(users);
 		usersRepository.createDetails(username);
 		usersRepository.createReviews(username);
 		usersRepository.createMypage(username);
 		usersRepository.createPayment(username);
 		
-		logger.warn("회원가입 후 로그인");
-        UsersDTO vo = usersRepository.FindByUser(username);
-        String grade = usersRepository.GetByAuth(username);
-        
-        	/*CustomUserDetailsService*/
-        CustomUser user = new CustomUser(vo);
-        logger.warn("user : " + user); 
-        List<GrantedAuthority> roles = new ArrayList<>(1);
-        String roleStr = grade.equals("admin") ? "ADMIN" : "MEMBER";
-        if(grade=="ADMIN") {
-        	roles.add(new SimpleGrantedAuthority("ADMIN"));
-        }else {
-        	roles.add(new SimpleGrantedAuthority("MEMBER"));
-        }
-        roles.add(new SimpleGrantedAuthority(roleStr));
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
-        logger.warn("auth : " + auth);
-        SecurityContextHolder.getContext().setAuthentication(auth);
-		return "redirect:/user/regSuccess";
+		return "user/welcome";
 	}
 	
-	@RequestMapping("/regSuccess")
-	public String regSucess(Model model, Principal principal) {
-		String username = principal.getName();
-		logger.info("===============register success================");
-		logger.info("==============="+username+"================");
+	@RequestMapping("/welcome")
+	public String regSucess(Model model) {
 		
-		model.addAttribute("username", username);
+		logger.info("===============register success================");
 		return "user/welcome";
 	}
 	
@@ -128,6 +108,7 @@ public class MemberController {
 		String username = principal.getName();
 		
 		String path = request.getServletContext().getRealPath("/resources/file/profile/");
+		logger.info("==============="+path+"================");
 		String filename = image.getOriginalFilename();
 		if(!filename.equals("")) {
 			String ext = filename.substring(filename.lastIndexOf("."));
@@ -192,14 +173,18 @@ public class MemberController {
 	}
 	
 	@PostMapping("/renamePass")
-	public String renamePass(Model model, String username) {
+	public String renamePass(Model model, String username, Principal principal) {
+		if(username == null) {
+			username = principal.getName();
+		}
 		model.addAttribute("username", username);
 		return "user/renamePass";
 	}
 	
 	@PostMapping("/passPro")
 	@ResponseBody
-	public String passPro(String password, String username) {
+	public String passPro(String password, String username, Principal principal) {
+		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		password = passwordEncoder.encode(password);
 		usersRepository.changePass(password, username);
