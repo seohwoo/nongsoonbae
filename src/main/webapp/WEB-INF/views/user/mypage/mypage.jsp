@@ -50,12 +50,22 @@
             $('.navitem').on('click', function (e) {
                 e.preventDefault();
                 $('.navitem').removeClass('active');
+                $('.navitem').addClass('link-dark');
                 $(this).addClass('active');
 
                 var contentId = $(this).attr('id');
+                sessionStorage.setItem('lastClickedLink', contentId);
 
                 $('#content').load(contentId);
             });
+        	// Retrieve and load the last clicked link on page load
+            var lastClickedLink = sessionStorage.getItem('lastClickedLink');
+            if (lastClickedLink) {
+            	$('.navitem').removeClass('active');
+            	$('.navitem').addClass('link-dark');
+            	$('#' + lastClickedLink).addClass('active');
+                $('#content').load(lastClickedLink);
+            }
         });
     </script>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>

@@ -27,7 +27,14 @@ public class UserController {
 	
 	@RequestMapping("like")
 	public String like(Principal principal) {
+		String username = principal.getName();
 		
 		return "user/mypage/like";
+	}
+	
+	@RequestMapping("cart")
+public String cart(Principal principal) {
+		
+		return "user/mypage/cart";
 	}
 }

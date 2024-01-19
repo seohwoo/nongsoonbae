@@ -130,13 +130,13 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 상품 상세정보 보기
 	@Override
-	public ProductDTO productDetail(String productnum, String username) {
-		return mapper.productDetail(productnum, username);
+	public ProductDTO productDetail(String productnum, String username, String otherUsername) {
+		return mapper.productDetail(productnum, username, otherUsername);
 	}
 
 	@Override
-	public AreaDTO selectArea(String productnum, String username) {
-		return mapper.selectArea(productnum, username);
+	public AreaDTO selectArea(String productnum, String username, String otherUsername) {
+		return mapper.selectArea(productnum, username, otherUsername);
 	}
 
 	@Override
@@ -150,34 +150,34 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String selectName(String username) {
-		return mapper.selectName(username);
+	public String selectName(String otherUsername) {
+		return mapper.selectName(otherUsername);
 	}
 
 	@Override
-	public List<ProductDTO> selectOption(String username, String optionstatus) {
-		return mapper.selectOption(username, optionstatus);
+	public List<ProductDTO> selectOption(String username, String optionstatus, String otherUsername) {
+		return mapper.selectOption(username, optionstatus, otherUsername);
 	}
 
-	// 찜하기 유무
+	// 상품 찜하기 유무
 	@Override
 	public int selectProductPickCount(String username, String productnum) {
 		return mapper.selectProductPickCount(username, productnum);
 	}	
 	
-	// 찜하기
+	// 상품 찜하기
 	@Override
-	public void productPick(String username, String productnum) {
-		mapper.productPick(username, productnum);
+	public void productPick(String username, String productnum, String otherUsername) {
+		mapper.productPick(username, productnum, otherUsername);
 	}
 	
 	// 찜하기 누를 때마다 상품 찜 1씩 증가
 	@Override
-	public void updateProductWishcount(String username, String productnum) {
-		mapper.updateProductWishcount(username, productnum);
+	public void updateProductWishcount(String otherUsername, String productnum) {
+		mapper.updateProductWishcount(otherUsername, productnum);
 	}
 
-	// 찜 삭제하기
+	// 상품 찜 삭제하기
 	@Override
 	public void productPickDelete(String username, String productnum) {
 		mapper.productPickDelete(username, productnum);
@@ -185,18 +185,53 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 찜 삭제하기 누를 때마다 상품 찜 1씩 감소
 	@Override
-	public void deleteProductWishcount(String username, String productnum) {
-		mapper.deleteProductWishcount(username, productnum);
+	public void deleteProductWishcount(String otherUsername, String productnum) {
+		mapper.deleteProductWishcount(otherUsername, productnum);
 	}
 	
-
-	
-	
-	// 장바구니
+	// 장바구니 상품 유무
 	@Override
-	public void productShoppingCart(String username, String productnum) {
-		mapper.productShoppingCart(username, productnum);
+	public int selectProductShoppingCartCount(String username, String productnum) {
+		return mapper.selectProductShoppingCartCount(username, productnum);
 	}
+	
+	// 장바구니 상품 담기
+	@Override
+	public void productShoppingCart(String username, String productnum, String otherUsername) {
+		mapper.productShoppingCart(username, productnum, otherUsername);
+	}
+	
+	// 장바구니 상품 삭제하기
+	@Override
+	public void productShoppingCartDelete(String username, String productnum) {
+		mapper.productShoppingCartDelete(username, productnum);
+	}
+
+	// 상품 클릭시 조회수 증가
+	@Override
+	public void updateReadcount(String username, String productnum) {
+		mapper.updateReadcount(username, productnum);
+	}
+
+	// 상품 조회한 유저
+	@Override
+	public void productReadcountInsert(String username, String productnum) {
+		mapper.productReadcountInsert(username, productnum);
+	}
+
+	// 상품넘버로 유저네임찾기
+	@Override
+	public String selectUsername(String productnum) {
+		return mapper.selectUsername(productnum);
+	}
+
+	// 오늘 상품 조회한 사람 찾기
+	@Override
+	public int todayProductReadcount(String username, String productnum, String todaydate) {
+		return mapper.todayProductReadcount(username, productnum, todaydate);
+	}
+
+
 	
 
 

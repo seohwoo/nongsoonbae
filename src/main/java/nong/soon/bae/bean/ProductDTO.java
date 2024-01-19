@@ -25,6 +25,7 @@ public class ProductDTO {
 	private String optionstatus;
 	private String username;
 	private String seqnum;
+	private String otherUsername;
 	
 	private List<String> optionname;
     private List<Integer> optionprice;

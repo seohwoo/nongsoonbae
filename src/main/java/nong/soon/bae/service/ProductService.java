@@ -45,43 +45,57 @@ public interface ProductService {
 	// FINISH
 		
 	// 상품 상세정보 보기
-	public ProductDTO productDetail(String productnum, String username);		
+	public ProductDTO productDetail(String productnum, String username, String otherUsername);		
 	
-	public AreaDTO selectArea(String productnum, String username);
+	// 상품넘버로 유저네임찾기
+	public String selectUsername(String productnum);
+	
+	public AreaDTO selectArea(String productnum, String username, String otherUsername);
 	
 	public String selectAreaName1(AreaDTO areaDTO);
 	
 	public String selectAreaName2(AreaDTO areaDTO);
 	
-	public String selectName(String username);
+	public String selectName(String otherUsername);
 	
-	public List<ProductDTO> selectOption(String username, String optionstatus);
+	public List<ProductDTO> selectOption(String username, String optionstatus, String otherUsername);
 	
 	public List<AllProductDTO> allProduct();
 
-	// 찜하기 유무
+	// 상품 찜하기 유무
 	public int selectProductPickCount(String username, String productnum);	
 		
-	// 찜하기
-	public void productPick(String username, String productnum);
+	// 상품 찜하기
+	public void productPick(String username, String productnum, String otherUsername);
 
 	// 찜하기 누를 때마다 상품 찜 1씩 증가
-	public void updateProductWishcount(String username, String productnum);	
+	public void updateProductWishcount(String otherUsername, String productnum);	
 
-	// 찜 삭제하기
+	// 상품 찜 삭제하기
 	public void productPickDelete(String username, String productnum);
 	
 	// 찜 삭제하기 누를 때마다 상품 찜 1씩 감소
-	public void deleteProductWishcount(String username, String productnum);	
+	public void deleteProductWishcount(String otherUsername, String productnum);	
 	
-	// 장바구니
-	public void productShoppingCart(String username, String productnum);	
+	// 장바구니 상품 유무
+	public int selectProductShoppingCartCount(String username, String productnum);
 	
+	// 장바구니 상품 담기
+	public void productShoppingCart(String username, String productnum, String otherUsername);	
+	
+	// 장바구니 상품 삭제하기
+	public void productShoppingCartDelete(String username, String productnum);
+	
+	// 상품 클릭시 조회수 증가
+	public void updateReadcount(String username, String productnum);
 
+	// 상품 조회한 유저
+	public void productReadcountInsert(String username, String productnum);	
 	
-
+	// 오늘 상품 조회한 사람 찾기
+	public int todayProductReadcount(String username, String productnum, String todaydate);
 	
-
+	
 	
 	// TEST
 	
