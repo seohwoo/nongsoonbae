@@ -8,6 +8,7 @@ import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 
@@ -56,7 +57,7 @@ public interface ProductService {
 	
 	public String selectAreaName2(AreaDTO areaDTO);
 	
-	public String selectName(String otherUsername);
+	public String selectOtherNickname(String otherUsername);
 	
 	public List<ProductDTO> selectOption(String username, String optionstatus, String otherUsername);
 	
@@ -66,7 +67,7 @@ public interface ProductService {
 	public int selectProductPickCount(String username, String productnum);	
 		
 	// 상품 찜하기
-	public void productPick(String username, String productnum, String otherUsername);
+	public void productPick(String username, String productnum, String otherNickname);
 
 	// 찜하기 누를 때마다 상품 찜 1씩 증가
 	public void updateProductWishcount(String otherUsername, String productnum);	
@@ -81,13 +82,13 @@ public interface ProductService {
 	public int selectProductShoppingCartCount(String username, String productnum);
 	
 	// 장바구니 상품 담기
-	public void productShoppingCart(String username, String productnum, String otherUsername);	
+	public void productShoppingCart(String username, String productnum, String otherNickname);	
 	
 	// 장바구니 상품 삭제하기
 	public void productShoppingCartDelete(String username, String productnum);
 	
 	// 상품 클릭시 조회수 증가
-	public void updateReadcount(String username, String productnum);
+	public void updateReadcount(String username, String productnum, String otherUsername);
 
 	// 상품 조회한 유저
 	public void productReadcountInsert(String username, String productnum);	
@@ -95,7 +96,11 @@ public interface ProductService {
 	// 오늘 상품 조회한 사람 찾기
 	public int todayProductReadcount(String username, String productnum, String todaydate);
 	
+	// 상품 리뷰쓰기
+	public void reviewInsert(ReviewsDTO reviewsDTO);
 	
+	// 나의 닉네임 찾기
+	public String selectMyNickname(String username);
 	
 	// TEST
 	

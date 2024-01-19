@@ -11,6 +11,7 @@ import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.ProductMapper;
@@ -150,8 +151,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public String selectName(String otherUsername) {
-		return mapper.selectName(otherUsername);
+	public String selectOtherNickname(String otherUsername) {
+		return mapper.selectOtherNickname(otherUsername);
 	}
 
 	@Override
@@ -167,8 +168,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 상품 찜하기
 	@Override
-	public void productPick(String username, String productnum, String otherUsername) {
-		mapper.productPick(username, productnum, otherUsername);
+	public void productPick(String username, String productnum, String otherNickname) {
+		mapper.productPick(username, productnum, otherNickname);
 	}
 	
 	// 찜하기 누를 때마다 상품 찜 1씩 증가
@@ -197,8 +198,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 장바구니 상품 담기
 	@Override
-	public void productShoppingCart(String username, String productnum, String otherUsername) {
-		mapper.productShoppingCart(username, productnum, otherUsername);
+	public void productShoppingCart(String username, String productnum, String otherNickname) {
+		mapper.productShoppingCart(username, productnum, otherNickname);
 	}
 	
 	// 장바구니 상품 삭제하기
@@ -209,8 +210,8 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 클릭시 조회수 증가
 	@Override
-	public void updateReadcount(String username, String productnum) {
-		mapper.updateReadcount(username, productnum);
+	public void updateReadcount(String username, String productnum, String otherUsername) {
+		mapper.updateReadcount(username, productnum, otherUsername);
 	}
 
 	// 상품 조회한 유저
@@ -229,6 +230,17 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int todayProductReadcount(String username, String productnum, String todaydate) {
 		return mapper.todayProductReadcount(username, productnum, todaydate);
+	}
+
+	// 상품 리뷰쓰기
+	@Override
+	public void reviewInsert(ReviewsDTO reviewsDTO) {
+		mapper.reviewInsert(reviewsDTO);
+	}
+
+	@Override
+	public String selectMyNickname(String username) {
+		return mapper.selectMyNickname(username);
 	}
 
 

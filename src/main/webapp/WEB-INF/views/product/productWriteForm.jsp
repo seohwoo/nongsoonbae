@@ -250,7 +250,7 @@
 			    
 			    <tr> 
 					<td colspan="2" align="center"> 
-						<input type="submit" name="confirm" value="상품등록" >
+						<input type="submit" name="confirm" value="상품등록">
 						<input type="reset" name="reset" value="다시입력">
 						<input type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">
 					</td>

@@ -43,6 +43,7 @@ import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ProductReadcountDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.service.ProductService;
@@ -295,6 +296,9 @@ public class ProductController {
 		productDTO.setOtherUsername(otherUsername);
 		productDTO = service.productDetail(productnum, username, otherUsername);
 		
+		// 나의 닉네임 찾기
+		String myNickname = service.selectMyNickname(username);		
+		
 		// 상점 주소 가져오는 코드
 		areaDTO.setOtherUsername(otherUsername);
 		areaDTO = service.selectArea(productnum, username, otherUsername);
@@ -309,8 +313,8 @@ public class ProductController {
 		areaDTO.setArea2(0);
 		String areaName1 = service.selectAreaName1(areaDTO);
 		
-		// 닉네임 가져오는 코드
-		String name = service.selectName(otherUsername);
+		// 상품올린 사람의 닉네임 가져오는 코드
+		String otherNickname = service.selectOtherNickname(otherUsername);
 
 		// 상품의 옵션값 가져오는 코드
 		String optionstatus = productnum;
@@ -328,18 +332,19 @@ public class ProductController {
 		
 		// 오늘 상품조회 안했으면 상품조회수+1 , 상품조회 테이블 정보넣기
 		if(count == 0) {
-			service.updateReadcount(username, productnum);
+			service.updateReadcount(username, productnum, otherUsername);
 			service.productReadcountInsert(username, productnum);			
 		}
 		
 		model.addAttribute("otherUsername", otherUsername);
 		model.addAttribute("productnum", productnum);
 		model.addAttribute("option", option);
-		model.addAttribute("name", name);
+		model.addAttribute("otherNickname", otherNickname);
 		model.addAttribute("areaName1", areaName1);
 		model.addAttribute("areaName2", areaName2);
 		model.addAttribute("areaDTO", areaDTO);
 		model.addAttribute("productDTO", productDTO);
+		model.addAttribute("myNickname", myNickname);
 		
 		return "product/productDetail";
 	}
@@ -367,7 +372,7 @@ public class ProductController {
 	
 	// 찜하기
 	@RequestMapping("productPick")
-	public String productPick(Principal principal, String productnum, String otherUsername) {
+	public String productPick(Principal principal, String productnum, String otherNickname, String otherUsername) {
 		String username = principal.getName();
 		
 		// 상품 찜하기 유무
@@ -375,7 +380,7 @@ public class ProductController {
 		
 		// 상품 찜 안돼있으면(0) 내 테이블에 상품 찜하고 판매자 상품 찜한 갯수에 +1
 		if(count == 0) {
-			service.productPick(username, productnum, otherUsername);
+			service.productPick(username, productnum, otherNickname);
 			service.updateProductWishcount(otherUsername, productnum);
 		}else {
 			// 상품 찜 돼있으면 내 테이블에 상품 찜 삭제하고 판매자 상품 찜한 갯수에 -1 
@@ -387,7 +392,7 @@ public class ProductController {
 	
 	// 장바구니
 	@RequestMapping("productShoppingCart")
-	public String productShoppingCart(Principal principal, String productnum, String otherUsername) {
+	public String productShoppingCart(Principal principal, String productnum, String otherNickname) {
 		String username = principal.getName();
 		
 		// 장바구니 상품 유무
@@ -395,7 +400,7 @@ public class ProductController {
 		
 		// 장바구니에 상품 없으면(0) 장바구니에 상품 담기
 		if(count == 0) {
-			service.productShoppingCart(username, productnum, otherUsername);
+			service.productShoppingCart(username, productnum, otherNickname);
 		}else {
 			// 장바구니에 상품 있으면 장바구니에 상품 삭제하기
 			service.productShoppingCartDelete(username, productnum);
@@ -403,5 +408,23 @@ public class ProductController {
 		return "redirect:/product/productMain"; 
 	}	
 	
+	@RequestMapping("productReview")
+	public String productReview(Principal principal, String myNickname, String productnum, Model model) {
+		String username = principal.getName();
+		
+		model.addAttribute("myNickname", myNickname);
+		model.addAttribute("productnum", productnum);
+		
+		return "product/productReview";
+	}
+	
+	@RequestMapping("productReviewPro")
+	public String productReviewPro(Principal principal, ReviewsDTO reviewsDTO) {
+		String username = principal.getName();
+		
+
+		service.reviewInsert(reviewsDTO);
+		return "product/productReviewPro";
+	}	
 }
 

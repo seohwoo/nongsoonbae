@@ -8,6 +8,7 @@ import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UsersDTO;
 
@@ -64,7 +65,7 @@ public interface ProductMapper {
 	
 	public String selectAreaName2(AreaDTO areaDTO);
 	
-	public String selectName(String otherUsername);
+	public String selectOtherNickname(String otherUsername);
 	
 	public List<ProductDTO> selectOption(@Param("username") String username,
 										 @Param("optionstatus") String optionstatus,
@@ -77,7 +78,7 @@ public interface ProductMapper {
 	// 상품 찜하기
 	public void productPick(@Param("username") String username, 
 							@Param("productnum") String productnum,
-							@Param("otherUsername") String otherUsername);
+							@Param("otherNickname") String otherNickname);
 
 	// 찜하기 누를 때마다 상품 찜 1씩 증가
 	public void updateProductWishcount(@Param("otherUsername") String otherUsername, 
@@ -98,7 +99,7 @@ public interface ProductMapper {
 	// 장바구니 상품 담기
 	public void productShoppingCart(@Param("username") String username, 
 									@Param("productnum") String productnum,
-									@Param("otherUsername") String otherUsername);
+									@Param("otherNickname") String otherNickname);
 	
 	// 장바구니 상품 삭제하기
 	public void productShoppingCartDelete(@Param("username") String username, 
@@ -106,7 +107,8 @@ public interface ProductMapper {
 	
 	// 상품 클릭시 조회수 증가
 	public void updateReadcount(@Param("username") String username, 
-								@Param("productnum") String productnum);
+								@Param("productnum") String productnum,
+								@Param("otherUsername") String otherUsername);
 	
 	// 상품 조회한 유저
 	public void productReadcountInsert(@Param("username") String username, 
@@ -116,6 +118,12 @@ public interface ProductMapper {
 	public int todayProductReadcount(@Param("username") String username, 
 									 @Param("productnum") String productnum,
 									 @Param("todaydate") String todaydate);
+	
+	// 상품 리뷰쓰기
+	public void reviewInsert(ReviewsDTO reviewsDTO);
+	
+	// 나의 닉네임 찾기
+	public String selectMyNickname(String username);
 	
 	// TEST
 	

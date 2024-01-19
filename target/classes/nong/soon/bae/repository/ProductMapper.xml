@@ -129,23 +129,31 @@
 		select * from ${otherUsername}_product where productnum=#{productnum}
 	</select>
 	
-	
+	<!-- 상품의 주소 찾기 // otherUsername = 상품올린 사람(유저네임)의 아이디 -->
 	<select id="selectArea" resultType="nong.soon.bae.bean.AreaDTO" parameterType="String">
 		select a.area1, a.area2 from allproduct a, ${otherUsername}_product p
 		where a.productnum = p.productnum 
 		and a.productnum = #{productnum}
 	</select>
 	
+	<!-- area1 주소 찾기 -->
 	<select id="selectAreaName1" resultType="String" parameterType="nong.soon.bae.bean.AreaDTO">
 		select areaname from area where area1=#{area1} and area2=#{area2}
 	</select>
 	
+	<!-- area2 주소 찾기 -->
 	<select id="selectAreaName2" resultType="String" parameterType="nong.soon.bae.bean.AreaDTO">
 		select areaname from area where area1=#{area1} and area2=#{area2}
 	</select>
 	
-	<select id="selectName" resultType="String" parameterType="String">
+	<!-- 상품올린 사람(유저네임)의 이름 찾기 -->
+	<select id="selectOtherNickname" resultType="String" parameterType="String">
 		select name from users where username=#{otherUsername}
+	</select>
+	
+	<!-- 나의 닉네임 찾기 -->
+	<select id="selectMyNickname" resultType="String" parameterType="String">
+		select name from users where username=#{username} 
 	</select>
 	
 	<select id="selectOption" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
@@ -163,7 +171,7 @@
 	<insert id="productPick" parameterType="String">
 		insert into ${username}_mypage (username, productnum, wishstatus) 
 	    values(
-	        #{otherUsername}, #{productnum}, 1 )
+	        #{otherNickname}, #{productnum}, 1 )
 	</insert>
 	
 	<!-- 찜하기 누를 때마다 상품 찜 1씩 증가  -->
@@ -193,7 +201,7 @@
 	<insert id="productShoppingCart" parameterType="String">
 		insert into ${username}_mypage (username, productnum, wishstatus) 
 	    values(
-	        #{otherUsername}, #{productnum}, 2 )			
+	        #{otherNickname}, #{productnum}, 2 )			
 	</insert>
 	
 	<!-- 장바구니 상품 삭제하기 -->
@@ -203,7 +211,7 @@
 	
 	<!-- 상품 클릭시 조회수 증가 -->
 	<update id="updateReadcount" parameterType="String">
-		update woo_product set readcount = readcount+1 where productnum=#{productnum}
+		update ${otherUsername}_product set readcount = readcount+1 where productnum=#{productnum}
 	</update>
 	
 	<!-- 상품 조회한 유저정보 넣기 -->
@@ -219,8 +227,17 @@
 		and productnum=#{productnum} and username=#{username}
 	</select>
 	
-	
-	
+	<!-- 상품 리뷰쓰기 -->
+	<insert id="reviewInsert" parameterType="nong.soon.bae.bean.ReviewsDTO">
+		insert into P_${productnum}_reviews (username, productnum, content, imagecount, stars, regdate)
+		values (
+		 	#{name},
+		 	#{productnum},
+		 	#{content}, 
+		 	#{imagecount}, 
+		 	#{stars}, 
+		 	sysdate ) 		
+	</insert>
 	
 	
 	

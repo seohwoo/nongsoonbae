@@ -13,7 +13,7 @@
 			<h3>${productDTO.productname} 상품 정보</h3>
 			<td>지역 : ${areaName1}</td>
 			<td>${areaName2}</td>
-			<td>/ 이름 : ${name}</td>
+			<td>/ 이름 : ${otherNickname}</td>
 					
 			<table border="1px" style="text-align: center;">
 				<tr>
@@ -86,9 +86,9 @@
 					<td colspan="2" align="center"> 
 						<input type="submit" name="confirm" value="결제하기" >
 																			
-						<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPick?productnum=${productnum}&otherUsername=${otherUsername}'">
-						<input type="button" value="장바구니" onclick="javascript:window.location='/product/productShoppingCart?productnum=${productnum}&otherUsername=${otherUsername}'">
-						<input type="button" value="리뷰쓰기" onclick="javascript:window.location='#'">
+						<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPick?productnum=${productnum}&otherNickname=${otherNickname}&otherUsername=${otherUsername}'">
+						<input type="button" value="장바구니" onclick="javascript:window.location='/product/productShoppingCart?productnum=${productnum}&otherNickname=${otherNickname}'">
+						<button onclick="window.open('productReview?productnum=${productnum}&myNickname=${myNickname}','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');">리뷰쓰기</button>
 					</td>
 				</tr>			
 			</table>
