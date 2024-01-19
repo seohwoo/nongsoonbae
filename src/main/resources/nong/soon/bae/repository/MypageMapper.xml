@@ -4,8 +4,20 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.MypageMapper">
 	
-	<select id="selectLike">
-		
+	<select id="selectLike" resultType="nong.soon.bae.bean.MyPageDTO">
+		select * from #{username}_mypage where wishstatus=1
+	</select>
+	<select id="selectfarmer" resultType="nong.soon.bae.bean.MyPageDTO">
+		select * from #{username}_mypage where wishstatus=2
+	</select>
+	<select id="selectLikeDetail" resultType="nong.soon.bae.bean.ProductDTO">
+		select * from #{username}_product where productnum=#{productnum}
+	</select>
+	<select id="selectProductList" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where productnum=#{productnum}, username=#{username}
+	</select>
+	<select id="selectfarmerDetail" resultType="nong.soon.bae.bean.ShopListDTO">
+		select * from shoplist where username=#{username}
 	</select>
 	
 </mapper>

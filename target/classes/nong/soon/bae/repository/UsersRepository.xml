@@ -45,21 +45,21 @@
 		insert into userdetails(username) values(#{username})
 	</insert>
 	<insert id="createReviews">
-		create table #{username}_reviews ( 
+		create table ${username}_reviews ( 
 			productnum varchar2(50) primary key,
 			content varchar2(4000) not null,
 			imagecount number default 0,
 			stars number default 5,
-			regdate dae default sysdate)
+			regdate date default sysdate)
 	</insert>
 	<insert id="createMypage">
-		create table #{username}_mypage ( 
+		create table ${username}_mypage ( 
 			username varchar2(50) not null,
 			productnum varchar2(50),
 			wishstatus number not null)
 	</insert>
 	<insert id="createPayment">
-		create table #{username}_payment (
+		create table ${username}_payment (
 			username varchar2(50) not null,
 			price number not null,
 			totalprice number not null,
