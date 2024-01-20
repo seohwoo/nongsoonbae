@@ -144,7 +144,7 @@ public class TestController{
 	public String chatRoom(Model model, Principal pri, String sendname, String chatno) throws Exception {
 		String username = pri.getName();
 		String chat = "";
-		String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
+		String fileRoot = "C:\\Users\\User\\Documents\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
 		String filePath = "";
 		String ip = "";
 		ChatDTO dto = service.chatInfo(chatno, username);
@@ -188,7 +188,7 @@ public class TestController{
         return sortedNames;
     }
 	
-	// 채팅 UI 생성
+	// 梨꾪똿 UI �깮�꽦
 	private String changeChat(String chat, ChatDTO dto) {
 		String result = "";
 		String[] arChat = chat.split(",");
@@ -213,17 +213,30 @@ public class TestController{
 	}
 	
 	
-	@PostMapping("/increaseCount")
+	@PostMapping("/updateCount")
     @ResponseBody
-    public String increaseCount(@RequestParam("cnt") String cnt, 
-    		@RequestParam("chatno") String chatno, Principal pri) {
-        int DBcnt = Integer.parseInt(cnt);
-        int DBchatno = Integer.parseInt(chatno);
-        DBcnt++; // 카운터 증가
-        String username = pri.getName();
-        service.updateNoRead(DBcnt, DBchatno, username);
-        return String.valueOf(DBcnt); // 증가된 값을 문자열로 변환하여 반환
+    public String updateCount(@RequestParam("cnt") int cnt, 
+    		@RequestParam("chatno") int chatno, @RequestParam("username") String username) {
+        service.updateNoRead(cnt, chatno, username);
+        return String.valueOf(cnt); 
     }
+	
+	@PostMapping("/updateJoin")
+	@ResponseBody
+	public String updateJoin(@RequestParam("joincnt") int joincnt, 
+			@RequestParam("chatno") int chatno) {
+		joincnt++;
+		service.updateJoinCnt(joincnt, chatno);
+		return String.valueOf(joincnt); 
+	}
+	@PostMapping("/updateOut")
+	@ResponseBody
+	public String updateOut(@RequestParam("joincnt") int joincnt, 
+			@RequestParam("chatno") int chatno) {
+		joincnt--;
+		service.updateJoinCnt(joincnt, chatno);
+		return String.valueOf(joincnt); 
+	}
 
 	@RequestMapping("sampleCnt")
 	public String sampleCnt(Model model, Principal pri) {
@@ -234,7 +247,7 @@ public class TestController{
 	
 	
 	
-	//써머노트 사용하려면 여기부터...
+	//�뜥癒몃끂�듃 �궗�슜�븯�젮硫� �뿬湲곕��꽣...
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
@@ -317,5 +330,5 @@ public class TestController{
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	//...여기까지
+	//...�뿬湲곌퉴吏�
 }

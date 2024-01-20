@@ -49,4 +49,7 @@
 	<update id="zeroNoRead">
 		update chat set noread=0 where chatno=#{chatno} and username=#{username}
 	</update>
+	<update id="updateJoinCnt">
+		update chat set isjoin=#{joincnt} where chatno=#{chatno}
+	</update>
 </mapper>

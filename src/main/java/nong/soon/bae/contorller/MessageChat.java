@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,8 +56,8 @@ public class MessageChat extends DefaultEmbeddableVerticle {
             	String sendname = roomOutEvent.getString("sendname");
             	String chatno = roomOutEvent.getString("chatno");
             	String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
-            	socket.leave(roomIdentifier);
             	io.sockets().in(roomIdentifier).emit("out", roomOutEvent);
+            	socket.leave(roomIdentifier);
             });
 
         });
@@ -73,7 +74,7 @@ public class MessageChat extends DefaultEmbeddableVerticle {
     }
 
     private void createChatFile(String roomIdentifier, String msg) {
-        String filename = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\" + roomIdentifier + ".txt";
+        String filename = "C:\\Users\\User\\Documents\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\" + roomIdentifier + ".txt";
         FileWriter writer = null;
         try {
             writer = new FileWriter(filename, true);

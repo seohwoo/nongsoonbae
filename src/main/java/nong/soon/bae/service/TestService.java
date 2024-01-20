@@ -15,5 +15,6 @@ public interface TestService {
 	public ChatDTO findSenduser(String chatno, String username);
 	public void updateNoRead(int cnt, int chatno, String username);
 	public void zeroNoRead(int chatno, String username);
+	public void updateJoinCnt(int joincnt, int chatno);
 }
    

@@ -17,4 +17,5 @@ public interface TestMapper {
 	public ChatDTO findSenduser(@Param("chatno") String chatno, @Param("username") String username);
 	public void updateNoRead(@Param("cnt") int cnt, @Param("chatno") int chatno, @Param("username") String username);
 	public void zeroNoRead(@Param("chatno") int chatno, @Param("username") String username);
+	public void updateJoinCnt(@Param("joincnt") int joincnt, @Param("chatno") int chatno);
 }

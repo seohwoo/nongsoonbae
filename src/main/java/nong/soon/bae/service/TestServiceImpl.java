@@ -57,4 +57,9 @@ public class TestServiceImpl implements TestService{
 		return mapper.findSenduser(chatno, username);
 	}
 
+	@Override
+	public void updateJoinCnt(int joincnt, int chatno) {
+		mapper.updateJoinCnt(joincnt, chatno);
+	}
+
 }

@@ -19,16 +19,41 @@
 				// 문서 전체의 스크롤바를 가장 아래로 이동
 				var socket = io.connect("http://${ip}:9999");
 				var cnt = '${sendnoread}';
+				var joincnt = '${dto.isjoin}';
+				console.log('시작 : '+joincnt);
 				msgerChat.scrollTop = msgerChat.scrollHeight;
 				socket.emit("joinRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
 				socket.on("join", function (join) {
 					cnt=0;
+					$.ajax({
+	                    type: 'POST',
+	                    url: '/test/updateJoin',
+	                    data: {
+	                    		joincnt: joincnt,
+	                    		chatno: '${dto.chatno}'
+	                    	},
+		                success: function(response) {
+		                	joincnt = parseInt(response);
+							console.log('들어옴 : '+joincnt);
+		                } 	
+	                });
 				});
-				$("#outRoomBtn").on("click", function () {
+				$(window).on('beforeunload', function() {
 					socket.emit("outRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
 				});
 				socket.on("out", function (out) {
-					cnt=0;
+					$.ajax({
+	                    type: 'POST',
+	                    url: '/test/updateOut',
+	                    data: {
+	                    		joincnt: joincnt,
+	                    		chatno: '${dto.chatno}'
+	                    	},
+		                success: function(response) {
+		                	joincnt = parseInt(response);
+							console.log('나감 : '+joincnt);
+		                } 	
+	                });	
 				});
 				socket.on("response", function (message) {
 					var arr = message.msg.split(',');
@@ -70,6 +95,20 @@
 						var formattedTime = new Intl.DateTimeFormat('ko-KR', options).format(currentDate);
 						msgerChat.scrollTop = msgerChat.scrollHeight;
 						socket.emit("chatMsg", { msg: '${dto.username_name}' + "," + m + "," + formattedTime +"," , username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
+						if(joincnt < 2) {
+			                $.ajax({
+			                    type: 'POST',
+			                    url: '/test/updateCount',
+			                    data: {
+			                    		cnt: cnt+1,
+			                    		chatno: '${dto.chatno}',
+			                    		username: '${dto.username}'
+			                    	},
+				                success: function(response) {
+				                	cnt = parseInt(response);
+				                } 	
+			                });
+		            	}
 					}
 				});
 				$(document).ready(function () {
@@ -77,21 +116,30 @@
 						$('#chat').val('');
 					});
 				});
-				$(document).ready(function() {
-		            $('#sendBtn').click(function() {
-		                $.ajax({
-		                    type: 'POST',
-		                    url: '/test/increaseCount',
-		                    data: {
-		                    		cnt: cnt,
-		                    		chatno: '${dto.chatno}'
-		                    	},
-			                success: function(response) {
-			                	cnt = parseInt(response);
-			                } 	
-		                });
-		            });
-		        });
+				$(document).ready(function () {
+					$('#outRoomBtn').click(function () {
+						window.location.href = "/test/roomList";
+					});
+				});
+				$(window).on('beforeunload', function (e) {
+			        var isReloading = performance.navigation.type === 1;
+			        if (isReloading) {
+			        	socket.on("out", function (out) {
+							$.ajax({
+			                    type: 'POST',
+			                    url: '/test/updateOut',
+			                    data: {
+			                    		joincnt: joincnt,
+			                    		chatno: '${dto.chatno}'
+			                    	},
+				                success: function(response) {
+				                	joincnt = parseInt(response);
+									console.log('나감 : '+joincnt);
+				                } 	
+			                });	
+						});
+			        }
+			    });
 			});
 		</script>
 	</head>
