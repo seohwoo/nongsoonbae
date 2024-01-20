@@ -42,6 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import nong.soon.bae.bean.ChatDTO;
 import nong.soon.bae.data.ApiKeys;
+import nong.soon.bae.data.FileRoot;
 import nong.soon.bae.service.TestService;
 
 
@@ -144,18 +145,13 @@ public class TestController{
 	public String chatRoom(Model model, Principal pri, String sendname, String chatno) throws Exception {
 		String username = pri.getName();
 		String chat = "";
-		String fileRoot = "C:\\Users\\User\\Documents\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
+		String fileRoot = FileRoot.getFilepath();
 		String filePath = "";
-		String ip = "";
+		String ip = FileRoot.getIp();
 		ChatDTO dto = service.chatInfo(chatno, username);
 		service.zeroNoRead(Integer.parseInt(chatno), username);
 		int sendnoread = service.findSenduser(chatno, username).getNoread();
-		try {
-			InetAddress localhost = InetAddress.getLocalHost();
-			ip = localhost.getHostAddress();
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    }
+		
 		if(username!=null && sendname!=null) {
 			try {
 				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname, chatno)+".txt";

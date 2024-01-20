@@ -25,18 +25,20 @@
 				socket.emit("joinRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
 				socket.on("join", function (join) {
 					cnt=0;
-					$.ajax({
-	                    type: 'POST',
-	                    url: '/test/updateJoin',
-	                    data: {
-	                    		joincnt: joincnt,
-	                    		chatno: '${dto.chatno}'
-	                    	},
-		                success: function(response) {
-		                	joincnt = parseInt(response);
-							console.log('들어옴 : '+joincnt);
-		                } 	
-	                });
+					if(joincnt <= 2) {
+						$.ajax({
+		                    type: 'POST',
+		                    url: '/test/updateJoin',
+		                    data: {
+		                    		joincnt: joincnt,
+		                    		chatno: '${dto.chatno}'
+		                    	},
+			                success: function(response) {
+			                	joincnt = parseInt(response);
+								console.log('들어옴 : '+joincnt);
+			                } 	
+		                });
+					}
 				});
 				$(window).on('beforeunload', function() {
 					socket.emit("outRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });

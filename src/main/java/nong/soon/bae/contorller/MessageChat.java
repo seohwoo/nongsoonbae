@@ -22,6 +22,8 @@ import com.nhncorp.mods.socket.io.SocketIOSocket;
 import com.nhncorp.mods.socket.io.impl.DefaultSocketIOServer;
 import com.nhncorp.mods.socket.io.spring.DefaultEmbeddableVerticle;
 
+import nong.soon.bae.data.FileRoot;
+
 public class MessageChat extends DefaultEmbeddableVerticle {
 
     private SocketIOServer io = null;
@@ -74,7 +76,7 @@ public class MessageChat extends DefaultEmbeddableVerticle {
     }
 
     private void createChatFile(String roomIdentifier, String msg) {
-        String filename = "C:\\Users\\User\\Documents\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\" + roomIdentifier + ".txt";
+        String filename = FileRoot.getFilepath() + roomIdentifier + ".txt";
         FileWriter writer = null;
         try {
             writer = new FileWriter(filename, true);
