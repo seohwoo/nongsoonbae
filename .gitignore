@@ -42,6 +42,7 @@ pom.properties
 KorServiceAPI.java
 VlandAPI.java
 ApiKeys.java
+FileRoot.java
 
 # sbteclipse plugin
 .target

@@ -30,8 +30,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,6 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import nong.soon.bae.bean.ChatDTO;
 import nong.soon.bae.data.ApiKeys;
+import nong.soon.bae.data.FileRoot;
 import nong.soon.bae.service.TestService;
 
 
@@ -56,7 +60,6 @@ public class TestController{
 	private ArrayList<String> srcValues;
 	@Autowired
 	private ArrayList<String> realFiles;
-	
 	
 	@RequestMapping("main")
 	public String test(Model model) {
@@ -142,17 +145,13 @@ public class TestController{
 	public String chatRoom(Model model, Principal pri, String sendname, String chatno) throws Exception {
 		String username = pri.getName();
 		String chat = "";
-		String fileRoot = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\";
+		String fileRoot = FileRoot.getFilepath();
 		String filePath = "";
-		String ip = "";
+		String ip = FileRoot.getIp();
 		ChatDTO dto = service.chatInfo(chatno, username);
-		try {
-			InetAddress localhost = InetAddress.getLocalHost();
-			ip = localhost.getHostAddress();
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    }
-
+		service.zeroNoRead(Integer.parseInt(chatno), username);
+		int sendnoread = service.findSenduser(chatno, username).getNoread();
+		
 		if(username!=null && sendname!=null) {
 			try {
 				filePath = fileRoot+"\\"+getRoomIdentifier(username, sendname, chatno)+".txt";
@@ -173,6 +172,7 @@ public class TestController{
 		model.addAttribute("chat", chat);
 		model.addAttribute("dto", dto);
 		model.addAttribute("ip", ip);
+		model.addAttribute("sendnoread", sendnoread);
 		return "test/room";
 	}
 	
@@ -184,7 +184,7 @@ public class TestController{
         return sortedNames;
     }
 	
-	// 채팅 UI 생성
+	// 梨꾪똿 UI �깮�꽦
 	private String changeChat(String chat, ChatDTO dto) {
 		String result = "";
 		String[] arChat = chat.split(",");
@@ -209,7 +209,41 @@ public class TestController{
 	}
 	
 	
-	//써머노트 사용하려면 여기부터...
+	@PostMapping("/updateCount")
+    @ResponseBody
+    public String updateCount(@RequestParam("cnt") int cnt, 
+    		@RequestParam("chatno") int chatno, @RequestParam("username") String username) {
+        service.updateNoRead(cnt, chatno, username);
+        return String.valueOf(cnt); 
+    }
+	
+	@PostMapping("/updateJoin")
+	@ResponseBody
+	public String updateJoin(@RequestParam("joincnt") int joincnt, 
+			@RequestParam("chatno") int chatno) {
+		joincnt++;
+		service.updateJoinCnt(joincnt, chatno);
+		return String.valueOf(joincnt); 
+	}
+	@PostMapping("/updateOut")
+	@ResponseBody
+	public String updateOut(@RequestParam("joincnt") int joincnt, 
+			@RequestParam("chatno") int chatno) {
+		joincnt--;
+		service.updateJoinCnt(joincnt, chatno);
+		return String.valueOf(joincnt); 
+	}
+
+	@RequestMapping("sampleCnt")
+	public String sampleCnt(Model model, Principal pri) {
+		model.addAttribute("username", pri.getName());
+		return "/test/sampleCnt";
+	}
+	
+	
+	
+	
+	//�뜥癒몃끂�듃 �궗�슜�븯�젮硫� �뿬湲곕��꽣...
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
@@ -292,5 +326,5 @@ public class TestController{
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	//...여기까지
+	//...�뿬湲곌퉴吏�
 }

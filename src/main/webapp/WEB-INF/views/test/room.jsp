@@ -18,8 +18,45 @@
 				const msgerChat = get(".msger-chat");
 				// 문서 전체의 스크롤바를 가장 아래로 이동
 				var socket = io.connect("http://${ip}:9999");
+				var cnt = '${sendnoread}';
+				var joincnt = '${dto.isjoin}';
+				console.log('시작 : '+joincnt);
 				msgerChat.scrollTop = msgerChat.scrollHeight;
 				socket.emit("joinRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
+				socket.on("join", function (join) {
+					cnt=0;
+					if(joincnt <= 2) {
+						$.ajax({
+		                    type: 'POST',
+		                    url: '/test/updateJoin',
+		                    data: {
+		                    		joincnt: joincnt,
+		                    		chatno: '${dto.chatno}'
+		                    	},
+			                success: function(response) {
+			                	joincnt = parseInt(response);
+								console.log('들어옴 : '+joincnt);
+			                } 	
+		                });
+					}
+				});
+				$(window).on('beforeunload', function() {
+					socket.emit("outRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
+				});
+				socket.on("out", function (out) {
+					$.ajax({
+	                    type: 'POST',
+	                    url: '/test/updateOut',
+	                    data: {
+	                    		joincnt: joincnt,
+	                    		chatno: '${dto.chatno}'
+	                    	},
+		                success: function(response) {
+		                	joincnt = parseInt(response);
+							console.log('나감 : '+joincnt);
+		                } 	
+	                });	
+				});
 				socket.on("response", function (message) {
 					var arr = message.msg.split(',');
 					var side = "left";
@@ -42,7 +79,7 @@
 						  '      <div class=\'msg-info-time\'>' + arr[2] + '</div>' +
 						  '    </div>' +
 						  '    <div class=\'msg-text\'>' + arr[1] + '</div>' +
-						  '  </div>' +
+						  '  </div>' + 
 						  '</div>';
 					$("#msgs").append(msgHTML);
 					msgerChat.scrollTop = msgerChat.scrollHeight;
@@ -60,6 +97,20 @@
 						var formattedTime = new Intl.DateTimeFormat('ko-KR', options).format(currentDate);
 						msgerChat.scrollTop = msgerChat.scrollHeight;
 						socket.emit("chatMsg", { msg: '${dto.username_name}' + "," + m + "," + formattedTime +"," , username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
+						if(joincnt < 2) {
+			                $.ajax({
+			                    type: 'POST',
+			                    url: '/test/updateCount',
+			                    data: {
+			                    		cnt: cnt+1,
+			                    		chatno: '${dto.chatno}',
+			                    		username: '${dto.username}'
+			                    	},
+				                success: function(response) {
+				                	cnt = parseInt(response);
+				                } 	
+			                });
+		            	}
 					}
 				});
 				$(document).ready(function () {
@@ -67,6 +118,30 @@
 						$('#chat').val('');
 					});
 				});
+				$(document).ready(function () {
+					$('#outRoomBtn').click(function () {
+						window.location.href = "/test/roomList";
+					});
+				});
+				$(window).on('beforeunload', function (e) {
+			        var isReloading = performance.navigation.type === 1;
+			        if (isReloading) {
+			        	socket.on("out", function (out) {
+							$.ajax({
+			                    type: 'POST',
+			                    url: '/test/updateOut',
+			                    data: {
+			                    		joincnt: joincnt,
+			                    		chatno: '${dto.chatno}'
+			                    	},
+				                success: function(response) {
+				                	joincnt = parseInt(response);
+									console.log('나감 : '+joincnt);
+				                } 	
+			                });	
+						});
+			        }
+			    });
 			});
 		</script>
 	</head>
@@ -76,6 +151,7 @@
 		    <div class="msger-header-title">
 		      <i class="fas fa-comment-alt"></i> ${dto.sendname_name}
 		    </div>
+		    <button id="outRoomBtn">❌</button>
 		    <div class="msger-header-options">
 		      <span><i class="fas fa-cog"></i></span>
 		    </div>
@@ -84,8 +160,8 @@
 				${chat}
 			</main>
 			<div class="msger-inputarea">
-			    <input type="text" class="msger-input" name="chat" id="chat" placeholder="Enter your message...">
-			    <button type="submit" id="sendBtn" class="msger-send-btn">Send</button>
+			    <input type="text" class="msger-input" name="chat" id="chat" placeholder="메세지를 입력하세요...">
+			    <button type="submit" id="sendBtn" class="msger-send-btn">전송</button>
 			</div>    
 		</section>
 	</body>

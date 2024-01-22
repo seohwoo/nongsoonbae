@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,6 +22,8 @@ import com.nhncorp.mods.socket.io.SocketIOSocket;
 import com.nhncorp.mods.socket.io.impl.DefaultSocketIOServer;
 import com.nhncorp.mods.socket.io.spring.DefaultEmbeddableVerticle;
 
+import nong.soon.bae.data.FileRoot;
+
 public class MessageChat extends DefaultEmbeddableVerticle {
 
     private SocketIOServer io = null;
@@ -37,8 +40,9 @@ public class MessageChat extends DefaultEmbeddableVerticle {
                 String chatno = roomJoinEvent.getString("chatno");
                 String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
                 socket.join(roomIdentifier);
+                io.sockets().in(roomIdentifier).emit("join", roomJoinEvent);
             });
-
+            
             socket.on("chatMsg", chatMsgEvent -> {
                 String msg = chatMsgEvent.getString("msg");
                 String sender = chatMsgEvent.getString("username");
@@ -48,6 +52,16 @@ public class MessageChat extends DefaultEmbeddableVerticle {
                 createChatFile(roomIdentifier, msg);
                 io.sockets().in(roomIdentifier).emit("response", chatMsgEvent);
             });
+            
+            socket.on("outRoom", roomOutEvent -> {
+            	String username = roomOutEvent.getString("username");
+            	String sendname = roomOutEvent.getString("sendname");
+            	String chatno = roomOutEvent.getString("chatno");
+            	String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
+            	io.sockets().in(roomIdentifier).emit("out", roomOutEvent);
+            	socket.leave(roomIdentifier);
+            });
+
         });
 
         server.listen(9999);
@@ -62,7 +76,7 @@ public class MessageChat extends DefaultEmbeddableVerticle {
     }
 
     private void createChatFile(String roomIdentifier, String msg) {
-        String filename = "D:\\dvsp\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nongsoonbae\\resources\\chatRoom\\" + roomIdentifier + ".txt";
+        String filename = FileRoot.getFilepath() + roomIdentifier + ".txt";
         FileWriter writer = null;
         try {
             writer = new FileWriter(filename, true);

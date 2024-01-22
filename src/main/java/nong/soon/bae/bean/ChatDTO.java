@@ -12,4 +12,6 @@ public class ChatDTO {
 	private String sendname_name;
 	private String username_img;
 	private String sendname_img;
+	private int noread;
+	private int isjoin;
 }
