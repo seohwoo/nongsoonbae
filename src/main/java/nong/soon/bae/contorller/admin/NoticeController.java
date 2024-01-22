@@ -84,9 +84,7 @@ public class NoticeController  {
 		dto.setTitle(title); // 제목 설정
 		dto.setContent(content); // 내용 설정
 		dto.setFiles(files); // 첨부 파일 개수 설정
-		System.out.println(num);
 		model.addAttribute("content", content);
-		service.insert(dto);
 		return "redirect:/admin/noticeList";
 	}
 

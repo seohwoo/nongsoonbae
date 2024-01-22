@@ -3,11 +3,13 @@ package nong.soon.bae.service;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.UserCheckDTO;
 
 import nong.soon.bae.repository.UserCheckMapper;
@@ -160,7 +162,52 @@ public class UserCheckServiceImpl implements UserCheckService{
 		model.addAttribute("blacksearchCnt", blackcnt);
 		model.addAttribute("blacksearchlist", blacksearchlist);
 	}
+
+	@Override
+	public void showCate(Model model) {
+		List<ProductCategoryDTO> catelist = Collections.EMPTY_LIST;
+		catelist = mapper.showCate();
+		model.addAttribute("catelist",catelist);
 		
+		}
+
+	@Override
+	public int maxNum() {
+		return mapper.maxNum();
+	}
+
+	@Override
+	public int insertNewCate(int num, String addCate) {
+		checkMap.clear();
+        checkMap.put("num", num);
+        checkMap.put("addCate", addCate);
+		return mapper.insertNewCate(checkMap);
+		
+		}
+
+	@Override
+	public int addCateFile(String addCate, String realname) {
+		checkMap.put("realname", realname);
+        checkMap.put("addCate", addCate);
+		return mapper.addCateFile(checkMap);
+	}
+
+	@Override
+	public void showSubCate(Model model, int cate1Select) {
+		List<ProductCategoryDTO> subcatelist = Collections.EMPTY_LIST;
+		subcatelist = mapper.showSubCate(cate1Select);
+		model.addAttribute("subcatelist",subcatelist);
+	}
+
+	@Override
+	public void showSelectCate1(Model model, int cate1Select) {
+		String showSelectCate1 = null;
+		showSelectCate1 = mapper.showSelectCate1(cate1Select);
+		model.addAttribute("showSelectCate1",showSelectCate1);
+		
+	}
+
+	
 	}
 
 

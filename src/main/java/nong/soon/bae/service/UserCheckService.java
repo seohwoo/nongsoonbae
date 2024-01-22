@@ -1,5 +1,6 @@
 package nong.soon.bae.service;
 
+
 import org.springframework.ui.Model;
 
 public interface UserCheckService {
@@ -11,4 +12,16 @@ public interface UserCheckService {
 	public int reuser(String username); //정지회원복구하기
 	public int deleteblacklist (String username); //블랙리스트에서 제거하기 
 	public void blackFindUser(Model model, int pageNum, String userSearch);//정지회원검색
+	
+	public void showCate(Model model); //카테고리 분류하기
+	public int maxNum();
+	
+	public int insertNewCate (int num, String addCate);
+	int addCateFile(String addCate, String realname);
+	
+
+	public void showSubCate (Model model, int cate1Select);
+	public void showSelectCate1 (Model model, int cate1Select);
+	
+	
 }
