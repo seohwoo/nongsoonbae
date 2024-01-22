@@ -29,7 +29,7 @@ public interface ProductMapper {
 	public int imagesInsert(@Param("productnum") String productnum,
 							@Param("filename") String filename,
 							@Param("username") String username);
-	
+
 	// 상품 옵션 추가
 	public void optionInsert(ProductDTO product);
 	

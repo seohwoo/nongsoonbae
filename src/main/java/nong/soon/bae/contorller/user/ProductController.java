@@ -106,7 +106,7 @@ public class ProductController {
 	// 상품 등록하기
 	@RequestMapping("productWritePro")
 	public String productWritePro(String content, String[] fileNames, HttpServletRequest request, List<MultipartFile> files, Model model, 
-								  Principal principal, ProductDTO product, AllProductDTO dto, String cate3, 
+								  Principal principal, ProductDTO product, AllProductDTO dto, String cate3, String productname,
 								  @RequestParam("optionname") String[] optionname, 
 								  @RequestParam("optiontotalprice") int[] optiontotalprice,
 								  @RequestParam("optionProductCount") int[] optionProductCount) {
@@ -159,6 +159,11 @@ public class ProductController {
 				sourceFile.delete();
 			}
 	    }
+	    product.setProductname(productname);
+	    product.setContent(content);
+	    product.setProductname(productname);
+	    product.setProductname(productname);
+	    product.setProductname(productname);
 		model.addAttribute("content", content);
 		///////////////////////////////////////
 		
