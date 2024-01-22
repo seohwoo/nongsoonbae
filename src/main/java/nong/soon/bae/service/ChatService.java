@@ -1,18 +1,17 @@
 package nong.soon.bae.service;
 
-import java.util.List;
+
+import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.ChatDTO;
+
 
 public interface ChatService {
 
 	
-	public List<ChatDTO> userChatList(String username);
-	public ChatDTO chatInfo(String chatno, String username);
-	public ChatDTO findChat(String chatno, String username);
-	public ChatDTO findSenduser(String chatno, String username);
-	public void updateNoRead(int cnt, int chatno, String username);
-	public void zeroNoRead(int chatno, String username);
-	public void updateJoinCnt(int joincnt, int chatno);
-	
+	public void userChatList(Model model, String username);
+	public void chatInfo(Model model,String chatno, String username);
+	public int updateNoRead(int cnt, int chatno, String username);
+	public int updateJoinCnt(int joincnt, int chatno, int isjoin);
+	public ChatDTO createAdminRoom(String username);
 }
