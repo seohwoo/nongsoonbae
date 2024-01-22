@@ -2,13 +2,8 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="nong.soon.bae.repository.TestMapper">
-	<select id="count" resultType="int">
-		select count(*) from users
-	</select>
-	<select id="findUsers" parameterType="String" resultType="nong.soon.bae.bean.UsersDTO">
-		select * from users where username=#{username}
-	</select>
+<mapper namespace="nong.soon.bae.repository.ChatMapper">
+
 	<select id="userChatList" parameterType="String" resultType="chatDTO">
 		SELECT
 		    chat.*,

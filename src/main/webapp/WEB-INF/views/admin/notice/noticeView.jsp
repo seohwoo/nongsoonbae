@@ -51,14 +51,14 @@
             }
             .delete-button {
                 padding: 8px 15px;
-                background-color: #d9534f; /* 빨간색 계열로 설정 */
+                background-color: #d9534f; 
                 color: white;
                 text-decoration: none;
                 border-radius: 5px;
-                margin-left: 10px; /* 버튼 사이의 간격 */
+                margin-left: 10px; 
             }
             .delete-button:hover {
-                background-color: #c9302c; /* 호버 시 색상 변경 */
+                background-color: #c9302c; 
             }
         </style>
     </head>

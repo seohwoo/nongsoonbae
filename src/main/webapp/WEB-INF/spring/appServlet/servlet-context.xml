@@ -40,6 +40,7 @@
 	</beans:bean>
 	<security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled" />
 	
-	<beans:bean id="messageChat" class="nong.soon.bae.contorller.MessageChat" />
+	<!-- <beans:bean id="messageChat" class="nong.soon.bae.contorller.MessageChat" /> -->
+	<beans:bean id="messageChat" class="nong.soon.bae.data.MessageChat" />
 	 
 </beans:beans>

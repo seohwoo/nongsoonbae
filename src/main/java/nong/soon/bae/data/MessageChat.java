@@ -1,4 +1,4 @@
-package nong.soon.bae.contorller;
+package nong.soon.bae.data;
 
 import java.io.FileWriter;
 import java.nio.file.Files;

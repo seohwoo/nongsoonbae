@@ -54,7 +54,27 @@ public class UserCheckServiceImpl implements UserCheckService{
 	    
 	}
 
-
+	@Override
+	public void findUser(Model model, int pageNum, String userSearch) {
+		int pageSize = 10;
+		int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
+		String keyword = "%" + userSearch + "%";
+		checkMap.put("keyword", keyword);
+		int cnt = mapper.searchUserCnt(keyword);
+		List<UserCheckDTO> searchlist = Collections.EMPTY_LIST;
+		if(cnt > 0) {
+			checkMap.put("start", startRow);
+	    	checkMap.put("end", endRow);
+	    	checkMap.put("keyword", keyword);
+			searchlist = mapper.serchUserlist(checkMap);
+		}
+		model.addAttribute("userSearch", userSearch);
+		model.addAttribute("searchCnt", cnt);
+		model.addAttribute("searchlist", searchlist);
+	}
+		
+	
 
 	@Override //일반 유저 정지 
 	public int userstop(String username) {
@@ -121,6 +141,32 @@ public class UserCheckServiceImpl implements UserCheckService{
 		return mapper.deleteblacklist(checkMap);
 	}
 
-}
+	@Override
+	public void blackFindUser(Model model, int pageNum, String userSearch) {
+		int pageSize = 10;
+		int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
+		String keyword = "%" + userSearch + "%";
+		checkMap.put("keyword", keyword);
+		int blackcnt = mapper.blacksearchUserCnt(keyword);
+		List<UserCheckDTO> blacksearchlist = Collections.EMPTY_LIST;
+		if(blackcnt > 0) {
+			checkMap.put("start", startRow);
+	    	checkMap.put("end", endRow);
+	    	checkMap.put("keyword", keyword);
+			blacksearchlist = mapper.blackserchUserlist(checkMap);
+		}
+		model.addAttribute("userSearch", userSearch);
+		model.addAttribute("blacksearchCnt", blackcnt);
+		model.addAttribute("blacksearchlist", blacksearchlist);
+	}
+		
+	}
+
+
+
+	
+
+
 
 

@@ -161,9 +161,6 @@ public class ProductController {
 	    }
 	    product.setProductname(productname);
 	    product.setContent(content);
-	    product.setProductname(productname);
-	    product.setProductname(productname);
-	    product.setProductname(productname);
 		model.addAttribute("content", content);
 		///////////////////////////////////////
 		

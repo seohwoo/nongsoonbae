@@ -5,7 +5,13 @@ import lombok.Data;
 @Data
 public class ChatDTO {
 	
+	private int chatno;
 	private String username;
 	private String sendname;
-	private int num;
+	private String username_name;
+	private String sendname_name;
+	private String username_img;
+	private String sendname_img;
+	private int noread;
+	private int isjoin;
 }

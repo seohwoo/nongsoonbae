@@ -55,6 +55,9 @@
 	<body>
 	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
 	<h1>정지 회원 목록 (${blackcount}명)</h1>
+		<div>
+			<jsp:include page="/WEB-INF/views/admin/usercheck/blackuserSearch.jsp" />
+		</div>
 		<c:forEach var="blacklist" items="${blacklist}">
     		<div class="blacklist">
       		 <form action="/admin/reuserPro" method="post" >

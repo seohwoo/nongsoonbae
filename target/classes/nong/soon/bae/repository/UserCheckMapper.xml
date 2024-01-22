@@ -45,4 +45,43 @@
 	<delete id="deleteblacklist" parameterType="hashMap">
 		delete from blacklist where username=#{username}
 	</delete>
+	<select id="searchUserCnt" parameterType="String" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) FROM users WHERE 	
+			(username LIKE #{keyword} OR name LIKE #{keyword}) AND grade = 'ROLE_USER'
+		
+		 ]]>
+	</select>
+	<select id="serchUserlist" parameterType="hashmap" resultType="nong.soon.bae.bean.UserCheckDTO">
+		<![CDATA[
+		SELECT * FROM 
+    		(SELECT b.*, rownum r FROM 
+        		(SELECT * FROM users 
+         			WHERE (username LIKE #{keyword} OR name LIKE #{keyword}) 
+          				 AND grade = 'ROLE_USER' 
+         					ORDER BY username DESC) b) 
+                WHERE r >= #{start} AND r <= #{end}
+                
+		]]>
+	</select>
+	<select id="blacksearchUserCnt" parameterType="String" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) FROM users WHERE 	
+			(username LIKE #{keyword} OR name LIKE #{keyword}) AND grade = 'ROLE_STOP'
+		
+		 ]]>
+	</select>
+	<select id="blackserchUserlist" parameterType="hashmap" resultType="nong.soon.bae.bean.UserCheckDTO" >
+		<![CDATA[
+		SELECT * FROM 
+    		(SELECT a.*, rownum r FROM 
+       				 (SELECT u.username AS u_username, u.name AS u_name, 
+        				 u.email AS u_email, b.reason AS b_reason, b.bandate AS b_bandate 
+         					FROM users u JOIN blacklist b ON u.username = b.username 
+         						WHERE u.username LIKE #{keyword} OR u.name LIKE #{keyword}
+        						 ORDER BY b.bandate DESC) a) WHERE r >= #{start} AND r <= #{end}        
+
+      ]]>
+	</select>
+
 </mapper>
