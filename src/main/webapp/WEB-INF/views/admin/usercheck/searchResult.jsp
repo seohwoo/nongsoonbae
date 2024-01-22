@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>회원관리</title>
-		<style>
+	<meta charset="UTF-8">
+	<title>검색결과</title>
+	<style>
 	        body {
 	        font-family: Arial, sans-serif;
 	        background-color: #f5f5f5;
@@ -52,13 +52,20 @@
     </style>
 	</head>
 	<body>
-	<h4>일반 회원 목록 (${count} 명)</h4>	 
-			<c:forEach var="list" items="${list}">
+	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+	<div>
+		<c:if test="${searchCnt  == 0 }" >
+	         <h1> 💟 ${ userSearch}💟 에 대한 검색결과가 없습니다! </h1>
+	         <input type="button" value="돌아가기" onclick="goBack()"/>
+	         </c:if>
+	         <c:if test="${searchCnt  >  0 }" >
+	         	<h3> 💟 ${ userSearch}💟 검색결과 ${searchCnt} 명 </h3>
+	         	<c:forEach var="searchlist" items="${searchlist}">
 				<div class="userlist">
 					<form action="/admin/stopPro" method="post" onsubmit="return confirmSubmission(this)">
-		                <input type="hidden" name="username" value="${list.username}"> 
-			            <h2>💟 ID : ${list.username}</h2>
-			            <h3>이름 : ${list.name}</h3>
+		                <input type="hidden" name="username" value="${searchlist.username}"> 
+			            <h2>💟 ID : ${searchlist.username}</h2>
+			            <h3>이름 : ${searchlist.name}</h3>
 		                <input type="button" value="정지하기" onclick="toggleOptions(this)"/>
 		                <div class="options" style="display:none;">
 		                    <select name="reason">
@@ -73,43 +80,23 @@
 		                    <input type="submit" value="선택하기"/> 
 	                </div>
 	                <div class="email-meta">
-	                    <p>이메일: ${list.email}</p>
+	                    <p>이메일: ${searchlist.email}</p>
 	                </div>
          		   </form>				
 				</div>
 			</c:forEach>	
-				<div class="pagination">
-				    <c:if test="${startPage > 10}">
-				        <form action="/admin/userall" method="post">
-				            <input type="hidden" name="pageNum" value="${startPage-10}">
-				            <button type="submit">[이전]</button>
-				        </form>
-				    </c:if>
-				    <c:forEach var="i" begin="${startPage}" end="${endPage}">
-				        <form action="/admin/userall" method="post">
-				            <input type="hidden" name="pageNum" value="${i}">
-				            <button type="submit">[${i}]</button>
-				        </form>
-				    </c:forEach>
-				    <c:if test="${endPage < pageCount}">
-				        <form action="/admin/userall" method="post">
-				            <input type="hidden" name="pageNum" value="${startPage+10}">
-				            <button type="submit">[다음]</button>
-				        </form>
-				    </c:if>
-				   </div>
+	         </c:if>	
+	     </div>
 	</body>
 	<script>
 	    function toggleOptions(button) {
 	    var optionsDiv = button.parentElement.querySelector('.options'); 
-	
 	    if (optionsDiv.style.display === "none") {
 	        optionsDiv.style.display = "block";
 	    } else {
 	        optionsDiv.style.display = "none";
 	    	}
 		}
-	    
 	    function confirmSubmission(form) {
 	        var reasonSelect = form.querySelector('select[name="reason"]');
 	        var reasonValue = reasonSelect.value;
@@ -121,6 +108,8 @@
 	            return confirm(username + '님을 정지하시겠습니까?'); 
 	        }
 	    }
-
-</script>
+	    function goBack() {
+            window.history.back(); 
+        }
+	</script>
 </html>
