@@ -184,7 +184,7 @@ public class TestController{
         return sortedNames;
     }
 	
-	// 梨꾪똿 UI �깮�꽦
+	// 채팅변화
 	private String changeChat(String chat, ChatDTO dto) {
 		String result = "";
 		String[] arChat = chat.split(",");
@@ -243,7 +243,7 @@ public class TestController{
 	
 	
 	
-	//�뜥癒몃끂�듃 �궗�슜�븯�젮硫� �뿬湲곕��꽣...
+	//占쎈쑅�솒紐껊걗占쎈뱜 占쎄텢占쎌뒠占쎈릭占쎌젻筌롳옙 占쎈연疫꿸퀡占쏙옙苑�...
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
@@ -326,5 +326,5 @@ public class TestController{
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	//...�뿬湲곌퉴吏�
+	//...占쎈연疫꿸퀗�돱筌욑옙
 }

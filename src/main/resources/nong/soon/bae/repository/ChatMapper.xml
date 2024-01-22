@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.ChatMapper">
+
+	<select id="userChatList" parameterType="String" resultType="chatDTO">
+		SELECT
+		    chat.*,
+		    users.name AS username_name,
+		    receiver_users.name AS sendname_name,
+		    udetails.image AS username_img,
+		    sdetails.image AS sendname_img
+		FROM chat
+		JOIN users ON chat.username = users.username
+		JOIN users receiver_users ON chat.sendname = receiver_users.username
+		JOIN userdetails udetails ON chat.username = udetails.username
+		JOIN userdetails sdetails ON chat.sendname = sdetails.username
+		WHERE chat.username = #{username}
+	</select>
+	<select id="chatInfo">
+		SELECT
+		    chat.*,
+		    users.name AS username_name,
+		    receiver_users.name AS sendname_name,
+		    udetails.image AS username_img,
+		    sdetails.image AS sendname_img
+		FROM chat
+		JOIN users ON chat.username = users.username
+		JOIN users receiver_users ON chat.sendname = receiver_users.username
+		JOIN userdetails udetails ON chat.username = udetails.username
+		JOIN userdetails sdetails ON chat.sendname = sdetails.username
+		WHERE chat.chatno = #{chatno} AND chat.username = #{username}
+	</select>
+	<select id="findChat" resultType="chatDTO">
+		select * from chat where username=#{username} and chatno=#{chatno}
+	</select>
+	<select id="findSenduser" resultType="chatDTO">
+		select * from chat where sendname=#{username} and chatno=#{chatno}
+	</select>
+	<update id="updateNoRead">
+		update chat set noread=#{cnt} where chatno=#{chatno} and sendname=#{username}
+	</update>
+	<update id="zeroNoRead">
+		update chat set noread=0 where chatno=#{chatno} and username=#{username}
+	</update>
+	<update id="updateJoinCnt">
+		update chat set isjoin=#{joincnt} where chatno=#{chatno}
+	</update>
+</mapper>
