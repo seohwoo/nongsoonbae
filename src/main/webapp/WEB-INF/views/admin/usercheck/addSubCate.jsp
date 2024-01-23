@@ -7,7 +7,6 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	
 	</head>
 	<body>
 	<h3> 기존 분류 항목 (기존에 있는 항목은 추가할 수 없습니다. 두개 항목 이상의 물품을 정해서 넣어주세요. ex. 키위/파인애플)</h3> <br />
@@ -28,8 +27,6 @@
         	<input type="file" name="categoryImage2" accept="image/*">
         	<input type="hidden" value="2" name="addCateNum2" />
    	 	</form>	
-   	 	
-   	 	
 		<script>
 		    $(document).ready(function() {
 		        var existingCateNames = [];

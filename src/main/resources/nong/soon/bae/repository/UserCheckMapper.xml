@@ -128,5 +128,8 @@
         )
 	
 	</insert>
+	<select id="showDetailCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3>0 order by cate3 asc
+	</select>
 	
 </mapper>
