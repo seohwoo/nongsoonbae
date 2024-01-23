@@ -100,14 +100,13 @@ public class ProductController {
 	
 	@RequestMapping("productWritePro")
 	public String productWritePro(Principal principal, Model model, String categorynum, String[] fileNames, HttpServletRequest request, AllProductDTO APdto) {
-		// 연도 구하는 코드
+		// 24년 구하는 코드
 		Date date = new Date();
 		SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");		
 		String day = smf.format(date);		
 		String year = day.split("/")[0].substring(2, 4);
 		
 		String keyword = "%" + year + categorynum + "%";
-		System.out.println(keyword);
 		String productnum = "";
 		int productnumCnt = service.selectLastProductNumCnt(keyword);
 		if(productnumCnt==0) {
@@ -135,18 +134,22 @@ public class ProductController {
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
 		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-	    if(fileNames != null) {
+	    
+		if(fileNames != null) {
 	    	ImagesDTO  Idto = new ImagesDTO();
 	    	Idto.setProductnum(productnum);
 	    	Idto.setUsername(username);
 	    	isFile(fileNames, content);
-			for (String filename : realFiles) {
+			
+	    	for (String filename : realFiles) {
 				try {
 					File sourceFile = new File(fileRoot+filename);
 					File targetDirectory = new File(realRoot);
 					String ext = filename.substring(filename.lastIndexOf("."));
 					String realname = productnum+"_"+cnt+ext;
 					Idto.setFilename(realname);
+					
+					//
 					service.imagesInsert(Idto);
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
 					cnt++;
@@ -155,7 +158,8 @@ public class ProductController {
 					e.printStackTrace();
 				}
 			}
-			for (String filename : fileNames) {
+			
+	    	for (String filename : fileNames) {
 				File sourceFile = new File(fileRoot+filename);
 				sourceFile.delete();
 			}

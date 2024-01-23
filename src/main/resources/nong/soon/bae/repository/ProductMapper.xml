@@ -60,6 +60,8 @@
 		JOIN AREA A ON SL.Address LIKE '%' || A.areaname || '%'
 		where SL.username=#{username}
 	</select>
+	
+	<!--  -->
 	<select id="selectLastProductNumCnt" parameterType="String" resultType="int">
 		select count(*) from allproduct WHERE productnum LIKE #{keyword}
 	</select>
