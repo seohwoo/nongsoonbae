@@ -39,6 +39,7 @@
 	        <ul>
 	            <li><a href="/admin/usercheck">전체회원</a></li>
 	            <li><a href="/admin/blacklist">정지회원</a></li>
+	            <li><a href="/admin/addcategory">카테고리 추가하기</a></li>
 	        </ul>
 	    </nav>
 	</body>

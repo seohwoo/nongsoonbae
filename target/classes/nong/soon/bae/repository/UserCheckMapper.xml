@@ -83,5 +83,30 @@
 
       ]]>
 	</select>
+	<select id="showCate" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory order by cate1 asc
+	</select>
+	<select id="maxNum" >
+		SELECT MAX(cate1) FROM productcategory
+	</select>
+	<insert id="insertNewCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{num},
+            0,
+            0,
+            #{addCate}
+        )
+	
+	</insert>
+	<update id="addCateFile" parameterType="hashMap">
+		update productcategory set img=#{realname} where catename=#{addCate}
+	</update>
+	<select id="showSubCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3=0 order by cate2 asc
+	</select>
+	<select id="showSelectCate1" parameterType="int" resultType="String">
+		select catename from productcategory where cate1=#{cate1Select} and cate2=0 and cate3=0 order by cate2 asc
+	</select>
 
+	
 </mapper>
