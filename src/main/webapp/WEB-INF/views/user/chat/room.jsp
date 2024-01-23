@@ -50,7 +50,7 @@
 				socket.on("out", function (out) {
 					$.ajax({
 	                    type: 'POST',
-	                    url: '/test/updateOut',
+	                    url: '/chat/updateJoin',
 	                    data: {
 	                    		joincnt: joincnt,
 	                    		chatno: '${dto.chatno}',
@@ -120,25 +120,6 @@
 						$('#chat').val('');
 					});
 				});
-				$(window).on('beforeunload', function (e) {
-			        var isReloading = performance.navigation.type === 1;
-			        if (isReloading) {
-			        	socket.on("out", function (out) {
-							$.ajax({
-			                    type: 'POST',
-			                    url: '/chat/updateJoin',
-			                    data: {
-			                    		joincnt: joincnt,
-			                    		chatno: '${dto.chatno}',
-			                    		isjoin: 0
-			                    	},
-				                success: function(response) {
-				                	joincnt = parseInt(response);
-				                } 	
-			                });	
-						});
-			        }
-			    });
 				<!-- 버튼에 대한 조작 -->
 				$("#button1").on("click", function () {
 					if('${isAdmin}') {

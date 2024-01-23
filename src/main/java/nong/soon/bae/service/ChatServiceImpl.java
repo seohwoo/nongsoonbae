@@ -116,7 +116,7 @@ public class ChatServiceImpl implements ChatService{
 
 	@Override
 	public int updateJoinCnt(int joincnt, int chatno, int isjoin) {
-		if(joincnt==1) {
+		if(isjoin==1) {
 			joincnt++;
 		}else {
 			joincnt--;
