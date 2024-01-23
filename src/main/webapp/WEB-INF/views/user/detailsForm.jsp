@@ -84,9 +84,6 @@
 	            if (!validateForm()) {
 	                return false; // 폼 제출을 막음
 	            }
-	            const address = $('#roadAddress').val() + " " + $('#detailAddress').val() + $('#extraAddress').val();
-	            $('#address').val(address);
-
 	            return true;
 	        });
 	    }); 
@@ -102,16 +99,14 @@
 	<img src="/resources/img/default.png" id="imagePreview" style=" max-width: 50%;  height: auto;"> <br />
 	<input type="file" class="form-control" onchange="chooseImage(this)" id="image" name="image" required />
 	
-	비밀변호 변경 <input type="button" class="btn" onclick="/member/passPro" value="변경하러 이동" /><br />
+	비밀변호 변경 <br /><input type="button" class="btn btn-primary" onclick="window.location.href='/member/renamePass'" value="변경하러 이동" /><br />
 
-	주소<input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
+	주소<input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호" readonly>
 		<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" class="form-control" id="roadAddress" placeholder="도로명주소" readonly>
+		<input type="text" class="form-control" name="roadAddress" id="roadAddress" placeholder="도로명주소" readonly>
 		<span id="guide" class="form-control" style="color:#999;display:none"></span>
-		<input type="text" class="form-control" id="detailAddress" placeholder="상세주소" required>
-		<input type="text" class="form-control" id="extraAddress" placeholder="참고항목" readonly>
-		<input type="hidden" id="address" name="address" />
-		
+		<input type="text" class="form-control" name="detailAddress" id="detailAddress" placeholder="상세주소" required>
+		<input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly>
 	전화번호<input type="text" name="phone" class="form-control" placeholder="PHONE NUMBER" required>
 	<br />
 	<div class="d-grid gap-2  mx-auto">

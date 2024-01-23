@@ -1,6 +1,7 @@
 package nong.soon.bae.contorller.user;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,9 +37,20 @@ public class UserController {
 	@RequestMapping("like")
 	public String like(Model model, Principal principal, @RequestParam(value="pageNum",required = true , defaultValue="1" )int listNum) {
 		String username = principal.getName();
-		MyPageDTO user = service.selectLike(username);
-		String productnum = user.getProductnum();
-		service.selectLikeDetail(username, productnum, model, listNum);
+		List<MyPageDTO> user = service.selectLike(username);
+		List<MyPageDTO> farmer = service.selectfarmer(username);
+		if(user == null) {
+			model.addAttribute("status", 0);
+		}else {
+			model.addAttribute("status", 1);
+			service.selectLikeDetail(username, model, listNum);
+		}
+		if(farmer==null) {
+			model.addAttribute("status", 0);
+		}else {
+			model.addAttribute("status", 2);
+			service.selectFarmerDetail(username, model, listNum);
+		}
 		return "user/mypage/like";
 	}
 	
