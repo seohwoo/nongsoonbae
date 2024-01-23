@@ -28,9 +28,11 @@
 				/WEB-INF/spring/appServlet/user/main-context.xml
 				/WEB-INF/spring/appServlet/user/mail-context.xml
 				/WEB-INF/spring/appServlet/user/product-context.xml
+				/WEB-INF/spring/appServlet/user/chat-context.xml
 				/WEB-INF/spring/appServlet/test-context.xml
 				/WEB-INF/spring/appServlet/admin/notice-context.xml
 				/WEB-INF/spring/appServlet/admin/usercheck-context.xml
+				/WEB-INF/spring/appServlet/user/mypage-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

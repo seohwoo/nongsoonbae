@@ -11,6 +11,9 @@ import java.util.HashMap;
 import nong.soon.bae.api.UsingKorAPI;
 
 public class test1 {
+
+	
+
 	public static void main(String[] args) {
 		
 		Date date = new Date();
@@ -24,6 +27,9 @@ public class test1 {
 		
 		productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);
 		System.out.println(productnum);
+
+        
+
 	}
 	
 	

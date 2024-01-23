@@ -5,13 +5,24 @@
 <mapper namespace="nong.soon.bae.repository.MypageMapper">
 	
 	<select id="selectLike" resultType="nong.soon.bae.bean.MyPageDTO">
-		select * from #{username}_mypage where wishstatus=1
+		select * from ${username}_mypage where wishstatus=1
 	</select>
 	<select id="selectfarmer" resultType="nong.soon.bae.bean.MyPageDTO">
-		select * from #{username}_mypage where wishstatus=2
+		select * from ${username}_mypage where wishstatus=2
 	</select>
-	<select id="selectLikeDetail" resultType="nong.soon.bae.bean.ProductDTO">
-		select * from #{username}_product where productnum=#{productnum}
+	<select id="selectLikeDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.ProductDTO">
+		<![CDATA[
+			select * from 
+			(select c.* , rownum r from 
+			(select * from ${username}_product where productnum=#{productnum} order by readcount) c) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	<select id="cntlike" resultType="int">
+		select count(*) from ${username}_mypage where wishstatus=1
+	</select>
+	<select id="cntfarmer" resultType="int">
+		select count(*) from ${username}_mypage where wishstatus=2
 	</select>
 	<select id="selectProductList" resultType="nong.soon.bae.bean.AllProductDTO">
 		select * from allproduct where productnum=#{productnum}, username=#{username}

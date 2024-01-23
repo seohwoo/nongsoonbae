@@ -25,7 +25,12 @@
 		           <form action="/nsb/menu" method="post" onsubmit="return checkAndRedirect('${dto.cate1}')">
 			            <input type="hidden" name="cate1" value="${dto.cate1}" />
 		 	            <button class="btn" type="submit">
-			 	            <img src="${dto.img}" border="0" width="100" height="100">
+		 	            	<c:if test='${dto.img.endsWith(".png") || dto.img.endsWith(".jpg") || dto.img.endsWith(".jpeg")}'>
+		 	            		<img src="/resources/img/${dto.img}" border="0" width="100" height="100">
+		 	            	</c:if>
+		 	            	<c:if test='${!dto.img.endsWith(".png") && !dto.img.endsWith(".jpg") && !dto.img.endsWith(".jpeg")}'>
+			 	            	<img src="${dto.img}" border="0" width="100" height="100">
+		 	            	</c:if>
 			 	            <br />
 			                <span>${dto.catename}</span>
 		                </button>

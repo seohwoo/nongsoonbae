@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.service.MypageService;
 
 @Controller
@@ -32,9 +34,11 @@ public class UserController {
 	}
 	
 	@RequestMapping("like")
-	public String like(Principal principal) {
+	public String like(Model model, Principal principal, @RequestParam(value="pageNum",required = true , defaultValue="1" )int listNum) {
 		String username = principal.getName();
-		service.selectLike(username);
+		MyPageDTO user = service.selectLike(username);
+		String productnum = user.getProductnum();
+		service.selectLikeDetail(username, productnum, model, listNum);
 		return "user/mypage/like";
 	}
 	
