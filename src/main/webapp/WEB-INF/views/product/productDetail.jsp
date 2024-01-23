@@ -86,6 +86,7 @@
 					<td colspan="2" align="center"> 
 						<input type="submit" name="confirm" value="결제하기" >
 																			
+						<input type="button" value="농부 구독" onclick="javascript:window.location='/product/myProduct?productnum=${productnum}&otherUsername=${otherUsername}'">
 						<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPick?productnum=${productnum}&otherNickname=${otherNickname}&otherUsername=${otherUsername}'">
 						<input type="button" value="장바구니" onclick="javascript:window.location='/product/productShoppingCart?productnum=${productnum}&otherNickname=${otherNickname}'">
 						<button onclick="window.open('productReview?productnum=${productnum}&myNickname=${myNickname}','window_name','width=430,height=500,location=no,status=no,scrollbars=yes');">리뷰쓰기</button>

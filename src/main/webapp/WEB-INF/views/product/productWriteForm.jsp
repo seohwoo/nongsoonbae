@@ -110,9 +110,7 @@
 	    }
 	   e.preventDefault();
 	})
-	
-	
-	//
+
 		num = null;
 		vnum = null;
  		function changes1Step(fr) {
@@ -143,10 +141,10 @@
  			for(i=form.Step2.length-1; i >= 0; i--) {
  				form.Step2.options[i]=null;
  			}
- 			for(i=form.cate3.length-1; i>=0; i--) {
- 				form.cate3.options[i] = null;
+ 			for(i=form.categorynum.length-1; i>=0; i--) {
+ 				form.categorynum.options[i] = null;
  			}
- 			form.cate3.options[0] = new Option("-----", "-----");
+ 			form.categorynum.options[0] = new Option("-----", "-----");
  			for(i=0; i< num.length; i++) {  
  				form.Step2.options[i] = new Option(num[i],vnum[i]);
  			}
@@ -270,11 +268,11 @@
  				num = new Array("고르시오");
  				vnum = new Array("고르시오");
  			} 
- 			for(i=0; i<form.cate3.length; i++) {
- 				form.cate3.options[i] = null;
+ 			for(i=0; i<form.categorynum.length; i++) {
+ 				form.categorynum.options[i] = null;
  			}
  			for(i=0; i<num.length; i++) {
- 				form.cate3.options[i] = new Option(num[i],vnum[i]);
+ 				form.categorynum.options[i] = new Option(num[i],vnum[i]);
  			}
  		}
  		
@@ -288,7 +286,7 @@
 	</script>
 
 	<body>
-		<h3>${username} 페이지</h3>
+		<h3>${myName} 페이지</h3>
 		<form action="/product/productWritePro" method="post" name="form" enctype="multipart/form-data" id = "addProduct">
 			<table width="850" border="1">
 				 		
@@ -304,7 +302,7 @@
 				<select name='Step2' onchange='changes2Step(value)'>
 					<option>-----</option>
 				</select>
-				<select name="cate3">
+				<select name="categorynum">
 					<option>-----</option>
 				</select>		
 			    
@@ -312,13 +310,6 @@
 					<td width="200">상품이름</td>
 					<td width="400"> 
 						<input type="text" name="productname" size="15" required="required">
-					</td>
-			    </tr>
-			    
-			    <tr> 
-					<td width="200">사진</td>
-					<td width="400"> 
-						<input type="file" name="files" multiple="multiple" onchange="displayFileCount()" required="required">
 					</td>
 			    </tr>
 			    
@@ -330,7 +321,7 @@
 						<input type="date" name="enddate" size="15" required="required">
 					</td>
 			    </tr>
-			    
+			    <!-- 
 			    <tr> 
 				    <td width="200">옵션</td>
 				    <td width="400">				   		
@@ -342,7 +333,7 @@
 			 			<input type="number" name="optionProductCount" placeholder="상품재고" /> <br />
 				    </td>
 				</tr>
-			    
+			     -->
 			    <input type="hidden" name="username" value="${username}" />
 			    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			    

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ImagesDTO {
-	private String num;
 	private String productnum;
+	private String username;
 	private String filename;
 }
