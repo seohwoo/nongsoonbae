@@ -22,9 +22,15 @@
             overflow-y: auto; 
         }
     </style>
+    
 </head>
 <body>
     <%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+    <c:if test="${isImg.equals('0')}">
+    	<script type="text/javascript">
+    		alert("카테고리추가실패...");
+   		</script>
+    </c:if>
     <h1>물품별 카테고리 추가하기</h1>
     <table>
         <tr>
@@ -98,12 +104,13 @@
                 alert('중복된 항목은 추가할 수 없습니다.');
                 e.preventDefault(); // 폼 제출 방지
             } else {
-                var numValue = parseInt($('input[name="num"]').val());
+            	var numValue = parseInt($('input[name="num"]').val());
                 $('input[name="num"]').val(numValue + 1);
-                alert('대분류 카테고리가 정상적으로 추가되었습니다.');
             }
         });
-
+        if('${isImg}'==='1') {
+            alert('대분류 카테고리가 정상적으로 추가되었습니다.');
+		}
 
         $('#submitBtn').on('click', function(e) {
             e.preventDefault();

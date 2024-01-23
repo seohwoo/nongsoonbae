@@ -76,13 +76,17 @@ public class UserCheckController {
 	}
 	
 	@RequestMapping("addcategory") //게시판 물품 카테고리 추가하기 
-	public String addcategory(Model model,@RequestParam(value="cate1Select",required = false ) String cate1Select ) {
+	public String addcategory(Model model,@RequestParam(value="cate1Select",required = false ) String cate1Select, String isImg ) {
+		if(isImg==null) {
+			isImg = "2";
+		}
 		service.showCate(model);
 		int maxNum = service.maxNum();
 		model.addAttribute("num", maxNum);
 		if(cate1Select != null) {
 		service.showSubCate(model,Integer.parseInt(cate1Select));
 		}
+		model.addAttribute("isImg", isImg);
 		return "admin/usercheck/addcategory";
 	}
 	
@@ -104,8 +108,8 @@ public class UserCheckController {
 	public String addCatePro(Model model,@RequestParam(value="num") int num,
 									@RequestParam("addCate")String addCate, 
 									@RequestParam("categoryImage") MultipartFile[] files,HttpServletRequest request) {
-		service.insertNewCate(num,addCate); //대분류 카테고리 추가하기 
 	    String realRoot = request.getServletContext().getRealPath("/resources/img/");
+	    String isImg = "0";
 	    if (files != null && files.length > 0) {
 	        int cnt = 1;
 	        for (MultipartFile file : files) {
@@ -113,18 +117,22 @@ public class UserCheckController {
 	                try {
 	                    String originalFileName = file.getOriginalFilename();
 	                    String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-	                    String realname = "addCate_" + num + "_" + cnt + ext ;
-	                    File targetFile = new File(realRoot + realname);
-	                    file.transferTo(targetFile); // 파일 저장
-	                    cnt++;
-	                    service.addCateFile(addCate,realname);
+	                    if(ext.equals(".jpg") || ext.equals(".png") || ext.equals(".jpeg")) {
+	                    	String realname = "addCate_" + num + "_" + cnt + ext ;
+		                    File targetFile = new File(realRoot + realname);
+		                    file.transferTo(targetFile); // 파일 저장
+		                    cnt++;
+		                    service.insertNewCate(num,addCate); //대분류 카테고리 추가하기 
+		                    service.addCateFile(addCate,realname);
+		                    isImg = "1";
+	                    }
 	                } catch (IOException e) {
 	                    e.printStackTrace();
 	                }
 	            }
 	        }
 	    }
-	  	    return "redirect:/admin/addcategory";
+	  	    return "redirect:/admin/addcategory?isImg=" + isImg;
 	}
 	
 	@RequestMapping("addSubCatePro") //게시판 물품 카테고리 추가하기 
