@@ -28,4 +28,13 @@ public interface UserCheckMapper {
 	int addCateFile(HashMap map);
 	public List<ProductCategoryDTO> showSubCate(int cate1Select);
 	public String showSelectCate1(int cate1Select);
+	
+	public int subMaxNum(int cate1Select);	
+	int insertSubCate(HashMap map);
+	int insertSubDetailCate(HashMap map);
+	
+
 }
+
+
+

@@ -201,13 +201,34 @@ public class UserCheckServiceImpl implements UserCheckService{
 
 	@Override
 	public void showSelectCate1(Model model, int cate1Select) {
-		String showSelectCate1 = null;
-		showSelectCate1 = mapper.showSelectCate1(cate1Select);
-		model.addAttribute("showSelectCate1",showSelectCate1);
+		List<ProductCategoryDTO> subcatelist = Collections.EMPTY_LIST;
+		
 		
 	}
 
-	
+	@Override
+	public int subMaxNum(int cate1Select) {
+		return mapper.subMaxNum(cate1Select);
+	}
+
+	@Override
+	public int insertSubCate(int cate1Select, int subMaxNum, String addSubCate) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		checkMap.put("addSubCate",addSubCate);
+		return mapper.insertSubCate(checkMap);
+	}
+
+	@Override
+	public int insertSubDetailCate(int cate1Select, int subMaxNum, int addCateNum1, String addCate1) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		checkMap.put("addCateNum1",addCateNum1);
+		checkMap.put("addCate1",addCate1);
+		return mapper.insertSubDetailCate(checkMap);
+	}	
 	}
 
 

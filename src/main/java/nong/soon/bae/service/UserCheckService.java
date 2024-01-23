@@ -23,5 +23,10 @@ public interface UserCheckService {
 	public void showSubCate (Model model, int cate1Select);
 	public void showSelectCate1 (Model model, int cate1Select);
 	
+	public int subMaxNum(int cate1Select);
+	
+	public int insertSubCate(int cate1Select,int subMaxNum, String addSubCate);
+	
+	public int insertSubDetailCate(int cate1Select,int subMaxNum, int addCateNum1, String addCate1);
 	
 }

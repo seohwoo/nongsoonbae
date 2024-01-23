@@ -107,6 +107,26 @@
 	<select id="showSelectCate1" parameterType="int" resultType="String">
 		select catename from productcategory where cate1=#{cate1Select} and cate2=0 and cate3=0 order by cate2 asc
 	</select>
-
+	<select id="subMaxNum" parameterType="int" resultType="int">
+		SELECT MAX(cate2) FROM productcategory where cate1=#{cate1Select}
+	</select>
+	<insert id="insertSubCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{cate1Select},
+            #{subMaxNum},
+            0,
+            #{addSubCate}
+        )
+	
+	</insert>
+	<insert id="insertSubDetailCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{cate1Select},
+            #{subMaxNum},
+            #{addCateNum1},
+            #{addCate1}
+        )
+	
+	</insert>
 	
 </mapper>

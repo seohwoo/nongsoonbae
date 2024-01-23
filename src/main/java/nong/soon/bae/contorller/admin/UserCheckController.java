@@ -80,7 +80,6 @@ public class UserCheckController {
 		service.showCate(model);
 		int maxNum = service.maxNum();
 		model.addAttribute("num", maxNum);
-		System.out.println(maxNum);
 		if(cate1Select != null) {
 		service.showSubCate(model,Integer.parseInt(cate1Select));
 		}
@@ -91,8 +90,11 @@ public class UserCheckController {
 	@RequestMapping("addSubCate") //게시판 물품 카테고리 추가하기 
 	public String addSubCate(Model model,@RequestParam(value="cate1Select",required = false ) String cate1Select ) {
 		if(cate1Select != null) {
-		service.showSelectCate1 (model,Integer.parseInt(cate1Select));
 		service.showSubCate(model,Integer.parseInt(cate1Select));
+		model.addAttribute("cate1Select",cate1Select);
+		int subMaxNum = service.subMaxNum(Integer.parseInt(cate1Select));
+		model.addAttribute("subMaxNum",subMaxNum);
+		
 		}
 		return "admin/usercheck/addSubCate";
 	}
@@ -103,8 +105,7 @@ public class UserCheckController {
 									@RequestParam("addCate")String addCate, 
 									@RequestParam("categoryImage") MultipartFile[] files,HttpServletRequest request) {
 		service.insertNewCate(num,addCate); //대분류 카테고리 추가하기 
-		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
-	    String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
+	    String realRoot = request.getServletContext().getRealPath("/resources/img/");
 	    if (files != null && files.length > 0) {
 	        int cnt = 1;
 	        for (MultipartFile file : files) {
@@ -112,7 +113,7 @@ public class UserCheckController {
 	                try {
 	                    String originalFileName = file.getOriginalFilename();
 	                    String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-	                    String realname = "addCate_" + num + "_" + cnt ;
+	                    String realname = "addCate_" + num + "_" + cnt + ext ;
 	                    File targetFile = new File(realRoot + realname);
 	                    file.transferTo(targetFile); // 파일 저장
 	                    cnt++;
@@ -124,5 +125,24 @@ public class UserCheckController {
 	        }
 	    }
 	  	    return "redirect:/admin/addcategory";
+	}
+	
+	@RequestMapping("addSubCatePro") //게시판 물품 카테고리 추가하기 
+	public String addSubCatePro(Model model,
+					@RequestParam(value="cate1Select",required = false ) String cate1Select,
+					@RequestParam(value="subMaxNum") int subMaxNum,
+					@RequestParam("addSubCate")String addSubCate,
+					@RequestParam("addCate1")String addCate1,
+					@RequestParam("addCateNum1")String addCateNum1,
+					@RequestParam("addCate2")String addCate2,
+					@RequestParam("addCateNum2")String addCateNum2) {
+		if(addSubCate != null && addCate1 !=null ) {
+			service.insertSubCate(Integer.parseInt(cate1Select),subMaxNum,addSubCate);
+			service.insertSubDetailCate(Integer.parseInt(cate1Select),subMaxNum,Integer.parseInt(addCateNum1),addCate1);
+		}
+		if(addCate2 !=null) {
+			service.insertSubDetailCate(Integer.parseInt(cate1Select),subMaxNum,Integer.parseInt(addCateNum2),addCate2);
+		}	
+		return "redirect:/admin/addcategory";
 	}
 }

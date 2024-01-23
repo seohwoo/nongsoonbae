@@ -28,7 +28,7 @@
 		 	            	<c:if test='${dto.img.endsWith(".png") || dto.img.endsWith(".jpg") || dto.img.endsWith(".jpeg")}'>
 		 	            		<img src="/resources/img/${dto.img}" border="0" width="100" height="100">
 		 	            	</c:if>
-		 	            	<c:if test='${!dto.img.endsWith(".png")}'>
+		 	            	<c:if test='${!dto.img.endsWith(".png") && !dto.img.endsWith(".jpg") && !dto.img.endsWith(".jpeg")}'>
 			 	            	<img src="${dto.img}" border="0" width="100" height="100">
 		 	            	</c:if>
 			 	            <br />
