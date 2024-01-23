@@ -26,41 +26,53 @@
 				var img = '${dto.sendname_img}';
 				console.log('시작 : '+joincnt);
 				msgerChat.scrollTop = msgerChat.scrollHeight;
-				socket.emit("joinRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
-				socket.on("join", function (join) {
-					cnt=0;
-					if(joincnt <= 2) {
-						$.ajax({
-		                    type: 'POST',
-		                    url: '/chat/updateJoin',
-		                    data: {
-		                    		joincnt: joincnt,
-		                    		chatno: '${dto.chatno}',
-		                    		isjoin: 1
-		                    	},
-			                success: function(response) {
-			                	joincnt = parseInt(response);
-			                } 	
-		                });
-					}
-				});
-				$(window).on('beforeunload', function() {
-					socket.emit("outRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
-				});
-				socket.on("out", function (out) {
-					$.ajax({
-	                    type: 'POST',
-	                    url: '/chat/updateJoin',
-	                    data: {
-	                    		joincnt: joincnt,
-	                    		chatno: '${dto.chatno}',
-	                    		isjoin: 0
-	                    	},
-		                success: function(response) {
-		                	joincnt = parseInt(response);
-		                } 	
-	                });	
-				});
+				var isReloaded = false;
+				    if (!isReloaded) {
+				    	
+				        socket.emit("joinRoom", {
+				            username: '${dto.username}',
+				            sendname: '${dto.sendname}',
+				            chatno : '${dto.chatno}'
+				        });
+						
+				        socket.on("join", function (join) {
+				            cnt=0;
+				            if(joincnt <= 2) {
+				                $.ajax({
+				                    type: 'POST',
+				                    url: '/chat/updateJoin',
+				                    data: {
+				                        joincnt: joincnt,
+				                        chatno: '${dto.chatno}',
+				                        isjoin: 1
+				                    },
+				                    success: function(response) {
+				                        joincnt = parseInt(response);
+				                        isReloaded = true;
+				                    }    
+				                });
+				            }
+				        });
+				        $(window).on('beforeunload', function() {
+							socket.emit("outRoom", { username: '${dto.username}', sendname: '${dto.sendname}', chatno : '${dto.chatno}' });
+						});
+						socket.on("out", function (out) {
+							$.ajax({
+			                    type: 'POST',
+			                    url: '/chat/updateJoin',
+			                    data: {
+			                    		joincnt: joincnt,
+			                    		chatno: '${dto.chatno}',
+			                    		isjoin: 0
+			                    	},
+				                success: function(response) {
+				                	joincnt = parseInt(response);
+				                	isReloaded = false;
+				                } 	
+			                });	
+						});
+				    }
+			        
 				socket.on("response", function (message) {
 					var arr = message.msg.split(',');
 					// 마지막 빈 문자열 제거
@@ -120,6 +132,11 @@
 						$('#chat').val('');
 					});
 				});
+				$(document).on('keydown', function(e) {
+				    if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+				      e.preventDefault();
+				    }
+				  });
 				<!-- 버튼에 대한 조작 -->
 				$("#button1").on("click", function () {
 					if('${isAdmin}') {
