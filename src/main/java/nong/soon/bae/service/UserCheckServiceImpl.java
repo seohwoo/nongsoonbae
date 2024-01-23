@@ -228,6 +228,23 @@ public class UserCheckServiceImpl implements UserCheckService{
 		checkMap.put("addCateNum1",addCateNum1);
 		checkMap.put("addCate1",addCate1);
 		return mapper.insertSubDetailCate(checkMap);
+	}
+
+	@Override
+	public void showDetailCate(Model model, int cate1Select) {
+		List<ProductCategoryDTO> detailCateList = Collections.EMPTY_LIST;
+		detailCateList=mapper.showDetailCate(cate1Select);
+		model.addAttribute("detailCateList",detailCateList);
+		}
+
+	
+
+	@Override
+	public int subDetailMaxNum(int maxNum, int cate1Select) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("maxNum",maxNum);
+		return 0;
 	}	
 	}
 

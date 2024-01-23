@@ -32,7 +32,9 @@ public interface UserCheckMapper {
 	public int subMaxNum(int cate1Select);	
 	int insertSubCate(HashMap map);
 	int insertSubDetailCate(HashMap map);
+	public List<ProductCategoryDTO> showDetailCate (int cate1Select);
 	
+	public int subDetailMaxNum(HashMap map);	
 
 }
 

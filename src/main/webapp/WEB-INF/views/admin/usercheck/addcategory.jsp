@@ -8,21 +8,70 @@
     <title>물품 카테고리 추가하기</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        td {
-            vertical-align: top;
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-        .scrollable {
-            max-height: 200px; 
-            overflow-y: auto; 
-        }
-    </style>
-    
+	    body {
+	        font-family: Arial, sans-serif;
+	        background-color: #f8f8f8;
+	        padding: 20px;
+	    }
+	
+	    h1, h2 {
+	        color: #333;
+	        margin-bottom: 20px;
+	    }
+	
+	    table {
+	        width: 100%;
+	        border-collapse: collapse;
+	    }
+	
+	    td {
+	        vertical-align: top;
+	        border: 1px solid #ddd;
+	        padding: 10px;
+	        background-color: #fff;
+	        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	    }
+	
+	    .scrollable {
+	        max-height: 300px; 
+	        overflow-y: auto;
+	        border: 1px solid #ddd;
+	        padding: 10px;
+	        margin-bottom: 20px;
+	    }
+	
+	    form {
+	        background-color: #fff;
+	        padding: 20px;
+	        border-radius: 8px;
+	        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	    }
+	
+	    input[type="text"], input[type="file"], select {
+	        width: 100%;
+	        padding: 10px;
+	        margin: 5px 0 20px 0;
+	        display: inline-block;
+	        border: 1px solid #ccc;
+	        border-radius: 4px;
+	        box-sizing: border-box;
+	    }
+	
+	    input[type="submit"] {
+	        background-color: #4CAF50;
+	        color: white;
+	        border: none;
+	        padding: 12px 20px;
+	        border-radius: 4px;
+	        cursor: pointer;
+	        font-size: 16px;
+	    }
+	
+	    input[type="submit"]:hover {
+	        background-color: #45a049;
+	    }
+	</style>
+
 </head>
 <body>
     <%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
@@ -64,21 +113,10 @@
         <input type="hidden" value="${num}" name="num" />
     </form>
     
-    <h2>중분류 추가하기</h2>
-    <form id="cateSelectForm" action="/admin/addSubCate" method="post">
-        <select id="cate1Select" name="cate1Select">
-            <c:forEach var="cate" items="${catelist}">
-                <c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
-                    <option value="${cate.cate1}">${cate.catename}</option> 
-                </c:if>
-            </c:forEach>
-        </select>
-        <button id="submitBtn">선택하기</button>
-    </form>
-    
-    <div id="subCateContainer" style="display:none;">
-    	<jsp:include page="/WEB-INF/views/admin/usercheck/addSubCate.jsp" />
+    <div>
+    	<jsp:include page="/WEB-INF/views/admin/usercheck/addDetailCate.jsp" />
     </div>
+    
     
     <script>
     $(document).ready(function() {
@@ -112,22 +150,7 @@
             alert('대분류 카테고리가 정상적으로 추가되었습니다.');
 		}
 
-        $('#submitBtn').on('click', function(e) {
-            e.preventDefault();
-            var cate1SelectValue = $('#cate1Select').val();
-            $.ajax({
-                url: '/admin/addSubCate',
-                type: 'POST',
-                data: $('#cateSelectForm').serialize(),
-                success: function(response) {
-                    $('#subCateContainer').html(response).show();
-                },
-                error: function(xhr, status, error) {
-                    console.error("오류 발생: " + error);
-                }
-            });
-        });
-    });
+  
     </script>
 </body>
 </html>

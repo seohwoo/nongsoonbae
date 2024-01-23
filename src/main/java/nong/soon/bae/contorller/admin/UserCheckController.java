@@ -2,24 +2,17 @@ package nong.soon.bae.contorller.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale.Category;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.service.UserCheckService;
 
 @Controller
@@ -94,10 +87,10 @@ public class UserCheckController {
 	@RequestMapping("addSubCate") //게시판 물품 카테고리 추가하기 
 	public String addSubCate(Model model,@RequestParam(value="cate1Select",required = false ) String cate1Select ) {
 		if(cate1Select != null) {
-		service.showSubCate(model,Integer.parseInt(cate1Select));
-		model.addAttribute("cate1Select",cate1Select);
-		int subMaxNum = service.subMaxNum(Integer.parseInt(cate1Select));
-		model.addAttribute("subMaxNum",subMaxNum);
+			service.showSubCate(model,Integer.parseInt(cate1Select));
+			model.addAttribute("cate1Select",cate1Select);
+			int subMaxNum = service.subMaxNum(Integer.parseInt(cate1Select));
+			model.addAttribute("subMaxNum",subMaxNum);
 		
 		}
 		return "admin/usercheck/addSubCate";
@@ -134,6 +127,49 @@ public class UserCheckController {
 	    }
 	  	    return "redirect:/admin/addcategory?isImg=" + isImg;
 	}
+	
+	
+	@RequestMapping("addDetailCate") //소분류 물품 추가하기 
+	public String addDeailCate(Model model ) {
+		service.showCate(model);
+		return "admin/usercheck/addDetailCate";
+		
+	}
+	
+	@RequestMapping("addDetailCateForm") //소분류 물품 추가하기 
+	public String addDetailCate(Model model, 
+						@RequestParam(value="cate1Select",required = false ) String cate1Select ) {
+		if(cate1Select != null) {
+			service.showDetailCate(model,Integer.parseInt(cate1Select));
+		}
+		int subMaxNum= service.subMaxNum(Integer.parseInt(cate1Select)); 
+		int datailMaxNum = service.subDetailMaxNum(subMaxNum,Integer.parseInt(cate1Select));
+		
+		model.addAttribute("subMaxNum",subMaxNum);
+		System.out.println(subMaxNum);
+		model.addAttribute("datailMaxNum",datailMaxNum);
+		System.out.println(datailMaxNum);
+		model.addAttribute("cate1Select",cate1Select);
+		return "admin/usercheck/addDetailCateForm";
+		
+	}
+	
+	
+
+	@RequestMapping("addDetailCatePro") //소분류 물품 추가하기 
+	public String addDetailCatePro(Model model, 
+						@RequestParam(value="cate1Select",required = false ) String cate1Select,
+						@RequestParam(value="addDetail" ) String addDetail ) {
+		
+		
+		
+		return "admin/usercheck/addDetailCateForm";
+		
+	}
+	
+
+	
+	
 	
 	@RequestMapping("addSubCatePro") //게시판 물품 카테고리 추가하기 
 	public String addSubCatePro(Model model,
