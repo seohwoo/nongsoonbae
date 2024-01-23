@@ -3,11 +3,13 @@ package nong.soon.bae.service;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.UserCheckDTO;
 
 import nong.soon.bae.repository.UserCheckMapper;
@@ -160,7 +162,90 @@ public class UserCheckServiceImpl implements UserCheckService{
 		model.addAttribute("blacksearchCnt", blackcnt);
 		model.addAttribute("blacksearchlist", blacksearchlist);
 	}
+
+	@Override
+	public void showCate(Model model) {
+		List<ProductCategoryDTO> catelist = Collections.EMPTY_LIST;
+		catelist = mapper.showCate();
+		model.addAttribute("catelist",catelist);
 		
+		}
+
+	@Override
+	public int maxNum() {
+		return mapper.maxNum();
+	}
+
+	@Override
+	public int insertNewCate(int num, String addCate) {
+		checkMap.clear();
+        checkMap.put("num", num);
+        checkMap.put("addCate", addCate);
+		return mapper.insertNewCate(checkMap);
+		
+		}
+
+	@Override
+	public int addCateFile(String addCate, String realname) {
+		checkMap.put("realname", realname);
+        checkMap.put("addCate", addCate);
+		return mapper.addCateFile(checkMap);
+	}
+
+	@Override
+	public void showSubCate(Model model, int cate1Select) {
+		List<ProductCategoryDTO> subcatelist = Collections.EMPTY_LIST;
+		subcatelist = mapper.showSubCate(cate1Select);
+		model.addAttribute("subcatelist",subcatelist);
+	}
+
+	@Override
+	public void showSelectCate1(Model model, int cate1Select) {
+		List<ProductCategoryDTO> subcatelist = Collections.EMPTY_LIST;
+		
+		
+	}
+
+	@Override
+	public int subMaxNum(int cate1Select) {
+		return mapper.subMaxNum(cate1Select);
+	}
+
+	@Override
+	public int insertSubCate(int cate1Select, int subMaxNum, String addSubCate) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		checkMap.put("addSubCate",addSubCate);
+		return mapper.insertSubCate(checkMap);
+	}
+
+	@Override
+	public int insertSubDetailCate(int cate1Select, int subMaxNum, int addCateNum1, String addCate1) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		checkMap.put("addCateNum1",addCateNum1);
+		checkMap.put("addCate1",addCate1);
+		return mapper.insertSubDetailCate(checkMap);
+	}
+
+	@Override
+	public void showDetailCate(Model model, int cate1Select) {
+		List<ProductCategoryDTO> detailCateList = Collections.EMPTY_LIST;
+		detailCateList=mapper.showDetailCate(cate1Select);
+		model.addAttribute("detailCateList",detailCateList);
+		}
+
+	
+
+	@Override
+	public int subDetailMaxNum(int maxNum, int cate1Select) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("maxNum",maxNum);
+		return 0;
+	}	
 	}
 
 

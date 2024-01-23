@@ -3,8 +3,12 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.ChatMapper">
+	
+	<select id="userChatCnt" parameterType="hashmap" resultType="int">
+		select count(*) from chat where username=#{username}
+	</select>
 
-	<select id="userChatList" parameterType="String" resultType="chatDTO">
+	<select id="userChatList" parameterType="hashmap" resultType="chatDTO">
 		SELECT
 		    chat.*,
 		    users.name AS username_name,
@@ -18,11 +22,13 @@
 		JOIN userdetails sdetails ON chat.sendname = sdetails.username
 		WHERE chat.username = #{username}
 	</select>
-	<select id="chatInfo">
+	<select id="chatInfo" parameterType="hashmap" resultType="chatDTO">
 		SELECT
 		    chat.*,
 		    users.name AS username_name,
+            users.grade AS username_grade,
 		    receiver_users.name AS sendname_name,
+            receiver_users.grade AS sendname_grade,
 		    udetails.image AS username_img,
 		    sdetails.image AS sendname_img
 		FROM chat
@@ -32,19 +38,31 @@
 		JOIN userdetails sdetails ON chat.sendname = sdetails.username
 		WHERE chat.chatno = #{chatno} AND chat.username = #{username}
 	</select>
-	<select id="findChat" resultType="chatDTO">
-		select * from chat where username=#{username} and chatno=#{chatno}
-	</select>
 	<select id="findSenduser" resultType="chatDTO">
 		select * from chat where sendname=#{username} and chatno=#{chatno}
 	</select>
 	<update id="updateNoRead">
 		update chat set noread=#{cnt} where chatno=#{chatno} and sendname=#{username}
 	</update>
-	<update id="zeroNoRead">
+	<update id="zeroNoRead" parameterType="hashmap">
 		update chat set noread=0 where chatno=#{chatno} and username=#{username}
 	</update>
 	<update id="updateJoinCnt">
 		update chat set isjoin=#{joincnt} where chatno=#{chatno}
 	</update>
+	<select id="getAdminUser" resultType="usersDTO">
+		select * from users where username='admin'
+	</select>
+	<select id="adminChatCnt" parameterType="hashmap" resultType="int">
+		select count(*) from chat where username=#{username} and sendname=#{sendname}
+	</select>
+	<insert id="insertQnaToMe" parameterType="hashmap">
+		insert into chat(chatno, username, sendname) values(chat_seq.nextval, #{username}, #{sendname})
+	</insert>
+	<insert id="insertQnaToSend" parameterType="hashmap">
+		insert into chat(chatno, username, sendname) values(chat_seq.currval, #{sendname}, #{username})
+	</insert>
+	<select id="adminChatInfo" parameterType="hashmap" resultType="chatDTO">
+		select * from chat where username=#{username} and sendname=#{sendname}
+	</select>
 </mapper>

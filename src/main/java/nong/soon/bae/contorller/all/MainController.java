@@ -92,6 +92,9 @@ public class MainController{
 			cate1 = "0";
 			model.addAttribute("cate1", Integer.parseInt(cate1));
 		}
+		
+		
+		
 		return "all/main/categorymain";
 	}
 	

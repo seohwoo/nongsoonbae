@@ -3,14 +3,14 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>일단 상점 메인</title>
 	</head>
 	
 	<body>
-		<h3>${username} 페이지</h3>
-		<form action="/product/createProduct" method="post" name="createProduct">
+		<h3>${myName} 페이지</h3>
+		<form action="/product/createProduct?myName=${myName}" method="post">
 			<input type="submit" value="나의 상점 만들기">
-			<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm'">
+			<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
 			<input type="button" value="나의 상점 관리" onclick="javascript:window.location='/product/myProduct'">
 			<input type="button" value="전체 상품 조회" onclick="javascript:window.location='/product/allProduct'">
 			

@@ -1,5 +1,8 @@
 package nong.soon.bae;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,23 +13,25 @@ import nong.soon.bae.api.UsingKorAPI;
 public class test1 {
 
 	
-	public String[] todayInfo() {
-		Date date = new Date();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
-		String formatDate = simpleDateFormat.format(date);
-		String[] today = formatDate.split("/");
-		return today;
-	}
-	
+
 	public static void main(String[] args) {
 		
-		test1 t1 = new test1();
-		String[] today = t1.todayInfo();
-		for (String string : today) {
-			System.out.println(string);
-		}
+		Date date = new Date();
+		SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");
+		
+		String day = smf.format(date);		
+		String year = day.split("/")[0].substring(2, 4);
+
+		
+		String productnum = "2411100001";
+		
+		productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);
+		System.out.println(productnum);
+
         
+
 	}
+	
 	
 	
 }
