@@ -11,12 +11,11 @@ import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
 
 public interface MypageMapper {
-	public MyPageDTO selectLike(String username);
-	public MyPageDTO selectfarmer(String username);
+	public List<MyPageDTO> selectLike(String username);
+	public List<MyPageDTO> selectfarmer(String username);
 	public int cntlike(String username);
 	public int cntfarmer(String username);
 	
-	public List<ProductDTO> selectLikeDetail(HashMap map);
-	public List<AllProductDTO> selectProductList(@Param("username") String username ,@Param("productnum") String productnum);
-	public List<ShopListDTO> selectfarmerDetail(@Param("username") String username);
+	public List<MyPageDTO> selectLikeDetail(HashMap map);
+	public List<MyPageDTO> selectFarmerDetail(HashMap map);
 }

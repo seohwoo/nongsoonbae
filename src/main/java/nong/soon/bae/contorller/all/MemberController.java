@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import nong.soon.bae.bean.AddressDTO;
 import nong.soon.bae.bean.UserDetailsDTO;
 import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.bean.UsersDTO;
@@ -66,12 +69,6 @@ public class MemberController {
 		return "all/regForm";
 	}
 	
-	@GetMapping("/checkUsernameAvailability")
-    public ResponseEntity<Boolean> checkUsernameAvailability(@RequestParam String username) {
-        boolean isAvailable = memberservice.isUsernameAvailable(username);
-        return ResponseEntity.ok(isAvailable);
-    }
-	
 	@RequestMapping("/reg")
 	public String register(UsersDTO users) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -79,14 +76,21 @@ public class MemberController {
 		String username = users.getUsername();
 		logger.info("===============register================");
 		logger.info("==============="+username+"================");
-		usersRepository.save(users);
+		memberservice.save(users);
 		usersRepository.createDetails(username);
 		usersRepository.createReviews(username);
 		usersRepository.createMypage(username);
 		usersRepository.createPayment(username);
+		usersRepository.createImages(username);
 		
 		return "user/welcome";
 	}
+	@ExceptionHandler(IllegalStateException.class)
+    public String handleIllegalStateException(IllegalStateException e, Model model) {
+		logger.info("=============error==============");
+		model.addAttribute("errorMessage", e.getMessage());
+	    return "all/regForm";
+    }
 	
 	@RequestMapping("/welcome")
 	public String regSucess(Model model) {
@@ -103,12 +107,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/details")
-	public String detailPro(MultipartFile image, HttpServletRequest request, Model model, Principal principal, String address, String phone) {
+	public String detailPro(MultipartFile image, HttpServletRequest request, Model model, Principal principal, AddressDTO adto, String phone) {
 		UserDetailsDTO dto = new UserDetailsDTO();
 		String username = principal.getName();
-		
+		logger.info("==============="+adto+"================");
+		String address = adto.getRoadAddress() + " " + adto.getDetailAddress() + adto.getExtraAddress();
+		logger.info("==============="+address+"================");
 		String path = request.getServletContext().getRealPath("/resources/file/profile/");
-		logger.info("==============="+path+"================");
 		String filename = image.getOriginalFilename();
 		if(!filename.equals("")) {
 			String ext = filename.substring(filename.lastIndexOf("."));
@@ -126,8 +131,7 @@ public class MemberController {
 		dto.setUsername(username);
 		dto.setAddress(address);
 		dto.setPhone(phone);
-		usersRepository.addDetails(dto);
-		
+		usersRepository.addDetails(dto);	
 		
 		return "redirect:/user/mypage";
 	}

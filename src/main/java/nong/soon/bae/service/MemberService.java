@@ -19,14 +19,9 @@ public class MemberService {
     }
 
     private void validateDuplicateMember(UsersDTO users) {
-    	UsersDTO findMember = usersRepository.FindByEmail(users.getEmail());
-        if (findMember != null) {
+    	UsersDTO findMember = usersRepository.FindByUser(users.getUsername());
+        if (findMember != null ) {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
-    }
-    
-    public boolean isUsernameAvailable(String username) {
-        UsersDTO existingUser = usersRepository.FindByUser(username);
-        return existingUser == null;
     }
 }
