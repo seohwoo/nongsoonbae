@@ -129,7 +129,40 @@
 	
 	</insert>
 	<select id="showDetailCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
-		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3>0 order by cate3 asc
+		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3>0 order by cate1,cate2,cate3 desc
 	</select>
+	<select id="subDetailMaxNum" parameterType="hashMap" resultType="int">
+		SELECT MAX(cate3) FROM productcategory where cate1=#{cate1Select} and cate2=#{maxNum}
+	</select>
+	<insert id="insertDetailCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{cate1Select},
+            #{subMaxNum},
+            #{datailMaxNum},
+            #{addDetail}
+        )
+	
+	</insert>
+	<update id="addDetailFile" parameterType="hashMap">
+		update productcategory set img=#{realname} where catename=#{addDetail}
+	</update>
+	<select id="showEtcCate" parameterType="hashMap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3>0 order by cate3
+	</select>
+	<select id="findEtcName" parameterType="hashMap" resultType="String">
+		select catename from productcategory where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3=0 
+	</select>
+	<update id="updateCateName" parameterType="hashMap">
+		update productcategory set catename=#{newCateName} where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3=0
+	</update>
+	<insert id="updateEtcCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{cate1Select},
+            #{etcNum},
+            0,
+            #{etcName}
+        )
+	
+	</insert>
 	
 </mapper>
