@@ -80,6 +80,16 @@
     		alert("카테고리추가실패...");
    		</script>
     </c:if>
+    
+    <% if (request.getAttribute("operationSuccess") != null) { %>
+    <script>alert('<%=request.getAttribute("operationSuccess")%>');</script>
+	<% } %>
+	<% if (request.getAttribute("fileFormatError") != null) { %>
+    <script>alert('<%=request.getAttribute("fileFormatError")%>');</script>
+	<% } %>
+    
+    
+    
     <h1>물품별 카테고리 추가하기</h1>
     <table>
         <tr>
@@ -115,6 +125,12 @@
     
     <div>
     	<jsp:include page="/WEB-INF/views/admin/usercheck/addDetailCate.jsp" />
+    </div>
+    
+    
+    
+     <div>
+    	<jsp:include page="/WEB-INF/views/admin/usercheck/updateSubCate.jsp" />
     </div>
     
     

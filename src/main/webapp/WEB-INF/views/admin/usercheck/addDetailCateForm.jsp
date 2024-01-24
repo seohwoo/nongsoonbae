@@ -61,9 +61,46 @@
 	  <input type="text" name="addDetail" placeholder="품목적기">
 	  <input type="hidden" value="${cate1Select}" name="cate1Select" /> 
 	  <input type="hidden" value="${subMaxNum}" name="subMaxNum" />
+	  <input type="hidden" value="${datailMaxNum}" name="datailMaxNum" />
 	  <input type="file" name="addImage" accept="image/*">
 	  <input type="submit" value="추가">
    </form>	
+   
+   
+   <script>
+	$(document).ready(function() {
+	    var existingCateNames = [];
+	    <c:forEach var="cate" items="${detailCateList}">
+	        existingCateNames.push("${cate.catename}");
+	    </c:forEach>
 	
+	    $('#addDetailCate').on('submit', function(e) {
+	        var newCateName = $('input[name="addDetail"]').val().trim();
+	
+	        // 입력 필드가 비어 있을 경우
+	        if (!newCateName) {
+	            alert('항목을 입력해주세요.');
+	            e.preventDefault(); // 폼 제출 방지
+	            return;
+	        }
+	
+	        // 중복 체크
+	        if (existingCateNames.includes(newCateName)) {
+	            alert('중복된 항목은 추가할 수 없습니다.');
+	            e.preventDefault(); // 폼 제출 방지
+	            return;
+	        }
+	
+	        // datailMaxNum 값 증가
+	        var numValue = parseInt($('input[name="datailMaxNum"]').val());
+	        $('input[name="datailMaxNum"]').val(numValue + 1);
+	    });
+	
+	});
+	</script>
+
+   
+   
+   
 	</body>
 </html>

@@ -244,8 +244,66 @@ public class UserCheckServiceImpl implements UserCheckService{
 		checkMap.clear();
 		checkMap.put("cate1Select",cate1Select);
 		checkMap.put("maxNum",maxNum);
-		return 0;
-	}	
+		return mapper.subDetailMaxNum(checkMap);
+	}
+
+	@Override
+	public int insertDetailCate(int cate1Select, int subMaxNum, int datailMaxNum, String addDetail) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		checkMap.put("datailMaxNum",datailMaxNum);
+		checkMap.put("addDetail",addDetail);
+	
+		return mapper.insertDetailCate(checkMap);
+	}
+
+	@Override
+	public int addDetailFile(String realname, String addDetail) {
+		checkMap.clear();
+		checkMap.put("realname",realname);
+		checkMap.put("addDetail",addDetail);
+		return mapper.addDetailFile(checkMap);
+		}
+
+	@Override
+	public void showEtcCate(Model model, int cate1Select, int subMaxNum) {
+		List<ProductCategoryDTO> etcList = Collections.EMPTY_LIST;
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		etcList = mapper.showEtcCate(checkMap);
+		model.addAttribute("etcList",etcList);
+		}
+
+	@Override
+	public String findEtcName(int cate1Select, int subMaxNum) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		return mapper.findEtcName(checkMap);
+	}
+
+	@Override
+	public int updateCateName(String newCateName, int cate1Select, int subMaxNum) {
+		checkMap.clear();
+		checkMap.put("newCateName",newCateName);
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("subMaxNum",subMaxNum);
+		
+		return mapper.updateCateName(checkMap);
+	}
+
+	@Override
+	public int updateEtcCate(int cate1Select, int etcNum, String etcName) {
+		checkMap.clear();
+		checkMap.put("cate1Select",cate1Select);
+		checkMap.put("etcNum",etcNum);
+		checkMap.put("etcName",etcName);
+		return mapper.updateEtcCate(checkMap);
+	}
+
+	
 	}
 
 
