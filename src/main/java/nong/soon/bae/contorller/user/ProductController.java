@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -25,15 +26,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import nong.soon.bae.bean.AddressDTO;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ImagesDTO;
+import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.service.ProductService;
 
@@ -73,9 +77,12 @@ public class ProductController {
 
 	// 내 상점 정보 등록하기
 	@RequestMapping("createProductPro")
-	public String createProductPro(Principal principal, ShopListDTO SLdto) {
+	public String createProductPro(Principal principal, ShopListDTO SLdto, AddressDTO Adto) {
 		String username = principal.getName();
+		String address = Adto.getRoadAddress() + " " + Adto.getDetailAddress() + Adto.getExtraAddress();
+		
 		SLdto.setUsername(username);
+		SLdto.setAddress(address);
 		
 		// 내 상점 정보 등록하기
 		service.shopListInsert(SLdto);
@@ -90,16 +97,21 @@ public class ProductController {
 	
 	// TEST
 	
-	
+	// 상품 등록하기
 	@RequestMapping("productWriteForm")
 	public String productWriteForm(String myName, Model model, Principal principal) {
 		model.addAttribute("myName", myName);
 		return "/product/productWriteForm";
 	}
 	
-	
+	// 상품 등록하기
 	@RequestMapping("productWritePro")
-	public String productWritePro(Principal principal, Model model, String categorynum, String[] fileNames, HttpServletRequest request, AllProductDTO APdto) {
+	public String productWritePro(Principal principal, Model model, String categorynum, String[] fileNames, 
+								  HttpServletRequest request, AllProductDTO APdto, 
+								  @RequestParam("optionname") String[] optionname, 
+								  @RequestParam("optiontotalprice") int[] optiontotalprice,
+								  @RequestParam("optionProductCount") int[] optionProductCount) {
+
 		// 24년 구하는 코드
 		Date date = new Date();
 		SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");		
@@ -108,9 +120,13 @@ public class ProductController {
 		
 		String keyword = "%" + year + categorynum + "%";
 		String productnum = "";
+		
+		// 가장 최근의 상품번호값
 		int productnumCnt = service.selectLastProductNumCnt(keyword);
+		// 상품넘버가 없으면 productnum 만들기
 		if(productnumCnt==0) {
 			productnum = year + categorynum + "00001";
+		// 상품넘버 있으면 기존 productnum에 +1하기
 		}else {
 			productnum = service.selectLastProductNum(keyword).get(0).getProductnum();
 			productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);		
@@ -118,11 +134,27 @@ public class ProductController {
 		
 		String username = principal.getName();
 		APdto.setUsername(username);
-		APdto.setCatenum(categorynum);
+		APdto.setCatenum(categorynum);		
 		APdto.setSeqnum("C_"+categorynum);
-		List<AreaDTO> areaList = service.selectArea(username);
-		APdto.setArea1(areaList.get(1).getArea1());
-		APdto.setArea2(areaList.get(1).getArea2());
+		
+		// 상점 주소 가져오기
+		String fullAddress = service.selectAddress(username);
+		// 공백 기준으로 자르기
+		String[] addressParts = fullAddress.split(" ");
+		// area1 주소
+		String area1Address = addressParts[0];
+		// area2 주소
+		String area2Address = addressParts[1];
+		
+		// area1 주소 번호로 가져오기
+		int area1 = service.selectArea1(area1Address);
+		// area2 주소 번호로 가져오기
+		int area2 = service.selectArea2(area2Address, area1);
+		
+		APdto.setArea1(area1);
+		APdto.setArea2(area2);
+		
+		// 상품 등록하기
 		service.productInsert(APdto);
 		
 		
@@ -149,7 +181,6 @@ public class ProductController {
 					String realname = productnum+"_"+cnt+ext;
 					Idto.setFilename(realname);
 					
-					//
 					service.imagesInsert(Idto);
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
 					cnt++;
@@ -157,13 +188,33 @@ public class ProductController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
-			
+			}			
 	    	for (String filename : fileNames) {
 				File sourceFile = new File(fileRoot+filename);
 				sourceFile.delete();
 			}
-	    }
+	    }		
+		
+		// username_product에 옵션들 넣기
+		String optionProductnum = productnum;
+		// 옵션 넘어온 값만큼 반복
+		for(int i = 0; i < optionname.length; i++) {
+			ProductDTO Pdto = new ProductDTO();
+			// 옵션넘버값 1씩 증가
+			String productnumString = String.valueOf(Long.parseLong(optionProductnum) + 1);
+			
+			Pdto.setUsername(username);
+			Pdto.setProductnum(productnum);
+			Pdto.setOptionname(optionname[i]);
+			Pdto.setPrice(optiontotalprice[i]);
+			Pdto.setProductcount(optionProductCount[i]);
+			Pdto.setOptionnum(productnumString);		
+			
+			optionProductnum = productnumString;
+			// username_product 옵션들 넣기
+			service.optionInsert(Pdto);
+		}
+		
 		return "/product/productWritePro";
 	}	
 	

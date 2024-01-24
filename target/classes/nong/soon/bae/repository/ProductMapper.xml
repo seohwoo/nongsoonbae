@@ -11,11 +11,11 @@
 
 	<!-- 내 상점 정보 등록하기 -->
 	<insert id="shopListInsert" parameterType="nong.soon.bae.bean.ShopListDTO">
-		insert into shoplist (username, shopName, shopContent, regDate, address) 
+		insert into shoplist (username, shopname, shopcontent, regdate, address) 
 	    values (
 	        #{username},
-	        #{shopName}, 
-	        #{shopContent}, 
+	        #{shopname}, 
+	        #{shopcontent}, 
 	        sysdate,
 	        #{address} )
 	</insert>	
@@ -23,13 +23,13 @@
 	<!-- 내 상점 테이블 만들기 -->
 	<insert id="createProduct" parameterType="String">
 		create table ${username}_product (
-			optionNum varchar2(50) primary Key not null,
+			optionnum varchar2(50) primary Key not null,
 			username varchar2(50) not null,
-			productNum varchar2(50) not null,
-			optionName varchar2(200) not null,
+			productnum varchar2(50) not null,
+			optionname varchar2(200) not null,
 			price number not null,
-			productCount number not null,
-			sellCount number not null )
+			productcount number not null,
+			sellnount number default 0 not null )
 	</insert>
 	
 	<!-- FINISH -->
@@ -54,11 +54,21 @@
 			#{area2} )
 	</insert>
 	
-	<!-- 상점에 대한 주소 가져오는 코드 -->
-	<select id="selectArea" resultType="nong.soon.bae.bean.AreaDTO" parameterType="String">
-		SELECT SL.Address, A.AREA1, A.AREA2 FROM SHOPLIST SL
-		JOIN AREA A ON SL.Address LIKE '%' || A.areaname || '%'
-		where SL.username=#{username}
+
+	
+	<!-- 상점 주소 가져오는 코드 -->
+	<select id="selectAddress" resultType="String" parameterType="String">
+		select address from shoplist where username=#{username}
+	</select>
+	
+	<!-- area1 값 가져오는 코드 -->
+	<select id="selectArea1" resultType="int" parameterType="String">
+		select area1 from area where areaname=#{areaname}
+	</select>
+	
+	<!-- area2 값 가져오는 코드 -->
+	<select id="selectArea2" resultType="int">
+		select area2 from area where areaname=#{area2Address} and area1=#{area1}
 	</select>
 	
 	<!-- 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수 -->
@@ -79,6 +89,19 @@
 			#{filename} )
 	</insert>
 	
+	
+	<!-- 상품 등록할 때 username_product에 옵션들 넣기 -->
+	<insert id="optionInsert" parameterType="nong.soon.bae.bean.ProductDTO">
+		insert into ${username}_product (optionnum, username, productnum, 
+		optionname, price, productcount)
+		values (
+			#{optionnum}, 
+			#{username}, 
+			#{productnum}, 
+			#{optionname}, 
+			#{price}, 
+			#{productcount} )
+	</insert>
 	
 </mapper>    
     

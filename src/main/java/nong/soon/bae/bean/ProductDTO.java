@@ -9,24 +9,11 @@ import lombok.Data;
 
 @Data
 public class ProductDTO {
+	private String optionnum;
+	private String username;
 	private String productnum;
-	private String productname;
-	private int wishcount;
-	private int totalprice;
+	private String optionname;
+	private int price;
 	private int productcount;
 	private int sellcount;
-	private int imagecount;
-	private String content;
-	private int readcount;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date startdate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date enddate;
-	private String optionstatus;
-	private String username;
-	private String seqnum;
-	private String otherUsername;
-	
-	private List<String> optionname;
-    private List<Integer> optionprice;
 }
