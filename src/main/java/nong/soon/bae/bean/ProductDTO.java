@@ -16,4 +16,7 @@ public class ProductDTO {
 	private int price;
 	private int productcount;
 	private int sellcount;
+	
+	private String catenum;
+	private String seqnum;	
 }

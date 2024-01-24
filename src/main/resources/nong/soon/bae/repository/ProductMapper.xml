@@ -95,7 +95,7 @@
 		insert into ${username}_product (optionnum, username, productnum, 
 		optionname, price, productcount)
 		values (
-			#{optionnum}, 
+			TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || ${catenum} || LPAD(${seqnum}_seq.nextval, 5, '0')), 
 			#{username}, 
 			#{productnum}, 
 			#{optionname}, 

@@ -194,23 +194,22 @@ public class ProductController {
 				sourceFile.delete();
 			}
 	    }		
-		
-		// username_product에 옵션들 넣기
-		String optionProductnum = productnum;
+		/////////////////////// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
 		// 옵션 넘어온 값만큼 반복
 		for(int i = 0; i < optionname.length; i++) {
 			ProductDTO Pdto = new ProductDTO();
 			// 옵션넘버값 1씩 증가
-			String productnumString = String.valueOf(Long.parseLong(optionProductnum) + 1);
+			
 			
 			Pdto.setUsername(username);
 			Pdto.setProductnum(productnum);
 			Pdto.setOptionname(optionname[i]);
 			Pdto.setPrice(optiontotalprice[i]);
 			Pdto.setProductcount(optionProductCount[i]);
-			Pdto.setOptionnum(productnumString);		
+			Pdto.setCatenum(categorynum);
+			Pdto.setSeqnum("C_"+categorynum);
 			
-			optionProductnum = productnumString;
 			// username_product 옵션들 넣기
 			service.optionInsert(Pdto);
 		}
