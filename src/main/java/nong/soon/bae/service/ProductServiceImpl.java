@@ -53,16 +53,19 @@ public class ProductServiceImpl implements ProductService {
 		mapper.productInsert(APdto);
 	}
 
+	// 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수
 	@Override
 	public int selectLastProductNumCnt(String keyword) {
 		return mapper.selectLastProductNumCnt(keyword);
 	}
 	
+	// 상품번호가 있으면 상품번호 뽑아오는거
 	@Override
 	public List<AllProductDTO> selectLastProductNum(String keyword) {
 		return mapper.selectLastProductNum(keyword);
 	}
 
+	// 상품 등록할 때 이미지 넣기
 	@Override
 	public void imagesInsert(ImagesDTO Idto) {
 		mapper.imagesInsert(Idto);

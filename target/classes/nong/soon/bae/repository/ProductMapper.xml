@@ -61,14 +61,17 @@
 		where SL.username=#{username}
 	</select>
 	
-	<!--  -->
+	<!-- 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수 -->
 	<select id="selectLastProductNumCnt" parameterType="String" resultType="int">
 		select count(*) from allproduct WHERE productnum LIKE #{keyword}
 	</select>
+	
+	<!-- 상품번호가 있으면 상품번호 뽑아오는거 -->
 	<select id="selectLastProductNum" parameterType="String" resultType="nong.soon.bae.bean.AllProductDTO">
 		select * from allproduct WHERE productnum LIKE #{keyword}
 	</select>
 	
+	<!-- 상품 등록할 때 이미지 넣기 -->
 	<insert id="imagesInsert" parameterType="nong.soon.bae.bean.ImagesDTO">
 		insert into ${username}_images values (
 			#{productnum},
