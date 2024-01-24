@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <body>
@@ -13,6 +14,18 @@
 		  </div>
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
+		  <c:if test="${status==0 }">
+		  	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+			<table cellspacing="0" class="g-table-list product">
+				<thead>
+					<tr>
+						<th>찜한 상품이 없습니다.</th>
+					</tr>
+				</thead>
+			</table>
+			</div>
+		  </c:if>
+		  <c:if test="${status==1}">
 		  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -22,25 +35,25 @@
 						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">상품명</th>
 						<th class="g-table-list-col-title g-table-list-col-desc required">가게</th>
 						<th class="g-table-list-col-title g-table-list-col-money required">가격</th>
-						<th class="g-table-list-col-title g-table-list-col-date required">찜한 날짜</th>
 					</tr>
 				</thead>
+				<c:forEach var="like" items="${likeList}">
 				<tbody>
 					<tr>
 						<td><a href="#"><i class="fa fa-fw fa-pencil"></i></a></td>
 						<td><img src="/resources/img/sample.jpg" style="width: 50px; height: 50px;"></td>
-						<td><a href="#">[설날 세일]사과 청송 늘봄 햇부사 흠과 가정용 1.5kg 3Kg 5Kg [원산지:국산(경상북도 청송군)]</a><br><div class="g-table-list-col-small-copy">1kg</div></td>
-						<td class="g-table-list-rwd"><a href="#">유미네 사과농장</a></td>
-						<td>1000원</td>
-						<td><div class="g-table-list-col-small-copy">2024/01/18</div></td>
+						<td><a href="#">${like.optionname}</a></td>
+						<td class="g-table-list-rwd"><a href="#">${like.shopname}</a></td>
+						<td>${like.totalprice}원</td>
 					</tr>
 				</tbody>
+				</c:forEach>
 			</table>
 			<div class="g-table-list-pagination">
 				<div class="g-table-list-pagination-col">
 					<span class="g-body-copy">Page</span>
-					<form><input type="text" class="g-table-list-pagination-current" placeholder="3"></form>
-					<span class="g-body-copy">of 32</span>
+					<form><input type="text" class="g-table-list-pagination-current" value="${likeNum}"></form>
+					<span class="g-body-copy">of ${likeMaxNum}</span>
 				</div>
 				<div class="g-table-list-pagination-col">
 					<a href="#" class="g-actions-button g-actions-button-pager"><i class="fa fa-fw fa-caret-left right-4"></i>Prev</a>
@@ -48,6 +61,19 @@
 				</div>
 			</div>
 		</div>
+		</c:if>
+		<div class="tab-content" id="nav-tabContent">
+		  <c:if test="${status==0 }">
+		  	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+			<table cellspacing="0" class="g-table-list product">
+				<thead>
+					<tr>
+						<th>구독한 농부가 없습니다.</th>
+					</tr>
+				</thead>
+			</table>
+			</div>
+		  </c:if>
 		<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -57,25 +83,26 @@
 						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">카테고리</th>
 						<th class="g-table-list-col-title g-table-list-col-desc required">가게</th>
 						<th class="g-table-list-col-title g-table-list-col-money required">위치</th>
-						<th class="g-table-list-col-title g-table-list-col-date required">구독일</th>
 					</tr>
 				</thead>
+				<c:forEach var="farmer" items="${farmerList}">
 				<tbody>
 					<tr>
 						<td><a href="#"><i class="fa fa-fw fa-pencil"></i></a></td>
 						<td><img src="/resources/img/farmer.jpg" style="width: 50px; height: 50px;"></td>
-						<td><a href="#">과일 > 사과/멜론/아보카도 > 사과</a></td>
-						<td class="g-table-list-rwd"><a href="#">유미네 사과농장</a></td>
-						<td>충청남도 당진</td>
-						<td><div class="g-table-list-col-small-copy">2024/01/18</div></td>
+						<td><a href="#">${farmer.cate1} > ${farmer.cate2} > ${farmer.cate3}</a></td>
+						<td class="g-table-list-rwd"><a href="#">${farmer.shopname}</a></td>
+						<td>${farmer.area1} ${farmer.area2}</td>
+						
 					</tr>
 				</tbody>
+				</c:forEach>
 			</table>
 			<div class="g-table-list-pagination">
 				<div class="g-table-list-pagination-col">
 					<span class="g-body-copy">Page</span>
-						<form><input type="text" class="g-table-list-pagination-current" placeholder="1"></form>
-					<span class="g-body-copy">of 5</span>
+						<form><input type="text" class="g-table-list-pagination-current" value="${farmerNum}"></form>
+					<span class="g-body-copy">of ${farmerMaxNum}</span>
 				</div>
 				<div class="g-table-list-pagination-col">
 					<a href="#" class="g-actions-button g-actions-button-pager"><i class="fa fa-fw fa-caret-left right-4"></i>Prev</a>

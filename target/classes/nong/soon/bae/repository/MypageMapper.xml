@@ -10,25 +10,31 @@
 	<select id="selectfarmer" resultType="nong.soon.bae.bean.MyPageDTO">
 		select * from ${username}_mypage where wishstatus=2
 	</select>
-	<select id="selectLikeDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.ProductDTO">
-		<![CDATA[
-			select * from 
-			(select c.* , rownum r from 
-			(select * from ${username}_product where productnum=#{productnum} order by readcount) c) 
-			where r >= #{start} and r <= #{end}
-		]]>
-	</select>
 	<select id="cntlike" resultType="int">
 		select count(*) from ${username}_mypage where wishstatus=1
 	</select>
 	<select id="cntfarmer" resultType="int">
 		select count(*) from ${username}_mypage where wishstatus=2
 	</select>
-	<select id="selectProductList" resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct where productnum=#{productnum}, username=#{username}
+	
+	<select id="selectLikeDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.ProductDTO">
+		<![CDATA[
+			select c.optionname, c.price, i.filename, s.shopname
+			from (select c.*, rownum r from (select * from ${username}_product where productnum=#{productnum} order by readcount) c) c
+			join ${username}_image i on c.productnum = i.productnum
+			join shoplist s on c.username = s.username
+			where r >= #{start} and r <= #{end}
+		]]>
 	</select>
-	<select id="selectfarmerDetail" resultType="nong.soon.bae.bean.ShopListDTO">
-		select * from shoplist where username=#{username}
+	<select id="selectfarmerDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.ProductDTO">
+		<![CDATA[
+			select c.cate1, c.cate2, c.cate3, c.area1, c.area2, c.username, i.filename, s.shopname
+			from (select c.*, rownum r from (select * from allproduct where productnum=#{productnum} order by readcount) c) c
+			join ${username}_image i on c.productnum = i.productnum
+			join shoplist s on c.username = s.username
+			where r >= #{start} and r <= #{end}
+		]]>
 	</select>
+	
 	
 </mapper>

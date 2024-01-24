@@ -7,10 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -25,26 +24,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
-import nong.soon.bae.bean.MyPageDTO;
-import nong.soon.bae.bean.ProductCategoryDTO;
-import nong.soon.bae.bean.ProductDTO;
-import nong.soon.bae.bean.ProductReadcountDTO;
+import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.ShopListDTO;
-import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.service.ProductService;
 
 @Controller
@@ -65,343 +55,177 @@ public class ProductController {
 	// 일단 상점 메인
 	@RequestMapping("productMain")
 	public String productMain(Model model, Principal principal) {
-		String username = principal.getName();
-		model.addAttribute("username", username);
+		String username = principal.getName();		
+		
+		// 내 이름 가져오기
+		String myName = service.selectMyName(username);
+		
+		model.addAttribute("myName", myName);
 		return "product/productMain";
 	}	
 	
-	// 개인 상점(테이블) 만들기
+	// 내 상점 정보 등록하기
 	@RequestMapping("createProduct")
-	public String createProduct(Model model, Principal principal) {
-		String username = principal.getName();
-		model.addAttribute("username", username);
+	public String createProduct(Model model, String myName) {
+		model.addAttribute("myName", myName);
 		return "product/createProduct";
-	}
-	
-	// 내 상점 정보 등록하기, 개인 상점, 이미지 테이블 만들기
+	}	
+
+	// 내 상점 정보 등록하기
 	@RequestMapping("createProductPro")
-	public String createProductPro(Model model, Principal principal, ShopListDTO dto) {
+	public String createProductPro(Principal principal, ShopListDTO SLdto) {
 		String username = principal.getName();
-		model.addAttribute("username", username);
-		dto.setUsername(username);
+		SLdto.setUsername(username);
 		
-		service.allShopList(dto);
-		service.createProduct(username);
-		service.createImages(username);
+		// 내 상점 정보 등록하기
+		service.shopListInsert(SLdto);
+		// 내 상점 테이블 만들기
+		service.createProduct(username);		
 		return "redirect:/product/productMain";
 	}
 	
-	// 상품 등록하기
+	// FINISH
+	
+	
+	
+	// TEST
+	
+	
 	@RequestMapping("productWriteForm")
-	public String productWriteForm(HttpServletRequest request, Model model, Principal principal, 
-								   @RequestParam(value="productnum", defaultValue="0")String productnum) {
-		
-		String username = principal.getName();
-		model.addAttribute("username", username);
-		model.addAttribute("productnum", productnum);
-		return "product/productWriteForm";
+	public String productWriteForm(String myName, Model model, Principal principal) {
+		model.addAttribute("myName", myName);
+		return "/product/productWriteForm";
 	}
-
-	// 상품 등록하기
+	
+	
 	@RequestMapping("productWritePro")
-	public String productWritePro(String content, String[] fileNames, HttpServletRequest request, List<MultipartFile> files, Model model, 
-								  Principal principal, ProductDTO product, AllProductDTO dto, String cate3, 
-								  @RequestParam("optionname") String[] optionname, 
-								  @RequestParam("optiontotalprice") int[] optiontotalprice,
-								  @RequestParam("optionProductCount") int[] optionProductCount) {
+	public String productWritePro(Principal principal, Model model, String categorynum, String[] fileNames, HttpServletRequest request, AllProductDTO APdto) {
+		// 24년 구하는 코드
+		Date date = new Date();
+		SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");		
+		String day = smf.format(date);		
+		String year = day.split("/")[0].substring(2, 4);
 		
+		String keyword = "%" + year + categorynum + "%";
 		String productnum = "";
+		int productnumCnt = service.selectLastProductNumCnt(keyword);
+		if(productnumCnt==0) {
+			productnum = year + categorynum + "00001";
+		}else {
+			productnum = service.selectLastProductNum(keyword).get(0).getProductnum();
+			productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);		
+		}
+		
 		String username = principal.getName();
-		
-		product.setUsername(username);
-		product.setProductnum(cate3); 		
-		product.setSeqnum("C_"+cate3 );	
-		String path = request.getServletContext().getRealPath("/resources/file/product/");
-		
-		// 상품재고수 다 더한 코드	
-		int count = Arrays.stream(optionProductCount).sum();
-		product.setProductcount(count);
-		
-		// 상품 추가된 옵션값 구한 코드
-		String optionstatus = String.valueOf(optionname.length);
-		product.setOptionstatus(optionstatus);
-		
-		// 판매자가 입력한 가격 중 최저가격 구하기
-		int minValue = Arrays.stream(optiontotalprice).min().orElse(0);
-		product.setTotalprice(minValue);
+		APdto.setUsername(username);
+		APdto.setCatenum(categorynum);
+		APdto.setSeqnum("C_"+categorynum);
+		List<AreaDTO> areaList = service.selectArea(username);
+		APdto.setArea1(areaList.get(1).getArea1());
+		APdto.setArea2(areaList.get(1).getArea2());
+		service.productInsert(APdto);
 		
 		
 		
-		/////////////////////////////////////////
+		
+		
+		String content = APdto.getContent();
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
-		int cnt2 = 1;
+		int cnt = 1;
 		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-	    if(fileNames != null) {
+	    
+		if(fileNames != null) {
+	    	ImagesDTO  Idto = new ImagesDTO();
+	    	Idto.setProductnum(productnum);
+	    	Idto.setUsername(username);
 	    	isFile(fileNames, content);
-			for (String filename : realFiles) {
+			
+	    	for (String filename : realFiles) {
 				try {
 					File sourceFile = new File(fileRoot+filename);
 					File targetDirectory = new File(realRoot);
 					String ext = filename.substring(filename.lastIndexOf("."));
-					String filenum = service.selectProductnum(username);
-					String realname = filenum+"_"+cnt2+ext;
+					String realname = productnum+"_"+cnt+ext;
+					Idto.setFilename(realname);
+					
+					//
+					service.imagesInsert(Idto);
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
-					cnt2++;
+					cnt++;
 					content = content.replace(filename, realname);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			for (String filename : fileNames) {
+			
+	    	for (String filename : fileNames) {
 				File sourceFile = new File(fileRoot+filename);
 				sourceFile.delete();
 			}
 	    }
-		model.addAttribute("content", content);
-		///////////////////////////////////////
-		
-		
-		int cnt = service.productInsert(product, files, path);
-		int result = service.imagesInsert(files, path, username);
-		
-		// cate3 값을 cate1,2,3 으로 나눠서 AllproductDTO 에 넣는 코드
-		int catego1 = cate3.charAt(0)-48;
-		int catego2 = cate3.charAt(1)-48;
-		int catego3 = cate3.charAt(2)-48;				
-		dto.setCate1(catego1);
-		dto.setCate2(catego2);
-		dto.setCate3(catego3);
-		
-		// 상점의 주소를 AllProduct 테이블에 넣기
-		List<AreaDTO> selectAddress = service.selectAddress(username);
-		for (AreaDTO area : selectAddress) {
-            if (area.getArea1() >= 1 && area.getArea2() >= 1) {
-            	dto.setArea1(area.getArea1());
-            	dto.setArea2(area.getArea2());
-            }
-        }
- 	
-		
-		
-		// 가장 최근에 등록한 productnum값 allproduct에 넣기
-		if(cnt >0) {
-			dto.setProductnum(service.selectProductnum(username));
-			service.allProductInsert(dto);
-		}
-		
-		// 옵션 값만큼 상품 등록하기 
-		String OptionProductnum = service.selectProductnum(username);
-		for (int i = 0; i < optionname.length; i++) {
-		    product.setProductname(optionname[i]);
-		    product.setTotalprice(optiontotalprice[i]);
-		    product.setProductcount(optionProductCount[i]);
-		    product.setProductnum(cate3);
-		    product.setOptionstatus(OptionProductnum);
-		    service.optionInsert(product);		    
-		}		
-		
-		// productnum값으로 리뷰 테이블 만들기
-		productnum = "P_"+service.selectProductnum(username);
-		service.createReviews(productnum);
-		
-		model.addAttribute("username", username);
-		model.addAttribute("cnt", cnt);
-		model.addAttribute("result", result);		
-		
-		return "product/productWritePro";
-	}
-	 
-	// FINISH
-
-	public void isFile(String[] filenames, String content) {
-		srcValues.clear();
-		realFiles.clear();
-		Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
-	    Matcher matcher = pattern.matcher(content);
-	    while (matcher.find()) {
-	    	srcValues.add(matcher.group(1));
-	    }
-	    for (int i = 0; i < srcValues.size(); i++) {
-	    	int lastSlashIndex = srcValues.get(i).lastIndexOf('/');
-	    	if (lastSlashIndex != -1 && lastSlashIndex < srcValues.get(i).length() - 1) {
-	    		srcValues.set(i, srcValues.get(i).substring(lastSlashIndex + 1));
-	    	}
-	    }
-	    if(filenames.length != srcValues.size()) {
-	    	for (int i = 0; i < srcValues.size(); i++) {
-	    		for (String filename : filenames) {
-	    			if(filename.equals(srcValues.get(i))) {
-	    				realFiles.add(srcValues.get(i));
-	    			}
-	    		}
-	    	}
-	    }else {
-	    	realFiles = srcValues;
-	    }
-	}
+		return "/product/productWritePro";
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	 public void isFile(String[] filenames, String content) {
+		 srcValues.clear();
+		 realFiles.clear();
+		 Pattern pattern = Pattern.compile("src\\s*=\\s*\"([^\"]+)\"");
+	     Matcher matcher = pattern.matcher(content);
+	     while (matcher.find()) {
+	         srcValues.add(matcher.group(1));
+	     }
+		 for (int i = 0; i < srcValues.size(); i++) {
+			int lastSlashIndex = srcValues.get(i).lastIndexOf('/');
+			if (lastSlashIndex != -1 && lastSlashIndex < srcValues.get(i).length() - 1) {
+				srcValues.set(i, srcValues.get(i).substring(lastSlashIndex + 1));
+			}
+		 }
+		 if(filenames.length != srcValues.size()) {
+			 for (int i = 0; i < srcValues.size(); i++) {
+				for (String filename : filenames) {
+					if(filename.equals(srcValues.get(i))) {
+						realFiles.add(srcValues.get(i));
+					}
+				}
+			}
+		 }else {
+			 realFiles = srcValues;
+		 }
+	 }
 	
 	@RequestMapping(value = "uploadSummernoteImageFile", produces = "application/json", consumes = "multipart/form-data")
 	public ResponseEntity<JsonNode> uploadSummernoteImageFile(@RequestPart("file") MultipartFile multipartFile,
 	      HttpServletRequest request) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		JsonNode responseJson;
-		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
-		try {
-			String originalFileName = multipartFile.getOriginalFilename();
-			String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-			String savedFileName = UUID.randomUUID() + extension;
-			Path targetPath = Path.of(fileRoot, savedFileName);
-			Files.copy(multipartFile.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-			String imageUrl = request.getContextPath() + "/resources/summernoteImage/" + savedFileName;
-			responseJson = objectMapper.createObjectNode()
-					.put("url", imageUrl)
-					.put("responseCode", "success")
-					.put("fileName", savedFileName);
-			return ResponseEntity.ok(responseJson);
-		} catch (IOException e) {
-			responseJson = objectMapper.createObjectNode().put("responseCode", "error");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
-		}
+	   ObjectMapper objectMapper = new ObjectMapper();
+	   JsonNode responseJson;
+	   String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
+		
+	   try {
+	      String originalFileName = multipartFile.getOriginalFilename();
+	      String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+	      String savedFileName = UUID.randomUUID() + extension;
+	      Path targetPath = Path.of(fileRoot, savedFileName);
+	      Files.copy(multipartFile.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+		
+	      String imageUrl = request.getContextPath() + "/resources/summernoteImage/" + savedFileName;
+	      responseJson = objectMapper.createObjectNode()
+	            .put("url", imageUrl)
+	            .put("responseCode", "success")
+	            .put("fileName", savedFileName);
+	      return ResponseEntity.ok(responseJson);
+	   } catch (IOException e) {
+	      responseJson = objectMapper.createObjectNode().put("responseCode", "error");
+	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
+	   }
 	}
 	
-	@RequestMapping("myProduct")
-	public String myProduct(Model model, Principal principal, ProductDTO dto) {
-		String username = principal.getName();
-		model.addAttribute("username", username);
-		dto.setUsername(username);
-		List<ProductDTO> productDTO = service.myProduct(username);
-		model.addAttribute("productDTO", productDTO);
-		return "product/myProduct";
-	}
-	
-	@RequestMapping("productInfo")
-	public String productInfo(Model model, Principal principal, ProductDTO productDTO, String productnum) {
-		String username = principal.getName();
-		model.addAttribute("username", username);
-		productDTO.setUsername(username);
-		productDTO = service.productInfo(productDTO);
-		model.addAttribute("productDTO", productDTO);
-		return "product/productInfo";
-	}
-	
-	// 상품 상세보기 
-	@RequestMapping("productDetail")
-	public String productDetail(String productnum, Model model, Principal principal, ProductDTO productDTO, AreaDTO areaDTO, ProductReadcountDTO PRcDTO) {
-		String username = principal.getName();
-		model.addAttribute("username", username);	
-		productDTO.setUsername(username);
-		String otherUsername = service.selectUsername(productnum);
-		productDTO.setOtherUsername(otherUsername);
-		productDTO = service.productDetail(productnum, username, otherUsername);
-		
-		// 상점 주소 가져오는 코드
-		areaDTO.setOtherUsername(otherUsername);
-		areaDTO = service.selectArea(productnum, username, otherUsername);
-		
-		// area1 가져오는 코드
-		areaDTO.setArea1(areaDTO.getArea1());
-		areaDTO.setArea2(areaDTO.getArea2());
-		String areaName2 = service.selectAreaName2(areaDTO);
-		
-		// area2 가져오는 코드
-		areaDTO.setArea1(areaDTO.getArea1());
-		areaDTO.setArea2(0);
-		String areaName1 = service.selectAreaName1(areaDTO);
-		
-		// 닉네임 가져오는 코드
-		String name = service.selectName(otherUsername);
-
-		// 상품의 옵션값 가져오는 코드
-		String optionstatus = productnum;
-		List<ProductDTO> option = service.selectOption(username, optionstatus, otherUsername);
-		
-		
-		// 오늘 날짜 가져오는 코드
-	    Date date = new Date();
-	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd");
-	    String todaydate = simpleDateFormat.format(date);
-	    PRcDTO.setTodaydate(todaydate);
-		
-	    // 조회한 상품 날짜랑 오늘 날짜 비교하는 코드 
-		int count = service.todayProductReadcount(username, productnum, todaydate);
-		
-		// 오늘 상품조회 안했으면 상품조회수+1 , 상품조회 테이블 정보넣기
-		if(count == 0) {
-			service.updateReadcount(username, productnum);
-			service.productReadcountInsert(username, productnum);			
-		}
-		
-		model.addAttribute("otherUsername", otherUsername);
-		model.addAttribute("productnum", productnum);
-		model.addAttribute("option", option);
-		model.addAttribute("name", name);
-		model.addAttribute("areaName1", areaName1);
-		model.addAttribute("areaName2", areaName2);
-		model.addAttribute("areaDTO", areaDTO);
-		model.addAttribute("productDTO", productDTO);
-		
-		return "product/productDetail";
-	}
-	
-	@RequestMapping("allProduct")
-	public String allProduct(Model model, Principal principal, String productName, ProductDTO productDTO) {
-		String username = principal.getName();
-		model.addAttribute("username", username);
-		
-		List<AllProductDTO> allProductDTO = service.allProduct();
-		model.addAttribute("allProductDTO", allProductDTO);
-		return "product/allProduct";
-	}
-	
-	
-	@PostMapping("sample2")
-	public String sample2(@RequestParam("files") List<MultipartFile> files) {
-		return "product/sample2";
-	}
-						
-	@RequestMapping("sample")
-	public String sample() {
-		return "product/sample";
-	}
-	
-	// 찜하기
-	@RequestMapping("productPick")
-	public String productPick(Principal principal, String productnum, String otherUsername) {
-		String username = principal.getName();
-		
-		// 상품 찜하기 유무
-		int count = service.selectProductPickCount(username, productnum);
-		
-		// 상품 찜 안돼있으면(0) 내 테이블에 상품 찜하고 판매자 상품 찜한 갯수에 +1
-		if(count == 0) {
-			service.productPick(username, productnum, otherUsername);
-			service.updateProductWishcount(otherUsername, productnum);
-		}else {
-			// 상품 찜 돼있으면 내 테이블에 상품 찜 삭제하고 판매자 상품 찜한 갯수에 -1 
-			service.productPickDelete(username, productnum);
-			service.deleteProductWishcount(otherUsername, productnum);
-		}
-		return "redirect:/product/productMain"; 
-	}	
-	
-	// 장바구니
-	@RequestMapping("productShoppingCart")
-	public String productShoppingCart(Principal principal, String productnum, String otherUsername) {
-		String username = principal.getName();
-		
-		// 장바구니 상품 유무
-		int count = service.selectProductShoppingCartCount(username, productnum);
-		
-		// 장바구니에 상품 없으면(0) 장바구니에 상품 담기
-		if(count == 0) {
-			service.productShoppingCart(username, productnum, otherUsername);
-		}else {
-			// 장바구니에 상품 있으면 장바구니에 상품 삭제하기
-			service.productShoppingCartDelete(username, productnum);
-		}
-		return "redirect:/product/productMain"; 
-	}	
 	
 }
-

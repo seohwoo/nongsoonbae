@@ -16,6 +16,11 @@
 	    	<beans:map key-type="String" value-type="String" />
 	   	</beans:constructor-arg>
 	  </beans:bean>
+	  <beans:bean id="FarmerDetailMap" class="java.util.HashMap" >
+	   	<beans:constructor-arg>
+	    	<beans:map key-type="String" value-type="String" />
+	   	</beans:constructor-arg>
+	  </beans:bean>
       
   
 </beans:beans>
