@@ -1,5 +1,6 @@
 package nong.soon.bae.contorller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,10 @@ import nong.soon.bae.service.KaKaoPayService;
 @Controller
 public class KaKaoController {
 
+	@Autowired
 	private final KaKaoPayService kakaoPayService;
-    
+	
+	
     /**
      * 결제요청
      */

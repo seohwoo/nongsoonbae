@@ -5,9 +5,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>카카오페이버튼</title>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	</head>
 	<body>
-		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<button id="btn_kakao-pay">kakao</button>
 		<script>
 			$(function(){
@@ -16,6 +16,9 @@
 				$.ajax({
 					type:'POST'
 					,url:'/test/ready'
+					,data: {
+	                	
+	                }
 					,success:function(response){
 						location.href = response.next_redirect_pc_url;			
 					}
