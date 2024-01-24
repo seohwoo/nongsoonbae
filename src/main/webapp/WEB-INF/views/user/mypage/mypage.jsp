@@ -14,7 +14,7 @@
 <div class="container-fluid" id="wrapper">
   <div class="row flex-nowrap">
     <div class="col-2 bd-sidebar align-items">
-      <ul class="nav nav-pills flex-column mb-auto" style="margin-top: 100px;">
+      <ul class="nav nav-pills flex-column mb-auto" >
 	      <li class="nav-item">
 	        <a href="/user/mypage" class="nav-link active navitem" aria-current="page" id="home">  
 	          내 정보
