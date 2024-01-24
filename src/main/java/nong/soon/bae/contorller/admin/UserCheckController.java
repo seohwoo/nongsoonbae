@@ -104,17 +104,17 @@ public class UserCheckController {
 	    String realRoot = request.getServletContext().getRealPath("/resources/img/");
 	    String isImg = "0";
 	    if (files != null && files.length > 0) {
-	        int cnt = 1;
+	       
 	        for (MultipartFile file : files) {
 	            if (!file.isEmpty()) {
 	                try {
 	                    String originalFileName = file.getOriginalFilename();
 	                    String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
 	                    if(ext.equals(".jpg") || ext.equals(".png") || ext.equals(".jpeg")) {
-	                    	String realname = "addCate_" + num + "_" + cnt + ext ;
+	                    	String realname = "addCate_" + num + "_"+ "0" + "0" + ext ;
 		                    File targetFile = new File(realRoot + realname);
 		                    file.transferTo(targetFile); // 파일 저장
-		                    cnt++;
+		                 
 		                    service.insertNewCate(num,addCate); //대분류 카테고리 추가하기 
 		                    service.addCateFile(addCate,realname);
 		                    isImg = "1";
@@ -146,9 +146,7 @@ public class UserCheckController {
 		int datailMaxNum = service.subDetailMaxNum(subMaxNum,Integer.parseInt(cate1Select));
 		
 		model.addAttribute("subMaxNum",subMaxNum);
-		System.out.println(subMaxNum);
 		model.addAttribute("datailMaxNum",datailMaxNum);
-		System.out.println(datailMaxNum);
 		model.addAttribute("cate1Select",cate1Select);
 		return "admin/usercheck/addDetailCateForm";
 		
@@ -156,21 +154,100 @@ public class UserCheckController {
 	
 	
 
-	@RequestMapping("addDetailCatePro") //소분류 물품 추가하기 
+	@RequestMapping("addDetailCatePro") // 소분류 물품 추가하기
 	public String addDetailCatePro(Model model, 
-						@RequestParam(value="cate1Select",required = false ) String cate1Select,
-						@RequestParam(value="addDetail" ) String addDetail ) {
-		
-		
-		
-		return "admin/usercheck/addDetailCateForm";
+	                    @RequestParam(value="cate1Select", required = false) String cate1Select,
+	                    @RequestParam(value="addDetail") String addDetail,
+	                    @RequestParam(value="subMaxNum") String subMaxNum,
+	                    @RequestParam(value="datailMaxNum") String datailMaxNum,
+	                    @RequestParam("addImage") MultipartFile[] files,
+	                    HttpServletRequest request) {
+
+	    boolean fileFormatValid = true; 
+	    boolean operationSuccess = false; 
+	    // 세부 카테고리 정보 저장
+	    if (addDetail != null && !addDetail.isEmpty()) {
+	        service.insertDetailCate(Integer.parseInt(cate1Select), Integer.parseInt(subMaxNum), Integer.parseInt(datailMaxNum), addDetail);
+	        operationSuccess = true; // 카테고리 추가 성공
+	    }
+	    // 파일 저장 로직
+	    if (files != null && files.length > 0) {
+	        for (MultipartFile file : files) {
+	            if (!file.isEmpty()) {
+	                String originalFileName = file.getOriginalFilename();
+	                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+	                if (ext.equals(".jpg") || ext.equals(".png") || ext.equals(".jpeg")) {
+	                    String realname = "addCate_" + cate1Select + "_" + subMaxNum + "_" + datailMaxNum + ext;
+	                    File targetFile = new File(request.getServletContext().getRealPath("/resources/img/") + realname);
+	                    try {
+	                        file.transferTo(targetFile); // 파일 저장
+	                        service.addDetailFile(realname,addDetail);
+	                        operationSuccess = true; // 파일 업로드 및 카테고리 추가 성공
+	                    } catch (IOException e) {
+	                        e.printStackTrace();
+	                        operationSuccess = false; // 오류 발생
+	                        break;
+	                    }
+	                } else {
+	                    fileFormatValid = false;
+	                    break;
+	                }
+	            }
+	        }
+	    }
+	    if (operationSuccess) {
+	        model.addAttribute("operationSuccess", "작업이 성공적으로 완료되었습니다.");
+	    }
+	    
+	    if (!fileFormatValid) {
+	        model.addAttribute("fileFormatError", "파일 형식이 올바르지 않습니다. 지원되는 형식: .jpg, .png, .jpeg");
+	        return "redirect:/admin/addcategory";
+	    }
+
+	    return "redirect:/admin/addcategory";
+	}
+	
+	
+	@RequestMapping("updateSubCate") //소분류 물품 추가하기 
+	public String updateSubCate(Model model ) {
+		service.showCate(model);
+		return "admin/usercheck/updateSubCate";
 		
 	}
 	
-
+	@RequestMapping("updateSubCateForm") 
+	public String updateSubCateForm(Model model, 
+						@RequestParam(value="cate1Select",required = false ) String cate1Select ) {	
+		int subMaxNum= service.subMaxNum(Integer.parseInt(cate1Select)); 
+		String etcName = service.findEtcName(Integer.parseInt(cate1Select),subMaxNum);
+		if(cate1Select != null) {
+			service.showEtcCate(model,Integer.parseInt(cate1Select),subMaxNum);
+		}
+		
+		model.addAttribute("subMaxNum",subMaxNum);
+		System.out.println(subMaxNum);
+		model.addAttribute("cate1Select",cate1Select);
+		return "admin/usercheck/updateSubCateForm";
+	}
 	
 	
-	
+	@RequestMapping("updateSubCatePro") 
+	public String updateSubCatePro(Model model,
+			@RequestParam(value="cate1Select",required = false ) String cate1Select,
+			@RequestParam(value="subMaxNum",required = false ) String subMaxNum,
+			@RequestParam(value="newCateName",required = false) String newCateName) {
+		
+		String etcName = service.findEtcName(Integer.parseInt(cate1Select),Integer.parseInt(subMaxNum));
+		if(newCateName != null) {
+			service.updateCateName(newCateName,Integer.parseInt(cate1Select),Integer.parseInt(subMaxNum));
+			int etcNum = Integer.parseInt(subMaxNum) + 1;
+			service.updateEtcCate(Integer.parseInt(cate1Select),etcNum,etcName);
+		}
+		
+		
+		return "redirect:/admin/addcategory";
+	}
+			
 	@RequestMapping("addSubCatePro") //게시판 물품 카테고리 추가하기 
 	public String addSubCatePro(Model model,
 					@RequestParam(value="cate1Select",required = false ) String cate1Select,
@@ -189,4 +266,5 @@ public class UserCheckController {
 		}	
 		return "redirect:/admin/addcategory";
 	}
+	
 }

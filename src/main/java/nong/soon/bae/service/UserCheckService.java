@@ -17,7 +17,7 @@ public interface UserCheckService {
 	public int maxNum();
 	
 	public int insertNewCate (int num, String addCate);
-	int addCateFile(String addCate, String realname);
+	public int addCateFile(String addCate, String realname);
 	
 
 	public void showSubCate (Model model, int cate1Select);
@@ -29,4 +29,14 @@ public interface UserCheckService {
 	
 	public void showDetailCate(Model model,int cate1Select);
 	public int subDetailMaxNum(int maxNum, int cate1Select);
+	
+	public int insertDetailCate(int cate1Select,int subMaxNum, int datailMaxNum, String addDetail);
+	public int addDetailFile (String realname, String addDetail);
+	
+	public void showEtcCate (Model model,int cate1Select, int subMaxNum);
+	public String findEtcName(int cate1Select,int subMaxNum);
+	
+	public int updateCateName (String newCateName,int cate1Select , int subMaxNum);
+	public int updateEtcCate (int cate1Select, int etcNum, String etcName);
+	
 }
