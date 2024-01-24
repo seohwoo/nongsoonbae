@@ -321,7 +321,7 @@
 						<input type="date" name="enddate" size="15" required="required">
 					</td>
 			    </tr>
-			    <!-- 
+		
 			    <tr> 
 				    <td width="200">옵션</td>
 				    <td width="400">				   		
@@ -333,7 +333,7 @@
 			 			<input type="number" name="optionProductCount" placeholder="상품재고" /> <br />
 				    </td>
 				</tr>
-			     -->
+		
 			    <input type="hidden" name="username" value="${username}" />
 			    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			    
