@@ -243,7 +243,7 @@ public class TestController{
 	
 	
 	
-	//占쎈쑅�솒紐껊걗占쎈뱜 占쎄텢占쎌뒠占쎈릭占쎌젻筌롳옙 占쎈연疫꿸퀡占쏙옙苑�...
+	//써머노트 사용하려면 여기부터...
 	@RequestMapping("editorPro")
 	public String editorPro(String content, Model model,String[] fileNames, HttpServletRequest request) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
@@ -326,5 +326,12 @@ public class TestController{
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	//...占쎈연疫꿸퀗�돱筌욑옙
+	//...여기까지
+	
+	
+	
+	
+	
+	
+	
 }
