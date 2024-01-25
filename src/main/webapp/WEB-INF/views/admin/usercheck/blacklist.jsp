@@ -64,7 +64,7 @@
 	            <input type="hidden" name="username" value="${blacklist.u_username}"> 
 		            <h2>💔 ID : ${blacklist.u_username}</h2>
 		            <h3>이름 : ${blacklist.u_name}</h3>
-	          		<input type="submit" value="계정복구" onclick="return confirmRecovery('${blacklist.u_username}')" />
+	          			<input type="submit" value="계정복구" onclick="return confirmRecovery('${blacklist.u_username}')" />
 		            <div class="email-meta">
 		                <p>이메일: ${blacklist.u_email}</p>
 		                <p>정지사유: ${blacklist.b_reason} 

@@ -91,12 +91,11 @@
 	</select>
 	<insert id="insertNewCate" parameterType="hashMap"  >
 		insert into productcategory (cate1,cate2,cate3,catename)values (
-            #{num},
+            #{cateNum},
             0,
             0,
             #{addCate}
         )
-	
 	</insert>
 	<update id="addCateFile" parameterType="hashMap">
 		update productcategory set img=#{realname} where catename=#{addCate}
@@ -104,30 +103,9 @@
 	<select id="showSubCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3=0 order by cate2 asc
 	</select>
-	<select id="showSelectCate1" parameterType="int" resultType="String">
-		select catename from productcategory where cate1=#{cate1Select} and cate2=0 and cate3=0 order by cate2 asc
-	</select>
 	<select id="subMaxNum" parameterType="int" resultType="int">
 		SELECT MAX(cate2) FROM productcategory where cate1=#{cate1Select}
 	</select>
-	<insert id="insertSubCate" parameterType="hashMap"  >
-		insert into productcategory (cate1,cate2,cate3,catename)values (
-            #{cate1Select},
-            #{subMaxNum},
-            0,
-            #{addSubCate}
-        )
-	
-	</insert>
-	<insert id="insertSubDetailCate" parameterType="hashMap"  >
-		insert into productcategory (cate1,cate2,cate3,catename)values (
-            #{cate1Select},
-            #{subMaxNum},
-            #{addCateNum1},
-            #{addCate1}
-        )
-	
-	</insert>
 	<select id="showDetailCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3>0 order by cate1,cate2,cate3 desc
 	</select>
@@ -138,7 +116,7 @@
 		insert into productcategory (cate1,cate2,cate3,catename)values (
             #{cate1Select},
             #{subMaxNum},
-            #{datailMaxNum},
+            #{detailNum},
             #{addDetail}
         )
 	
@@ -164,5 +142,11 @@
         )
 	
 	</insert>
+	<delete id="deleteDetailCate" parameterType="hashMap">
+		delete from productcategory where cate3=#{detailNum} and catename=#{addDetail}
+	</delete>
+	<delete id="deleteCate" parameterType="hashMap">
+		delete from productcategory where cate1=#{cateNum} and catename=#{addCate}
+	</delete>
 	
 </mapper>
