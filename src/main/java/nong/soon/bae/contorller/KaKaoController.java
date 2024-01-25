@@ -40,6 +40,7 @@ public class KaKaoController {
     @GetMapping("/success")
     public String afterPayRequest(@RequestParam("pg_token") String pgToken,Model model) {
         KakaoApproveResponse kakaoApprove = kakaoPayService.ApproveResponse(pgToken);
+        //sid¿˙¿Â
         model.addAttribute("kakaoApprove", kakaoApprove);
         model.addAttribute("amount", kakaoApprove.getAmount());
         return "test/kakaosuccess";

@@ -28,13 +28,14 @@ public class KaKaoPayServiceImpl implements KaKaoPayService{
 		 // 카카오페이 요청 양식
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", cid);
+        parameters.add("sid", "sid");
         parameters.add("partner_order_id", "가맹점 주문 번호");	// 가맹점 주문 번호
         parameters.add("partner_user_id", "가맹점 회원 ID");	// 가맹점 회원 ID
         parameters.add("item_name", "상품명");				// 상품명
         parameters.add("item_code", "상품코드");				// 상품코드
         parameters.add("quantity", "1");					// 상품개수
-        parameters.add("created_at", "");					// 쓰지마(지우지마)
-        parameters.add("approved_at", "");					// 쓰지마(지우지마)
+        parameters.add("created_at", "");					// 쓰지마(지우지마) : 결제요청시간
+        parameters.add("approved_at", "");					// 쓰지마(지우지마) : 결제승인시간
         parameters.add("total_amount", "50000");			// 실제가격
         parameters.add("tax_free_amount", "45000");			// 할인가격
         parameters.add("approval_url", "http://"+FileRoot.getIp()+":8080/test/success"); // 성공 시 redirect url
