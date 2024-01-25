@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import nong.soon.bae.bean.ChatDTO;
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface TestMapper {
@@ -22,4 +23,5 @@ public interface TestMapper {
 	public int findAddCartCnt(String username);
 	public List<String> findAddCartSeller(String username);
 	public List<MyPageDTO> findAddCart(@Param("username") String username, @Param("seller") String seller);
+	public void insertUsersPayment(PaymentDTO dto);
 }

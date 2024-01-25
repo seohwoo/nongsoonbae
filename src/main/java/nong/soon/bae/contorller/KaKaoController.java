@@ -73,10 +73,30 @@ public class KaKaoController {
 	}
 
 	@GetMapping("/success")
-	public String afterPayRequest(@RequestParam("pg_token") String pgToken, Model model) {
+	public String afterPayRequest(@RequestParam("pg_token") String pgToken, Model model, Principal pri) {
 		KakaoApproveResponse kakaoApprove = kakaoPayService.ApproveResponse(pgToken);
 		paymentDTO.setSid(pgToken);
-		paymentDTO.setOrderdate(kakaoApprove.getApproved_at());
+		String username = pri.getName();
+		List<String> sellerList = Collections.EMPTY_LIST;
+		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
+		PaymentDTO dto = new PaymentDTO();
+		sellerList = service.findAddCartSeller(username);
+		for (String seller : sellerList) {
+			cartList = service.findAddCart(username, seller);
+			for (MyPageDTO cartDTO : cartList) {
+				dto.setUsername(cartDTO.getUsername());
+				dto.setProductnum(cartDTO.getProductnum());
+				dto.setOptionnum(cartDTO.getOptionnum());
+				dto.setRealprice(cartDTO.getCount() * cartDTO.getPrice());
+				dto.setTotalprice(dto.getRealprice());
+				dto.setQuantity(cartDTO.getCount());
+				if(kakaoApprove.getItem_name().equals("멤버쉽정기결제")) {
+					dto.setSid(pgToken);
+				}
+				service.insertUsersPayment(dto);
+			}
+		}
+		
 		model.addAttribute("kakaoApprove", kakaoApprove);
 		model.addAttribute("amount", kakaoApprove.getAmount());
 		return "test/kakaosuccess";

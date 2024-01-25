@@ -5,6 +5,7 @@ import java.util.List;
 
 import nong.soon.bae.bean.ChatDTO;
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface TestService {
@@ -21,5 +22,6 @@ public interface TestService {
 	public int findAddCartCnt(String username);
 	public List<String> findAddCartSeller(String username);
 	public List<MyPageDTO> findAddCart(String username, String seller);
+	public void insertUsersPayment(PaymentDTO dto);
 }
    
