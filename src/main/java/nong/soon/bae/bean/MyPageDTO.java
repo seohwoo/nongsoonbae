@@ -17,6 +17,7 @@ public class MyPageDTO {
 	private String filename;
 	private String optionname;
 	private String shopname;
+	//결제할 때 조인에서 사용해요
 	private int price;
 	private String cate1;
 	private String cate2;

@@ -41,7 +41,7 @@
 			where r >= #{start} and r <= #{end}
 		]]>
 	</select>
-	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.MyPageDTO">
+	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
 		<![CDATA[
 			select c.optionname, c.price, i.filename, s.shopname
 			from (select c.*, rownum r from (select * from ${username}_product where productnum=#{productnum} order by readcount) c) c

@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import lombok.RequiredArgsConstructor;
 import nong.soon.bae.bean.KakaoApproveResponse;
 import nong.soon.bae.bean.KakaoReadyResponse;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.data.ApiKeys;
 import nong.soon.bae.data.FileRoot;
 
@@ -24,20 +25,20 @@ public class KaKaoPayServiceImpl implements KaKaoPayService{
     static final String admin_Key = ApiKeys.getApiKeys().getKakaoPayKey(); // 공개 조심! 본인 애플리케이션의 어드민 키를 넣어주세요
     private KakaoReadyResponse kakaoReady;
 	@Override
-	public KakaoReadyResponse kakaoPayReady() {
+	public KakaoReadyResponse kakaoPayReady(PaymentDTO dto) {
 		 // 카카오페이 요청 양식
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", cid);
-        parameters.add("sid", "sid");
+        parameters.add("sid", dto.getSid());
         parameters.add("partner_order_id", "가맹점 주문 번호");	// 가맹점 주문 번호
         parameters.add("partner_user_id", "가맹점 회원 ID");	// 가맹점 회원 ID
-        parameters.add("item_name", "상품명");				// 상품명
+        parameters.add("item_name", dto.getItemname());				// 상품명
         parameters.add("item_code", "상품코드");				// 상품코드
-        parameters.add("quantity", "1");					// 상품개수
+        parameters.add("quantity", "" + dto.getQuantity());					// 상품개수
         parameters.add("created_at", "");					// 쓰지마(지우지마) : 결제요청시간
         parameters.add("approved_at", "");					// 쓰지마(지우지마) : 결제승인시간
-        parameters.add("total_amount", "50000");			// 실제가격
-        parameters.add("tax_free_amount", "45000");			// 할인가격
+        parameters.add("total_amount", "" + dto.getTotalprice());			// 실제가격
+        parameters.add("tax_free_amount", "" + dto.getRealprice());			// 면세가격
         parameters.add("approval_url", "http://"+FileRoot.getIp()+":8080/test/success"); // 성공 시 redirect url
         parameters.add("cancel_url", "http://"+FileRoot.getIp()+":8080/test/cancel"); 	// 취소 시 redirect url
         parameters.add("fail_url", "http://"+FileRoot.getIp()+":8080/test/fail"); 		// 실패 시 redirect url

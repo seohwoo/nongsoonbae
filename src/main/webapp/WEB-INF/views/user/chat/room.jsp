@@ -19,7 +19,7 @@
 				}
 				const msgerChat = get(".msger-chat");
 				// 문서 전체의 스크롤바를 가장 아래로 이동
-				var socket = io.connect("http://${ip}:9999");
+				var socket = io.connect("http://${ip}:9898");
 				var cnt = '${sendnoread}';
 				var joincnt = '${dto.isjoin}';
 				var side = "left";

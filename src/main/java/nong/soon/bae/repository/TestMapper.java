@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import nong.soon.bae.bean.ChatDTO;
+import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface TestMapper {
@@ -18,4 +19,7 @@ public interface TestMapper {
 	public void updateNoRead(@Param("cnt") int cnt, @Param("chatno") int chatno, @Param("username") String username);
 	public void zeroNoRead(@Param("chatno") int chatno, @Param("username") String username);
 	public void updateJoinCnt(@Param("joincnt") int joincnt, @Param("chatno") int chatno);
+	public int findAddCartCnt(String username);
+	public List<String> findAddCartSeller(String username);
+	public List<MyPageDTO> findAddCart(@Param("username") String username, @Param("seller") String seller);
 }

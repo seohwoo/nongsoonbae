@@ -16,9 +16,6 @@
 				$.ajax({
 					type:'POST'
 					,url:'/test/ready'
-					,data: {
-	                	
-	                }
 					,success:function(response){
 						location.href = response.next_redirect_pc_url;			
 					}

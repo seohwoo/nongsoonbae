@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nong.soon.bae.bean.ChatDTO;
+import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.TestMapper;
 
@@ -61,5 +62,23 @@ public class TestServiceImpl implements TestService{
 	public void updateJoinCnt(int joincnt, int chatno) {
 		mapper.updateJoinCnt(joincnt, chatno);
 	}
+
+	@Override
+	public int findAddCartCnt(String username) {
+		return mapper.findAddCartCnt(username);
+	}
+
+	@Override
+	public List<String> findAddCartSeller(String username) {
+		return mapper.findAddCartSeller(username);
+	}
+
+	@Override
+	public List<MyPageDTO> findAddCart(String username, String seller) {
+		return mapper.findAddCart(username, seller);
+	}
+
+
+	
 
 }

@@ -8,6 +8,8 @@
 	</head>
 	<body>
 		<h2>success</h2>
+		${kakaoApprove.cid }<br>
+		${kakaoApprove.sid }<br>
 		${kakaoApprove.partner_order_id }<br>
 		${kakaoApprove.partner_user_id }<br>
 		${kakaoApprove.item_name }<br>
