@@ -47,9 +47,9 @@
 			#{content},
 			sysdate,
 			#{enddate},
-			1,
-			1,
-			1,
+			#{cate1},
+			#{cate2},
+			#{cate3},
 			#{area1},
 			#{area2} )
 	</insert>
@@ -69,20 +69,7 @@
 		select area2 from area where areaname=#{area2Address} and area1=#{area1}
 	</select>
 	
-	<!-- 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수 -->
-	<select id="selectLastProductNumCnt" parameterType="String" resultType="int">
-		select count(*) from allproduct WHERE productnum LIKE #{keyword}
-	</select>
-	
-	<!-- 상품번호가 있으면 상품번호 뽑아오는거 -->
-	<select id="selectLastProductNum" parameterType="String" resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct WHERE productnum LIKE #{keyword} order by startdate desc
-	</select>
-	
-	<select id="selectOptionNum" resultType="String">
-		select optionnum from ${username}_product where optionnum like #{keyword} order by optionnum desc
-	</select>
-	
+
 	
 	<!-- 상품 등록할 때 이미지 넣기 -->
 	<insert id="imagesInsert" parameterType="nong.soon.bae.bean.ImagesDTO">
@@ -105,5 +92,44 @@
 			#{productcount} )
 	</insert>
 	
+	<!-- 카테고리 대분류 -->
+	<select id="selectCate1" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1>0 and cate2=0 and cate3=0
+	</select>
+	<select id="selectCate2" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1} and cate2 > 0 and cate3=0
+	</select>
+	<select id="selectCate3" resultType="nong.soon.bae.bean.ProductCategoryDTO" >
+		select * from productcategory where cate1=#{cate1} and cate2 = #{cate2} and cate3 > 0
+	</select>
+	
+	
+	
+	
+	
+	<select id="selectAllProductLastProductNum" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
+		select * from allproduct where username=#{username} order by startdate desc
+	</select>
+	
+	
+
+
+
+
 </mapper>    
-    
+
+
+	<!-- 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수 
+	<select id="selectLastProductNumCnt" resultType="int">
+		select count(*) from ${username}_product where optionnum like #{keyword}
+	</select>
+		
+	 상품번호가 있으면 상품번호 뽑아오는거 
+	<select id="selectLastProductNum" parameterType="String" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct WHERE productnum LIKE #{keyword} order by startdate desc
+	</select>
+	
+	<select id="selectOptionNum" resultType="String">
+		select optionnum from ${username}_product where optionnum like #{keyword} order by optionnum desc
+	</select>
+	-->	
