@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.ShopListDTO;
 
 public interface MypageMapper {
 	public List<MyPageDTO> selectLike(String username);
@@ -14,5 +15,5 @@ public interface MypageMapper {
 	public int cntcart(String username);
 	
 	public List<MyPageDTO> selectLikeDetail(HashMap map);
-	public List<MyPageDTO> selectFarmerDetail(HashMap map);
+	public List<ShopListDTO> selectFarmerDetail(HashMap map);
 }

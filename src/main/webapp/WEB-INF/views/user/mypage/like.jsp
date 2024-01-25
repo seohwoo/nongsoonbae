@@ -90,9 +90,9 @@
 					<tr>
 						<td><a href="#"><i class="fa fa-fw fa-pencil"></i></a></td>
 						<td><img src="/resources/img/farmer.jpg" style="width: 50px; height: 50px;"></td>
-						<td><a href="#">${farmer.cate1} > ${farmer.cate2} > ${farmer.cate3}</a></td>
-						<td class="g-table-list-rwd"><a href="#">${farmer.shopname}</a></td>
-						<td>${farmer.area1} ${farmer.area2}</td>
+						<td><a href="#">${farmer.shopname}</a></td>
+						<td class="g-table-list-rwd"><a href="#">${farmer.shopcontent}</a></td>
+						<td>${farmer.address}</td>
 						
 					</tr>
 				</tbody>

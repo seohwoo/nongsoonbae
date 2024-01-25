@@ -81,15 +81,12 @@ public class MypageServiceImpl implements MypageService {
 		}else if(listNum > maxCategoryNum) {
 			listNum = maxCategoryNum;
 		}
-		List<MyPageDTO> list = new ArrayList<>();
+		List<ShopListDTO> list = new ArrayList<>();
 		for (MyPageDTO myPageDTO : user) {
 			int start = (listNum-1)*categorySize+1;
 			int end = listNum * categorySize;
-			FarmerDetailMap.put("start", String.valueOf(start));
-			FarmerDetailMap.put("end", String.valueOf(end));
 			FarmerDetailMap.put("username", myPageDTO.getFollow());
-			FarmerDetailMap.put("productNum", myPageDTO.getProductnum());
-			List<MyPageDTO> tempList = mapper.selectFarmerDetail(LikeDetailMap);
+			List<ShopListDTO> tempList = mapper.selectFarmerDetail(LikeDetailMap);
 			list.addAll(tempList);
 		}
 		model.addAttribute("farmereList", list);

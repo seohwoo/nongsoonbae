@@ -33,13 +33,9 @@
 			LEFT JOIN ${username}_product m ON m.productnum = mp.productnum AND m.optionnum = mp.optionnum
 		]]>
 	</select>
-	<select id="selectfarmerDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
+	<select id="selectFarmerDetail" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
 		<![CDATA[
-			select c.cate1, c.cate2, c.cate3, c.area1, c.area2, c.username, i.filename, s.shopname
-			from (select c.*, rownum r from (select * from allproduct where productnum=#{productnum}) c) c
-			join ${username}_image i on c.productnum = i.productnum
-			join shoplist s on c.username = s.username
-			where r >= #{start} and r <= #{end}
+			select shopname, shopcontent, regdate, address from shoplist where username=#{username}
 		]]>
 	</select>
 	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
