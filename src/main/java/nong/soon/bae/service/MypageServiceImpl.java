@@ -57,14 +57,14 @@ public class MypageServiceImpl implements MypageService {
 		for (MyPageDTO myPageDTO : user) {
 			int start = (listNum-1)*categorySize+1;
 			int end = listNum * categorySize;
-			LikeDetailMap.put("start", String.valueOf(start));
-			LikeDetailMap.put("end", String.valueOf(end));
+		//	LikeDetailMap.put("start", String.valueOf(start));
+		//	LikeDetailMap.put("end", String.valueOf(end));
 			LikeDetailMap.put("username", myPageDTO.getFollow());
-			LikeDetailMap.put("productNum", myPageDTO.getProductnum());
+			LikeDetailMap.put("productnum", myPageDTO.getProductnum());
+			System.out.println(LikeDetailMap);
 			List<MyPageDTO> tempList = mapper.selectLikeDetail(LikeDetailMap);
 			list.addAll(tempList);
 		}
-
 		model.addAttribute("likeList", list);
 		model.addAttribute("likeNum", listNum);
 		model.addAttribute("likeMaxNum", maxCategoryNum);

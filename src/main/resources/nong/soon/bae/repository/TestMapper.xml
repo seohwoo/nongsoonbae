@@ -52,7 +52,5 @@
 	<update id="updateJoinCnt">
 		update chat set isjoin=#{joincnt} where chatno=#{chatno}
 	</update>
-	<select id="findAllProduct" resultType="">
 	
-	</select>
 </mapper>

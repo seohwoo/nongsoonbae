@@ -68,13 +68,11 @@
 			username varchar2(50) not null,
 			productnum varchar2(50) not null,
 			optionnum varchar2(50) not null,
-			price number not null,
+			realprice number not null,
 			totalprice number not null,
-			address varchar2(1000) not null,
-			count number not null,
+			quantity number not null,
 			orderdate date default sysdate,
-			payment number not null,
-			phone varchar2(50) not null)
+			sid varchar2(50))
 	</insert>
 	<insert id="createImages">
 		create table ${username}_images ( 
