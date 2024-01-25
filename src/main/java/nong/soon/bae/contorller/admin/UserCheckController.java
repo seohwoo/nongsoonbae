@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.service.UserCheckService;
@@ -68,7 +69,7 @@ public class UserCheckController {
 		return "redirect:/admin/blacklist";
 	}
 	
-	@RequestMapping("addcategory") //게시판 물품 카테고리 추가하기 
+	@RequestMapping("addcategory") //게시판 물품 카테고리 메인페이지 
 	public String addcategory(Model model,@RequestParam(value="cate1Select",required = false ) String cate1Select, String isImg ) {
 		if(isImg==null) {
 			isImg = "2";
@@ -79,57 +80,66 @@ public class UserCheckController {
 		if(cate1Select != null) {
 		service.showSubCate(model,Integer.parseInt(cate1Select));
 		}
-		model.addAttribute("isImg", isImg);
+		
 		return "admin/usercheck/addcategory";
 	}
 	
-	
-	@RequestMapping("addSubCate") //게시판 물품 카테고리 추가하기 
-	public String addSubCate(Model model,@RequestParam(value="cate1Select",required = false ) String cate1Select ) {
-		if(cate1Select != null) {
-			service.showSubCate(model,Integer.parseInt(cate1Select));
-			model.addAttribute("cate1Select",cate1Select);
-			int subMaxNum = service.subMaxNum(Integer.parseInt(cate1Select));
-			model.addAttribute("subMaxNum",subMaxNum);
-		
-		}
-		return "admin/usercheck/addSubCate";
-	}
-	
-	
-	@RequestMapping("addCatePro") //게시판 물품 카테고리 추가하기 
-	public String addCatePro(Model model,@RequestParam(value="num") int num,
-									@RequestParam("addCate")String addCate, 
-									@RequestParam("categoryImage") MultipartFile[] files,HttpServletRequest request) {
+
+	@RequestMapping("addCatePro") //대분류 카테고리 추가하기
+	public String addCatePro(Model model, @RequestParam(value="num") int num,
+	                         @RequestParam("addCate") String addCate, 
+	                         @RequestParam("categoryImage") MultipartFile[] files,
+	                         HttpServletRequest request,RedirectAttributes redirectAttributes) {
+
 	    String realRoot = request.getServletContext().getRealPath("/resources/img/");
-	    String isImg = "0";
+	    boolean operationSuccess = false;
+	    boolean fileFormatValid = true;
+	    int cateNum = num + 1;
+
+	    if (addCate != null && !addCate.isEmpty()) {
+	        service.insertNewCate(cateNum, addCate);
+	        operationSuccess = true;
+	    }
+
 	    if (files != null && files.length > 0) {
-	       
 	        for (MultipartFile file : files) {
 	            if (!file.isEmpty()) {
 	                try {
 	                    String originalFileName = file.getOriginalFilename();
-	                    String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-	                    if(ext.equals(".jpg") || ext.equals(".png") || ext.equals(".jpeg")) {
-	                    	String realname = "addCate_" + num + "_"+ "0" + "0" + ext ;
-		                    File targetFile = new File(realRoot + realname);
-		                    file.transferTo(targetFile); // 파일 저장
-		                 
-		                    service.insertNewCate(num,addCate); //대분류 카테고리 추가하기 
-		                    service.addCateFile(addCate,realname);
-		                    isImg = "1";
+	                    String ext = originalFileName.substring(originalFileName.lastIndexOf(".")).toLowerCase();
+	                    if (ext.equals(".jpg") || ext.equals(".png") || ext.equals(".jpeg")) {
+	                        String realname = "addCate_" + cateNum + "_0_0" + ext;
+	                        File targetFile = new File(realRoot + realname);
+	                        file.transferTo(targetFile); // 파일 저장 
+	                        service.addCateFile(addCate, realname);
+	                        operationSuccess = true;
+	                    } else {
+	                        fileFormatValid = false;
+	                        break;
 	                    }
 	                } catch (IOException e) {
 	                    e.printStackTrace();
+	                    operationSuccess = false;
+	                    break;
 	                }
 	            }
 	        }
 	    }
-	  	    return "redirect:/admin/addcategory?isImg=" + isImg;
+	    if (!fileFormatValid && operationSuccess) {
+	        // 이미 추가된 카테고리 정보 삭제
+	    	service.deleteCate(cateNum, addCate);
+	        operationSuccess = false;
+	        redirectAttributes.addFlashAttribute("status", 0); 
+	    }else {
+	        redirectAttributes.addFlashAttribute("status", 1); // 추가가 완료되었습니다.
+	    }
+	    
+	    return "redirect:/admin/addcategory";
 	}
+
 	
 	
-	@RequestMapping("addDetailCate") //소분류 물품 추가하기 
+	@RequestMapping("addDetailCate") //소분류 물품 목록
 	public String addDeailCate(Model model ) {
 		service.showCate(model);
 		return "admin/usercheck/addDetailCate";
@@ -147,13 +157,13 @@ public class UserCheckController {
 		
 		model.addAttribute("subMaxNum",subMaxNum);
 		model.addAttribute("datailMaxNum",datailMaxNum);
+				
 		model.addAttribute("cate1Select",cate1Select);
 		return "admin/usercheck/addDetailCateForm";
 		
 	}
 	
 	
-
 	@RequestMapping("addDetailCatePro") // 소분류 물품 추가하기
 	public String addDetailCatePro(Model model, 
 	                    @RequestParam(value="cate1Select", required = false) String cate1Select,
@@ -161,52 +171,54 @@ public class UserCheckController {
 	                    @RequestParam(value="subMaxNum") String subMaxNum,
 	                    @RequestParam(value="datailMaxNum") String datailMaxNum,
 	                    @RequestParam("addImage") MultipartFile[] files,
-	                    HttpServletRequest request) {
+	                    HttpServletRequest request,RedirectAttributes redirectAttributes) {
 
 	    boolean fileFormatValid = true; 
 	    boolean operationSuccess = false; 
+	    int detailNum = Integer.parseInt(datailMaxNum) + 1;
+	    String realRoot = request.getServletContext().getRealPath("/resources/img/");
+
 	    // 세부 카테고리 정보 저장
 	    if (addDetail != null && !addDetail.isEmpty()) {
-	        service.insertDetailCate(Integer.parseInt(cate1Select), Integer.parseInt(subMaxNum), Integer.parseInt(datailMaxNum), addDetail);
+	        service.insertDetailCate(Integer.parseInt(cate1Select), Integer.parseInt(subMaxNum), detailNum, addDetail);
 	        operationSuccess = true; // 카테고리 추가 성공
 	    }
 	    // 파일 저장 로직
 	    if (files != null && files.length > 0) {
 	        for (MultipartFile file : files) {
 	            if (!file.isEmpty()) {
-	                String originalFileName = file.getOriginalFilename();
-	                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-	                if (ext.equals(".jpg") || ext.equals(".png") || ext.equals(".jpeg")) {
-	                    String realname = "addCate_" + cate1Select + "_" + subMaxNum + "_" + datailMaxNum + ext;
-	                    File targetFile = new File(request.getServletContext().getRealPath("/resources/img/") + realname);
-	                    try {
+	                try {
+	                    String originalFileName = file.getOriginalFilename();
+	                    String ext = originalFileName.substring(originalFileName.lastIndexOf(".")).toLowerCase();
+	                    if (ext.equals(".jpg") || ext.equals(".png") || ext.equals(".jpeg")) {
+	                        String realname = "addDetailCate_" + cate1Select + "_" + subMaxNum + "_" + datailMaxNum + ext;
+	                        File targetFile = new File(realRoot + realname);
 	                        file.transferTo(targetFile); // 파일 저장
-	                        service.addDetailFile(realname,addDetail);
+	                        service.addDetailFile(realname, addDetail);
 	                        operationSuccess = true; // 파일 업로드 및 카테고리 추가 성공
-	                    } catch (IOException e) {
-	                        e.printStackTrace();
-	                        operationSuccess = false; // 오류 발생
+	                    } else {
+	                        fileFormatValid = false;
 	                        break;
 	                    }
-	                } else {
-	                    fileFormatValid = false;
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                    operationSuccess = false;
 	                    break;
 	                }
 	            }
 	        }
 	    }
-	    if (operationSuccess) {
-	        model.addAttribute("operationSuccess", "작업이 성공적으로 완료되었습니다.");
+	    if (!fileFormatValid && operationSuccess) {
+	        // 이미 추가된 카테고리 정보 삭제
+	        service.deleteDetailCate(detailNum, addDetail);
+	        operationSuccess = false;
+	        redirectAttributes.addFlashAttribute("status", 0); //추가 실패 메시지 전달
+	    }else {
+	        redirectAttributes.addFlashAttribute("status", 1); // 추가가 완료 메시지 전달
 	    }
-	    
-	    if (!fileFormatValid) {
-	        model.addAttribute("fileFormatError", "파일 형식이 올바르지 않습니다. 지원되는 형식: .jpg, .png, .jpeg");
-	        return "redirect:/admin/addcategory";
-	    }
-
 	    return "redirect:/admin/addcategory";
 	}
-	
+
 	
 	@RequestMapping("updateSubCate") //소분류 물품 추가하기 
 	public String updateSubCate(Model model ) {
@@ -215,28 +227,25 @@ public class UserCheckController {
 		
 	}
 	
-	@RequestMapping("updateSubCateForm") 
+	@RequestMapping("updateSubCateForm") //중분류 항목 새롭게 만들기
 	public String updateSubCateForm(Model model, 
 						@RequestParam(value="cate1Select",required = false ) String cate1Select ) {	
 		int subMaxNum= service.subMaxNum(Integer.parseInt(cate1Select)); 
-		String etcName = service.findEtcName(Integer.parseInt(cate1Select),subMaxNum);
 		if(cate1Select != null) {
 			service.showEtcCate(model,Integer.parseInt(cate1Select),subMaxNum);
 		}
 		
 		model.addAttribute("subMaxNum",subMaxNum);
-		System.out.println(subMaxNum);
 		model.addAttribute("cate1Select",cate1Select);
 		return "admin/usercheck/updateSubCateForm";
 	}
 	
 	
-	@RequestMapping("updateSubCatePro") 
+	@RequestMapping("updateSubCatePro") //기타항목 데이터 업데이트
 	public String updateSubCatePro(Model model,
 			@RequestParam(value="cate1Select",required = false ) String cate1Select,
 			@RequestParam(value="subMaxNum",required = false ) String subMaxNum,
-			@RequestParam(value="newCateName",required = false) String newCateName) {
-		
+			@RequestParam(value="newCateName",required = false) String newCateName) {	
 		String etcName = service.findEtcName(Integer.parseInt(cate1Select),Integer.parseInt(subMaxNum));
 		if(newCateName != null) {
 			service.updateCateName(newCateName,Integer.parseInt(cate1Select),Integer.parseInt(subMaxNum));
@@ -247,24 +256,4 @@ public class UserCheckController {
 		
 		return "redirect:/admin/addcategory";
 	}
-			
-	@RequestMapping("addSubCatePro") //게시판 물품 카테고리 추가하기 
-	public String addSubCatePro(Model model,
-					@RequestParam(value="cate1Select",required = false ) String cate1Select,
-					@RequestParam(value="subMaxNum") int subMaxNum,
-					@RequestParam("addSubCate")String addSubCate,
-					@RequestParam("addCate1")String addCate1,
-					@RequestParam("addCateNum1")String addCateNum1,
-					@RequestParam("addCate2")String addCate2,
-					@RequestParam("addCateNum2")String addCateNum2) {
-		if(addSubCate != null && addCate1 !=null ) {
-			service.insertSubCate(Integer.parseInt(cate1Select),subMaxNum,addSubCate);
-			service.insertSubDetailCate(Integer.parseInt(cate1Select),subMaxNum,Integer.parseInt(addCateNum1),addCate1);
-		}
-		if(addCate2 !=null) {
-			service.insertSubDetailCate(Integer.parseInt(cate1Select),subMaxNum,Integer.parseInt(addCateNum2),addCate2);
-		}	
-		return "redirect:/admin/addcategory";
-	}
-	
 }

@@ -177,9 +177,9 @@ public class UserCheckServiceImpl implements UserCheckService{
 	}
 
 	@Override
-	public int insertNewCate(int num, String addCate) {
+	public int insertNewCate(int cateNum, String addCate) {
 		checkMap.clear();
-        checkMap.put("num", num);
+        checkMap.put("cateNum", cateNum);
         checkMap.put("addCate", addCate);
 		return mapper.insertNewCate(checkMap);
 		
@@ -199,36 +199,13 @@ public class UserCheckServiceImpl implements UserCheckService{
 		model.addAttribute("subcatelist",subcatelist);
 	}
 
-	@Override
-	public void showSelectCate1(Model model, int cate1Select) {
-		List<ProductCategoryDTO> subcatelist = Collections.EMPTY_LIST;
-		
-		
-	}
+	
 
 	@Override
 	public int subMaxNum(int cate1Select) {
 		return mapper.subMaxNum(cate1Select);
 	}
 
-	@Override
-	public int insertSubCate(int cate1Select, int subMaxNum, String addSubCate) {
-		checkMap.clear();
-		checkMap.put("cate1Select",cate1Select);
-		checkMap.put("subMaxNum",subMaxNum);
-		checkMap.put("addSubCate",addSubCate);
-		return mapper.insertSubCate(checkMap);
-	}
-
-	@Override
-	public int insertSubDetailCate(int cate1Select, int subMaxNum, int addCateNum1, String addCate1) {
-		checkMap.clear();
-		checkMap.put("cate1Select",cate1Select);
-		checkMap.put("subMaxNum",subMaxNum);
-		checkMap.put("addCateNum1",addCateNum1);
-		checkMap.put("addCate1",addCate1);
-		return mapper.insertSubDetailCate(checkMap);
-	}
 
 	@Override
 	public void showDetailCate(Model model, int cate1Select) {
@@ -248,11 +225,11 @@ public class UserCheckServiceImpl implements UserCheckService{
 	}
 
 	@Override
-	public int insertDetailCate(int cate1Select, int subMaxNum, int datailMaxNum, String addDetail) {
+	public int insertDetailCate(int cate1Select, int subMaxNum, int detailNum, String addDetail) {
 		checkMap.clear();
 		checkMap.put("cate1Select",cate1Select);
 		checkMap.put("subMaxNum",subMaxNum);
-		checkMap.put("datailMaxNum",datailMaxNum);
+		checkMap.put("detailNum",detailNum);
 		checkMap.put("addDetail",addDetail);
 	
 		return mapper.insertDetailCate(checkMap);
@@ -301,6 +278,22 @@ public class UserCheckServiceImpl implements UserCheckService{
 		checkMap.put("etcNum",etcNum);
 		checkMap.put("etcName",etcName);
 		return mapper.updateEtcCate(checkMap);
+	}
+
+	@Override
+	public int deleteDetailCate(int detailNum, String addDetail) {
+		checkMap.clear();
+		checkMap.put("detailNum",detailNum);
+		checkMap.put("addDetail",addDetail);
+		return mapper.deleteDetailCate(checkMap);
+	}
+
+	@Override
+	public int deleteCate(int cateNum, String addCate) {
+		checkMap.clear();
+		checkMap.put("cateNum",cateNum);
+		checkMap.put("addCate",addCate);
+		return mapper.deleteCate(checkMap);
 	}
 
 	

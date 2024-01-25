@@ -9,20 +9,20 @@
 	</head>
 	<body>
 	<h3> 기타 추가 된 품목 중분류로 합치기 </h3>
-	<form id="cateSelect" action="/admin/updateSubCateForm" method="post">
-		<select id="cate1Select" name="cate1Select">
-	    	<c:forEach var="cate" items="${catelist}">
-	        	<c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
-	                  <option value="${cate.cate1}">${cate.catename}</option> 
-	            </c:if>
-	         </c:forEach>
-	     </select>
-        	<button id="submitUpdateBtn">조회하기</button>
-   	</form>
+		<form id="cateSelect" action="/admin/updateSubCateForm" method="post">
+			<select id="cate1Select" name="cate1Select">
+		    	<c:forEach var="cate" items="${catelist}">
+		        	<c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
+		                  <option value="${cate.cate1}">${cate.catename}</option> 
+		            </c:if>
+		         </c:forEach>
+		     </select>
+	        	<button id="submitUpdateBtn">조회하기</button>
+	   	</form>
 	
-	<div id="etcCateContainer" style="display:none;">
-    	<jsp:include page="/WEB-INF/views/admin/usercheck/updateSubCateForm.jsp" />
-    </div>
+		<div id="etcCateContainer" style="display:none;">
+	    	<jsp:include page="/WEB-INF/views/admin/usercheck/updateSubCateForm.jsp" />
+	    </div>
     
     
 	<script>
@@ -41,13 +41,6 @@
             }
         });
     });
-    
-    
     </script>
-	
-	
-	
-	
-	
 	</body>
 </html>

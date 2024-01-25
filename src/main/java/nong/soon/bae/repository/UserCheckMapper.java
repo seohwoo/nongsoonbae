@@ -27,22 +27,20 @@ public interface UserCheckMapper {
 	int insertNewCate(HashMap map); //대분류 카테고리
 	int addCateFile(HashMap map);
 	public List<ProductCategoryDTO> showSubCate(int cate1Select);
-	public String showSelectCate1(int cate1Select);
 	
 	public int subMaxNum(int cate1Select);	
-	int insertSubCate(HashMap map);
-	int insertSubDetailCate(HashMap map);
+	
 	public List<ProductCategoryDTO> showDetailCate (int cate1Select);
 	
 	public int subDetailMaxNum(HashMap map);	
-	
-	
 	int insertDetailCate(HashMap map);
 	int addDetailFile (HashMap map);
 	public List<ProductCategoryDTO> showEtcCate(HashMap map);
 	public String findEtcName(HashMap map);
 	int updateCateName (HashMap map);
 	int updateEtcCate (HashMap map);
+	int deleteDetailCate (HashMap map);
+	int deleteCate (HashMap map );
 }
 
 
