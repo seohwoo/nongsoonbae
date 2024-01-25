@@ -25,6 +25,8 @@ public class MypageServiceImpl implements MypageService {
 	private HashMap<String, String> LikeDetailMap;
 	@Autowired
 	private HashMap<String, String> FarmerDetailMap;
+	@Autowired
+	private HashMap<String, String> SelectMyCartMap;
 
 	@Override
 	public List<MyPageDTO> selectLike(String username) {		
@@ -34,6 +36,10 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public List<MyPageDTO> selectfarmer(String username) {
 		return mapper.selectfarmer(username);
+	}
+	@Override
+	public List<MyPageDTO> selectcart(String username) {
+		return mapper.selectcart(username);
 	}
 
 	@Override
@@ -53,7 +59,7 @@ public class MypageServiceImpl implements MypageService {
 			int end = listNum * categorySize;
 			LikeDetailMap.put("start", String.valueOf(start));
 			LikeDetailMap.put("end", String.valueOf(end));
-			LikeDetailMap.put("username", myPageDTO.getUsername());
+			LikeDetailMap.put("username", myPageDTO.getFollow());
 			LikeDetailMap.put("productNum", myPageDTO.getProductnum());
 			List<MyPageDTO> tempList = mapper.selectLikeDetail(LikeDetailMap);
 			list.addAll(tempList);
@@ -81,7 +87,7 @@ public class MypageServiceImpl implements MypageService {
 			int end = listNum * categorySize;
 			FarmerDetailMap.put("start", String.valueOf(start));
 			FarmerDetailMap.put("end", String.valueOf(end));
-			FarmerDetailMap.put("username", myPageDTO.getUsername());
+			FarmerDetailMap.put("username", myPageDTO.getFollow());
 			FarmerDetailMap.put("productNum", myPageDTO.getProductnum());
 			List<MyPageDTO> tempList = mapper.selectFarmerDetail(LikeDetailMap);
 			list.addAll(tempList);
@@ -90,4 +96,8 @@ public class MypageServiceImpl implements MypageService {
 		model.addAttribute("farmerNum", listNum);
 		model.addAttribute("farmerMaxNum", maxCategoryNum);
 	}
+	
+	
+
+	
 }

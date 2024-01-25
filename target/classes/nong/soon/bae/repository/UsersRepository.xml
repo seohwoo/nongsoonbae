@@ -59,6 +59,8 @@
 			username varchar2(50) not null,
 			follow varchar2(50) not null,
 			productnum varchar2(50),
+			optionnum varchar2(50),
+			count number,
 			wishstatus number not null)
 	</insert>
 	<insert id="createPayment">

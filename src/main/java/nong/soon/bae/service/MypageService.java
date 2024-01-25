@@ -12,6 +12,7 @@ import nong.soon.bae.bean.ShopListDTO;
 public interface MypageService {
 	public List<MyPageDTO> selectLike(String username);
 	public List<MyPageDTO> selectfarmer(String username);
+	public List<MyPageDTO> selectcart(String username);
 	
 	public void selectLikeDetail(String username, Model model, int listNum);
 	public void selectFarmerDetail(String username, Model model, int listNum);
