@@ -28,8 +28,12 @@ public class test1 {
 		productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);
 		System.out.println(productnum);
 
-        
-
+        String fullAddress = "충남 천안시 동남구 신부동";
+        String[] addressParts = fullAddress.split(" ");
+        String area1 = addressParts[0];
+        String area2 = addressParts[1];
+        System.out.println(area1);
+        System.out.println(area2);
 	}
 	
 	
