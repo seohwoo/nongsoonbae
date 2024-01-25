@@ -45,6 +45,9 @@ public interface ProductMapper {
 	// 상품번호가 있으면 상품번호 뽑아오는거
 	public List<AllProductDTO> selectLastProductNum(String keyword);
 	
+	public List<String> selectOptionNum(@Param("keyword") String keyword, 
+								  @Param("username") String username);
+	
 	// 상품 등록할 때 이미지 넣기
 	public void imagesInsert(ImagesDTO Idto);
 	

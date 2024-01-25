@@ -80,6 +80,11 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectLastProductNum(keyword);
 	}
 
+	@Override
+	public List<String> selectOptionNum(String keyword, String username) {
+		return mapper.selectOptionNum(keyword, username);
+	}	
+	
 	// 상품 등록할 때 이미지 넣기
 	@Override
 	public void imagesInsert(ImagesDTO Idto) {
@@ -91,6 +96,8 @@ public class ProductServiceImpl implements ProductService {
 	public void optionInsert(ProductDTO Pdto) {
 		mapper.optionInsert(Pdto);
 	}
+
+
 
 
 

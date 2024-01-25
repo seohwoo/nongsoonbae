@@ -112,6 +112,7 @@ public class ProductController {
 								  @RequestParam("optiontotalprice") int[] optiontotalprice,
 								  @RequestParam("optionProductCount") int[] optionProductCount) {
 
+		String username = principal.getName();
 		// 24년 구하는 코드
 		Date date = new Date();
 		SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");		
@@ -126,13 +127,16 @@ public class ProductController {
 		// 상품넘버가 없으면 productnum 만들기
 		if(productnumCnt==0) {
 			productnum = year + categorynum + "00001";
+			logger.info("productnumIF======="+productnum);
 		// 상품넘버 있으면 기존 productnum에 +1하기
 		}else {
-			productnum = service.selectLastProductNum(keyword).get(0).getProductnum();
-			productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);		
+			productnum = service.selectOptionNum(keyword, username).get(0);
+			logger.info("productnumELSE======="+productnum);
+			productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);
+			logger.info("productnumELSE======="+productnum);
 		}
 		
-		String username = principal.getName();
+		
 		APdto.setUsername(username);
 		APdto.setCatenum(categorynum);		
 		APdto.setSeqnum("C_"+categorynum);
@@ -169,6 +173,7 @@ public class ProductController {
 	    
 		if(fileNames != null) {
 	    	ImagesDTO  Idto = new ImagesDTO();
+	    	logger.info("productnumIDTO======="+productnum);
 	    	Idto.setProductnum(productnum);
 	    	Idto.setUsername(username);
 	    	isFile(fileNames, content);
@@ -178,8 +183,11 @@ public class ProductController {
 					File sourceFile = new File(fileRoot+filename);
 					File targetDirectory = new File(realRoot);
 					String ext = filename.substring(filename.lastIndexOf("."));
+					
+					//String lastOptionnum = service.selectOptionNum(keyword, productnum);
 					String realname = productnum+"_"+cnt+ext;
 					Idto.setFilename(realname);
+					
 					
 					service.imagesInsert(Idto);
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
