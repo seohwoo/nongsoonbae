@@ -23,7 +23,9 @@ public class AllProductDTO {
 	private int cate3;
 	private int area1;
 	private int area2;
-	
+	// Ãß°¡
 	private String catenum;
 	private String seqnum;
+	private String filename;
+	private int price;
 }

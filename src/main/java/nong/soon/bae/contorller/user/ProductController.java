@@ -66,6 +66,7 @@ public class ProductController {
 		String myName = service.selectMyName(username);
 		
 		model.addAttribute("myName", myName);
+		model.addAttribute("username", username);
 		return "product/productMain";
 	}	
 	
@@ -100,13 +101,9 @@ public class ProductController {
 	
 	// 상품 등록하기
 	@RequestMapping("productWriteForm")
-	public String productWriteForm(String myName, Model model, Principal principal, int cate2, int  cate3) {
+	public String productWriteForm(String myName, Model model, Principal principal) {
 		model.addAttribute("myName", myName);
 		
-		model.addAttribute("cate2", cate2);
-		model.addAttribute("cate3", cate3);
-		logger.info("cate2======="+cate2);
-		logger.info("cate3======="+cate3);
 		// TEST
 		List<ProductCategoryDTO> cate1 = service.selectCate1();
 		model.addAttribute("cate1", cate1);
@@ -193,7 +190,9 @@ public class ProductController {
 		service.productInsert(APdto);
 		
 		String productnum = service.selectAllProductLastProductNum(username).get(0).getProductnum();
+		String createReviewsProductnum = "P_"+productnum;
 		
+		service.createReviews(createReviewsProductnum);
 
 		
 		
@@ -203,7 +202,6 @@ public class ProductController {
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
 		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-	    
 		if(fileNames != null) {
 	    	ImagesDTO  Idto = new ImagesDTO();
 	    	Idto.setProductnum(productnum);
@@ -251,7 +249,29 @@ public class ProductController {
 		return "/product/productWritePro";
 	}	
 	
-	
+	// 상점 정보 가져오는 주소
+	@RequestMapping("productMyShop")
+	public String selectMyShop(Model model, String username) {
+		ShopListDTO SLdto = service.selectMyShop(username);
+		List<AllProductDTO> APdto = service.selectUsernameProduct(username);
+		
+		
+		// 상점 주소 
+		String fullAddress = SLdto.getAddress();
+		// 공백 기준으로 자르기
+		String[] addressParts = fullAddress.split(" ");
+		// area1 주소
+		String area1Address = addressParts[0];
+		// area2 주소
+		String area2Address = addressParts[1];
+		// 주소 합쳐
+		String address = area1Address + " " + area2Address;
+		
+		model.addAttribute("address" , address);
+		model.addAttribute("SLdto", SLdto);
+		model.addAttribute("APdto", APdto);
+		return "/product/productMyShop";
+	}
 	
 	
 	
@@ -314,9 +334,11 @@ public class ProductController {
 	
 	// TEST
 	@RequestMapping("sample")
-	public String selectCate1(Model model) {
-		List<ProductCategoryDTO> cate1 = service.selectCate1();
-		model.addAttribute("cate1", cate1);
+	public String selectCate1(Principal principal, Model model) {
+		String username = principal.getName();
+		
+		String address = service.selectAddress(username);
+		model.addAttribute("address", address);
 		return "/product/sample";
 	}
 

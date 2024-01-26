@@ -53,10 +53,18 @@ public interface ProductMapper {
 	
 	public List<AllProductDTO> selectAllProductLastProductNum(String username);
 	
+	// 내 상점 페이지에 필요한 정보들 가져오기
+	public ShopListDTO selectMyShop(String username);
+	
+	// 유저의 상품들 가져오기
+	public List<AllProductDTO> selectUsernameProduct(String username);
+	
+	// 상품 등록할 때 상품 리뷰 테이블 만들기
+	public void createReviews(String createReviewsProductnum);
 	
 	
-	
-	
+	// sample
+	public String sampleAddress(String username);
 }
 
 

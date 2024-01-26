@@ -85,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductCategoryDTO> selectCate1() {
 		return mapper.selectCate1();
 	}
-	// 카테고리 대분류
+	
 	@Override
 	public List<ProductCategoryDTO> selectCate2(int cate1) {
 		return mapper.selectCate2(cate1);
@@ -100,6 +100,31 @@ public class ProductServiceImpl implements ProductService {
 	public List<AllProductDTO> selectAllProductLastProductNum(String username) {
 		return mapper.selectAllProductLastProductNum(username);
 	}
+	
+	// 내 상점 페이지에 필요한 정보들 가져오기
+	@Override
+	public ShopListDTO selectMyShop(String username) {
+		return mapper.selectMyShop(username);
+	}
+
+	// 유저의 상품들 가져오기
+	@Override
+	public List<AllProductDTO> selectUsernameProduct(String username) {
+		return mapper.selectUsernameProduct(username);
+	}
+
+	@Override
+	public String sampleAddress(String username) {
+		return mapper.sampleAddress(username);
+	}
+	
+	
+	// 상품 등록할 때 상품 리뷰 테이블 만들기
+	@Override
+	public void createReviews(String createReviewsProductnum) {
+		mapper.createReviews(createReviewsProductnum);
+	}
+
 
 
 }

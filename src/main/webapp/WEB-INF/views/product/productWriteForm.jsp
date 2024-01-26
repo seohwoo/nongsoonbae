@@ -135,15 +135,15 @@
 	<body>
 		<h3>${myName} 페이지</h3>
 		<form action="/product/productWritePro" method="post" name="form" enctype="multipart/form-data" id = "addProduct">
+			<select id="cate1" name="cate1">
+				<option value="-------">-------</option>
+					<c:forEach var="cate1" items="${cate1}">
+						<option value="${cate1.cate1}">${cate1.catename}</option>
+					</c:forEach>
+			</select>
+			<div id="c2"></div>	 
 			<table width="850" border="1">
 				 
-				<select id="cate1">
-					<option value="-------">-------</option>
-						<c:forEach var="cate1" items="${cate1}">
-							<option value="${cate1.cate1}">${cate1.catename}</option>
-						</c:forEach>
-				</select>
-				<div id="c2"></div>	 
 			    
 			    <tr> 
 					<td width="200">상품이름</td>
@@ -172,7 +172,7 @@
 			 			<input type="number" name="optionProductCount" placeholder="상품재고" /> <br />
 				    </td>
 				</tr>
-		
+				
 			    <input type="hidden" name="username" value="${username}" />
 			    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			    

@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	</head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 
 	<script>
 		$(function() {
@@ -23,7 +16,7 @@
 	</script>
 	
 	<body>
-		<select id="cate2">
+		<select id="cate2" name="cate2">
 			<option value="-------">-------</option>
 			<c:forEach var="cate2" items="${cate2}">
 				<option value="${cate2.cate2}">${cate2.catename}</option>
@@ -31,4 +24,3 @@
 		</select>
 		<div id="c3"></div>
 	</body>
-</html>
