@@ -49,17 +49,15 @@ public class PayServiceImpl implements PayService{
 	}
 	@Override
 	public PaymentDTO isMembershipReady(String username) {
-		PaymentDTO dto = null;
 		paymentMap.put("username", username);
 		int first = mapper.isFirstMembershipCnt(paymentMap);
-		if(first==0) {
-			dto = new PaymentDTO();
-			dto.setItemname("멤버십정기결제");
-			dto.setQuantity(1);
-			dto.setTotalprice(4900);
-			dto.setRealprice(4900);
-		}else {
-			dto = mapper.isFirstMembership(paymentMap).get(0);
+			
+		dto.setItemname("멤버십정기결제");
+		dto.setQuantity(1);
+		dto.setTotalprice(4900);
+		dto.setRealprice(4900);
+		if(first != 0) {
+			dto.setSid(mapper.isFirstMembership(paymentMap).get(0).getSid());
 		}
 		return dto;
 	}

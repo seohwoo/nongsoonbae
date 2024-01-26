@@ -59,7 +59,7 @@ public class PayController {
 	public String afterPayRequest(@RequestParam("pg_token") String pgToken, Model model, Principal pri) {
 		KakaoApproveResponse kakaoApprove = kakaoPayService.ApproveResponse(pgToken);
 		String username = pri.getName();
-		String sid = pgToken;
+		String sid = kakaoApprove.getSid();
 		if(kakaoApprove.getItem_name().equals("멤버십정기결제")) {
 			service.isMembershipSuccess(username, sid);
 		}else {
