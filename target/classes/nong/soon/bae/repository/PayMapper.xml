@@ -24,8 +24,8 @@
 		select * from ${username}_payment where productnum='membership'
 	</select>
 	<insert id="insertUsersPayment" parameterType="paymentDTO">
-		insert into ${username}_payment(username, productnum, optionnum, realprice, totalprice, quantity)
-		values(#{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity})
+		insert into ${username}_payment(username, productnum, optionnum, realprice, totalprice, quantity, sid)
+		values(#{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid})
 	</insert>
 	<delete id="deleteUsersAddCart" parameterType="String">
 		delete from ${username}_mypage where wishstatus=3

@@ -9,7 +9,6 @@
    
    <beans:bean id="paymentDTO" class="nong.soon.bae.bean.PaymentDTO"/>
    <beans:bean id="dto" class="nong.soon.bae.bean.PaymentDTO"/>
-   <beans:bean id="mypageDTO" class="nong.soon.bae.bean.MyPageDTO"/>
    <beans:bean id="paymentMap" class="java.util.HashMap" >
    	<beans:constructor-arg>
     	<beans:map key-type="String" value-type="String" />

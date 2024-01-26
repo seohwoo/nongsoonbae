@@ -50,7 +50,7 @@ public class PayController {
 
 	@RequestMapping("/kakaopay")
 	public String main(Model model) {
-		int isMembership = 1;
+		int isMembership = 0;
 		model.addAttribute("isMembership", isMembership);
 		return "user/pay/kakaoBtn";
 	}
@@ -59,9 +59,8 @@ public class PayController {
 	public String afterPayRequest(@RequestParam("pg_token") String pgToken, Model model, Principal pri) {
 		KakaoApproveResponse kakaoApprove = kakaoPayService.ApproveResponse(pgToken);
 		String username = pri.getName();
-		String sid = kakaoApprove.getSid();
 		if(kakaoApprove.getItem_name().equals("멤버십정기결제")) {
-			service.isMembershipSuccess(username, sid);
+			service.isMembershipSuccess(username, pgToken);
 		}else {
 			service.isproductSuccess(username);
 		}

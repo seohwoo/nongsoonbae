@@ -79,6 +79,7 @@ public class PayServiceImpl implements PayService{
 				dto.setRealprice(cartDTO.getCount() * cartDTO.getPrice());
 				dto.setTotalprice(dto.getRealprice());
 				dto.setQuantity(cartDTO.getCount());
+				dto.setSid("simple payment");
 			}
 			cnt += mapper.insertUsersPayment(dto);
 			if(cnt == addCartCnt) {
