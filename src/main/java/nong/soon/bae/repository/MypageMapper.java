@@ -16,4 +16,6 @@ public interface MypageMapper {
 	
 	public List<MyPageDTO> selectLikeDetail(HashMap map);
 	public List<ShopListDTO> selectFarmerDetail(HashMap map);
+	
+	public void deleteLike(MyPageDTO dto);
 }

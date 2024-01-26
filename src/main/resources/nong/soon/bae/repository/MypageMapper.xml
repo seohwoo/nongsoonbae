@@ -25,7 +25,7 @@
 	
 	<select id="selectLikeDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
 		<![CDATA[
-			SELECT m.optionname, m.price, i.filename, mp.productnum
+			SELECT m.optionname, m.price, m.username, i.filename, mp.productnum
 			FROM (
 			    SELECT productnum, min(optionnum) as optionnum FROM ${username}_product
 			    WHERE productnum = #{productnum} GROUP BY productnum)  mp
@@ -47,5 +47,7 @@
 			where r >= #{start} and r <= #{end}
 		]]>
 	</select>
-	
+	<delete id="deleteLike">
+		DELETE FROM ${username}_mypage WHERE productnum = #{productnum} AND wishstatus = 1
+	</delete>
 </mapper>

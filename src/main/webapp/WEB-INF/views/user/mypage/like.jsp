@@ -3,6 +3,27 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.delete-like').click(function (event) {
+            event.preventDefault();
+            var productnum = $(this).data('productnum');
+	            $.ajax({
+                type: 'POST',
+                url: '/user/deleteLike',
+                data: { productnum: productnum },
+                success: function (response) {
+                	if (response === 'success') {
+                        $rowToDelete.remove();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
 <body>
 	<main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: 17%">
 	<div class="container like">
@@ -14,7 +35,7 @@
 		  </div>
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
-		  <c:if test="${status==0 }">
+		  <c:if test="${likestatus==0 }">
 		  	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -25,28 +46,29 @@
 			</table>
 			</div>
 		  </c:if>
-		  <c:if test="${status==1}">
+		  
+		  <c:if test="${likestatus != 0}">
 		  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
 					<tr>
-						<th class="g-table-list-col-edit"></th>
+						<th class="g-table-list-col-delete"></th>
 						<th class="g-table-list-col-title g-table-list-col-sku required ">이미지</th>
 						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">상품명</th>
-						<th class="g-table-list-col-title g-table-list-col-desc required">가게</th>
+						<th class="g-table-list-col-title g-table-list-col-desc required">판매자</th>
 						<th class="g-table-list-col-title g-table-list-col-money required">가격</th>
 					</tr>
 				</thead>
 				<c:forEach var="like" items="${likeList}">
-				<tbody>
-					<tr>
-						<td><a href="#"><i class="fa fa-fw fa-pencil"></i></a></td>
-						<td><img src="/resources/img/sample.jpg" style="width: 50px; height: 50px;"></td>
-						<td><a href="#">${like.optionname}</a></td>
-						<td class="g-table-list-rwd"><a href="#">${like.shopname}</a></td>
-						<td>${like.totalprice}원</td>
-					</tr>
-				</tbody>
+					<tbody>
+						<tr>
+							<td><a href="#" class="delete-like" data-productnum="${like.productnum}">🗑</a></td>
+							<td><img src="/resources/img/sample.jpg" style="width: 50px; height: 50px;"></td>
+							<td><a href="#">${like.optionname}</a></td>
+							<td class="g-table-list-rwd"><a href="#">${like.username}</a></td>
+							<td>${like.price}원</td>
+						</tr>
+					</tbody>
 				</c:forEach>
 			</table>
 			<div class="g-table-list-pagination">
@@ -63,7 +85,7 @@
 		</div>
 		</c:if>
 		<div class="tab-content" id="nav-tabContent">
-		  <c:if test="${status==0 }">
+		  <c:if test="${farmerstatus==0 }">
 		  	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -74,14 +96,15 @@
 			</table>
 			</div>
 		  </c:if>
+		  <c:if test="${farmerstatus != 0}">
 		<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
 					<tr>
 						<th class="g-table-list-col-edit"></th>
 						<th class="g-table-list-col-title g-table-list-col-sku required ">이미지</th>
-						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">카테고리</th>
-						<th class="g-table-list-col-title g-table-list-col-desc required">가게</th>
+						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">상점 이름</th>
+						<th class="g-table-list-col-title g-table-list-col-desc required">상점 소개</th>
 						<th class="g-table-list-col-title g-table-list-col-money required">위치</th>
 					</tr>
 				</thead>
@@ -110,6 +133,7 @@
 				</div>
 			</div>
 		</div>
+		</c:if>
 	</div>
 </div>
 </div>

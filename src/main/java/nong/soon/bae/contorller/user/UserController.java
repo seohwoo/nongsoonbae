@@ -44,21 +44,28 @@ public class UserController {
 		String username = principal.getName();
 		List<MyPageDTO> user = service.selectLike(username);
 		List<MyPageDTO> farmer = service.selectfarmer(username);
-		logger.info("=============="+user+"==============");
 		if(user == null) {
-			model.addAttribute("status", 0);
+			model.addAttribute("likestatus", 0);
 		}else {
-			model.addAttribute("status", 1);
+			model.addAttribute("likestatus", 1);
 			service.selectLikeDetail(username, model, listNum);
 		}
 		if(farmer==null) {
-			model.addAttribute("status", 0);
+			model.addAttribute("farmerstatus", 0);
 		}else {
-			model.addAttribute("status", 2);
+			model.addAttribute("farmerstatus", 2);
 			service.selectFarmerDetail(username, model, listNum);
 		}
 		return "user/mypage/like";
 	}
+	
+	@PostMapping("deleteLike")
+	@ResponseBody
+	public String deleteLike(Principal principal, @RequestParam("productnum") String productnum) {
+		String username = principal.getName();
+        service.deleteLike(username, productnum);
+        return "success";
+    }
 	
 	@RequestMapping("cart")
 	public String cart(Principal principal) {
