@@ -70,26 +70,29 @@
 	    input[type="submit"]:hover {
 	        background-color: #45a049;
 	    }
+	    select, button {
+        padding: 8px 15px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        cursor: pointer;
+	    }
+	
+	    button {
+	        background-color: #4CAF50;
+	        color: white;
+	        border: none;
+	    }
+	
+	    button:hover {
+	        background-color: #45a049;
+	    }
 	</style>
 
 </head>
 <body>
     <%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
-    <c:if test="${isImg.equals('0')}">
-    	<script type="text/javascript">
-    		alert("카테고리추가실패...");
-   		</script>
-    </c:if>
-    
-    <% if (request.getAttribute("operationSuccess") != null) { %>
-    <script>alert('<%=request.getAttribute("operationSuccess")%>');</script>
-	<% } %>
-	<% if (request.getAttribute("fileFormatError") != null) { %>
-    <script>alert('<%=request.getAttribute("fileFormatError")%>');</script>
-	<% } %>
-    
-    
-    
     <h1>물품별 카테고리 추가하기</h1>
     <table>
         <tr>
@@ -115,59 +118,60 @@
             </td>
         </tr>
     </table>
-    <h2>대분류 추가하기</h2>
-    <form action="/admin/addCatePro" method="post" id="addCate" enctype="multipart/form-data"> 
-        <input type="text" name="addCate" placeholder="대분류 추가하기">
-        <input type="file" name="categoryImage" accept="image/*">
-        <input type="submit" value="추가">
-        <input type="hidden" value="${num}" name="num" />
-    </form>
+    <h2>대분류 카테고리 추가하기</h2>
+	    <form action="/admin/addCatePro" method="post" id="addCate" enctype="multipart/form-data"> 
+	        <input type="text" name="addCate" placeholder="대분류 추가하기">
+	        <input type="file" name="categoryImage" accept="image/*">
+	        <input type="submit" value="추가">
+	        <input type="hidden" value="${num}" name="num" />
+	    </form>
     
     <div>
     	<jsp:include page="/WEB-INF/views/admin/usercheck/addDetailCate.jsp" />
     </div>
     
-    
-    
-     <div>
+    <div>
     	<jsp:include page="/WEB-INF/views/admin/usercheck/updateSubCate.jsp" />
     </div>
     
     
-    <script>
-    $(document).ready(function() {
-        var existingCateNames = [];
-        <c:forEach var="cate" items="${catelist}">
-            <c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
-                existingCateNames.push("${cate.catename}");
-            </c:if>
-        </c:forEach>
-
-        $('#addCate').on('submit', function(e) {
-            var newCateName = $('input[name="addCate"]').val().trim();
-
-            // 입력 필드가 비어 있을 경우
-            if (!newCateName) {
-                alert('항목을 입력해주세요.');
-                e.preventDefault(); // 폼 제출 방지
-                return;
-            }
-
-            // 중복 체크
-            if (existingCateNames.includes(newCateName)) {
-                alert('중복된 항목은 추가할 수 없습니다.');
-                e.preventDefault(); // 폼 제출 방지
-            } else {
-            	var numValue = parseInt($('input[name="num"]').val());
-                $('input[name="num"]').val(numValue + 1);
-            }
-        });
-        if('${isImg}'==='1') {
-            alert('대분류 카테고리가 정상적으로 추가되었습니다.');
-		}
-
-  
-    </script>
+   <script type="text/javascript">
+	    $(document).ready(function() {
+	        var existingCateNames = [];
+	        <c:forEach var="cate" items="${catelist}">
+	            <c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
+	                existingCateNames.push("${cate.catename}");
+	            </c:if>
+	        </c:forEach>
+	
+	        $('#addCate').on('submit', function(e) {
+	            var newCateName = $('input[name="addCate"]').val().trim();
+	
+	       
+	            if (!newCateName) {
+	                alert('항목을 입력해주세요.');
+	                e.preventDefault(); // 폼 제출 방지
+	                return; 
+	            }
+	
+	            // 중복 체크
+	            if (existingCateNames.includes(newCateName)) {
+	                alert('중복된 항목은 추가할 수 없습니다.');
+	                e.preventDefault(); 
+	                return; 
+	            } 
+	        });
+	
+	        var status = <c:out value="${status}" default="-1" />;
+	            if (status !== -1) {
+	                if (status === 1) {
+	                    alert("추가가 완료되었습니다.");
+	                } else if (status === 0) {
+	                    alert("유효하지 않은 파일 형식입니다.");
+	                }
+	            }
+	        });
+	</script>
 </body>
 </html>
 

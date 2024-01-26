@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nong.soon.bae.bean.ChatDTO;
+import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.TestMapper;
 

@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import nong.soon.bae.bean.ChatDTO;
+import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface TestMapper {
@@ -18,4 +20,5 @@ public interface TestMapper {
 	public void updateNoRead(@Param("cnt") int cnt, @Param("chatno") int chatno, @Param("username") String username);
 	public void zeroNoRead(@Param("chatno") int chatno, @Param("username") String username);
 	public void updateJoinCnt(@Param("joincnt") int joincnt, @Param("chatno") int chatno);
+	
 }

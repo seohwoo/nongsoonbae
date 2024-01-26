@@ -5,7 +5,6 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
 	<style>
         body {
             font-family: Arial, sans-serif;
@@ -50,57 +49,69 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        select, button {
+        padding: 8px 15px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        cursor: pointer;
+	    }
+	
+	    button {
+	        background-color: #4CAF50;
+	        color: white;
+	        border: none;
+	    }
+	
+	    button:hover {
+	        background-color: #45a049;
+	    }
     </style>
 	</head>
 	<body>
 	<h4>아래의 항목은 중복 추가할 수 없습니다. </h4>
-	<c:forEach var="cate" items="${detailCateList}">
-          ${cate.catename}
-   </c:forEach>
-   <form action="/admin/addDetailCatePro" method="post" id="addDetailCate" enctype="multipart/form-data"> 
-	  <input type="text" name="addDetail" placeholder="품목적기">
-	  <input type="hidden" value="${cate1Select}" name="cate1Select" /> 
-	  <input type="hidden" value="${subMaxNum}" name="subMaxNum" />
-	  <input type="hidden" value="${datailMaxNum}" name="datailMaxNum" />
-	  <input type="file" name="addImage" accept="image/*">
-	  <input type="submit" value="추가">
-   </form>	
-   
-   
-   <script>
-	$(document).ready(function() {
-	    var existingCateNames = [];
-	    <c:forEach var="cate" items="${detailCateList}">
-	        existingCateNames.push("${cate.catename}");
-	    </c:forEach>
-	
-	    $('#addDetailCate').on('submit', function(e) {
-	        var newCateName = $('input[name="addDetail"]').val().trim();
-	
-	        // 입력 필드가 비어 있을 경우
-	        if (!newCateName) {
-	            alert('항목을 입력해주세요.');
-	            e.preventDefault(); // 폼 제출 방지
-	            return;
-	        }
-	
-	        // 중복 체크
-	        if (existingCateNames.includes(newCateName)) {
-	            alert('중복된 항목은 추가할 수 없습니다.');
-	            e.preventDefault(); // 폼 제출 방지
-	            return;
-	        }
-	
-	        // datailMaxNum 값 증가
-	        var numValue = parseInt($('input[name="datailMaxNum"]').val());
-	        $('input[name="datailMaxNum"]').val(numValue + 1);
-	    });
-	
-	});
-	</script>
+		<c:forEach var="cate" items="${detailCateList}">
+	          ${cate.catename}
+	   	</c:forEach>
+		   <form action="/admin/addDetailCatePro" method="post" id="addDetailCate" enctype="multipart/form-data"> 
+			  <input type="text" name="addDetail" placeholder="품목적기">
+			  <input type="hidden" value="${cate1Select}" name="cate1Select" /> 
+			  <input type="hidden" value="${subMaxNum}" name="subMaxNum" />
+			  <input type="hidden" value="${datailMaxNum}" name="datailMaxNum" />
+			  <input type="file" name="addImage" accept="image/*">
+			  <input type="submit" value="추가">
+		   </form>	
+		   
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var existingCateNames = [];
+                <c:forEach var="cate" items="${detailCateList}">
+                    existingCateNames.push("${cate.catename}");
+                </c:forEach>
 
-   
-   
-   
-	</body>
+                $('#addDetailCate').on('submit', function(e) {
+                    var newCateName = $('input[name="addDetail"]').val().trim();
+
+                    
+                    if (!newCateName) {
+                        alert('항목을 입력해주세요.');
+                        e.preventDefault(); 
+                        return;
+                    }
+
+                    
+                    if (existingCateNames.includes(newCateName)) {
+                        alert('중복된 항목은 추가할 수 없습니다.');
+                        e.preventDefault(); 
+                        return;
+                    }
+                });
+            });
+        </script>
+    </body>
 </html>
+  
+   
+	

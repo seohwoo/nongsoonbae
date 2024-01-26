@@ -2,7 +2,10 @@ package nong.soon.bae.service;
 
 import java.util.List;
 
+
 import nong.soon.bae.bean.ChatDTO;
+import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface TestService {
@@ -16,5 +19,6 @@ public interface TestService {
 	public void updateNoRead(int cnt, int chatno, String username);
 	public void zeroNoRead(int chatno, String username);
 	public void updateJoinCnt(int joincnt, int chatno);
+	
 }
    

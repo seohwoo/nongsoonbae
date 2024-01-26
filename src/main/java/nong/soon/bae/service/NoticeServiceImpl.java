@@ -21,11 +21,6 @@ public class NoticeServiceImpl implements NoticeService {
 	private HashMap noticeMap;
 
 	@Override
-	public void insert(NoticeBoardDTO dto) { //작성한글 인서트
-		mapper.insert(dto);	
-	}
-
-	@Override
 	public void list(int pageNum, Model model) { //작성글 목록 
 		int pageSize = 10;
 	    int startRow = (pageNum - 1) * pageSize + 1;
@@ -77,6 +72,15 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public NoticeBoardDTO showNewNotice() {
 		return mapper.showNewNotice();
+	}
+
+	@Override
+	public void writeInsert(String title, String content, int files) {
+		noticeMap.clear();
+		noticeMap.put("title", title);
+		noticeMap.put("content", content);
+		noticeMap.put("files", files);
+		mapper.writeInsert(noticeMap);
 	}
 
 

@@ -15,3 +15,5 @@ public interface ChatService {
 	public int updateJoinCnt(int joincnt, int chatno, int isjoin);
 	public ChatDTO createAdminRoom(String username);
 }
+
+

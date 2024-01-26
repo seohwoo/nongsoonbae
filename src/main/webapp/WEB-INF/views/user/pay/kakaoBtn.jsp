@@ -26,7 +26,7 @@
 					// 카카오페이 결제전송
 					$.ajax({
 						type:'POST'
-						,url:'/test/ready'
+						,url:'/user/pay/ready'
 						,data: {
 							isMembership: '${isMembership}'
 						}

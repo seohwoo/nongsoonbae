@@ -7,23 +7,43 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	 <style>
+	 select, button {
+        padding: 8px 15px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        cursor: pointer;
+	    }
+	
+	    button {
+	        background-color: #4CAF50;
+	        color: white;
+	        border: none;
+	    }
+	
+	    button:hover {
+	        background-color: #45a049;
+	    }
+	</style>
 	</head>
 	<body>
 	<h2>품목 추가하기</h2>
-	<h4>추가할 카테고리 선택하기</h4>
-		<form id="cateSelectForm" action="/admin/addDetailCateForm" method="post">
-	        <select id="cate1Select" name="cate1Select">
-	            <c:forEach var="cate" items="${catelist}">
-	                <c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
-	                    <option value="${cate.cate1}">${cate.catename}</option> 
-	                </c:if>
-	            </c:forEach>
-	        </select>
-        	<button id="submitBtn">선택</button>
-   		 </form>
-	<div id="subCateContainer" style="display:none;">
-    	<jsp:include page="/WEB-INF/views/admin/usercheck/addDetailCateForm.jsp" />
-    </div> 
+		<h4>추가할 카테고리 선택하기</h4>
+			<form id="cateSelectForm" action="/admin/addDetailCateForm" method="post">
+		        <select id="cate1Select" name="cate1Select">
+		            <c:forEach var="cate" items="${catelist}">
+		                <c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
+		                    <option value="${cate.cate1}">${cate.catename}</option> 
+		                </c:if>
+		            </c:forEach>
+		        </select>
+	        	<button id="submitBtn">선택</button>
+	   		 </form>
+		<div id="subCateContainer" style="display:none;">
+	    	<jsp:include page="/WEB-INF/views/admin/usercheck/addDetailCateForm.jsp" />
+	    </div> 
     
     
     <script>
@@ -42,8 +62,6 @@
             }
         });
     });
-    
-    
     
     </script>
 	</body>

@@ -57,9 +57,9 @@
 				<div class="userlist">
 					<form action="/admin/stopPro" method="post" onsubmit="return confirmSubmission(this)">
 		                <input type="hidden" name="username" value="${list.username}"> 
-			            <h2>💟 ID : ${list.username}</h2>
-			            <h3>이름 : ${list.name}</h3>
-		                <input type="button" value="정지하기" onclick="toggleOptions(this)"/>
+				            <h2>💟 ID : ${list.username}</h2>
+				            <h3>이름 : ${list.name}</h3>
+		                	<input type="button" value="정지하기" onclick="toggleOptions(this)"/>
 		                <div class="options" style="display:none;">
 		                    <select name="reason">
 		                        <option value="notReason">정지 사유 선택하기</option>
@@ -71,10 +71,10 @@
 				                <option value="서비스 악용 (시스템의 취약점 이용, 서버 부하 유발하는 행위)">서비스 악용 (시스템의 취약점 이용, 서버 부하 유발하는 행위)</option>
 		                    </select>
 		                    <input type="submit" value="선택하기"/> 
-	                </div>
-	                <div class="email-meta">
-	                    <p>이메일: ${list.email}</p>
-	                </div>
+	                	</div>
+		                <div class="email-meta">
+		                    <p>이메일: ${list.email}</p>
+		                </div>
          		   </form>				
 				</div>
 			</c:forEach>	

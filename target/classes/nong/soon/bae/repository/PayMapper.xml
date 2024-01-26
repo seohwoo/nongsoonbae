@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.PayMapper">
+	<select id="findAddCartCnt" parameterType="String" resultType="int">
+		select count(*) from ${username}_mypage where wishstatus=3
+	</select>
+	<select id="findAddCartSeller" parameterType="String" resultType="String">
+		select distinct follow from ${username}_mypage where wishstatus=3
+	</select>
+	<select id="findAddCart" resultType="myPageDTO">
+		SELECT cart.*, pl.price, pl.optionname
+		FROM ${username}_mypage cart
+		JOIN ${seller}_product pl 
+		ON cart.productnum = pl.productnum 
+		AND cart.optionnum = pl.optionnum
+		WHERE cart.wishstatus = 3
+	</select>
+	<select id="isFirstMembershipCnt" parameterType="hashmap" resultType="int">
+		select count(*) from ${username}_payment where productnum='membership'
+	</select>
+	<select id="isFirstMembership" parameterType="hashmap" resultType="paymentDTO">
+		select * from ${username}_payment where productnum='membership'
+	</select>
+	<insert id="insertUsersPayment" parameterType="paymentDTO">
+		insert into ${username}_payment(username, productnum, optionnum, realprice, totalprice, quantity, sid)
+		values(#{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid})
+	</insert>
+	<delete id="deleteUsersAddCart" parameterType="String">
+		delete from ${username}_mypage where wishstatus=3
+	</delete>
+</mapper>
