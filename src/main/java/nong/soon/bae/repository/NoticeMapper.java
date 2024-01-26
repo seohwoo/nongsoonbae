@@ -6,8 +6,7 @@ import java.util.List;
 import nong.soon.bae.bean.NoticeBoardDTO;
 
 public interface NoticeMapper {
-
-	public void insert (NoticeBoardDTO dto); //작성글 인서트
+	public void writeInsert(HashMap map); //글쓰기
 	public int count(); //작성글 총 갯수 
 	public List<NoticeBoardDTO> list (HashMap map); //작성글 목록
 	public void updateCountUp(int num); //조회수 증가하기 
