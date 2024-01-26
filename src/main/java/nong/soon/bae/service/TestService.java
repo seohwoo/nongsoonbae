@@ -19,9 +19,6 @@ public interface TestService {
 	public void updateNoRead(int cnt, int chatno, String username);
 	public void zeroNoRead(int chatno, String username);
 	public void updateJoinCnt(int joincnt, int chatno);
-	public int findAddCartCnt(String username);
-	public List<String> findAddCartSeller(String username);
-	public List<MyPageDTO> findAddCart(String username, String seller);
-	public void insertUsersPayment(PaymentDTO dto);
+	
 }
    

@@ -64,27 +64,4 @@ public class TestServiceImpl implements TestService{
 		mapper.updateJoinCnt(joincnt, chatno);
 	}
 
-	@Override
-	public int findAddCartCnt(String username) {
-		return mapper.findAddCartCnt(username);
-	}
-
-	@Override
-	public List<String> findAddCartSeller(String username) {
-		return mapper.findAddCartSeller(username);
-	}
-
-	@Override
-	public List<MyPageDTO> findAddCart(String username, String seller) {
-		return mapper.findAddCart(username, seller);
-	}
-
-	@Override
-	public void insertUsersPayment(PaymentDTO dto) {
-		mapper.insertUsersPayment(dto);
-	}
-
-
-	
-
 }

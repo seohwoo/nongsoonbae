@@ -20,8 +20,5 @@ public interface TestMapper {
 	public void updateNoRead(@Param("cnt") int cnt, @Param("chatno") int chatno, @Param("username") String username);
 	public void zeroNoRead(@Param("chatno") int chatno, @Param("username") String username);
 	public void updateJoinCnt(@Param("joincnt") int joincnt, @Param("chatno") int chatno);
-	public int findAddCartCnt(String username);
-	public List<String> findAddCartSeller(String username);
-	public List<MyPageDTO> findAddCart(@Param("username") String username, @Param("seller") String seller);
-	public void insertUsersPayment(PaymentDTO dto);
+	
 }

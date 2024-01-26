@@ -52,22 +52,5 @@
 	<update id="updateJoinCnt">
 		update chat set isjoin=#{joincnt} where chatno=#{chatno}
 	</update>
-	<select id="findAddCartCnt" parameterType="String" resultType="int">
-		select count(*) from ${username}_mypage where wishstatus=3
-	</select>
-	<select id="findAddCartSeller" parameterType="String" resultType="String">
-		select distinct follow from ${username}_mypage where wishstatus=3
-	</select>
-	<select id="findAddCart" resultType="myPageDTO">
-		SELECT cart.*, pl.price, pl.optionname
-		FROM ${username}_mypage cart
-		JOIN ${seller}_product pl 
-		ON cart.productnum = pl.productnum 
-		AND cart.optionnum = pl.optionnum
-		WHERE cart.wishstatus = 3
-	</select>
-	<insert id="insertUsersPayment" parameterType="paymentDTO">
-		insert into ${username}_payment(username, productnum, optionnum, realprice, totalprice, quantity)
-		values(#{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity})
-	</insert>
+	
 </mapper>

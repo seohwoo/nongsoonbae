@@ -35,52 +35,54 @@ public class KaKaoController {
 
 	@Autowired
 	private TestService service;
-
-	private ArrayList<PaymentDTO> paymentArList = new ArrayList<PaymentDTO>();
-	private PaymentDTO paymentDTO = new PaymentDTO();
-
+	
 	/**
 	 * 결제요청
 	 */
+	/*
 	@RequestMapping("/ready")
-	public @ResponseBody KakaoReadyResponse readyToKakaoPay(Principal pri) {
+	public @ResponseBody KakaoReadyResponse readyToKakaoPay(Principal pri, @RequestParam("isMembership") int isMembership) {
 		String username = pri.getName();
 		int cnt = service.findAddCartCnt(username);
 		List<String> sellerList = Collections.EMPTY_LIST;
 		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
+		PaymentDTO dto = new PaymentDTO();
 		if (cnt > 0) {
 			sellerList = service.findAddCartSeller(username);
 			for (String seller : sellerList) {
 				cartList = service.findAddCart(username, seller);
 				for (int i = 0; i < cartList.size(); i++) {
 					if (i == 0) {
-						paymentDTO.setItemname(cartList.get(i).getOptionname());
+						dto.setItemname(cartList.get(i).getOptionname());
 					}
-					paymentDTO.setRealprice(
-							paymentDTO.getRealprice() + (cartList.get(i).getPrice() * cartList.get(i).getCount()));
-					paymentDTO.setQuantity(paymentDTO.getQuantity() + cartList.get(i).getCount());
+					dto.setRealprice(
+							dto.getRealprice() + (cartList.get(i).getPrice() * cartList.get(i).getCount()));
+					dto.setQuantity(dto.getQuantity() + cartList.get(i).getCount());
 				}
 			}
-			paymentDTO.setTotalprice(paymentDTO.getRealprice());
-			paymentDTO.setItemname(paymentDTO.getItemname() + "외 " + (cnt-1) + "건");
+			dto.setTotalprice(dto.getRealprice());
+			dto.setItemname(dto.getItemname() + "외 " + (cnt-1) + "건");
 		}
-		return kakaoPayService.kakaoPayReady(paymentDTO);
+		return kakaoPayService.kakaoPayReady(dto);
 	}
 
 	@RequestMapping("/kakaomain")
-	public String main() {
+	public String main(Model model) {
+		int isMembership = 0;
+		model.addAttribute("isMembership", isMembership);
 		return "test/kakaomain";
 	}
 
 	@GetMapping("/success")
 	public String afterPayRequest(@RequestParam("pg_token") String pgToken, Model model, Principal pri) {
 		KakaoApproveResponse kakaoApprove = kakaoPayService.ApproveResponse(pgToken);
-		paymentDTO.setSid(pgToken);
 		String username = pri.getName();
 		List<String> sellerList = Collections.EMPTY_LIST;
 		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
 		PaymentDTO dto = new PaymentDTO();
 		sellerList = service.findAddCartSeller(username);
+		int addCartCnt = service.findAddCartCnt(username);
+		int cnt = 0;
 		for (String seller : sellerList) {
 			cartList = service.findAddCart(username, seller);
 			for (MyPageDTO cartDTO : cartList) {
@@ -93,7 +95,10 @@ public class KaKaoController {
 				if(kakaoApprove.getItem_name().equals("멤버쉽정기결제")) {
 					dto.setSid(pgToken);
 				}
-				service.insertUsersPayment(dto);
+			}
+			cnt += service.insertUsersPayment(dto);
+			if(cnt == addCartCnt) {
+				service.deleteUsersAddCart(username);
 			}
 		}
 		
@@ -105,7 +110,7 @@ public class KaKaoController {
 	/**
 	 * 결제 진행 중 취소
 	 */
-
+	/*
 	@GetMapping("/cancel")
 	public void cancel() {
 
@@ -114,9 +119,10 @@ public class KaKaoController {
 	/**
 	 * 결제 실패
 	 */
+	/*
 	@GetMapping("/fail")
 	public void fail() {
 
 	}
-
+	*/
 }

@@ -39,9 +39,9 @@ public class KaKaoPayServiceImpl implements KaKaoPayService{
         parameters.add("approved_at", "");					// 쓰지마(지우지마) : 결제승인시간
         parameters.add("total_amount", "" + dto.getTotalprice());			// 실제가격
         parameters.add("tax_free_amount", "" + dto.getRealprice());			// 면세가격
-        parameters.add("approval_url", "http://"+FileRoot.getIp()+":8080/test/success"); // 성공 시 redirect url
-        parameters.add("cancel_url", "http://"+FileRoot.getIp()+":8080/test/cancel"); 	// 취소 시 redirect url
-        parameters.add("fail_url", "http://"+FileRoot.getIp()+":8080/test/fail"); 		// 실패 시 redirect url
+        parameters.add("approval_url", "http://"+FileRoot.getIp()+":8080/user/pay/success"); // 성공 시 redirect url
+        parameters.add("cancel_url", "http://"+FileRoot.getIp()+":8080/user/pay/cancel"); 	// 취소 시 redirect url
+        parameters.add("fail_url", "http://"+FileRoot.getIp()+":8080/user/pay/fail"); 		// 실패 시 redirect url
         
         
         // 파라미터, 헤더
