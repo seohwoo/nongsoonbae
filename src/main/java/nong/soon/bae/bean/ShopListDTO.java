@@ -12,4 +12,9 @@ public class ShopListDTO {
 	private Date regdate;
 	private String address;
 	private int grade;
+	
+	//
+	private String name;
+	private String image;
+	private int followers;
 }

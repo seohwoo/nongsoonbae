@@ -11,6 +11,7 @@
 	<body>
 		<form action="#" method="post" name="form">
 			<h3>${productDTO.productname} 상품 정보</h3>
+			
 			<td>지역 : ${areaName1}</td>
 			<td>${areaName2}</td>
 			<td>/ 이름 : ${otherNickname}</td>

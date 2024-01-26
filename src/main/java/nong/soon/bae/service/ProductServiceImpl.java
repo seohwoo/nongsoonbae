@@ -68,18 +68,6 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectArea2(area1, area2Address);
 	}
 	
-	// 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수
-	@Override
-	public int selectLastProductNumCnt(String keyword) {
-		return mapper.selectLastProductNumCnt(keyword);
-	}
-	
-	// 상품번호가 있으면 상품번호 뽑아오는거
-	@Override
-	public List<AllProductDTO> selectLastProductNum(String keyword) {
-		return mapper.selectLastProductNum(keyword);
-	}
-
 	// 상품 등록할 때 이미지 넣기
 	@Override
 	public void imagesInsert(ImagesDTO Idto) {
@@ -91,17 +79,71 @@ public class ProductServiceImpl implements ProductService {
 	public void optionInsert(ProductDTO Pdto) {
 		mapper.optionInsert(Pdto);
 	}
+	
+	// 카테고리 대분류
+	@Override
+	public List<ProductCategoryDTO> selectCate1() {
+		return mapper.selectCate1();
+	}
+	
+	@Override
+	public List<ProductCategoryDTO> selectCate2(int cate1) {
+		return mapper.selectCate2(cate1);
+	}
 
+	@Override
+	public List<ProductCategoryDTO> selectCate3(int cate1, int cate2) {
+		return mapper.selectCate3(cate1, cate2);
+	}
 
+	@Override
+	public List<AllProductDTO> selectAllProductLastProductNum(String username) {
+		return mapper.selectAllProductLastProductNum(username);
+	}
+	
+	// 내 상점 페이지에 필요한 정보들 가져오기
+	@Override
+	public ShopListDTO selectMyShop(String username) {
+		return mapper.selectMyShop(username);
+	}
 
+	// 유저의 상품들 가져오기
+	@Override
+	public List<AllProductDTO> selectUsernameProduct(String username) {
+		return mapper.selectUsernameProduct(username);
+	}
 
-
-
-
-
-
+	@Override
+	public String sampleAddress(String username) {
+		return mapper.sampleAddress(username);
+	}
 	
 	
-	
+	// 상품 등록할 때 상품 리뷰 테이블 만들기
+	@Override
+	public void createReviews(String createReviewsProductnum) {
+		mapper.createReviews(createReviewsProductnum);
+	}
+
+
 
 }
+
+
+	/* 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수
+	@Override
+	public int selectLastProductNumCnt(String keyword, String username) {
+		return mapper.selectLastProductNumCnt(keyword, username);
+	}
+	
+	// 상품번호가 있으면 상품번호 뽑아오는거
+	@Override
+	public List<AllProductDTO> selectLastProductNum(String keyword) {
+		return mapper.selectLastProductNum(keyword);
+	}
+	
+	@Override
+	public List<String> selectOptionNum(String keyword, String username) {
+		return mapper.selectOptionNum(keyword, username);
+	}	
+	*/
