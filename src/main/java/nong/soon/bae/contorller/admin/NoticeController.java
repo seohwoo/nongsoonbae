@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,7 +54,7 @@ public class NoticeController  {
 	
 	@RequestMapping("/admin/noticePro")
 	public String noticePro(String content, String title,  Model model,String[] fileNames, HttpServletRequest request,
-							@RequestParam(value="num") int num) {
+							@RequestParam(value="num") int num,RedirectAttributes redirectAttributes) {
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
@@ -84,8 +85,17 @@ public class NoticeController  {
 		dto.setTitle(title); // 제목 설정
 		dto.setContent(content); // 내용 설정
 		dto.setFiles(files); // 첨부 파일 개수 설정
-		model.addAttribute("content", content);
+		try {
+		    service.writeInsert(title, content, files);
+		    redirectAttributes.addFlashAttribute("status", 1);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		    // 필요한 경우 실패 상태를 설정
+		    redirectAttributes.addFlashAttribute("status", 0);
+		}
 		return "redirect:/admin/noticeList";
+	
+		
 	}
 
 	 public void isFile(String[] filenames, String content) {
@@ -156,7 +166,7 @@ public class NoticeController  {
 		}
 	 
 	 @RequestMapping("/admin/noticeDeletePro")
-	 public String noticeDeletePro(Model model, int num,HttpServletRequest request) {
+	 public String noticeDeletePro(Model model, int num,HttpServletRequest request,RedirectAttributes redirectAttributes) {
 		 	NoticeBoardDTO dto = service.readContent(num); // 공지사항 내용 조회
 		    String content = dto.getContent(); // 공지사항의 내용
 
@@ -171,7 +181,16 @@ public class NoticeController  {
 		            imageFile.delete(); // 파일 삭제
 		        }
 		    }
-		    service.delete(num); 
+		    
+		    try {
+		    	service.delete(num); 
+			    redirectAttributes.addFlashAttribute("deleteStatus", 1);
+			} catch (Exception e) {
+			    e.printStackTrace();
+			    
+			    redirectAttributes.addFlashAttribute("deleteStatus", 0);
+			}
+		  
 		    return "redirect:/admin/noticeList";
 		}
 	 

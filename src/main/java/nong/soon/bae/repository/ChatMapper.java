@@ -22,3 +22,8 @@ public interface ChatMapper {
 	public void insertQnaToSend(HashMap<String, String> map);
 	public ChatDTO adminChatInfo(HashMap<String, String> map);
 }
+
+
+
+
+

@@ -126,12 +126,12 @@ public class UserCheckController {
 	        }
 	    }
 	    if (!fileFormatValid && operationSuccess) {
-	        // 이미 추가된 카테고리 정보 삭제
+	        // 파일 확장자 검사 오류시 이미 추가된 카테고리 정보 삭제
 	    	service.deleteCate(cateNum, addCate);
 	        operationSuccess = false;
-	        redirectAttributes.addFlashAttribute("status", 0); 
+	        redirectAttributes.addFlashAttribute("status", 0);  //추가 실패 메시지 전달 
 	    }else {
-	        redirectAttributes.addFlashAttribute("status", 1); // 추가가 완료되었습니다.
+	        redirectAttributes.addFlashAttribute("status", 1); // 추가 완료 메시지 전달 
 	    }
 	    
 	    return "redirect:/admin/addcategory";
