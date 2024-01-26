@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,7 @@ public class MypageServiceImpl implements MypageService {
 	@Autowired
 	MypageMapper mapper;
 	@Autowired
-	private HashMap<String, String> LikeDetailMap;
-	@Autowired
-	private HashMap<String, String> FarmerDetailMap;
+	MyPageDTO dto;
 	@Autowired
 	private HashMap<String, String> SelectMyCartMap;
 
@@ -55,17 +54,16 @@ public class MypageServiceImpl implements MypageService {
 		}
 		List<MyPageDTO> list = new ArrayList<>();
 		for (MyPageDTO myPageDTO : user) {
-			int start = (listNum-1)*categorySize+1;
-			int end = listNum * categorySize;
-			LikeDetailMap.put("start", String.valueOf(start));
-			LikeDetailMap.put("end", String.valueOf(end));
-			LikeDetailMap.put("username", myPageDTO.getFollow());
-			LikeDetailMap.put("productNum", myPageDTO.getProductnum());
-			List<MyPageDTO> tempList = mapper.selectLikeDetail(LikeDetailMap);
+			HashMap<String, String> likeDetailMap = new HashMap<>();
+			likeDetailMap.put("username", myPageDTO.getFollow());
+			likeDetailMap.put("productnum", myPageDTO.getProductnum());
+			List<MyPageDTO> tempList = mapper.selectLikeDetail(likeDetailMap);
 			list.addAll(tempList);
 		}
-
-		model.addAttribute("likeList", list);
+		int start = (listNum - 1) * categorySize + 1;
+		int end = Math.min(list.size(), listNum * categorySize);
+		System.out.println((list.size()));
+		model.addAttribute("likeList", list.subList(start, end));
 		model.addAttribute("likeNum", listNum);
 		model.addAttribute("likeMaxNum", maxCategoryNum);
 	}
@@ -81,23 +79,27 @@ public class MypageServiceImpl implements MypageService {
 		}else if(listNum > maxCategoryNum) {
 			listNum = maxCategoryNum;
 		}
-		List<MyPageDTO> list = new ArrayList<>();
+		List<ShopListDTO> list = new ArrayList<>();
 		for (MyPageDTO myPageDTO : user) {
-			int start = (listNum-1)*categorySize+1;
-			int end = listNum * categorySize;
-			FarmerDetailMap.put("start", String.valueOf(start));
-			FarmerDetailMap.put("end", String.valueOf(end));
-			FarmerDetailMap.put("username", myPageDTO.getFollow());
-			FarmerDetailMap.put("productNum", myPageDTO.getProductnum());
-			List<MyPageDTO> tempList = mapper.selectFarmerDetail(LikeDetailMap);
+			HashMap<String, String> farmerDetailMap = new HashMap<>();
+			farmerDetailMap.put("username", myPageDTO.getFollow());
+			List<ShopListDTO> tempList = mapper.selectFarmerDetail(farmerDetailMap);
 			list.addAll(tempList);
 		}
-		model.addAttribute("farmereList", list);
+		int start = (listNum - 1) * categorySize + 1;
+		int end = Math.min(list.size(), listNum * categorySize);
+		model.addAttribute("farmerList", list.subList(start, end));
 		model.addAttribute("farmerNum", listNum);
 		model.addAttribute("farmerMaxNum", maxCategoryNum);
 	}
-	
-	
 
+	@Override
+	public void deleteLike(String username, String productnum) {
+		dto.setUsername(username);
+		dto.setProductnum(productnum);
+		System.out.println(dto);
+		mapper.deleteLike(dto);
+	}
+	
 	
 }

@@ -19,9 +19,4 @@ public class MyPageDTO {
 	private String shopname;
 	//결제할 때 조인에서 사용해요
 	private int price;
-	private String cate1;
-	private String cate2;
-	private String cate3;
-	private String area1;
-	private String area2;
 }

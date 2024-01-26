@@ -3,12 +3,15 @@ package nong.soon.bae.contorller.user;
 import java.security.Principal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.service.MypageService;
@@ -16,6 +19,8 @@ import nong.soon.bae.service.MypageService;
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	MypageService service;
@@ -40,23 +45,37 @@ public class UserController {
 		List<MyPageDTO> user = service.selectLike(username);
 		List<MyPageDTO> farmer = service.selectfarmer(username);
 		if(user == null) {
-			model.addAttribute("status", 0);
+			model.addAttribute("likestatus", 0);
 		}else {
-			model.addAttribute("status", 1);
+			model.addAttribute("likestatus", 1);
 			service.selectLikeDetail(username, model, listNum);
 		}
 		if(farmer==null) {
-			model.addAttribute("status", 0);
+			model.addAttribute("farmerstatus", 0);
 		}else {
-			model.addAttribute("status", 2);
+			model.addAttribute("farmerstatus", 2);
 			service.selectFarmerDetail(username, model, listNum);
 		}
 		return "user/mypage/like";
 	}
 	
+	@PostMapping("deleteLike")
+	@ResponseBody
+	public String deleteLike(Principal principal, @RequestParam("productnum") String productnum) {
+		String username = principal.getName();
+        service.deleteLike(username, productnum);
+        return "success";
+    }
+	
 	@RequestMapping("cart")
-public String cart(Principal principal) {
+	public String cart(Principal principal) {
 		
 		return "user/mypage/cart";
+	}
+	
+	@RequestMapping("deleteCartItem")
+	@ResponseBody
+	public void deleteCartItem(String productnum, Principal principal) {
+		String username = principal.getName();
 	}
 }

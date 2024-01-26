@@ -8,7 +8,6 @@
 table{
 	font-family: 'SUITE-Regular';
 	display: -ms-flexbox;
-	
 	-ms-flex-align: center;
 	text-align: center;
 	align-items: center;
@@ -22,7 +21,6 @@ table.table {
 }
 table.chart{
 	width : 80%;
-	margin-top: 550px;
 	margin-bottom: 200px;
 	margin-left: auto;
 	margin-right: auto;

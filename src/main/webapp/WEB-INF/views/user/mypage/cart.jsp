@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 	var check = false;
 	
@@ -39,22 +40,35 @@
 	
 	$(document).ready(function(){
 	  
-	  $(".remove").click(function(){
-	    var el = $(this);
-	    el.parent().parent().addClass("removed");
-	    window.setTimeout(
-	      function(){
-	        el.parent().parent().slideUp('fast', function() { 
-	          el.parent().parent().remove(); 
-	          if($(".product").length == 0) {
-	            if(check) {
-	              $("#cart").html("<h1>장바구니에 담은 상품이 없습니다.</h1>");
-	            }
-	          }
-	          changeTotal(); 
-	        });
-	      }, 200);
-	  });
+		$(".remove").click(function () {
+            var el = $(this);
+            var productnum = el.parent().find(".productnum").val();
+
+            // AJAX request to delete item from the server
+            $.ajax({
+                type: "POST",
+                url: "/user/deleteCartItem",
+                data: {productnum: productnum},
+                success: function (response) {
+                    el.parent().parent().addClass("removed");
+                    window.setTimeout(
+                        function () {
+                            el.parent().parent().slideUp('fast', function () {
+                                el.parent().parent().remove();
+                                if ($(".product").length == 0) {
+                                    if (check) {
+                                        $("#cart").html("<h1>장바구니에 담은 상품이 없습니다.</h1>");
+                                    }
+                                }
+                                changeTotal();
+                            });
+                        }, 200);
+               		 },
+                error: function (error) {
+                    console.log("Error deleting item:", error);
+                }
+            });
+        });
 	  
 	  $(".qt-plus").click(function(){
 	    $(this).parent().children(".qt").html(parseInt($(this).parent().children(".qt").html()) + 1);
@@ -87,89 +101,27 @@
 	  });
 	});
 </script>
-<main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-bottom:5%; margin-left: 17%;  overflow: scroll;ss">
+<main class="col-9 bd-content" role="main" style="margin-bottom:10%; margin-left: 17%;">
 	<div class="container like">
       <h1>장바구니</h1><br />
 	 
 		  <div class="cart">
 		  	<div class="container-cart">
 				<section id="cart"> 
-					<article class="product">
-						<div class="cart-image">
-							<a class="remove">
-								<img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/1.jpg" alt="">
-								<h3>Remove product</h3>
-							</a>
-						</div>
-						<div class="content">
-							<h1>상품명</h1>
-							상품 설명이나 옵션 적으면 될듯
-						</div>
-						<div class="content footer-content">
-							<span class="qt-minus">-</span>
-							<span class="qt">1</span>
-							<span class="qt-plus">+</span>
-		
-							<h2 class="full-price">
-								1000원
-							</h2>
-		
-							<h2 class="price">
-								1000원
-							</h2>
-						</div>
-					</article>
 		
 					<article class="product">
 						<div class="cart-image">
-							<a class="remove">
-								<img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/3.jpg" alt="">
-		
-								<h3>Remove product</h3>
-							</a>
-						</div>
-		
-						<div class="content">
-		
-							<h1>Lorem ipsum dolor</h1>
-		
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque.
-		
-						</div>
-		
-						<div class="content footer-content">
-							
-							<span class="qt-minus">-</span>
-							<span class="qt">1</span>
-							<span class="qt-plus">+</span>
-		
-							<h2 class="full-price">
-								5000원
-							</h2>
-							<h2 class="price">
-								5000원
-							</h2>
-						</div>
-					</article>
-		
-					<article class="product">
-						<div class="cart-image">
-							<a class="remove">
 								<img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/5.jpg" alt="">
-		
-								<h3>Remove product</h3>
-							</a>
 						</div>
-		
 						<div class="content">
-							<h1>Lorem ipsum dolor ipsdu</h1>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, numquam quis perspiciatis ea ad omnis provident laborum dolore in atque.
+							<h1>상품명</h1><button type="button" class="remove">🗑</button>
+							<p style="color: #FFBF00;">상점이름</p>
+							<input type="hidden" class="productnum" name="productnum" value="123">
 						</div>
 						<div class="content footer-content">					
 							<span class="qt-minus">-</span>
 							<span class="qt">3</span>
 							<span class="qt-plus">+</span>
-		
 							<h2 class="full-price">
 								6000원
 							</h2>
@@ -180,7 +132,6 @@
 					</article>
 		
 				</section>
-		
 			</div>
 			<div id="site-footer">
 				<div class="container clearfix">
