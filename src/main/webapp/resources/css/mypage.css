@@ -171,6 +171,9 @@ a:hover {
 	color: #3E4051;
 	font-size: 13px;
 }
+button.delete-like, button.delete-farmer{
+	border: none;
+}
 
 // Begin Table Body //
 

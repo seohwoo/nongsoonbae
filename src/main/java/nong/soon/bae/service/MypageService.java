@@ -18,4 +18,5 @@ public interface MypageService {
 	public void selectFarmerDetail(String username, Model model, int listNum);
 	
 	public void deleteLike(String username, String productnum);
+	public void deleteFarmer(String username, String follow);
 }

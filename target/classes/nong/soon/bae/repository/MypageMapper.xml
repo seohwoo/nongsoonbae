@@ -29,13 +29,17 @@
 			FROM (
 			    SELECT productnum, min(optionnum) as optionnum FROM ${username}_product
 			    WHERE productnum = #{productnum} GROUP BY productnum)  mp
-			LEFT JOIN ${username}_images i ON mp.productnum = i.productnum and i.filename like '%_1%'
+			LEFT JOIN ${username}_images i ON mp.productnum = i.productnum and i.filename LIKE '%\_1%' escape '\'
 			LEFT JOIN ${username}_product m ON m.productnum = mp.productnum AND m.optionnum = mp.optionnum
 		]]>
 	</select>
 	<select id="selectFarmerDetail" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
 		<![CDATA[
-			select shopname, shopcontent, regdate, address from shoplist where username=#{username}
+			SELECT u.image, s.* FROM (
+			    SELECT shopname, shopcontent, regdate, address, username 
+			    FROM shoplist 
+			    WHERE username=#{username}) s 
+			JOIN userdetails u ON s.username = u.username
 		]]>
 	</select>
 	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
@@ -49,5 +53,8 @@
 	</select>
 	<delete id="deleteLike">
 		DELETE FROM ${username}_mypage WHERE productnum = #{productnum} AND wishstatus = 1
+	</delete>
+	<delete id="deleteFarmer">
+		DELETE FROM ${username}_mypage WHERE follow = #{follow} AND wishstatus = 2
 	</delete>
 </mapper>

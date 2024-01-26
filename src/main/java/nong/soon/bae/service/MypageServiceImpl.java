@@ -60,10 +60,7 @@ public class MypageServiceImpl implements MypageService {
 			List<MyPageDTO> tempList = mapper.selectLikeDetail(likeDetailMap);
 			list.addAll(tempList);
 		}
-		int start = (listNum - 1) * categorySize + 1;
-		int end = Math.min(list.size(), listNum * categorySize);
-		System.out.println((list.size()));
-		model.addAttribute("likeList", list.subList(start, end));
+		model.addAttribute("likeList", list);
 		model.addAttribute("likeNum", listNum);
 		model.addAttribute("likeMaxNum", maxCategoryNum);
 	}
@@ -86,9 +83,7 @@ public class MypageServiceImpl implements MypageService {
 			List<ShopListDTO> tempList = mapper.selectFarmerDetail(farmerDetailMap);
 			list.addAll(tempList);
 		}
-		int start = (listNum - 1) * categorySize + 1;
-		int end = Math.min(list.size(), listNum * categorySize);
-		model.addAttribute("farmerList", list.subList(start, end));
+		model.addAttribute("farmerList", list);
 		model.addAttribute("farmerNum", listNum);
 		model.addAttribute("farmerMaxNum", maxCategoryNum);
 	}
@@ -99,6 +94,13 @@ public class MypageServiceImpl implements MypageService {
 		dto.setProductnum(productnum);
 		System.out.println(dto);
 		mapper.deleteLike(dto);
+	}
+
+	@Override
+	public void deleteFarmer(String username, String follow) {
+		dto.setUsername(username);
+		dto.setFollow(follow);
+		mapper.deleteFarmer(dto);
 	}
 	
 	

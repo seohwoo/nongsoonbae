@@ -67,6 +67,15 @@ public class UserController {
         return "success";
     }
 	
+	@PostMapping("deleteFarmer")
+	@ResponseBody
+	public String deleteFarmer(Principal principal, @RequestParam("username") String username) {
+		String follow = username;
+		username = principal.getName();
+		service.deleteFarmer(username, follow);
+		return "success";
+	}
+	
 	@RequestMapping("cart")
 	public String cart(Principal principal) {
 		

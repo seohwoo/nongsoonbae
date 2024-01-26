@@ -18,4 +18,5 @@ public interface MypageMapper {
 	public List<ShopListDTO> selectFarmerDetail(HashMap map);
 	
 	public void deleteLike(MyPageDTO dto);
+	public void deleteFarmer(MyPageDTO dto);
 }
