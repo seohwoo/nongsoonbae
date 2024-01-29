@@ -92,31 +92,39 @@ public class MainServiceImpl implements MainService {
 		seasonCategoryMap.put("cate1", cate1);
 		seasonCategoryMap.put("cate2", cate2);
 		seasonCategoryMap.put("cate3", cate3);
-		String catename = mapper.findCatename(seasonCategoryMap);
-		seasonCategoryMap.put("catename", catename);
-		int max = mapper.maxAvgPrice(catename);
-		String strMax = String.valueOf(max);
-		int yValue = Integer.parseInt(strMax.substring(0,1))+1;
-		String chartY = String.valueOf(yValue);
-		for (int i = 0; i < strMax.length()-1; i++) {
-			chartY += "0";
+		String catename = "";
+		int cnt = 0;
+		if(mapper.findCatename(seasonCategoryMap)!=null) {
+			catename = mapper.findCatename(seasonCategoryMap);
+			seasonCategoryMap.put("catename", catename);
+			cnt = mapper.isChart(seasonCategoryMap);
 		}
-		yValue = Integer.parseInt(chartY);
-		String keyword = "";
-		for (int i = 1; i <= 12; i++) {
-			keyword = "%" + thisYear + "년" + i + "월%";
-			seasonCategoryMap.put("keyword", keyword);
-			thislist.add(mapper.productChart(seasonCategoryMap));
-			keyword = "%" + lastYear + "년" + i + "월%";
-			seasonCategoryMap.put("keyword", keyword);
-			lastlist.add(mapper.productChart(seasonCategoryMap));
+		if(cnt>0) {
+			int max = mapper.maxAvgPrice(catename);
+			String strMax = String.valueOf(max);
+			int yValue = Integer.parseInt(strMax.substring(0,1))+1;
+			String chartY = String.valueOf(yValue);
+			for (int i = 0; i < strMax.length()-1; i++) {
+				chartY += "0";
+			}
+			yValue = Integer.parseInt(chartY);
+			String keyword = "";
+			for (int i = 1; i <= 12; i++) {
+				keyword = "%" + thisYear + "년" + i + "월%";
+				seasonCategoryMap.put("keyword", keyword);
+				thislist.add(mapper.productChart(seasonCategoryMap));
+				keyword = "%" + lastYear + "년" + i + "월%";
+				seasonCategoryMap.put("keyword", keyword);
+				lastlist.add(mapper.productChart(seasonCategoryMap));
+			}
+			model.addAttribute("catename", catename);
+			model.addAttribute("thisYear", thisYear);
+			model.addAttribute("lastYear", lastYear);
+			model.addAttribute("yValue", yValue);
+			model.addAttribute("thislist", thislist);
+			model.addAttribute("lastlist", lastlist);
 		}
-		model.addAttribute("catename", catename);
-		model.addAttribute("thisYear", thisYear);
-		model.addAttribute("lastYear", lastYear);
-		model.addAttribute("yValue", yValue);
-		model.addAttribute("thislist", thislist);
-		model.addAttribute("lastlist", lastlist);
+		model.addAttribute("isChart", cnt);
 	}
 	
 	public void page(int pageSize, int pageNum) {
@@ -167,6 +175,7 @@ public class MainServiceImpl implements MainService {
 		}
 		model.addAttribute("cateList", list);
 		model.addAttribute("cate1", cate1);
+		model.addAttribute("isCate3", cnt);
 		model.addAttribute("categoryNum", categoryNum);
 		model.addAttribute("maxCategoryNum", maxCategoryNum);
 	}
