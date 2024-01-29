@@ -66,6 +66,7 @@
 	<insert id="createPayment">
 		create table ${username}_payment (
 			username varchar2(50) not null,
+			follow varchar2(50),
 			productnum varchar2(50) not null,
 			optionnum varchar2(50) not null,
 			realprice number not null,

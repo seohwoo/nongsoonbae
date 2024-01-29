@@ -80,10 +80,11 @@ public class UserController {
 	public String cart(Principal principal, Model model) {
 		String username = principal.getName();
 		List<MyPageDTO> cart = service.selectcart(username);
+		logger.info("========"+cart+"=======");
 		if(cart == null) {
-			model.addAttribute("status", 0);
+			model.addAttribute("cartstatus", 0);
 		}else {
-			model.addAttribute("status", 1);
+			model.addAttribute("cartstatus", 1);
 			service.selectMyCart(username, model);
 		}
 		return "user/mypage/cart";
@@ -95,5 +96,11 @@ public class UserController {
 		String username = principal.getName();
 		service.deleteCart(username, optionnum);
 		return "success";
+	}
+	
+	@RequestMapping("buylist")
+	public String buylist() {
+		
+		return "/user/mypage/buylist";
 	}
 }

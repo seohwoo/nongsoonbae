@@ -60,4 +60,11 @@
 	<delete id="deleteCart">
 		delete from ${username}_mypage where optionnum=#{optionnum} and wishstatus=3
 	</delete>
+	
+	<!-- 정기결제 구매 내역 제외 -->
+	<select id="selectPay" resultType="nong.soon.bae.bean.PaymentDTO">
+		select * from ${username}_payment where sid is null
+	</select>
+	
+	
 </mapper>

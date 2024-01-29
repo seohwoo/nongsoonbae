@@ -25,22 +25,16 @@
 	    });
 	  
 	    price = Math.round(price * 100) / 100;
-
-	    // Check if subtotal is greater than or equal to 50000
 	    var shipping = price >= 50000 ? 0 : 3000;
-
 	    var fullPrice = Math.round((price + shipping) * 100) / 100;
 
 	    if (price == 0) {
 	        fullPrice = 0;
 	    }
-
-	    // Update the content of the span elements
 	    $(".subtotal span").html(price);
-	    $(".shipping span").html(shipping); // Update shipping cost dynamically
+	    $(".shipping span").html(shipping); 
 	    $(".total span").html(fullPrice);
 
-	    // Additional: Update the content of the subtotalAmount and totalAmount spans
 	    $("#subtotalAmount").html(price);
 	    $("#totalAmount").html(fullPrice);
 	}
@@ -136,48 +130,47 @@
 		  <div class="cart">
 		  	<div class="container-cart">
 				<section id="cart"> 
-				<c:if test="${status==0}">
+				<c:if test="${cartstatus==0}">
 					<article class="product">
 						<div class="content">
 							<p>장바구니에 담긴 상품이 없습니다.</p>
 						</div>
 					</article>
 				</c:if>
-				<c:if test="${status!=0}">
+				<c:if test="${cartstatus!=0}">
 					<c:forEach var="cart" items="${MyCart}">
 						<article class="product">
-						<div class="cart-image">
-								<img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/5.jpg" alt="">
+							<div class="cart-image">
+									<img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/5.jpg" alt="">
+							</div>
+							<div class="content">
+								<h1>${cart.optionname}</h1><button type="button" class="remove" data-optionnum="${cart.optionnum}">🗑</button>
+								<p style="color: #FFBF00;">${cart.shopname}</p>
+							</div>
+							<div class="content footer-content">					
+							    <span class="qt-minus" onclick="updateQuantity(this, ${cart.price}, '${cart.optionnum}', 'minus')">-</span>
+							    <span class="qt">${cart.count}</span>
+							    <span class="qt-plus" onclick="updateQuantity(this, ${cart.price}, '${cart.optionnum}', 'plus')">+</span>
+							    <h2 class="full-price">${cart.count * cart.price}원</h2>
+							    <h2 class="price">${cart.price}원</h2>
+							</div>
+						</article>
+					</c:forEach>
+					<div id="site-footer">
+						<div class="container clearfix">
+							<div class="left">
+								<h3 class="subtotal">합계: <span id="subtotalAmount"></span>원</h3>
+								<h3 class="shipping">배송비: <span>3000</span>원</h3>
+							</div>
+				
+							<div class="right">
+								<h1 class="total">총 합계: <span id="totalAmount"></span>원</h1>
+								<a class="btn" href="/user/pay/ready?isMembership=0">결제하기</a>
+							</div>
 						</div>
-						<div class="content">
-							<h1>${cart.optionname}</h1><button type="button" class="remove" data-optionnum="${cart.optionnum}">🗑</button>
-							<p style="color: #FFBF00;">${cart.shopname}</p>
-						</div>
-						<div class="content footer-content">					
-						    <span class="qt-minus" onclick="updateQuantity(this, ${cart.price}, '${cart.optionnum}', 'minus')">-</span>
-						    <span class="qt">${cart.count}</span>
-						    <span class="qt-plus" onclick="updateQuantity(this, ${cart.price}, '${cart.optionnum}', 'plus')">+</span>
-						    <h2 class="full-price">${cart.count * cart.price}원</h2>
-						    <h2 class="price">${cart.price}원</h2>
-						</div>
-					</article>
-				</c:forEach>
+					</div>
 				</c:if>	
-		
 				</section>
-			</div>
-			<div id="site-footer">
-				<div class="container clearfix">
-					<div class="left">
-						<h3 class="subtotal">합계: <span id="subtotalAmount"></span>원</h3>
-						<h3 class="shipping">배송비: <span>3000</span>원</h3>
-					</div>
-		
-					<div class="right">
-						<h1 class="total">총 합계: <span id="totalAmount"></span>원</h1>
-						<a class="btn" href="/user/pay/ready?isMembership=0">결제하기</a>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
