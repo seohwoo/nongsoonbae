@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
 
@@ -21,4 +22,7 @@ public interface MypageService {
 	public void deleteLike(String username, String productnum);
 	public void deleteFarmer(String username, String follow);
 	public void deleteCart(String username, String optionnum);
+	
+	public List<PaymentDTO> selectPay(String username);
+	public void selectPayDetail(String username, Model model);
 }

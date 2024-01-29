@@ -86,6 +86,7 @@ public class UserController {
 		}else {
 			model.addAttribute("cartstatus", 1);
 			service.selectMyCart(username, model);
+			model.addAttribute("isMembership", 0);
 		}
 		return "user/mypage/cart";
 	}

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
@@ -122,6 +123,19 @@ public class MypageServiceImpl implements MypageService {
 		dto.setUsername(username);
 		dto.setOptionnum(optionnum);
 		mapper.deleteCart(dto);	
+	}
+
+	@Override
+	public List<PaymentDTO> selectPay(String username) {
+		return mapper.selectPay(username);
+	}
+
+	@Override
+	public void selectPayDetail(String username, Model model) {
+		List<PaymentDTO> pay = selectPay(username);
+		List<MyPageDTO> list = new ArrayList<>();
+		
+		
 	}
 	
 }
