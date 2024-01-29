@@ -42,7 +42,11 @@ public class PayServiceImpl implements PayService{
 					dto.setQuantity(dto.getQuantity() + cartList.get(i).getCount());
 				}
 			}
-			dto.setTotalprice(dto.getRealprice());
+			if(dto.getRealprice()<50000) {
+				dto.setTotalprice(dto.getRealprice()+3000);
+			}else {
+				dto.setTotalprice(dto.getRealprice());
+			}
 			dto.setItemname(dto.getItemname() + "¿Ü " + (cnt-1) + "°Ç");
 		}
 		return dto;

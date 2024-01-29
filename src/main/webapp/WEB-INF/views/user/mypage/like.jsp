@@ -9,13 +9,35 @@
         $('.delete-like').click(function (event) {
             event.preventDefault();
             var productnum = $(this).data('productnum');
-	            $.ajax({
+            var $rowToDelete = $(this).closest('tr'); // Find the parent table row
+
+            $.ajax({
                 type: 'POST',
                 url: '/user/deleteLike',
                 data: { productnum: productnum },
                 success: function (response) {
-                	if (response === 'success') {
+                    if (response === 'success') {
                         $rowToDelete.remove();
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+        $('.delete-farmer').click(function (event) {
+            event.preventDefault();
+            var username = $(this).data('username');
+            var $rowToDelete = $(this).closest('tr'); // Find the parent table row
+
+            $.ajax({
+                type: 'POST',
+                url: '/user/deleteFarmer',
+                data: { username: username },
+                success: function (response) {
+                    if (response === 'success') {
+                        $rowToDelete.remove();
+                    }
                 },
                 error: function (error) {
                     console.log(error);
@@ -52,36 +74,25 @@
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
 					<tr>
-						<th class="g-table-list-col-delete"></th>
 						<th class="g-table-list-col-title g-table-list-col-sku required ">이미지</th>
 						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">상품명</th>
 						<th class="g-table-list-col-title g-table-list-col-desc required">판매자</th>
 						<th class="g-table-list-col-title g-table-list-col-money required">가격</th>
+						<th class="g-table-list-col-delete"></th>
 					</tr>
 				</thead>
 				<c:forEach var="like" items="${likeList}">
 					<tbody>
 						<tr>
-							<td><a href="#" class="delete-like" data-productnum="${like.productnum}">🗑</a></td>
-							<td><img src="/resources/img/sample.jpg" style="width: 50px; height: 50px;"></td>
+							<td><img src="/resources/img/${like.filename}" style="width: 50px; height: 50px;"></td>
 							<td><a href="#">${like.optionname}</a></td>
 							<td class="g-table-list-rwd"><a href="#">${like.username}</a></td>
 							<td>${like.price}원</td>
+							<td><button type="button" class="delete-like" data-productnum="${like.productnum}">🗑</button></td>
 						</tr>
 					</tbody>
 				</c:forEach>
 			</table>
-			<div class="g-table-list-pagination">
-				<div class="g-table-list-pagination-col">
-					<span class="g-body-copy">Page</span>
-					<form><input type="text" class="g-table-list-pagination-current" value="${likeNum}"></form>
-					<span class="g-body-copy">of ${likeMaxNum}</span>
-				</div>
-				<div class="g-table-list-pagination-col">
-					<a href="#" class="g-actions-button g-actions-button-pager"><i class="fa fa-fw fa-caret-left right-4"></i>Prev</a>
-					<a href="#" class="g-actions-button g-actions-button-pager g-table-list-pager">Next<i class="fa fa-fw fa-caret-right left-4"></i></a>
-				</div>
-			</div>
 		</div>
 		</c:if>
 		<div class="tab-content" id="nav-tabContent">
@@ -101,37 +112,26 @@
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
 					<tr>
-						<th class="g-table-list-col-edit"></th>
 						<th class="g-table-list-col-title g-table-list-col-sku required ">이미지</th>
-						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">상점 이름</th>
-						<th class="g-table-list-col-title g-table-list-col-desc required">상점 소개</th>
+						<th class="g-table-list-col-title g-table-list-col-desc required">상점 이름</th>
+						<th class="g-table-list-col-title g-table-list-col-listing opt g-table-list-rwd">상점 소개</th>
 						<th class="g-table-list-col-title g-table-list-col-money required">위치</th>
+						<th class="g-table-list-col-delete"></th>
 					</tr>
 				</thead>
 				<c:forEach var="farmer" items="${farmerList}">
 				<tbody>
 					<tr>
-						<td><a href="#"><i class="fa fa-fw fa-pencil"></i></a></td>
-						<td><img src="/resources/img/farmer.jpg" style="width: 50px; height: 50px;"></td>
+						<td><img src="/resources/img/sample.jpg" style="width: 50px; height: 50px;"></td>
 						<td><a href="#">${farmer.shopname}</a></td>
 						<td class="g-table-list-rwd"><a href="#">${farmer.shopcontent}</a></td>
 						<td>${farmer.address}</td>
-						
+						<td><button type="button" class="delete-farmer" data-productnum="${farmer.username}">🗑</button></td>	
 					</tr>
 				</tbody>
 				</c:forEach>
 			</table>
-			<div class="g-table-list-pagination">
-				<div class="g-table-list-pagination-col">
-					<span class="g-body-copy">Page</span>
-						<form><input type="text" class="g-table-list-pagination-current" value="${farmerNum}"></form>
-					<span class="g-body-copy">of ${farmerMaxNum}</span>
-				</div>
-				<div class="g-table-list-pagination-col">
-					<a href="#" class="g-actions-button g-actions-button-pager"><i class="fa fa-fw fa-caret-left right-4"></i>Prev</a>
-					<a href="#" class="g-actions-button g-actions-button-pager g-table-list-pager">Next<i class="fa fa-fw fa-caret-right left-4"></i></a>
-				</div>
-			</div>
+			
 		</div>
 		</c:if>
 	</div>

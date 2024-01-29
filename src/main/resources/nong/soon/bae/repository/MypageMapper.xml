@@ -29,25 +29,42 @@
 			FROM (
 			    SELECT productnum, min(optionnum) as optionnum FROM ${username}_product
 			    WHERE productnum = #{productnum} GROUP BY productnum)  mp
-			LEFT JOIN ${username}_images i ON mp.productnum = i.productnum and i.filename like '%_1%'
+			LEFT JOIN ${username}_images i ON mp.productnum = i.productnum and i.filename LIKE '%\_1%' escape '\'
 			LEFT JOIN ${username}_product m ON m.productnum = mp.productnum AND m.optionnum = mp.optionnum
 		]]>
 	</select>
 	<select id="selectFarmerDetail" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
 		<![CDATA[
-			select shopname, shopcontent, regdate, address from shoplist where username=#{username}
+			SELECT u.image, s.* FROM (
+			    SELECT shopname, shopcontent, regdate, address, username 
+			    FROM shoplist 
+			    WHERE username=#{username}) s 
+			JOIN userdetails u ON s.username = u.username
 		]]>
 	</select>
 	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
 		<![CDATA[
-			select c.optionname, c.price, i.filename, s.shopname
-			from (select c.*, rownum r from (select * from ${username}_product where productnum=#{productnum}) c) c
-			join ${username}_image i on c.productnum = i.productnum
-			join shoplist s on c.username = s.username
-			where r >= #{start} and r <= #{end}
+			select m.count, i.filename, p.optionname, p.price, p.optionnum, s.shopname from
+			(select * from ${follow}_product where optionnum=#{optionnum}) p
+			left join ${follow}_images i on p.productnum=i.productnum AND i.filename LIKE '%\_1%' escape '\'
+			left join ${username}_mypage m on m.follow=p.username
+			left join shoplist s on s.username=p.username
 		]]>
 	</select>
 	<delete id="deleteLike">
 		DELETE FROM ${username}_mypage WHERE productnum = #{productnum} AND wishstatus = 1
 	</delete>
+	<delete id="deleteFarmer">
+		DELETE FROM ${username}_mypage WHERE follow = #{follow} AND wishstatus = 2
+	</delete>
+	<delete id="deleteCart">
+		delete from ${username}_mypage where optionnum=#{optionnum} and wishstatus=3
+	</delete>
+	
+	<!-- 정기결제 구매 내역 제외 -->
+	<select id="selectPay" resultType="nong.soon.bae.bean.PaymentDTO">
+		select * from ${username}_payment where sid is null
+	</select>
+	
+	
 </mapper>

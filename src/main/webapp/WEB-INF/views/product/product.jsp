@@ -8,8 +8,8 @@
 	</head>
 	
 	<body>
-		<c:forEach var="category" items="${categoryDTO}">
-			${category.catename}
-		</c:forEach>
+		${cate1 }
+		${cate2 }
+		${cate3 }
 	</body>
 </html>

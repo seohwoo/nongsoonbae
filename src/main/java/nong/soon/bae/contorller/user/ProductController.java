@@ -37,6 +37,7 @@ import nong.soon.bae.bean.AddressDTO;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ImagesDTO;
+import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.service.ProductService;
@@ -65,6 +66,7 @@ public class ProductController {
 		String myName = service.selectMyName(username);
 		
 		model.addAttribute("myName", myName);
+		model.addAttribute("username", username);
 		return "product/productMain";
 	}	
 	
@@ -101,38 +103,66 @@ public class ProductController {
 	@RequestMapping("productWriteForm")
 	public String productWriteForm(String myName, Model model, Principal principal) {
 		model.addAttribute("myName", myName);
+		
+		// TEST
+		List<ProductCategoryDTO> cate1 = service.selectCate1();
+		model.addAttribute("cate1", cate1);
+		logger.info("cate1======="+cate1);
 		return "/product/productWriteForm";
 	}
+	//
+	@RequestMapping("productWriteForm2")
+	public String selectCate2(Model model , int cate1) {
+		List<ProductCategoryDTO> cate2 = service.selectCate2(cate1);
+		model.addAttribute("cate2", cate2);
+		logger.info("cate1======="+cate1);
+		logger.info("cate2======="+cate2);
+		return "/product/productWriteForm2";
+	}
+	
+	@RequestMapping("productWriteForm3")
+	public String selectCate3(Model model ,int cate1, int cate2) {
+		List<ProductCategoryDTO> cate3 = service.selectCate3(cate1, cate2);
+		model.addAttribute("cate3", cate3);
+		logger.info("cate1======="+cate1);
+		logger.info("cate2======="+cate2);
+		logger.info("cate3======="+cate3);
+		return "/product/productWriteForm3";
+	}	
+	//
+	
+	@RequestMapping("product")
+	public String product(Model model ,int cate1, int cate2, int cate3) {
+		
+		model.addAttribute("cate1", cate1);
+		model.addAttribute("cate2", cate2);
+		model.addAttribute("cate3", cate3);
+		logger.info("cate1======="+cate1);
+		logger.info("cate2======="+cate2);
+		logger.info("cate3======="+cate3);
+		return "/product/product";
+	}	
 	
 	// 상품 등록하기
 	@RequestMapping("productWritePro")
-	public String productWritePro(Principal principal, Model model, String categorynum, String[] fileNames, 
+	public String productWritePro(Principal principal, Model model, String[] fileNames,
+								  int cate1, int cate2, int cate3, 
 								  HttpServletRequest request, AllProductDTO APdto, 
 								  @RequestParam("optionname") String[] optionname, 
 								  @RequestParam("optiontotalprice") int[] optiontotalprice,
 								  @RequestParam("optionProductCount") int[] optionProductCount) {
 
-		// 24년 구하는 코드
-		Date date = new Date();
-		SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");		
-		String day = smf.format(date);		
-		String year = day.split("/")[0].substring(2, 4);
-		
-		String keyword = "%" + year + categorynum + "%";
-		String productnum = "";
-		
-		// 가장 최근의 상품번호값
-		int productnumCnt = service.selectLastProductNumCnt(keyword);
-		// 상품넘버가 없으면 productnum 만들기
-		if(productnumCnt==0) {
-			productnum = year + categorynum + "00001";
-		// 상품넘버 있으면 기존 productnum에 +1하기
-		}else {
-			productnum = service.selectLastProductNum(keyword).get(0).getProductnum();
-			productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);		
-		}
-		
 		String username = principal.getName();
+		
+		String categorynum = String.valueOf(cate1) + String.valueOf(cate2) + String.valueOf(cate3);
+		
+		logger.info("cate1======="+cate1);
+		logger.info("cate2======="+cate2);
+		logger.info("cate3======="+cate3);
+		
+		APdto.setCate1(cate1);
+		APdto.setCate2(cate2);
+		APdto.setCate3(cate3);		
 		APdto.setUsername(username);
 		APdto.setCatenum(categorynum);		
 		APdto.setSeqnum("C_"+categorynum);
@@ -154,10 +184,16 @@ public class ProductController {
 		APdto.setArea1(area1);
 		APdto.setArea2(area2);
 		
-		// 상품 등록하기
+
+		
+		// AllProduct 상품 등록하기
 		service.productInsert(APdto);
 		
+		String productnum = service.selectAllProductLastProductNum(username).get(0).getProductnum();
+		String createReviewsProductnum = "P_"+productnum;
 		
+		service.createReviews(createReviewsProductnum);
+
 		
 		
 		
@@ -166,7 +202,6 @@ public class ProductController {
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
 		int cnt = 1;
 		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-	    
 		if(fileNames != null) {
 	    	ImagesDTO  Idto = new ImagesDTO();
 	    	Idto.setProductnum(productnum);
@@ -181,6 +216,7 @@ public class ProductController {
 					String realname = productnum+"_"+cnt+ext;
 					Idto.setFilename(realname);
 					
+					
 					service.imagesInsert(Idto);
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
 					cnt++;
@@ -194,14 +230,10 @@ public class ProductController {
 				sourceFile.delete();
 			}
 	    }		
-		/////////////////////// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 		// 옵션 넘어온 값만큼 반복
 		for(int i = 0; i < optionname.length; i++) {
-			ProductDTO Pdto = new ProductDTO();
-			// 옵션넘버값 1씩 증가
-			
-			
+			ProductDTO Pdto = new ProductDTO();						
 			Pdto.setUsername(username);
 			Pdto.setProductnum(productnum);
 			Pdto.setOptionname(optionname[i]);
@@ -217,7 +249,29 @@ public class ProductController {
 		return "/product/productWritePro";
 	}	
 	
-	
+	// 상점 정보 가져오는 주소
+	@RequestMapping("productMyShop")
+	public String selectMyShop(Model model, String username) {
+		ShopListDTO SLdto = service.selectMyShop(username);
+		List<AllProductDTO> APdto = service.selectUsernameProduct(username);
+		
+		
+		// 상점 주소 
+		String fullAddress = SLdto.getAddress();
+		// 공백 기준으로 자르기
+		String[] addressParts = fullAddress.split(" ");
+		// area1 주소
+		String area1Address = addressParts[0];
+		// area2 주소
+		String area2Address = addressParts[1];
+		// 주소 합쳐
+		String address = area1Address + " " + area2Address;
+		
+		model.addAttribute("address" , address);
+		model.addAttribute("SLdto", SLdto);
+		model.addAttribute("APdto", APdto);
+		return "/product/productMyShop";
+	}
 	
 	
 	
@@ -278,4 +332,37 @@ public class ProductController {
 	}
 	
 	
+	// TEST
+	@RequestMapping("sample")
+	public String selectCate1(Principal principal, Model model) {
+		String username = principal.getName();
+		
+		String address = service.selectAddress(username);
+		model.addAttribute("address", address);
+		return "/product/sample";
+	}
+
+		
 }
+
+
+	/*
+	// 24년 구하는 코드
+	Date date = new Date();
+	SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");		
+	String day = smf.format(date);		
+	String year = day.split("/")[0].substring(2, 4);
+	String keyword = "%" + year + categorynum + "%";
+	String productnum = "";
+	// 가장 최근의 상품번호값
+	int productnumCnt = service.selectLastProductNumCnt(keyword, username);
+	// 상품넘버가 없으면 productnum 만들기
+	if(productnumCnt==0) {
+		productnum = year + categorynum + "00001";
+	// 상품넘버 있으면 기존 productnum에 +1하기
+	}else {
+		productnum = service.selectOptionNum(keyword, username).get(0);
+		productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);
+	}
+	*/
+
