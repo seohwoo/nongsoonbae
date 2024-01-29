@@ -30,6 +30,9 @@
 				     </c:forEach>  
 			</c:if>	
 		</div>
+		<div>
+			<jsp:include page="/WEB-INF/views/all/main/catelistDetail.jsp" />
+		</div>
 	</body>	
 </html>
 
