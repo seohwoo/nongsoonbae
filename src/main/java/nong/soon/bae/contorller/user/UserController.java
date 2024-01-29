@@ -53,7 +53,7 @@ public class UserController {
 		if(farmer==null) {
 			model.addAttribute("farmerstatus", 0);
 		}else {
-			model.addAttribute("farmerstatus", 2);
+			model.addAttribute("farmerstatus", 1);
 			service.selectFarmerDetail(username, model, listNum);
 		}
 		return "user/mypage/like";
@@ -77,14 +77,23 @@ public class UserController {
 	}
 	
 	@RequestMapping("cart")
-	public String cart(Principal principal) {
-		
+	public String cart(Principal principal, Model model) {
+		String username = principal.getName();
+		List<MyPageDTO> cart = service.selectcart(username);
+		if(cart == null) {
+			model.addAttribute("status", 0);
+		}else {
+			model.addAttribute("status", 1);
+			service.selectMyCart(username, model);
+		}
 		return "user/mypage/cart";
 	}
 	
 	@RequestMapping("deleteCartItem")
 	@ResponseBody
-	public void deleteCartItem(String productnum, Principal principal) {
+	public String deleteCartItem(String optionnum, Principal principal) {
 		String username = principal.getName();
+		service.deleteCart(username, optionnum);
+		return "success";
 	}
 }

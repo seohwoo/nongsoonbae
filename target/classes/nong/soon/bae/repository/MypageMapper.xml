@@ -44,11 +44,11 @@
 	</select>
 	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
 		<![CDATA[
-			select c.optionname, c.price, i.filename, s.shopname
-			from (select c.*, rownum r from (select * from ${username}_product where productnum=#{productnum}) c) c
-			join ${username}_image i on c.productnum = i.productnum
-			join shoplist s on c.username = s.username
-			where r >= #{start} and r <= #{end}
+			select m.count, i.filename, p.optionname, p.price, p.optionnum, s.shopname from
+			(select * from ${follow}_product where optionnum=#{optionnum}) p
+			left join ${follow}_images i on p.productnum=i.productnum AND i.filename LIKE '%\_1%' escape '\'
+			left join ${username}_mypage m on m.follow=p.username
+			left join shoplist s on s.username=p.username
 		]]>
 	</select>
 	<delete id="deleteLike">
@@ -56,5 +56,8 @@
 	</delete>
 	<delete id="deleteFarmer">
 		DELETE FROM ${username}_mypage WHERE follow = #{follow} AND wishstatus = 2
+	</delete>
+	<delete id="deleteCart">
+		delete from ${username}_mypage where optionnum=#{optionnum} and wishstatus=3
 	</delete>
 </mapper>
