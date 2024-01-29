@@ -333,13 +333,14 @@ public class ProductController {
 	
 	
 	// TEST
-	@RequestMapping("sample")
-	public String selectCate1(Principal principal, Model model) {
+	@RequestMapping("productDetail")
+	public String productDetail(Principal principal, Model model, String productnum) {
 		String username = principal.getName();
 		
-		String address = service.selectAddress(username);
-		model.addAttribute("address", address);
-		return "/product/sample";
+		List<ProductDTO> Pdto = service.sampleDetails(username, productnum);
+		model.addAttribute("Pdto", Pdto);
+		
+		return "/product/productDetail";
 	}
 
 		

@@ -21,13 +21,24 @@ public interface ProductMapper {
 	// 내 상점 테이블 만들기
 	public void createProduct(String username);
 	
-	// FINISH
+	// 카테고리 대분류
+	public List<ProductCategoryDTO> selectCate1();
 	
-	// TEST
+	// 카테고리 중분류
+	public List<ProductCategoryDTO> selectCate2(int cate1);
 	
-	
+	// 카테고리 소분류
+	public List<ProductCategoryDTO> selectCate3(@Param("cate1") int cate1, 
+												@Param("cate2") int cate2);	
+		
 	// 상품 등록하기
 	public void productInsert(AllProductDTO APdto);
+	
+	// 상품 등록한 직후의 productnum 구하기
+	public List<AllProductDTO> selectAllProductLastProductNum(String username);	
+
+	// 상품 등록할 때 상품 리뷰 테이블 만들기
+	public void createReviews(String createReviewsProductnum);
 	
 	// 상점 주소 가져오는 코드
 	public String selectAddress(String username);
@@ -45,26 +56,21 @@ public interface ProductMapper {
 	// 상품 등록할 때 username_product에 옵션들 넣기
 	public void optionInsert(ProductDTO Pdto);
 	
-	// 카테고리 대분류
-	public List<ProductCategoryDTO> selectCate1();
-	public List<ProductCategoryDTO> selectCate2(int cate1);
-	public List<ProductCategoryDTO> selectCate3(@Param("cate1") int cate1, 
-												@Param("cate2") int cate2);
+	// FINISH
 	
-	public List<AllProductDTO> selectAllProductLastProductNum(String username);
-	
+	// TEST
+
 	// 내 상점 페이지에 필요한 정보들 가져오기
 	public ShopListDTO selectMyShop(String username);
 	
 	// 유저의 상품들 가져오기
 	public List<AllProductDTO> selectUsernameProduct(String username);
 	
-	// 상품 등록할 때 상품 리뷰 테이블 만들기
-	public void createReviews(String createReviewsProductnum);
 	
 	
 	// sample
-	public String sampleAddress(String username);
+	public List<ProductDTO> sampleDetails(@Param("username") String username, 
+										  @Param("productnum") String productnum);
 }
 
 

@@ -61,6 +61,7 @@
 		<table width="600" border="1" style="text-align: center;">
 			<tr>
 				<td width="200">사진</td>
+				<td width="200">상품번호</td>
 				<td width="200">상품이름</td>
 				<td width="200">상품가격</td>
 				<td width="200">찜한 수</td>
@@ -72,6 +73,9 @@
 					<td>
 						<img src=" /resources/realImage/${APdto.filename}">
 					</td>
+					<td>
+						<a href="/product/productDetail?productnum=${APdto.productnum}">${APdto.productnum}</a>	
+					</td>										
 					<td>
 						${APdto.productname}	
 					</td>

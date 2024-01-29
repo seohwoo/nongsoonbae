@@ -18,5 +18,8 @@ public class ProductDTO {
 	private int sellcount;
 	
 	private String catenum;
-	private String seqnum;	
+	private String seqnum;
+	private String area1;
+	private String area2;
+
 }
