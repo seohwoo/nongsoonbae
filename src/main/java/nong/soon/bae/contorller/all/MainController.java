@@ -1,5 +1,6 @@
 package nong.soon.bae.contorller.all;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,8 @@ public class MainController{
 	}
 	
 	@RequestMapping("chart")
-	public String categoryChart(Model model, String cate1, String cate2, String cate3, String categoryNum) {
+	public String categoryChart(Model model, String cate1, String cate2, String cate3, String categoryNum, Principal pri) {
+		boolean isMembership = false;
 		if(categoryNum == null) {
 			categoryNum = "1";
 		}
@@ -69,9 +71,13 @@ public class MainController{
 			cate2 = "1";
 			cate3 = "1";
 		}
+		if(pri != null) {
+			isMembership = service.isMembership(isMembership, pri.getName());
+		}
 		service.cateMenu(model);
 		service.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
 		service.showChart(model, cate1, cate2, cate3);
+		model.addAttribute("isMembership", isMembership);
 		return "all/main/categoryChart";
 	}
 	

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.MainProductDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.repository.MainMapper;
 
 @Service
@@ -204,5 +205,16 @@ public class MainServiceImpl implements MainService {
 		return list;
 	}
 
-	
+	@Override
+	public boolean isMembership(boolean isMembership, String username) {
+		List<UserGradeDTO> list = mapper.isMembership(username).getGrade();
+		for (UserGradeDTO dto : list) {
+			if(dto.getGrade().equals("ROLE_MEMBERSHIP")) {
+				isMembership = true;
+				break;
+			}
+		}
+		return isMembership;
+
+	}
 }

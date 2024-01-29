@@ -6,6 +6,7 @@ import java.util.List;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.ChartDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.UsersDTO;
 
 public interface MainMapper {
 	/** 제철카테고리의 개수 */
@@ -34,6 +35,6 @@ public interface MainMapper {
 	public int searchProductCnt(String keyword);
 	/** 검색결과 리스트(10개씩 출력) */
 	public List<AllProductDTO> searchProduct(HashMap<String, String> map);
-	
-	
+	/** 로그인한 유저가 맴버쉽회원인지 조회 */
+	public UsersDTO isMembership(String username);
 }

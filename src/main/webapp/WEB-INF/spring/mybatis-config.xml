@@ -8,5 +8,6 @@
   		<typeAlias type="nong.soon.bae.bean.UsersDTO" alias="usersDTO"/>
   		<typeAlias type="nong.soon.bae.bean.MyPageDTO" alias="myPageDTO"/>
   		<typeAlias type="nong.soon.bae.bean.PaymentDTO" alias="paymentDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.ChartDTO" alias="chartDTO"/>
   	</typeAliases>
 </configuration>

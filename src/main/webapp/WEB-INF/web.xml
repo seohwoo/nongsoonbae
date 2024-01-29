@@ -31,6 +31,7 @@
 				/WEB-INF/spring/appServlet/user/chat-context.xml
 				/WEB-INF/spring/appServlet/user/pay-context.xml
 				/WEB-INF/spring/appServlet/test-context.xml
+				/WEB-INF/spring/appServlet/membership/membership-context.xml
 				/WEB-INF/spring/appServlet/admin/notice-context.xml
 				/WEB-INF/spring/appServlet/admin/usercheck-context.xml
 				/WEB-INF/spring/appServlet/user/mypage-context.xml

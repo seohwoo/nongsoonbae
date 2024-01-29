@@ -86,4 +86,24 @@
 		]]>
 	</select>
 	
+	<resultMap type="nong.soon.bae.bean.UsersDTO" id="memberMap">
+	    <id property="username" column="username"/>
+	    <result property="username" column="username"/>
+	    <result property="password" column="password"/>
+	    <result property="name" column="name"/>
+	    <result property="email" column="email"/>
+	    <result property="birth" column="birth"/>
+	    <result property="gender" column="gender"/>
+	    <result property="regsite" column="regsite"/>
+	    <collection property="grade" resultMap="authMap">
+	    </collection> 
+	  </resultMap>
+	  <resultMap type="nong.soon.bae.bean.UserGradeDTO" id="authMap">
+	    <result property="grade" column="grade"/>
+	    <result property="username" column="username"/>
+	  </resultMap>
+	
+	<select id="isMembership" parameterType="String" resultMap="memberMap">
+		select * from users where username=#{username}
+	</select>
 </mapper>

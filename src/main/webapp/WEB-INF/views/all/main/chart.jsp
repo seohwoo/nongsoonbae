@@ -41,24 +41,22 @@
 		      }
 		    }
 		  });
+		 
+		  if(${isMembership}) {
+			  document.getElementById("myChart").onclick = function clickHandler(evt) {
+				    var points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+					console.log(points);
+				    if (points.length) {
+				        var firstPoint = points[0];
+				        var month = myChart.data.labels[firstPoint.index];
+				        var year = myChart.data.datasets[firstPoint.datasetIndex].label + '년';
+				        var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+				        var name = '${catename}';
+				        window.location.href = '/membership/detailChart?year=' + year +'&month=' + month+'&value=' + value+'&name=' + name; 
+				    }
+				}
+		  }
 		  
-		  document.getElementById("myChart").onclick = function clickHandler(evt) {
-			    var points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-				console.log(points);
-			    if (points.length) {
-			        var firstPoint = points[0];
-			        var month = myChart.data.labels[firstPoint.index];
-			        var year = myChart.data.datasets[firstPoint.datasetIndex].label + '년';
-			        var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-			        var name = '${catename}';
-			        console.log(firstPoint);
-			        console.log(month);
-			        console.log(year);
-			        console.log(value);
-			        console.log(name);
-			        //window.location.href = '/membership/detailChart?label=' + label +'&labels=' + labels; 
-			    }
-			}
 		  
 		  
 		</script>

@@ -8,15 +8,20 @@
       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
    
   
-  <beans:bean id="srcValues" class="java.util.ArrayList">
+  <beans:bean id="monthList" class="java.util.ArrayList">
    	<beans:constructor-arg>
    		<beans:list value-type="String"/>
    	</beans:constructor-arg>
    </beans:bean>
-  <beans:bean id="realFiles" class="java.util.ArrayList">
+  <beans:bean id="valueList" class="java.util.ArrayList">
    	<beans:constructor-arg>
-   		<beans:list value-type="String"/>
+   		<beans:list value-type="Double"/>
    	</beans:constructor-arg>
    </beans:bean>
-  
+   <beans:bean id="membershipMap" class="java.util.HashMap" >
+   	<beans:constructor-arg>
+    	<beans:map key-type="String" value-type="String" />
+   	</beans:constructor-arg>
+   </beans:bean>
+   <beans:bean id="chartDTO" class="nong.soon.bae.bean.ChartDTO" />
 </beans:beans>
