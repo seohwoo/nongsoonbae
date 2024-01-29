@@ -37,6 +37,7 @@ import nong.soon.bae.bean.AddressDTO;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ImagesDTO;
+import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
@@ -332,18 +333,55 @@ public class ProductController {
 	}
 	
 	
-	// TEST
+	// 상품 상세정보
 	@RequestMapping("productDetail")
 	public String productDetail(Principal principal, Model model, String productnum) {
 		String username = principal.getName();
+		AllProductDTO APdto = service.selectAllProductPlusNameFollowers(productnum);
+		String follow = APdto.getUsername();
+		AreaDTO Adto1 = service.selectArea1Address(APdto.getArea1());
+		AreaDTO Adto2 = service.selectArea2Address(APdto.getArea1(), APdto.getArea2());
+		List<ProductDTO> option = service.selectProductOption(follow, productnum);
+		List<ImagesDTO> Idto = service.selectProductImages(follow, productnum);
 		
-		List<ProductDTO> Pdto = service.sampleDetails(username, productnum);
-		model.addAttribute("Pdto", Pdto);
-		
+		model.addAttribute("productnum", productnum);
+		model.addAttribute("APdto", APdto);
+		model.addAttribute("Adto1", Adto1);
+		model.addAttribute("Adto2", Adto2);
+		model.addAttribute("option", option);
+		model.addAttribute("Idto", Idto);
+		model.addAttribute("follow", follow);
 		return "/product/productDetail";
 	}
 
+	@RequestMapping("productPickPro")
+	public String productPickPro(Principal principal, Model model, String productnum, String follow, String optionnum) {
+		String username = principal.getName();
+		MyPageDTO MPdto = new MyPageDTO();
+		MPdto.setUsername(username);
+		MPdto.setFollow(follow);
+		MPdto.setProductnum(productnum);
+		MPdto.setOptionnum(optionnum);
 		
+		int pickCount = service.selectPickCount(username, productnum);
+		if(pickCount==0) {
+			service.InsertProductPick(MPdto);
+			service.allproductWishcntPlus(productnum);
+		}else {
+			service.deleteProductPick(username, productnum);
+			service.allproductWishcntMinus(productnum);
+		}
+		
+		return "redirect:/product/productMain";
+	}
+	
+	@RequestMapping("followPro")
+	public String followPro() {
+		
+		service.InsertUsernameFollow(null);
+		return "redirect:/product/productMain";
+	}
+
 }
 
 

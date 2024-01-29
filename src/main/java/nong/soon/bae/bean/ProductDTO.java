@@ -21,5 +21,5 @@ public class ProductDTO {
 	private String seqnum;
 	private String area1;
 	private String area2;
-
+	
 }

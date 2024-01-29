@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.ImagesDTO;
+import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
@@ -120,12 +121,74 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectUsernameProduct(username);
 	}
 
-
-	// sample
+	// 이름이랑 상품 가져오는 코드
 	@Override
-	public List<ProductDTO> sampleDetails(String username, String productnum) {
-		return mapper.sampleDetails(username, productnum);
+	public AllProductDTO selectAllProductPlusNameFollowers(String productnum) {
+		return mapper.selectAllProductPlusNameFollowers(productnum);
 	}
+
+	// 상품 등록한 상점 area1 주소	
+	@Override
+	public AreaDTO selectArea1Address(int area1) {
+		return mapper.selectArea1Address(area1);
+	}
+
+	// 상품 등록한 상점 area2 주소
+	@Override
+	public AreaDTO selectArea2Address(int area1, int area2) {
+		return mapper.selectArea2Address(area1, area2);
+	}
+
+	// 상품 옵션 가져오기	
+	@Override
+	public List<ProductDTO> selectProductOption(String follow, String productnum) {
+		return mapper.selectProductOption(follow, productnum);
+	}
+	
+	// 상품 이미지 가져오기
+	@Override
+	public List<ImagesDTO> selectProductImages(String follow, String productnum) {
+		return mapper.selectProductImages(follow, productnum);
+	}
+
+	// 상품 찜하기
+	@Override
+	public void InsertProductPick(MyPageDTO MPdto) {
+		mapper.InsertProductPick(MPdto);
+	}
+
+	// 상품에 찜 +1 하기
+	@Override
+	public void allproductWishcntPlus(String productnum) {
+		mapper.allproductWishcntPlus(productnum);
+	}
+	
+	// 상품 찜 유무
+	@Override
+	public int selectPickCount(String username, String productnum) {
+		return mapper.selectPickCount(username, productnum);
+	}
+
+	// 마이페이지에 상품 찜 삭제하기
+	@Override
+	public void deleteProductPick(String username, String productnum) {
+		mapper.deleteProductPick(username, productnum);
+	}
+
+	// Allproduct 상품에 찜 -1 하기
+	@Override
+	public void allproductWishcntMinus(String productnum) {
+		mapper.allproductWishcntMinus(productnum);
+	}
+
+	// 농부 팔로우하기
+	@Override
+	public void InsertUsernameFollow(MyPageDTO MPdto) {
+		mapper.InsertUsernameFollow(MPdto);
+	}
+
+
+
 	
 	
 

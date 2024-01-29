@@ -28,4 +28,6 @@ public class AllProductDTO {
 	private String seqnum;
 	private String filename;
 	private int price;
+	private String name;
+	private int followers;
 }
