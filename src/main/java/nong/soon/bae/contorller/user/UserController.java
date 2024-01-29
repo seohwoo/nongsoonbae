@@ -80,7 +80,6 @@ public class UserController {
 	public String cart(Principal principal, Model model) {
 		String username = principal.getName();
 		List<MyPageDTO> cart = service.selectcart(username);
-		logger.info("========"+cart+"=======");
 		if(cart == null) {
 			model.addAttribute("cartstatus", 0);
 		}else {
@@ -100,8 +99,9 @@ public class UserController {
 	}
 	
 	@RequestMapping("buylist")
-	public String buylist() {
-		
+	public String buylist(Principal principal, Model model) {
+		String username = principal.getName();
+		service.selectPayDetail(username, model);
 		return "/user/mypage/buylist";
 	}
 }
