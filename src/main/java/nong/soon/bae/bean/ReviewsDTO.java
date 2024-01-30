@@ -8,8 +8,9 @@ import lombok.Data;
 
 @Data
 public class ReviewsDTO {	
-	private String name;
+	private String username;
 	private String productnum;
+	private String optionnum;
 	private String content;
 	private int imagecount;
 	private int stars;

@@ -16,6 +16,15 @@
 				$("#selectedOptionNum").val(selectedOptionNum);
 			})
 		})
+		
+		
+		function openReviewWindow() {
+			var optionnum = $("#selectedOptionNum").val();
+			var productnum = ${productnum};
+			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=450,height=300,resizable=yes');
+
+		}
+</script>
 	</script>
 	
 	<body>
@@ -75,6 +84,6 @@
 		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
 		<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
 		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-			
+		<button onclick="openReviewWindow()">리뷰작성</button>	
 	</body>
 </html>

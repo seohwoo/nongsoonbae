@@ -10,6 +10,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 
 public interface ProductService {
@@ -91,6 +92,22 @@ public interface ProductService {
 	// 농부 팔로우하기
 	public void InsertUsernameFollow(MyPageDTO MPdto);
 	
+	// 농부 팔로우하면 userdetails에 followers +1 하기
+	public void userdetailsUpdateFollowersPlus(String follow);	
+	
+	// 마이페이지 농부 구독 유무
+	public int selectFollowCount(String username, String follow);
+	
+	// 농부 팔로우 취소하기
+	public void deleteFollow(String username, String follow);
+	
+	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
+	public void userdetailsUpdateFollowersMinus(String follow);	
+	
+	
+	
+	
+	
 	
 	// TEST
 	
@@ -120,7 +137,8 @@ public interface ProductService {
 	// 상품 이미지 가져오기 	
 	public List<ImagesDTO> selectProductImages(String follow, String productnum); 
 
-
+	// 상품 리뷰쓰기
+	public void reviewInsert(ReviewsDTO Rdto);
 	
 	// 상품 전체목록 보기
 	public List<AllProductDTO> selectAllproduct();	

@@ -11,6 +11,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.repository.ProductMapper;
 
@@ -167,7 +168,30 @@ public class ProductServiceImpl implements ProductService {
 	public void InsertUsernameFollow(MyPageDTO MPdto) {
 		mapper.InsertUsernameFollow(MPdto);
 	}	
+
+	// 농부 팔로우하면 userdetails에 followers +1 하기
+	@Override
+	public void userdetailsUpdateFollowersPlus(String follow) {
+		mapper.userdetailsUpdateFollowersPlus(follow);
+	}	
 	
+	// 마이페이지 농부 구독 유무
+	@Override
+	public int selectFollowCount(String username, String follow) {
+		return mapper.selectFollowCount(username, follow);
+	}
+	
+	// 농부 팔로우 취소하기
+	@Override
+	public void deleteFollow(String username, String follow) {
+		mapper.deleteFollow(username, follow);
+	}
+	
+	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
+	@Override
+	public void userdetailsUpdateFollowersMinus(String follow) {
+		mapper.userdetailsUpdateFollowersMinus(follow);
+	}	
 	
 	
 	// TEST
@@ -233,11 +257,24 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-
+	
 	@Override
 	public String CheckMyShop(String username) {
 		return mapper.CheckMyShop(username);
 	}
+
+	// 상품 리뷰쓰기
+	@Override
+	public void reviewInsert(ReviewsDTO Rdto) {
+		mapper.reviewInsert(Rdto);
+	}
+
+
+
+
+
+
+
 
 
 

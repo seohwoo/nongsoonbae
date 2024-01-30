@@ -10,6 +10,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 
 public interface ProductMapper {	
@@ -99,6 +100,22 @@ public interface ProductMapper {
 	// 농부 팔로우하기
 	public void InsertUsernameFollow(MyPageDTO MPdto);	
 	
+	// 농부 팔로우하면 userdetails에 followers +1 하기
+	public void userdetailsUpdateFollowersPlus(String follow);
+	
+	// 마이페이지 농부 구독 유무
+	public int selectFollowCount(@Param("username") String username,
+								 @Param("follow") String follow);
+	
+	// 농부 팔로우 취소하기
+	public void deleteFollow(@Param("username") String username,
+						 	 @Param("follow") String follow);
+	
+	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
+	public void userdetailsUpdateFollowersMinus(String follow);
+	
+	
+	
 	
 	// TEST
 	
@@ -129,7 +146,9 @@ public interface ProductMapper {
 	public List<ImagesDTO> selectProductImages(@Param("follow") String follow, 
 											   @Param("productnum") String productnum);
 
-
+	// 상품 리뷰쓰기
+	public void reviewInsert(ReviewsDTO Rdto);
+	
 	
 	// 상품 전체목록 보기
 	public List<AllProductDTO> selectAllproduct();

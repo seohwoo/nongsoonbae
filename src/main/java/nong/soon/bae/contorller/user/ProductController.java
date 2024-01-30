@@ -255,6 +255,7 @@ public class ProductController {
 		model.addAttribute("address" , address);
 		model.addAttribute("SLdto", SLdto);
 		model.addAttribute("APdto", APdto);
+		model.addAttribute("follow", username);
 		return "/product/productMyShop";
 	}
 	
@@ -305,14 +306,31 @@ public class ProductController {
 	@RequestMapping("followPro")
 	public String followPro(String follow, Principal principal) {
 		String username = principal.getName();
-		
 		MyPageDTO MPdto = new MyPageDTO();
 		MPdto.setUsername(username);
 		MPdto.setFollow(follow);
 		
-		service.InsertUsernameFollow(MPdto);
+		int followCount = service.selectFollowCount(username, follow);
+		if(followCount==0) {
+			service.InsertUsernameFollow(MPdto);
+			service.userdetailsUpdateFollowersPlus(follow);
+		}else {
+			service.deleteFollow(username, follow);
+			service.userdetailsUpdateFollowersMinus(follow);
+		}
+		
 		return "redirect:/product/productMain";
 	}	
+	
+	// 리뷰 작성하기
+	@RequestMapping("productReview")
+	public String productReview(Principal principal, String optionnum, String productnum, Model model) {
+		String username = principal.getName();
+		// 닉네임 가져오기
+		String name = service.selectMyName(username);
+		
+		return "/product/productReview";
+	}
 	
 	
 	// 상품 상세정보 짭?
@@ -359,8 +377,13 @@ public class ProductController {
 	}
 	
 
-
-	
+	// TEST
+	@RequestMapping("sample")
+	public String sample(String optionnum, Model model, String productnum) {
+		model.addAttribute("optionnum", optionnum);
+		model.addAttribute("productnum", productnum);
+		return "product/sample";
+	}
 	
 	
 	

@@ -191,11 +191,39 @@
 			values (
 				#{username}, 
 				#{follow},  
-				3 )
+				2 )
 	</insert>
 
+	<!-- 농부 팔로우하면 userdetails에 followers +1 하기 -->
+	<update id="userdetailsUpdateFollowersPlus" parameterType="String">
+		UPDATE userdetails SET followers = followers + 1 WHERE username = #{follow}
+	</update>
+
+	<!-- 마이페이지 농부 구독 유무 -->
+	<select id="selectFollowCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage where wishstatus=2 and follow=#{follow}
+	</select>
+	
+	<!-- 농부 팔로우 취소하기 -->
+	<delete id="deleteFollow" parameterType="String">
+		delete from ${username}_mypage where wishstatus=2 and follow=#{follow}
+	</delete>
+
+	<!-- 농부 팔로우 취소하면 userdetails에 followers -1 하기 -->
+	<update id="userdetailsUpdateFollowersMinus" parameterType="String">
+		UPDATE userdetails SET followers = followers - 1 WHERE username = #{follow}
+	</update>
+
+
+
+	
 	
 	<!-- TEST -->
+	
+	
+	
+	
+	
 	
 	<!-- 내 상점 페이지에 필요한 정보들 가져오기 -->
 	<select id="selectMyShop" resultType="nong.soon.bae.bean.ShopListDTO" parameterType="String">
@@ -247,7 +275,18 @@
 		select * from ${follow}_images where productnum=#{productnum}
 	</select>
 
-
+	<!-- 상품 리뷰쓰기 -->
+	<insert id="reviewInsert" parameterType="nong.soon.bae.bean.ReviewsDTO"> 
+		insert into P_${productnum}_reviews (username, productnum, optionnum content, imagecount, stars, regdate) 
+			values (
+				#{name}, 
+				#{productnum}, 
+				#{optionnum}, 
+				#{content}, 
+				#{imagecount}, 
+				#{stars}, 
+				sysdate )
+	</insert>
 
 
 
