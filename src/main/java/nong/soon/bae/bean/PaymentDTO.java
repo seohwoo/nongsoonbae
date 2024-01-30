@@ -8,6 +8,7 @@ public class PaymentDTO {
 	
 	private String paymentnum;
 	private String username;
+	private String follow;
 	private String productnum;
 	private String optionnum;
 	private String itemname;

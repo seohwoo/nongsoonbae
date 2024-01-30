@@ -66,6 +66,7 @@
 	<insert id="createPayment">
 		create table ${username}_payment (
 			username varchar2(50) not null,
+			follow varchar2(50),
 			productnum varchar2(50) not null,
 			optionnum varchar2(50) not null,
 			realprice number not null,
@@ -88,5 +89,12 @@
 	<update id="changePass" parameterType="hashMap">
 		update users set password=#{password} where username=#{username}
 	</update>
+	
+	<update id="UserDelete">
+		update users set grade='ROLE_DELETEUSER' where username=#{username}
+	</update>
+	<select id="checkIfUserIsDeleted" resultType="String">
+		select grade from users where username=#{username}
+	</select>
 </mapper>    
     

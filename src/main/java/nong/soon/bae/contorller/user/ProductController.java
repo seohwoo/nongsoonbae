@@ -62,12 +62,18 @@ public class ProductController {
 	@RequestMapping("productMain")
 	public String productMain(Model model, Principal principal) {
 		String username = principal.getName();		
+		String check = service.CheckMyShop(username);
+		if(check == null) {
+			model.addAttribute("status", 0);
+		}else {
+			model.addAttribute("status", 1);
+			// 내 이름 가져오기
+			String myName = service.selectMyName(username);
+			
+			model.addAttribute("myName", myName);
+			model.addAttribute("username", username);
+		}
 		
-		// 내 이름 가져오기
-		String myName = service.selectMyName(username);
-		
-		model.addAttribute("myName", myName);
-		model.addAttribute("username", username);
 		return "product/productMain";
 	}	
 	

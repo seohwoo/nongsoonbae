@@ -44,11 +44,11 @@
 	</select>
 	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
 		<![CDATA[
-			select c.optionname, c.price, i.filename, s.shopname
-			from (select c.*, rownum r from (select * from ${username}_product where productnum=#{productnum}) c) c
-			join ${username}_image i on c.productnum = i.productnum
-			join shoplist s on c.username = s.username
-			where r >= #{start} and r <= #{end}
+			select m.count, i.filename, p.optionname, p.price, p.optionnum, s.shopname from
+			(select * from ${follow}_product where optionnum=#{optionnum}) p
+			left join ${follow}_images i on p.productnum=i.productnum AND i.filename LIKE '%\_1%' escape '\'
+			left join ${username}_mypage m on m.follow=p.username
+			left join shoplist s on s.username=p.username
 		]]>
 	</select>
 	<delete id="deleteLike">
@@ -57,4 +57,23 @@
 	<delete id="deleteFarmer">
 		DELETE FROM ${username}_mypage WHERE follow = #{follow} AND wishstatus = 2
 	</delete>
+	<delete id="deleteCart">
+		delete from ${username}_mypage where optionnum=#{optionnum} and wishstatus=3
+	</delete>
+	
+	<!-- 정기결제 구매 내역 제외 -->
+	<select id="selectPay" resultType="nong.soon.bae.bean.PaymentDTO">
+		select * from ${username}_payment where sid='simple payment'
+	</select>
+	<select id="selectPayDetail" parameterType="HashMap" resultType="nong.soon.bae.bean.MyPageDTO">
+		<![CDATA[
+			select m.orderdate, m.realprice, a.productname, p.optionname, s.shopname from
+			(select * from ${username}_payment where sid='simple payment') m
+			left join allproduct a on m.follow=a.username
+			left join ${follow}_product p on m.optionnum=p.optionnum
+			left join shoplist s on m.follow=s.username
+		]]>
+	</select>
+	
+	
 </mapper>

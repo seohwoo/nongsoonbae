@@ -234,6 +234,11 @@ public class ProductServiceImpl implements ProductService {
 
 
 
+	@Override
+	public String CheckMyShop(String username) {
+		return mapper.CheckMyShop(username);
+	}
+
 
 
 	

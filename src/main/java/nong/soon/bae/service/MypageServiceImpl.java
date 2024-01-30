@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
@@ -24,8 +25,7 @@ public class MypageServiceImpl implements MypageService {
 	MypageMapper mapper;
 	@Autowired
 	MyPageDTO dto;
-	@Autowired
-	private HashMap<String, String> SelectMyCartMap;
+	
 
 	@Override
 	public List<MyPageDTO> selectLike(String username) {		
@@ -69,7 +69,7 @@ public class MypageServiceImpl implements MypageService {
 	public void selectFarmerDetail(String username, Model model, int listNum) {
 		int categorySize = 10;
 		int cnt = mapper.cntfarmer(username);
-		List<MyPageDTO> user = selectLike(username);
+		List<MyPageDTO> user = selectfarmer(username);
 		int maxCategoryNum = (int) (cnt / categorySize) + (cnt % categorySize == 0 ? 0 : 1);
 		if(listNum < 1) {
 			listNum = 1;
@@ -92,7 +92,6 @@ public class MypageServiceImpl implements MypageService {
 	public void deleteLike(String username, String productnum) {
 		dto.setUsername(username);
 		dto.setProductnum(productnum);
-		System.out.println(dto);
 		mapper.deleteLike(dto);
 	}
 
@@ -102,6 +101,51 @@ public class MypageServiceImpl implements MypageService {
 		dto.setFollow(follow);
 		mapper.deleteFarmer(dto);
 	}
-	
+
+	@Override
+	public void selectMyCart(String username, Model model) {
+		List<MyPageDTO> user = selectcart(username);
+		List<MyPageDTO> list = new ArrayList<>();
+		for (MyPageDTO myPageDTO : user) {
+		    HashMap<String, String> SelectMyCartMap = new HashMap<>();
+		    SelectMyCartMap.put("username", username);
+		    SelectMyCartMap.put("follow", myPageDTO.getFollow());
+		    SelectMyCartMap.put("optionnum", myPageDTO.getOptionnum());
+		    List<MyPageDTO> tempList = mapper.selectMyCart(SelectMyCartMap);
+		    list.addAll(tempList);
+		}
+		model.addAttribute("MyCart", list);
+	}
+
+	@Override
+	public void deleteCart(String username, String optionnum) {
+		dto.setUsername(username);
+		dto.setOptionnum(optionnum);
+		mapper.deleteCart(dto);	
+	}
+
+	@Override
+	public List<PaymentDTO> selectPay(String username) {
+		return mapper.selectPay(username);
+	}
+
+	@Override
+	public void selectPayDetail(String username, Model model) {
+		List<PaymentDTO> pay = selectPay(username);
+		System.out.println(pay);
+		List<MyPageDTO> list = new ArrayList<>();
+		for (PaymentDTO PaymentDTO : pay) {
+		    HashMap<String, String> SelectPayMap = new HashMap<>();
+		    SelectPayMap.put("username", username);
+		    SelectPayMap.put("follow", PaymentDTO.getFollow());
+		    System.out.println(username);
+		    System.out.println(PaymentDTO.getFollow());
+		    List<MyPageDTO> tempList = mapper.selectPayDetail(SelectPayMap);
+		    list.addAll(tempList);
+		    System.out.println(list);
+		}
+		model.addAttribute("paylist", list);
+		
+	}
 	
 }
