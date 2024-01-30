@@ -9,5 +9,6 @@
   		<typeAlias type="nong.soon.bae.bean.MyPageDTO" alias="myPageDTO"/>
   		<typeAlias type="nong.soon.bae.bean.PaymentDTO" alias="paymentDTO"/>
   		<typeAlias type="nong.soon.bae.bean.ChartDTO" alias="chartDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.ProductListDTO" alias="productListDTO"/>
   	</typeAliases>
 </configuration>

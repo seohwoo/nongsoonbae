@@ -38,7 +38,7 @@
 	<div style="display: flex;">
 		<c:if test="${cnt >  0 }" >
 			<c:forEach var="dto" items="${productlist}">
-			      <h1>${dto.productname}</h1>
+			     <%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 			</c:forEach>  
 		</c:if>	
 	</div>

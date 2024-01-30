@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
-import nong.soon.bae.bean.MainProductDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.ProductListDTO;
 import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.repository.MainMapper;
 
@@ -30,6 +30,8 @@ public class MainServiceImpl implements MainService {
 	private ArrayList<Double> thislist;
 	@Autowired
 	private ArrayList<Double> lastlist;
+	@Autowired
+	private ArrayList<ProductListDTO> productList;
 
 	public String[] todayInfo() {
 		Date date = new Date();
@@ -75,10 +77,11 @@ public class MainServiceImpl implements MainService {
 		List<AllProductDTO> list = Collections.EMPTY_LIST;
 		if(cnt > 0) {
 			list = mapper.seasonProduct(seasonCategoryMap);
+			showProduct(list);
 		}
 		model.addAttribute("catename", catename);
 		model.addAttribute("productCnt", cnt);
-		model.addAttribute("productList", list);
+		model.addAttribute("productList", productList);
 	}
 
 	@Override
@@ -205,13 +208,17 @@ public class MainServiceImpl implements MainService {
 	/**
 	 * main에 보여줄 값을 한번에 저장하기 위해 사용(일단보류)
 	 * */
-	public List<MainProductDTO> showProduct(List<AllProductDTO> alprList) {
-		List<MainProductDTO> list = Collections.EMPTY_LIST;
-		MainProductDTO dto = null;
+	public void showProduct(List<AllProductDTO> alprList) {
+		productList.clear();
+		ProductListDTO dto = null;
 		for (AllProductDTO alprDTO : alprList) {
-			
+			seasonCategoryMap.put("username", alprDTO.getUsername());
+			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
+			String keyword = alprDTO.getProductnum() + "_1%";
+			seasonCategoryMap.put("keyword", keyword);
+			dto = mapper.findProductListValue(seasonCategoryMap);
+			productList.add(dto);		
 		}
-		return list;
 	}
 
 	@Override

@@ -25,7 +25,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
 				/WEB-INF/spring/appServlet/servlet-context.xml
-				/WEB-INF/spring/appServlet/user/main-context.xml
+				/WEB-INF/spring/appServlet/all/main-context.xml
 				/WEB-INF/spring/appServlet/user/mail-context.xml
 				/WEB-INF/spring/appServlet/user/product-context.xml
 				/WEB-INF/spring/appServlet/user/chat-context.xml

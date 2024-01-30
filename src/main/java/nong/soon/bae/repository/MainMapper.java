@@ -6,6 +6,7 @@ import java.util.List;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.ChartDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.ProductListDTO;
 import nong.soon.bae.bean.UsersDTO;
 
 public interface MainMapper {
@@ -39,4 +40,6 @@ public interface MainMapper {
 	public List<AllProductDTO> searchProduct(HashMap<String, String> map);
 	/** 로그인한 유저가 맴버쉽회원인지 조회 */
 	public UsersDTO isMembership(String username);
+	/** 전체 상품 리스트 중 한칸에 들어가는 모든 정보*/
+	public ProductListDTO findProductListValue(HashMap<String, String> map);
 }
