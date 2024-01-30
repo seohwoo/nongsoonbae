@@ -89,5 +89,12 @@
 	<update id="changePass" parameterType="hashMap">
 		update users set password=#{password} where username=#{username}
 	</update>
+	
+	<update id="UserDelete">
+		update users set grade='ROLE_DELETEUSER' where username=#{username}
+	</update>
+	<select id="checkIfUserIsDeleted" resultType="String">
+		select grade from users where username=#{username}
+	</select>
 </mapper>    
     

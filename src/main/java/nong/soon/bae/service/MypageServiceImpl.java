@@ -140,7 +140,7 @@ public class MypageServiceImpl implements MypageService {
 		    SelectPayMap.put("follow", PaymentDTO.getFollow());
 		    System.out.println(username);
 		    System.out.println(PaymentDTO.getFollow());
-		    List<MyPageDTO> tempList = mapper.selectMyCart(SelectPayMap);
+		    List<MyPageDTO> tempList = mapper.selectPayDetail(SelectPayMap);
 		    list.addAll(tempList);
 		    System.out.println(list);
 		}

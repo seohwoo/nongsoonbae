@@ -46,9 +46,9 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 
 		String rdir = "/nsb/main";
 		if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
-            rdir = "/nsb/main";
+            rdir = "/admin/usercheck";
         } else if (authorities.contains(new SimpleGrantedAuthority("MEMBER"))) {
-            rdir = "/nsb/main";
+            rdir = "/user/mypage";
         }
 		response.sendRedirect(rdir);
 	}

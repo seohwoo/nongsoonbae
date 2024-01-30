@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: 17%">
 	<div class="container like">
       <h1>구매내역</h1><br />
-		  <c:if test="${paylist==0 }">
+		  <c:if test="${buystatus==0 }">
 		  	<div>
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -18,7 +19,7 @@
 			</div>
 		  </c:if>
 		  
-		  <c:if test="${paylist != 0}">
+		  <c:if test="${buystatus != 0}">
 		  <div>
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -37,7 +38,7 @@
 							<td><a href="#">${pay.productname}</a><p class="g-table-list-col-small-copy">${pay.optionname}</p></td>
 							<td class="g-table-list-rwd"><a href="#">${pay.shopname}</a></td>
 							<td>${pay.realprice}원</td>
-							<td class="g-table-list-date">${pay.orderdate}</td>
+							<td class="g-table-list-date"><fmt:formatDate value="${pay.orderdate}" dateStyle="short" type="date"/></td>
 						</tr>
 					</tbody>
 				</c:forEach>
