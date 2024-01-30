@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.service.UserCheckService;
 
 @Controller
@@ -36,19 +37,37 @@ public class UserCheckController {
 		return "admin/usercheck/searchResult";
 	}
 	
-	@RequestMapping("/userall") //일반 유저 리스트 
-	public String userall(Model model,@RequestParam(value="pageNum", defaultValue="1") int pageNum) {
-		service.userlist(pageNum, model);
-		return "admin/usercheck/userall";
-	}
 	
 	@RequestMapping("/stopPro") //회원 정지하기 
 	public String stopPro(@RequestParam("username") String username, 
-            				@RequestParam("reason") String reason) {
-		service.userstop(username);
-		service.blacklistInsert(username,reason);
-		return "redirect:/admin/usercheck";
+	                      @RequestParam("reason") String reason,
+	                      RedirectAttributes redirectAttributes) {
+	    boolean success = true;
+
+	    try {
+	        service.userstop(username);
+	        service.blacklistInsert(username, reason);
+	        
+	        List<ShopListDTO> findUser = service.findShop(username);
+	        //정지 대상 회원의 상점이 있는 경우 상점 또한 정지하기 
+	        if (findUser != null) {
+	            service.shopstop(username); 
+	            service.allstop(username);
+	        }
+	    } catch (Exception e) {
+	        success = false;
+	        
+	    }
+	    if (success) {
+	        redirectAttributes.addFlashAttribute("stopstatus", 1); // 성공 메시지 전달
+	        
+	    } else {
+	        redirectAttributes.addFlashAttribute("stopstatus", 0); // 실패 메시지 전달
+	    }
+
+	    return "redirect:/admin/usercheck";
 	}
+
 	
 	@RequestMapping("/blacklist")	//정지회원목록
 	public String blacklist(Model model,@RequestParam(value="pageNum", defaultValue="1") int pageNum) {
@@ -63,11 +82,28 @@ public class UserCheckController {
 	}
 	
 	@RequestMapping("/reuserPro") //정지회원복구하기
-	public String reuserPro(@RequestParam("username") String username) {
-		service.reuser(username);
-		service.deleteblacklist(username);
-		return "redirect:/admin/blacklist";
+	public String reuserPro(@RequestParam("username") String username,
+	                        RedirectAttributes redirectAttributes) {
+	    boolean resuccess = false;
+
+	    service.reuser(username);
+	    service.deleteblacklist(username);
+	    // 정지 회원 상점 복구
+	    List<ShopListDTO> refindUser = service.findShop(username);
+	    if(refindUser != null) {
+	        service.reshop(username);
+	        service.reall(username);
+	    }
+	    resuccess = true;
+	    if (resuccess) {
+	        redirectAttributes.addFlashAttribute("restatus", 1); // 복구 성공 메시지 전달
+	    } else {
+	        redirectAttributes.addFlashAttribute("restatus", 0); // 복구 실패 메시지 전달
+	    }
+
+	    return "redirect:/admin/blacklist";
 	}
+
 	
 	@RequestMapping("addcategory") //게시판 물품 카테고리 메인페이지 
 	public String addcategory(Model model,@RequestParam(value="cate1Select",required = false ) String cate1Select, String isImg ) {
@@ -84,7 +120,6 @@ public class UserCheckController {
 		return "admin/usercheck/addcategory";
 	}
 	
-
 	@RequestMapping("addCatePro") //대분류 카테고리 추가하기
 	public String addCatePro(Model model, @RequestParam(value="num") int num,
 	                         @RequestParam("addCate") String addCate, 
