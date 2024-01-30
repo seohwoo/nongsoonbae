@@ -14,7 +14,7 @@
 	<br />
 	<span>${dto.cate_name}</span>
 	<br />
-	<span>별점 : ${dto.total_stars}(${dto.review_count}) , 조회수 : ${dto.readcnt}, 찜개수 : ${dto.wishcnt}</span>
+	<span>별점 : ${dto.avg_stars}(${dto.review_count}) , 조회수 : ${dto.readcnt}, 찜개수 : ${dto.wishcnt}</span>
 	<br />
 	<span><fmt:formatDate value="${dto.startdate}" dateStyle="long" type="date"/></span>
 </div>

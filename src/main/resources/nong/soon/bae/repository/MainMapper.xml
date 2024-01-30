@@ -127,9 +127,9 @@
 		    (SELECT MIN(price) 
 		     FROM ${username}_product 
 		     WHERE username = ap.username AND productnum = ap.productnum) AS min_price,
-		    (SELECT SUM(stars) 
-		     FROM P_${productnum}_reviews 
-		     WHERE productnum = ap.productnum) AS total_stars,
+		    ROUND((SELECT AVG(stars) 
+           	FROM P_${productnum}_reviews 
+           	WHERE productnum = ap.productnum), 1) AS avg_stars,
 		    (SELECT COUNT(*) 
 		     FROM P_${productnum}_reviews 
 		     WHERE productnum = ap.productnum) AS review_count,
