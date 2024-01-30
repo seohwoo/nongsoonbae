@@ -61,6 +61,47 @@ public interface ProductMapper {
 	
 	// TEST
 
+	// 상품 정보 페이지
+	public AllProductDTO selectProductInfo(@Param("follow") String follow, 
+										   @Param("productnum") String productnum);
+	
+	// 상품 올린 사람의 주소, 이름, 팔로우 찾기
+	public AllProductDTO selectProductNameAddressFollowers(String follow);
+	
+	// 상품 옵션들 가져오기
+	public List<ProductDTO> selectProductOptionAll(@Param("follow") String follow, 
+			   									   @Param("productnum") String productnum);
+	
+	// 상품 사진 가져오기
+	public List<AllProductDTO> selectProductImagesAll(@Param("follow") String follow, 
+													  @Param("productnum") String productnum);
+
+	// 상품 찜하기
+	public void InsertProductPick(MyPageDTO MPdto);
+	
+	// 상품에 찜 +1 하기
+	public void allproductWishcntPlus(String productnum);
+	
+	// 상품 찜 유무
+	public int selectPickCount(@Param("username") String username, 
+							   @Param("productnum") String productnum);
+
+	// 마이페이지에 상품 찜 삭제하기
+	public void deleteProductPick(@Param("username") String username, 
+								  @Param("productnum") String productnum);
+	
+	// Allproduct 상품에 찜 -1 하기
+	public void allproductWishcntMinus(String productnum);
+	
+	// 농부 팔로우하기
+	public void InsertUsernameFollow(MyPageDTO MPdto);	
+	
+	
+	// TEST
+	
+	
+	
+	
 	// 내 상점 페이지에 필요한 정보들 가져오기
 	public ShopListDTO selectMyShop(String username);
 	
@@ -85,25 +126,10 @@ public interface ProductMapper {
 	public List<ImagesDTO> selectProductImages(@Param("follow") String follow, 
 											   @Param("productnum") String productnum);
 
-	// 상품 찜하기
-	public void InsertProductPick(MyPageDTO MPdto);
-	
-	// 상품에 찜 +1 하기
-	public void allproductWishcntPlus(String productnum);
-	
-	// 상품 찜 유무
-	public int selectPickCount(@Param("username") String username, 
-							   @Param("productnum") String productnum);
 
-	// 마이페이지에 상품 찜 삭제하기
-	public void deleteProductPick(@Param("username") String username, 
-								  @Param("productnum") String productnum);
 	
-	// Allproduct 상품에 찜 -1 하기
-	public void allproductWishcntMinus(String productnum);
-	
-	// 농부 팔로우하기
-	public void InsertUsernameFollow(MyPageDTO MPdto);
+	// 상품 전체목록 보기
+	public List<AllProductDTO> selectAllproduct();
 }
 	
 	

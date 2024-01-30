@@ -30,4 +30,5 @@ public class AllProductDTO {
 	private int price;
 	private String name;
 	private int followers;
+	private String address;
 }

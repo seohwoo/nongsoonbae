@@ -19,7 +19,7 @@
 		<table width="600" border="1" style="text-align: center;">
 			<img src="/resources/file/profile/${SLdto.image}" width="100px" height="100px" />
 			
-			<input type="button" value="follow" onclick="javascript:window.location='/product/productMain'">
+			<input type="button" value="follow" onclick="javascript:window.location='/product/followPro?follow=${follow}'">
 			
 			<tr> 
 				<td width="200">농부이름</td>
@@ -72,7 +72,7 @@
 			<c:forEach var="APdto" items="${APdto}"> 
 				<tr>
 					<td>
-						<img src="/resources/realImage/${APdto.filename}">
+						<img src="/resources/realImage/${APdto.filename}" width="100px" height="100px">
 					</td>
 					<td>
 						<a href="/product/productDetail?productnum=${APdto.productnum}">${APdto.productnum}</a>	

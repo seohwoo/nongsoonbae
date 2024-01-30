@@ -8,19 +8,19 @@
 	</head>
 	
 	<body>
-		<h3>상품 메인 TEST</h3>
+		<h3>임시 상품 메인 </h3>
 		<table border="1px" style="text-align: center;">
 			<tr>
 				<td>상품넘버</td>
 				<td>상품이름</td>
-				<td>이름</td>
 			</tr>
 			
-			<c:forEach var="dto" items="${allProductDTO}">
+			<c:forEach var="APdto" items="${APdto}">
 				<tr>
-					<td><a href="/product/productDetail?productnum=${dto.productnum}">${dto.productnum}</a></td>
-					<td>${dto.productname}</td>
-					<td>${dto.username}</td>			
+					<td>
+						<a href="/product/productInfo?productnum=${APdto.productnum}&follow=${APdto.username}">${APdto.productnum}</a>
+					</td>
+					<td>${APdto.productname}</td>			
 				</tr>				
 			</c:forEach>
 		</table>

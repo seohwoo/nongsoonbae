@@ -100,48 +100,33 @@ public class ProductController {
 	
 	// TEST
 	
-	// 상품 등록하기
+	// 상품 등록하는 페이지
 	@RequestMapping("productWriteForm")
 	public String productWriteForm(String myName, Model model, Principal principal) {
 		model.addAttribute("myName", myName);
 		
-		// TEST
+		// cate1 값 가져오기
 		List<ProductCategoryDTO> cate1 = service.selectCate1();
 		model.addAttribute("cate1", cate1);
-		logger.info("cate1======="+cate1);
 		return "/product/productWriteForm";
 	}
-	//
+	
+	// cate2 값 가져오기
 	@RequestMapping("productWriteForm2")
 	public String selectCate2(Model model , int cate1) {
+		// cate2 값 가져오기
 		List<ProductCategoryDTO> cate2 = service.selectCate2(cate1);
 		model.addAttribute("cate2", cate2);
-		logger.info("cate1======="+cate1);
-		logger.info("cate2======="+cate2);
 		return "/product/productWriteForm2";
 	}
 	
+	// cate3 값 가져오기
 	@RequestMapping("productWriteForm3")
 	public String selectCate3(Model model ,int cate1, int cate2) {
+		// cate3 값 가져오기
 		List<ProductCategoryDTO> cate3 = service.selectCate3(cate1, cate2);
 		model.addAttribute("cate3", cate3);
-		logger.info("cate1======="+cate1);
-		logger.info("cate2======="+cate2);
-		logger.info("cate3======="+cate3);
 		return "/product/productWriteForm3";
-	}	
-	//
-	
-	@RequestMapping("product")
-	public String product(Model model ,int cate1, int cate2, int cate3) {
-		
-		model.addAttribute("cate1", cate1);
-		model.addAttribute("cate2", cate2);
-		model.addAttribute("cate3", cate3);
-		logger.info("cate1======="+cate1);
-		logger.info("cate2======="+cate2);
-		logger.info("cate3======="+cate3);
-		return "/product/product";
 	}	
 	
 	// 상품 등록하기
@@ -153,13 +138,8 @@ public class ProductController {
 								  @RequestParam("optiontotalprice") int[] optiontotalprice,
 								  @RequestParam("optionProductCount") int[] optionProductCount) {
 
-		String username = principal.getName();
-		
+		String username = principal.getName();		
 		String categorynum = String.valueOf(cate1) + String.valueOf(cate2) + String.valueOf(cate3);
-		
-		logger.info("cate1======="+cate1);
-		logger.info("cate2======="+cate2);
-		logger.info("cate3======="+cate3);
 		
 		APdto.setCate1(cate1);
 		APdto.setCate2(cate2);
@@ -184,20 +164,17 @@ public class ProductController {
 		
 		APdto.setArea1(area1);
 		APdto.setArea2(area2);
-		
-
-		
+				
 		// AllProduct 상품 등록하기
 		service.productInsert(APdto);
 		
 		String productnum = service.selectAllProductLastProductNum(username).get(0).getProductnum();
 		String createReviewsProductnum = "P_"+productnum;
 		
+		// 상품 번호로 리뷰 테이블 만들기
 		service.createReviews(createReviewsProductnum);
 
-		
-		
-		
+		// 스마트 에디터?
 		String content = APdto.getContent();
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
@@ -217,7 +194,7 @@ public class ProductController {
 					String realname = productnum+"_"+cnt+ext;
 					Idto.setFilename(realname);
 					
-					
+					// 파일 넣기
 					service.imagesInsert(Idto);
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
 					cnt++;
@@ -246,17 +223,18 @@ public class ProductController {
 			// username_product 옵션들 넣기
 			service.optionInsert(Pdto);
 		}
-		
 		return "/product/productWritePro";
 	}	
 	
+	// FINISH
+	
 	// 상점 정보 가져오는 주소
 	@RequestMapping("productMyShop")
-	public String selectMyShop(Model model, String username) {
+	public String selectMyShop(Principal principal, Model model, String username) {
+		
 		ShopListDTO SLdto = service.selectMyShop(username);
 		List<AllProductDTO> APdto = service.selectUsernameProduct(username);
-		
-		
+				
 		// 상점 주소 
 		String fullAddress = SLdto.getAddress();
 		// 공백 기준으로 자르기
@@ -274,11 +252,121 @@ public class ProductController {
 		return "/product/productMyShop";
 	}
 	
+	// 일단 상점 메인
+	@RequestMapping("allProduct")
+	public String selectAllproduct(Model model) {
+		List<AllProductDTO> APdto = service.selectAllproduct();
+		model.addAttribute("APdto", APdto);
+		return "/product/allProduct";
+	}
+	
+	// 상품 상세정보
+	@RequestMapping("productInfo")
+	public String productInfo(String productnum, Model model, String follow) {
+		// 상품 정보 페이지
+		AllProductDTO APdto = service.selectProductInfo(follow, productnum);
+		// 상품 올린 사람의 주소, 이름, 팔로우 찾기
+		AllProductDTO APdtoNAF = service.selectProductNameAddressFollowers(follow);
+		// 상품 옵션들 가져오기
+		List<ProductDTO> Pdto = service.selectProductOptionAll(follow, productnum);
+		// 상품 사진 가져오기
+		List<AllProductDTO> Images = service.selectProductImagesAll(follow, productnum);
+		
+		
+		// 상점 주소 
+		String fullAddress = APdtoNAF.getAddress();
+		// 공백 기준으로 자르기
+		String[] addressParts = fullAddress.split(" ");
+		// area1 주소
+		String area1Address = addressParts[0];
+		// area2 주소
+		String area2Address = addressParts[1];
+		// 주소 합쳐
+		String address = area1Address + " " + area2Address;		
+		
+		
+		model.addAttribute("follow", follow);
+		model.addAttribute("productnum", productnum);
+		model.addAttribute("APdto", APdto);
+		model.addAttribute("APdtoNAF", APdtoNAF);
+		model.addAttribute("address", address);
+		model.addAttribute("Pdto", Pdto);
+		model.addAttribute("Images", Images);
+		return "/product/productInfo";
+	}
+
+	// 팔로우하기
+	@RequestMapping("followPro")
+	public String followPro(String follow, Principal principal) {
+		String username = principal.getName();
+		
+		MyPageDTO MPdto = new MyPageDTO();
+		MPdto.setUsername(username);
+		MPdto.setFollow(follow);
+		
+		service.InsertUsernameFollow(MPdto);
+		return "redirect:/product/productMain";
+	}	
+	
+	
+	// 상품 상세정보 짭?
+	@RequestMapping("productDetail")
+	public String productDetail(Principal principal, Model model, String productnum) {
+		String username = principal.getName();
+		AllProductDTO APdto = service.selectAllProductPlusNameFollowers(productnum);
+		String follow = APdto.getUsername();
+		AreaDTO Adto1 = service.selectArea1Address(APdto.getArea1());
+		AreaDTO Adto2 = service.selectArea2Address(APdto.getArea1(), APdto.getArea2());
+		List<ProductDTO> option = service.selectProductOption(follow, productnum);
+		List<ImagesDTO> Idto = service.selectProductImages(follow, productnum);
+		
+		model.addAttribute("productnum", productnum);
+		model.addAttribute("APdto", APdto);
+		model.addAttribute("Adto1", Adto1);
+		model.addAttribute("Adto2", Adto2);
+		model.addAttribute("option", option);
+		model.addAttribute("Idto", Idto);
+		model.addAttribute("follow", follow);
+		return "/product/productDetail";
+	}
+
+	// 찜하기
+	@RequestMapping("productPickPro")
+	public String productPickPro(Principal principal, Model model, String productnum, String follow, String optionnum) {
+		String username = principal.getName();
+		MyPageDTO MPdto = new MyPageDTO();
+		MPdto.setUsername(username);
+		MPdto.setFollow(follow);
+		MPdto.setProductnum(productnum);
+		MPdto.setOptionnum(optionnum);
+		
+		int pickCount = service.selectPickCount(username, productnum);
+		if(pickCount==0) {
+			service.InsertProductPick(MPdto);
+			service.allproductWishcntPlus(productnum);
+		}else {
+			service.deleteProductPick(username, productnum);
+			service.allproductWishcntMinus(productnum);
+		}
+		
+		return "redirect:/product/productMain";
+	}
+	
+
+
 	
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	 // 스마트 에디터?
 	 public void isFile(String[] filenames, String content) {
 		 srcValues.clear();
 		 realFiles.clear();
@@ -331,57 +419,6 @@ public class ProductController {
 	      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
 	   }
 	}
-	
-	
-	// 상품 상세정보
-	@RequestMapping("productDetail")
-	public String productDetail(Principal principal, Model model, String productnum) {
-		String username = principal.getName();
-		AllProductDTO APdto = service.selectAllProductPlusNameFollowers(productnum);
-		String follow = APdto.getUsername();
-		AreaDTO Adto1 = service.selectArea1Address(APdto.getArea1());
-		AreaDTO Adto2 = service.selectArea2Address(APdto.getArea1(), APdto.getArea2());
-		List<ProductDTO> option = service.selectProductOption(follow, productnum);
-		List<ImagesDTO> Idto = service.selectProductImages(follow, productnum);
-		
-		model.addAttribute("productnum", productnum);
-		model.addAttribute("APdto", APdto);
-		model.addAttribute("Adto1", Adto1);
-		model.addAttribute("Adto2", Adto2);
-		model.addAttribute("option", option);
-		model.addAttribute("Idto", Idto);
-		model.addAttribute("follow", follow);
-		return "/product/productDetail";
-	}
-
-	@RequestMapping("productPickPro")
-	public String productPickPro(Principal principal, Model model, String productnum, String follow, String optionnum) {
-		String username = principal.getName();
-		MyPageDTO MPdto = new MyPageDTO();
-		MPdto.setUsername(username);
-		MPdto.setFollow(follow);
-		MPdto.setProductnum(productnum);
-		MPdto.setOptionnum(optionnum);
-		
-		int pickCount = service.selectPickCount(username, productnum);
-		if(pickCount==0) {
-			service.InsertProductPick(MPdto);
-			service.allproductWishcntPlus(productnum);
-		}else {
-			service.deleteProductPick(username, productnum);
-			service.allproductWishcntMinus(productnum);
-		}
-		
-		return "redirect:/product/productMain";
-	}
-	
-	@RequestMapping("followPro")
-	public String followPro() {
-		
-		service.InsertUsernameFollow(null);
-		return "redirect:/product/productMain";
-	}
-
 }
 
 

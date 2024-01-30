@@ -5,42 +5,76 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>상품 페이지</title>
+		<script src="/resources/js/jquery-3.7.1.min.js"></script>
 	</head>
+
+	<script>
+		$(function() {
+			$("#Pdto").on("change", function() {
+				var selectedOptionNum = $("#Pdto").val();
+				$("#selectedOptionNum").val(selectedOptionNum);
+			})
+		})
+	</script>
 	
 	<body>
-		<h3>${productDTO.productname} 상품 정보</h3>
-		<hr />
 		<table border="1px" style="text-align: center;">
+			<tr> 
+				<td>농부 이름</td>
+				<td>${APdtoNAF.name}</td>
+			</tr>
+
+			<tr> 
+				<td>농장 주소</td>
+				<td>${address}</td>
+			</tr>			
+
+			<tr> 
+				<td>구독자 수</td>
+				<td>${APdtoNAF.followers}</td>
+			</tr>			
+
+			<tr> 
+				<td>상품 이름</td>
+				<td>${APdto.productname}</td>
+			</tr>			
+
+			<tr> 
+				<td>상품 가격</td>
+				<td>${APdto.price}</td>
+			</tr>
+
 			<tr>
-				<td>상품넘버</td>
-				<td>상품이름</td>
-				<td>찜한 갯수</td>
-				<td>가격</td>
-				<td>상품재고</td>
-				<td>판매갯수</td>
-				<td>사진갯수</td>
-				<td>상품설명</td>
-				<td>상품 조회수</td>
-				<td>판매시작일</td>
-				<td>판매종료일</td>
-				<td>옵션상태유무</td>
+			    <td>상품 사진</td>
+			    <td>
+			        <c:forEach var="Images" items="${Images}">
+			            <img src="/resources/realImage/${Images.filename}" width="100" height="100">
+			        </c:forEach>
+			    </td>
 			</tr>
 			
 			<tr>
-				<td>${productDTO.productnum}</a></td>
-				<td>${productDTO.productname}</td>			
-				<td>${productDTO.wishcount}</td>			
-				<td>${productDTO.totalprice}</td>			
-				<td>${productDTO.productcount}</td>			
-				<td>${productDTO.sellcount}</td>			
-				<td>${productDTO.imagecount}</td>			
-				<td>${productDTO.content}</td>			
-				<td>${productDTO.readcount}</td>
-				<td><fmt:formatDate value="${productDTO.startdate}" dateStyle="short" type="date"/></td>
-				<td><fmt:formatDate value="${productDTO.enddate}" dateStyle="short" type="date"/></td>
-				<td>${productDTO.optionstatus}</td>			
+				<td>상품 옵션</td>
+				<td>
+					<select id="Pdto" name="Pdto">
+						<option value="-------">-------</option>
+							<c:forEach var="Pdto" items="${Pdto}">
+								<option value="${Pdto.optionnum}">
+									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount}
+								</option>
+							</c:forEach>
+					</select>
+				</td>
 			</tr>
-		</table>	
+
+			
+			
+		</table>
+		
+		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
+		<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
+		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
+			
 	</body>
 </html>
