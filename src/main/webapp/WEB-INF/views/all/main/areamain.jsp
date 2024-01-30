@@ -25,7 +25,7 @@
 	    </form>
 	    <c:forEach var="dto" items="${arealist}" varStatus="status">
 	        <div style="margin-right: 10px;">
-	            <form class="areaSelectForm" action="/nsb/area" method="POST" onsubmit="checkAndRedirect(event, '${dto.area1}')">
+	            <form class="areaSelectForm" action="/nsb/area" method="post" onsubmit="checkAndRedirect(event, '${dto.area1}')">
 	                <input type="hidden" name="areaNum" value="${areaNum}" />
 	                <input type="hidden" name="area1" value="${dto.area1}" />
 	                <button type="submit" class="submitBtn">${dto.areaname}</button>
@@ -53,32 +53,6 @@
 	</div>
 	
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
-	<script>
-	    $(document).ready(function() {
-	        $('.areaSelectForm').on('submit', function(e) {
-	            var form = $(this);
-	            var area1Value = form.find('input[name="area1"]').val();
 	
-	            checkAndRedirect(e, area1Value);
-	
-	            if (e.isDefaultPrevented()) {
-	                return; 
-	            }
-	
-	            var url = form.attr('action');
-	            $.ajax({
-	                url: url,
-	                type: 'POST',
-	                data: form.serialize(),
-	                success: function(response) {
-	                    $('#targetDiv').html(response);
-	                },
-	                error: function(xhr, status, error) {
-	                    console.error("오류 발생: " + error);
-	                }
-	            });
-	        });
-	    });
-	</script>
 	</body>
 </html>
