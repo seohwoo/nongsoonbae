@@ -216,7 +216,7 @@
 	
 	<!-- mypage에서 상점 개설여부 확인용 -->
 	<select id="CheckMyShop" resultType="String">
-		select username from shoplist
+		select username from shoplist where username=#{username}
 	</select>
 	
 </mapper>    
