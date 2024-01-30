@@ -187,6 +187,11 @@ public class ProductServiceImpl implements ProductService {
 		mapper.InsertUsernameFollow(MPdto);
 	}
 
+	@Override
+	public String CheckMyShop(String username) {
+		return mapper.CheckMyShop(username);
+	}
+
 
 
 	

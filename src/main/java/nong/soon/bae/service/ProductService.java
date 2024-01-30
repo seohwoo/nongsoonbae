@@ -55,6 +55,8 @@ public interface ProductService {
 	// 상품 등록할 때 username_product에 옵션들 넣기
 	public void optionInsert(ProductDTO Pdto);	
 	
+	String CheckMyShop(String username);
+	
 	// FINISH
 	
 	// TEST

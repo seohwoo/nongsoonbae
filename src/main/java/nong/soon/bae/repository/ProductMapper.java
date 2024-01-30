@@ -57,6 +57,9 @@ public interface ProductMapper {
 	// 상품 등록할 때 username_product에 옵션들 넣기
 	public void optionInsert(ProductDTO Pdto);
 	
+	//상점개설여부(유미)
+	String CheckMyShop(String username);
+	
 	// FINISH
 	
 	// TEST
