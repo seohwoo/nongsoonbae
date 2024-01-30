@@ -1,7 +1,11 @@
 package nong.soon.bae.service;
 
 
+import java.util.List;
+
 import org.springframework.ui.Model;
+
+import nong.soon.bae.bean.ShopListDTO;
 
 public interface UserCheckService {
 	public void userlist(int pageNum , Model model); //일반 유저 목록
@@ -12,7 +16,11 @@ public interface UserCheckService {
 	public int reuser(String username); //정지회원복구하기
 	public int deleteblacklist (String username); //블랙리스트에서 제거하기 
 	public void blackFindUser(Model model, int pageNum, String userSearch);//정지회원검색
-	
+	public List<ShopListDTO> findShop (String username);
+	public int shopstop(String username); //상점 정지하기
+	public int allstop (String username); //allproduct 정지
+	public int reshop(String username); //상점 복구
+	public int reall(String username);
 	//~~여기까지 회원정지하기
 	
 	public void showCate(Model model); //카테고리 분류하기
