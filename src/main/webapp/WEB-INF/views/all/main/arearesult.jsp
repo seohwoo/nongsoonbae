@@ -14,7 +14,7 @@
 	         </c:if>
 	         <c:if test="${cntDetail >  0 }" >
 	            <c:forEach var="dto" items="${productlistdetail}">
-	               <h1>${dto.productname}</h1>
+	               <%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 	            </c:forEach>
 	         </c:if>	
 	     </div>

@@ -17,6 +17,15 @@
 	<update id="userstop" parameterType="hashMap" >
 		update users set grade='ROLE_STOP' where username=#{username}
 	</update>
+	<select id="findshop" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
+		select * from shoplist where username=#{username}
+	</select>
+	<update id="shopstop" parameterType="hashMap" >
+		update shoplist set grade=1 where username=#{username}
+	</update>
+	<update id="allstop" parameterType="hashMap" >
+		update allproduct set grade=1 where username=#{username}
+	</update>
 	<insert id="blacklistInsert" parameterType="hashMap"  >
 		insert into blacklist values (
 				#{username},
@@ -41,6 +50,12 @@
 	</select>
 	<update id="reuser" parameterType="hashMap">
 		update users set grade='ROLE_USER' where username=#{username}
+	</update>
+	<update id="reshop" parameterType="String">
+		update shoplist set grade=100 where username=#{username}
+	</update>
+	<update id="reall" parameterType="String">
+		update allproduct set grade=100 where username=#{username}
 	</update>
 	<delete id="deleteblacklist" parameterType="hashMap">
 		delete from blacklist where username=#{username}

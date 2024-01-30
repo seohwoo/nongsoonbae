@@ -4,7 +4,6 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>차트</title>
 	</head>
 	<body>
 		<h1>${catename}</h1>
@@ -13,7 +12,7 @@
 		<script>
 		  const ctx = document.getElementById('myChart');
 		
-		  new Chart(ctx, {
+		  var myChart = new Chart(ctx, {
 		    type: 'bar',
 		    data: {
 		      labels: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
@@ -33,15 +32,33 @@
 		    options: {
 		      responsive: false,	
 		      scales: {
-		    	yAxes: [{
+		    	y: {
 		    		ticks: {
 		    			suggestedMin: 0,
-	                    suggestedMax: ${yValue}
+	                    suggestedMax: '${yValue}'
 		    		}
-		    	}]
+		    	}
 		      }
 		    }
 		  });
+		 
+		  if(${isMembership}) {
+			  document.getElementById("myChart").onclick = function clickHandler(evt) {
+				    var points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+					console.log(points);
+				    if (points.length) {
+				        var firstPoint = points[0];
+				        var month = myChart.data.labels[firstPoint.index];
+				        var year = myChart.data.datasets[firstPoint.datasetIndex].label + '년';
+				        var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+				        var name = '${catename}';
+				        window.location.href = '/membership/detailChart?year=' + year +'&month=' + month+'&value=' + value+'&name=' + name; 
+				    }
+				}
+		  }
+		  
+		  
+		  
 		</script>
 	</body>
 </html>

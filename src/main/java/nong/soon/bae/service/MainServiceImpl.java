@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
-import nong.soon.bae.bean.MainProductDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.ProductListDTO;
+import nong.soon.bae.bean.UserGradeDTO;
 import nong.soon.bae.repository.MainMapper;
 
 @Service
@@ -29,6 +30,8 @@ public class MainServiceImpl implements MainService {
 	private ArrayList<Double> thislist;
 	@Autowired
 	private ArrayList<Double> lastlist;
+	@Autowired
+	private ArrayList<ProductListDTO> productList;
 
 	public String[] todayInfo() {
 		Date date = new Date();
@@ -74,10 +77,11 @@ public class MainServiceImpl implements MainService {
 		List<AllProductDTO> list = Collections.EMPTY_LIST;
 		if(cnt > 0) {
 			list = mapper.seasonProduct(seasonCategoryMap);
+			showProduct(list);
 		}
 		model.addAttribute("catename", catename);
 		model.addAttribute("productCnt", cnt);
-		model.addAttribute("productList", list);
+		model.addAttribute("productList", productList);
 	}
 
 	@Override
@@ -91,31 +95,39 @@ public class MainServiceImpl implements MainService {
 		seasonCategoryMap.put("cate1", cate1);
 		seasonCategoryMap.put("cate2", cate2);
 		seasonCategoryMap.put("cate3", cate3);
-		String catename = mapper.findCatename(seasonCategoryMap);
-		seasonCategoryMap.put("catename", catename);
-		int max = mapper.maxAvgPrice(catename);
-		String strMax = String.valueOf(max);
-		int yValue = Integer.parseInt(strMax.substring(0,1))+1;
-		String chartY = String.valueOf(yValue);
-		for (int i = 0; i < strMax.length()-1; i++) {
-			chartY += "0";
+		String catename = "";
+		int cnt = 0;
+		if(mapper.findCatename(seasonCategoryMap)!=null) {
+			catename = mapper.findCatename(seasonCategoryMap);
+			seasonCategoryMap.put("catename", catename);
+			cnt = mapper.isChart(seasonCategoryMap);
 		}
-		yValue = Integer.parseInt(chartY);
-		String keyword = "";
-		for (int i = 1; i <= 12; i++) {
-			keyword = "%" + thisYear + "년" + i + "월%";
-			seasonCategoryMap.put("keyword", keyword);
-			thislist.add(mapper.productChart(seasonCategoryMap));
-			keyword = "%" + lastYear + "년" + i + "월%";
-			seasonCategoryMap.put("keyword", keyword);
-			lastlist.add(mapper.productChart(seasonCategoryMap));
+		if(cnt>0) {
+			int max = mapper.maxAvgPrice(catename);
+			String strMax = String.valueOf(max);
+			int yValue = Integer.parseInt(strMax.substring(0,1))+1;
+			String chartY = String.valueOf(yValue);
+			for (int i = 0; i < strMax.length()-1; i++) {
+				chartY += "0";
+			}
+			yValue = Integer.parseInt(chartY);
+			String keyword = "";
+			for (int i = 1; i <= 12; i++) {
+				keyword = "%" + thisYear + "년" + i + "월%";
+				seasonCategoryMap.put("keyword", keyword);
+				thislist.add(mapper.productChart(seasonCategoryMap));
+				keyword = "%" + lastYear + "년" + i + "월%";
+				seasonCategoryMap.put("keyword", keyword);
+				lastlist.add(mapper.productChart(seasonCategoryMap));
+			}
+			model.addAttribute("catename", catename);
+			model.addAttribute("thisYear", thisYear);
+			model.addAttribute("lastYear", lastYear);
+			model.addAttribute("yValue", yValue);
+			model.addAttribute("thislist", thislist);
+			model.addAttribute("lastlist", lastlist);
 		}
-		model.addAttribute("catename", catename);
-		model.addAttribute("thisYear", thisYear);
-		model.addAttribute("lastYear", lastYear);
-		model.addAttribute("yValue", yValue);
-		model.addAttribute("thislist", thislist);
-		model.addAttribute("lastlist", lastlist);
+		model.addAttribute("isChart", cnt);
 	}
 	
 	public void page(int pageSize, int pageNum) {
@@ -166,6 +178,7 @@ public class MainServiceImpl implements MainService {
 		}
 		model.addAttribute("cateList", list);
 		model.addAttribute("cate1", cate1);
+		model.addAttribute("isCate3", cnt);
 		model.addAttribute("categoryNum", categoryNum);
 		model.addAttribute("maxCategoryNum", maxCategoryNum);
 	}
@@ -195,14 +208,29 @@ public class MainServiceImpl implements MainService {
 	/**
 	 * main에 보여줄 값을 한번에 저장하기 위해 사용(일단보류)
 	 * */
-	public List<MainProductDTO> showProduct(List<AllProductDTO> alprList) {
-		List<MainProductDTO> list = Collections.EMPTY_LIST;
-		MainProductDTO dto = null;
+	public void showProduct(List<AllProductDTO> alprList) {
+		productList.clear();
+		ProductListDTO dto = null;
 		for (AllProductDTO alprDTO : alprList) {
-			
+			seasonCategoryMap.put("username", alprDTO.getUsername());
+			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
+			String keyword = alprDTO.getProductnum() + "_1%";
+			seasonCategoryMap.put("keyword", keyword);
+			dto = mapper.findProductListValue(seasonCategoryMap);
+			productList.add(dto);		
 		}
-		return list;
 	}
 
-	
+	@Override
+	public boolean isMembership(boolean isMembership, String username) {
+		List<UserGradeDTO> list = mapper.isMembership(username).getGrade();
+		for (UserGradeDTO dto : list) {
+			if(dto.getGrade().equals("ROLE_MEMBERSHIP")) {
+				isMembership = true;
+				break;
+			}
+		}
+		return isMembership;
+
+	}
 }

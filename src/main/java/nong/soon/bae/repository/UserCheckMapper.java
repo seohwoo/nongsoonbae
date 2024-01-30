@@ -4,17 +4,25 @@ import java.util.HashMap;
 import java.util.List;
 
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UserCheckDTO;
 
 
 public interface UserCheckMapper {
 	public int count(); //일반회원수
 	public List<UserCheckDTO> userlist(HashMap map);
-	int userstop(HashMap map);
+	
+	int userstop(HashMap map); //유저정지
+	public List<ShopListDTO> findshop(String username); //상점 조회하기
+	int shopstop(HashMap map); //상점정지
+	int allstop(HashMap map); //상품정지
 	int blacklistInsert(HashMap map);
 	public int blackcount(); //정지 회원 수 
 	public List<UserCheckDTO> blacklist(HashMap map);
 	int reuser(HashMap map); //정지 회원 복구하기 
+	int reshop (String username); //상점 복구
+	int reall (String username);
+	
 	int deleteblacklist(HashMap map); //블랙리스트에서 제거
 	public int searchUserCnt(String keyword); //검색 결과 수 
 	public List<UserCheckDTO> serchUserlist(HashMap checkMap); //검색목록

@@ -26,10 +26,11 @@
 			<div style="display: flex;">
 			<c:if test="${cnt >  0 }" >
 				    <c:forEach var="dto" items="${productlist}">
-				            <h1>${dto.productname}</h1>
-				     </c:forEach>  
+				    	<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%> 
+				    </c:forEach>  
 			</c:if>	
 		</div>
+		
 	</body>	
 </html>
 

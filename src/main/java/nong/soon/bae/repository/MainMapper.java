@@ -6,6 +6,8 @@ import java.util.List;
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.ChartDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.ProductListDTO;
+import nong.soon.bae.bean.UsersDTO;
 
 public interface MainMapper {
 	/** 제철카테고리의 개수 */
@@ -18,7 +20,9 @@ public interface MainMapper {
 	public int seasonProductCnt(HashMap<String, String> map);
 	/** 해당 카테고리의 상품 리스트(10개씩 출력) */
 	public List<AllProductDTO> seasonProduct(HashMap<String, String> map);
-	/** 한달기준 농수산물의 평균 가격 */
+	/** 해당 카테고리의 정보가 차트에 있는지 확인*/
+	public int isChart(HashMap<String, String> map);
+	/** 한달기준 농수산물의 평균 가격 차트*/
 	public double productChart(HashMap<String, String> map);
 	/** 해당 카테고리 중 가장 높은 평균 가격 */
 	public int maxAvgPrice(String catename);
@@ -34,6 +38,8 @@ public interface MainMapper {
 	public int searchProductCnt(String keyword);
 	/** 검색결과 리스트(10개씩 출력) */
 	public List<AllProductDTO> searchProduct(HashMap<String, String> map);
-	
-	
+	/** 로그인한 유저가 맴버쉽회원인지 조회 */
+	public UsersDTO isMembership(String username);
+	/** 전체 상품 리스트 중 한칸에 들어가는 모든 정보*/
+	public ProductListDTO findProductListValue(HashMap<String, String> map);
 }

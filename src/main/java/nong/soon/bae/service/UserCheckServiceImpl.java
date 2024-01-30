@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.ProductCategoryDTO;
+import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.bean.UserCheckDTO;
 
 import nong.soon.bae.repository.UserCheckMapper;
@@ -84,7 +85,26 @@ public class UserCheckServiceImpl implements UserCheckService{
         checkMap.put("username", username);
 		return mapper.userstop(checkMap);
 	}
+	
+	@Override //정지 대상 회원 상점 조회하기 
+	public List<ShopListDTO> findShop(String username) {
+		return mapper.findshop(username);			
+	}
 
+
+	@Override //shoplist 정지
+	public int shopstop(String username) {
+		checkMap.clear();
+        checkMap.put("username", username);
+		return mapper.shopstop(checkMap);
+	}
+	
+	@Override //allproduct 정지 
+	public int allstop(String username) {
+		checkMap.clear();
+        checkMap.put("username", username);
+		return mapper.allstop(checkMap);
+	}
 
 
 	@Override //정지회원정보 저장 
@@ -136,6 +156,18 @@ public class UserCheckServiceImpl implements UserCheckService{
         checkMap.put("username", username);
 		return mapper.reuser(checkMap);
 	}
+	
+	@Override
+	public int reshop(String username) {
+		return mapper.reshop(username);
+	}
+
+	@Override
+	public int reall(String username) {
+		return mapper.reall(username);
+	}
+	
+	
 	@Override //복구된 회원 블랙리스트에서 삭제 
 	public int deleteblacklist(String username) {
 		checkMap.clear();
@@ -295,6 +327,12 @@ public class UserCheckServiceImpl implements UserCheckService{
 		checkMap.put("addCate",addCate);
 		return mapper.deleteCate(checkMap);
 	}
+
+	
+
+	
+	
+	
 
 	
 	}
