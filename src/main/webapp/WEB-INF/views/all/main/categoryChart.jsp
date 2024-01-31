@@ -9,7 +9,7 @@
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-	<div style="align-items: center;">
+	<div style="display: flex; flex-direction: column;">
 		<table class="chart table-borderless">
 			<tr>
 				<td>
@@ -62,6 +62,8 @@
 					</div>
 				</td>
 			</tr>	
+			</table>
+			<table class="chartsub table-borderless">
 			<tr>
 				<td class="page">
 					<c:if test="${cate1!=null}">
@@ -89,6 +91,8 @@
 					</c:if>
 				</td>
 			</tr>
+			</table>
+			<table class="chartsub table-borderless">
 			<tr>
 				<td>
 					<c:if test="${isChart==0 }">
