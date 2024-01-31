@@ -38,13 +38,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 			List<GrantedAuthority> roles = new ArrayList<>(1);
 			if(grade=="ADMIN") {
 	        	roles.add(new SimpleGrantedAuthority("ADMIN"));
+	        }else if(grade == "DELETEUSER") {
+	        	roles.add(new SimpleGrantedAuthority("DELETEUSER"));
 	        }else {
 	        	roles.add(new SimpleGrantedAuthority("USER"));
 	        }
+			
 			Authentication auth = new UsernamePasswordAuthenticationToken(username, dto.getPassword(), roles);
 			logger.warn("auth : " + auth);
-	        SecurityContextHolder.getContext().setAuthentication(auth);
+	        
+			SecurityContextHolder.getContext().setAuthentication(auth);
 			logger.info(""+dto);
+			
 			return dto == null ? null : new CustomUser(dto);
 		
 	}

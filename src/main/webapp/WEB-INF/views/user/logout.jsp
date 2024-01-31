@@ -14,6 +14,14 @@
 <link href="/resources/css/login.css" rel="stylesheet" type="text/css">
 
 </head>
+		<script type="text/javascript">
+	        var errorParam = '<%= request.getParameter("error") %>';
+	        if (errorParam === 'true') {
+	            // "error" 값이 true일 때 alert 띄우기
+	            alert("이미 회원 탈퇴된 계정입니다.");
+	            window.location.href="/member/out";
+	        }
+	    </script>
 	<body>
 		<%@include file="/WEB-INF/views/include/header.jsp"%>
 			<form class="form-signin" action="/member/out" method="POST">
