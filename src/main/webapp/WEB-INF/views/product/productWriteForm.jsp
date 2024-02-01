@@ -127,17 +127,19 @@
 	</script>
 
 	<body>
+	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<h3>${myName} 페이지</h3>
-		<form action="/product/productWritePro" method="post" name="form" enctype="multipart/form-data" id = "addProduct">
+		<h5>상품 등록</h5><br />
+		<form action="/product/productWritePro" method="post" name="form" class="productform" enctype="multipart/form-data" id="addProduct">
+			<div class="cate">
 			<select id="cate1" name="cate1">
 				<option value="-------">-------</option>
 					<c:forEach var="cate1" items="${cate1}">
 						<option value="${cate1.cate1}">${cate1.catename}</option>
 					</c:forEach>
 			</select>
-			<div id="c2"></div>	 
-			<table width="850" border="1">
-				 
+			<div id="c2"></div></div>	 
+			<table class="writeform" width="850" border="1">
 			    
 			    <tr> 
 					<td width="200">상품이름</td>
@@ -174,5 +176,6 @@
 				</tr>			    
 			</table>	
 		</form>
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>

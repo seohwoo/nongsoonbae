@@ -4,7 +4,7 @@
 <html>
 <body>
 	<main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
-      <table>
+      <table class="main">
       	<tr>
       		<td colspan="4">
       		<h1>${username}님! 어서오세요.</h1>

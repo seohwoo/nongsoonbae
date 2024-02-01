@@ -20,6 +20,6 @@ $(function(){
 <input type="number" name="optionunit" placeholder="단위" />
 ${catedto.unit} 
 <input type="hidden" name="optionamount" value="${catedto.amount}"/>
-<input type="hidden" name="optionrealunit" value="${catedto.unit}"/>
+<input type="hidden" name="optionrealunit" value="${catedto.unit}"/><br />
 <input type="number" name="optiontotalprice" placeholder="상품가격" />
 <input type="number" name="optionProductCount" placeholder="상품재고" /> <br />

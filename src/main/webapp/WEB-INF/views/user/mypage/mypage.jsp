@@ -35,6 +35,11 @@
 	          구매내역
 	        </a>
 	      </li>
+	      <li>
+	        <a href="#" class="nav-link link-dark navitem" id="chatlist"> 
+	          채팅리스트
+	        </a>
+	      </li>
     </ul>
       <br>
     </div>
@@ -54,16 +59,25 @@
                 $(this).addClass('active');
 
                 var contentId = $(this).attr('id');
-                sessionStorage.setItem('lastClickedLink', contentId);
 
-                $('#content').load(contentId);
+                // Check if the clicked link is "chatlist"
+                if (contentId === 'chatlist') {
+                    // Open a popup with the desired URL
+                    window.open('/chat/list', '_blank', 'width=600,height=400');
+                } else {
+                    // Load the content into the main page
+                    $('#content').load(contentId);
+                }
+
+                sessionStorage.setItem('lastClickedLink', contentId);
             });
-        	// Retrieve and load the last clicked link on page load
+
+            // Retrieve and load the last clicked link on page load
             var lastClickedLink = sessionStorage.getItem('lastClickedLink');
             if (lastClickedLink) {
-            	$('.navitem').removeClass('active');
-            	$('.navitem').addClass('link-dark');
-            	$('#' + lastClickedLink).addClass('active');
+                $('.navitem').removeClass('active');
+                $('.navitem').addClass('link-dark');
+                $('#' + lastClickedLink).addClass('active');
                 $('#content').load(lastClickedLink);
             }
         });
