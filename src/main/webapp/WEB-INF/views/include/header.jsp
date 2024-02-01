@@ -10,7 +10,7 @@
     <header>
         <!-- 로고 -->
         <section class="logo" >
-            <h2><a href="nsb/main" class="down"><img src="/resources/img/logo.png" style="width : auto; height: 60px;">농순배</a></h2>
+            <h2><a href="/nsb/main" class="down"><img src="/resources/img/logo.png" style="width : auto; height: 60px;">농순배</a></h2>
         </section>
         <!-- gnb -->
         <section class="menu_wrap">

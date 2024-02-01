@@ -24,9 +24,6 @@
 		    },
 		    options: {
 		      responsive: false,	
-		      scales: {
-		    	
-		      }
 		    }
 		  });
 		 
