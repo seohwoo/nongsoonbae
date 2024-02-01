@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
+
     <div class="col-md-3">
       <div class="card" style="width: 18rem;">
  	  <img src="/resources/realImage/${dto.image_filename}" width="300px" height="300px" class="card-img-top" alt="...">

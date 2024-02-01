@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>내 상점</title>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a59143e26d58362551774373cb766b2&libraries=services"></script>
 		<style type="text/css">
     		p {
@@ -16,84 +16,73 @@
 	</head>
 	
 	<body>
-		<table width="600" border="1" style="text-align: center;">
-			<img src="/resources/file/profile/${SLdto.image}" width="100px" height="100px" />
-			
-			<input type="button" value="follow" onclick="javascript:window.location='/product/productMain'">
-			
-			<tr> 
-				<td width="200">농부이름</td>
-				<td width="400"> 
-					${SLdto.name}	
-				</td>
-			</tr>		
-		
-			<tr> 
-				<td width="200">상점이름</td>
-				<td width="400"> 
-					${SLdto.shopname}	
-				</td>
-			</tr>
-
-			<tr> 
-				<td width="200">상점소개</td>
-				<td width="400"> 
-					${SLdto.shopcontent}	
-				</td>
-			</tr>		
-
-			<tr> 
-				<td width="200">상점주소</td>
-				<td width="400"> 
-					${address}	
-				</td>
-			</tr>
-
-			<tr> 
-				<td width="200">팔로우</td>
-				<td width="400"> 
-					${SLdto.followers}	
-				</td>
-			</tr>												
-		</table>	
-		
+	<%@include file="/WEB-INF/views/include/header.jsp"%>
+		<div class="seller">
+			<img class="sellimg" src="/resources/file/profile/${SLdto.image}" /><br />
+				<b class="h3">${SLdto.name}</b>
+				<p>${SLdto.shopname}</p>
+				<div class="container">
+					<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/productMain'">
+					<input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="" />
+				</div>
+				<p class="text-muted" style="font-size: 12px;">관심 고객 수 : ${SLdto.followers}</p>
+		</div>		
 		<br /> <hr /> <br />	
-		
-		<table width="600" border="1" style="text-align: center;">
-			<tr>
-				<td width="200">사진</td>
-				<td width="200">상품번호</td>
-				<td width="200">상품이름</td>
-				<td width="200">상품가격</td>
-				<td width="200">찜한 수</td>
-				<td width="200">조회수</td>				
-			</tr>
-			
-			<c:forEach var="APdto" items="${APdto}"> 
+		<div class="sellcontent">
+			<table style="text-align: center;">
 				<tr>
-					<td>
-						<img src="/resources/realImage/${APdto.filename}">
-					</td>
-					<td>
-						<a href="/product/productDetail?productnum=${APdto.productnum}">${APdto.productnum}</a>	
-					</td>										
-					<td>
-						${APdto.productname}	
-					</td>
-					<td>
-						${APdto.price}
-					</td>
-					<td>
-						${APdto.wishcnt}
-					</td>
-					<td>
-						${APdto.readcnt}
-					</td>
+					<td>소개 : </td><td colspan="5">${SLdto.shopcontent}</td>
 				</tr>
-			</c:forEach>
-		</table>
-		
-		
+				<tr>
+					<td>판매 상품</td>
+					<td colspan="5">
+					
+							<div class="p-4">
+						      <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
+						        <div class="col p-4 d-flex flex-column position-static">
+						          <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
+						          <h3 class="mb-0">Featured post</h3>
+						          <div class="mb-1 text-body-secondary">Nov 12</div>
+						          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+						          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+						            Continue reading
+						            <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+						          </a>
+						        </div>
+						        <div class="col-auto d-none d-lg-block">
+						          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+						        </div>
+						      </div>
+						    </div>
+					
+					</td>	
+				</tr>
+				
+				<c:forEach var="APdto" items="${APdto}"> 
+					<tr>
+						<td>
+							<img src="/resources/realImage/${APdto.filename}">
+						</td>
+						<td>
+							<a href="/product/productDetail?productnum=${APdto.productnum}">${APdto.productnum}</a>	
+						</td>										
+						<td>
+							${APdto.productname}	
+						</td>
+						<td>
+							${APdto.price}
+						</td>
+						<td>
+							${APdto.wishcnt}
+						</td>
+						<td>
+							${APdto.readcnt}
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+		<p>소재지 : ${address}</p>
 		<div id="map" style="width:40%;height:240px;"></div>
 		
 		<script>
@@ -135,5 +124,6 @@
 			    } 
 			});    
 		</script>
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>

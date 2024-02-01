@@ -37,6 +37,6 @@
 			</c:if>
 			</form>
 		</div>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>

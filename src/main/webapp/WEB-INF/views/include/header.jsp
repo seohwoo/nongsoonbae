@@ -5,6 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <link href="/resources/css/login.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/product.css" rel="stylesheet" type="text/css">
     <!-- 헤더 -->
     <header>
         <!-- 로고 -->

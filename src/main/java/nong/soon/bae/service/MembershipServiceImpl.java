@@ -52,4 +52,12 @@ public class MembershipServiceImpl implements MembershipService{
 		model.addAttribute("max", max);
 	}
 
+	@Override
+	public void showUserPriceChart(Model model, String cate1, String cate2, String cate3) {
+		
+	}
+	
+	
+	
+
 }

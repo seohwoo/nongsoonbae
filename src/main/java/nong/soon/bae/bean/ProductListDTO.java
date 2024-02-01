@@ -16,7 +16,7 @@ public class ProductListDTO {
 	private int wishcnt;
 	private int readcnt;
 	private int min_price; 
-	private int total_stars;
+	private double avg_stars;
 	private int review_count;
 	private String cate_name;
 	private String area_name1;

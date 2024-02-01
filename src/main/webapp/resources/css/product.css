@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.seller {
+	padding: 10px;
+	
+}
+.sellimg {
+	 width:100px; 
+	 height:100px;
+	 margin: 20px;
+}
+.sellbutton {
+	border: none;
+	background-color: #369F36;
+	color: #fff;
+	
+}
+.sellcontent {
+	
+}
+.sellcontent>table {
+	border: none;
+	background-color: #fff;
+}
+.sellcontent>table>tr{
+	padding: 10px;
+}
