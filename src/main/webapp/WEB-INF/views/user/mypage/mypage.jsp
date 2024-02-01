@@ -13,7 +13,7 @@
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 <div class="container-fluid" id="wrapper">
   <div class="row flex-nowrap">
-    <div class="col-2 bd-sidebar align-items">
+    <div class="col-2 bd-sidebar align-items" style="margin-top: -6%;">
       <ul class="nav nav-pills flex-column mb-auto" >
 	      <li class="nav-item">
 	        <a href="/user/mypage" class="nav-link active navitem" aria-current="page" id="home">  
