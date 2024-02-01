@@ -199,8 +199,8 @@ public class ProductServiceImpl implements ProductService {
 	
 	// 상품 올린 사람의 주소, 이름, 팔로우 찾기	
 	@Override
-	public AllProductDTO selectProductNameAddressFollowers(String follow) {
-		return mapper.selectProductNameAddressFollowers(follow);
+	public AllProductDTO selectProductNameAddressFollowers(String follow, String productnum) {
+		return mapper.selectProductNameAddressFollowers(follow, productnum);
 	}
 	
 	// 상품 옵션들 가져오기
@@ -294,11 +294,27 @@ public class ProductServiceImpl implements ProductService {
 		mapper.reviewInsert(Rdto);
 	}
 
+	// 상품 리뷰 가져오기
+	@Override
+	public List<ReviewsDTO> selectReviewsAll(String productnum) {
+		return mapper.selectReviewsAll(productnum);
+	}	
+
+	// 상품 리뷰 수
+	@Override
+	public int selectReviewsCount(String productnum) {
+		return mapper.selectReviewsCount(productnum);
+	}	
+	
 	// 장바구니 담기
 	@Override
 	public void insertShopping(MyPageDTO MPdto) {
 		mapper.insertShopping(MPdto);
 	}
+
+
+
+
 
 	
 

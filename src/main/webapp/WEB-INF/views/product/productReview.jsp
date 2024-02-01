@@ -119,8 +119,6 @@
 		<form action="/product/productReviewPro" method="post" name="form" enctype="multipart/form-data" id = "addProduct">
 			<textarea id="summernote" name="content" placeholder="리뷰작성"></textarea>
 			
-
-			
 			<div class="stars1">
 				<label for="star1" class="star" data-rating="1"> <i class="far fa-star" style="color: #ffc83d;"></i></label>
 				<label for="star2" class="star" data-rating="2"> <i class="far fa-star" style="color: #ffc83d;"></i></label>
@@ -152,44 +150,54 @@
 </html>
 
 <script>
-	const stars = document.querySelectorAll('.stars1 .star');
-	const radioButtons = document.querySelectorAll('input[name="stars"]');
-	
-	for (let i = 0; i < stars.length; i++) {
-	    if (i > -1) {
-	        stars[i].innerHTML = '<i class="fas fa-star" style="color: #ffc83d;"></i>';
-	    } else {
-	        stars[i].innerHTML = ' <i class="far fa-star" style="color: #ffc83d;"></i>';
-	    }
-	}
-	
-	radioButtons.forEach((radio, index) => {
-	    radio.addEventListener('change', () => {
-	        const starsValue = radio.value;
-	        for (let i = 0; i < stars.length; i++) {
-	            const sRating = parseInt(stars[i].getAttribute("data-rating"));
-	            if (sRating <= starsValue) {
-	                stars[i].innerHTML = '<i class="fas fa-star" style="color: #ffc83d;"></i>';
-	            } else {
-	                stars[i].innerHTML = ' <i class="far fa-star" style="color: #ffc83d;"></i>';
-	            }
-	        }
-	    });
-	});
-	
-	function validateAndSubmit() {
-	    const selectedStars = document.querySelector('input[name="stars"]:checked');
-	    const reviewTextarea = document.querySelector('textarea[name="review"]');
-	    if (!selectedStars || reviewTextarea.value.trim() === '') {
-	        alert("평점과 리뷰를 모두 입력했는지 확인해주세요.");
-	        return false;
-	    } else {
-	        return true;
-	    }
-	}
-	
-	
+    const stars = document.querySelectorAll('.stars1 .star');
+    const radioButtons = document.querySelectorAll('input[name="stars"]');
+    
+    // 초기에 5개 별을 채워진 상태로 표시
+    for (let i = 0; i < stars.length; i++) {
+        const sRating = parseInt(stars[i].getAttribute("data-rating"));
+        if (sRating <= 5) {
+            stars[i].innerHTML = '<i class="fas fa-star" style="color: #ffc83d;"></i>';
+        } else {
+            stars[i].innerHTML = '<i class="far fa-star" style="color: #ffc83d;"></i>';
+        }
+    }
+
+    radioButtons.forEach((radio, index) => {
+        radio.addEventListener('change', () => {
+            const starsValue = parseInt(radio.value);
+            for (let i = 0; i < stars.length; i++) {
+                const sRating = parseInt(stars[i].getAttribute("data-rating"));
+                if (sRating <= starsValue) {
+                    stars[i].innerHTML = '<i class="fas fa-star" style="color: #ffc83d;"></i>';
+                } else {
+                    stars[i].innerHTML = '<i class="far fa-star" style="color: #ffc83d;"></i>';
+                }
+            }
+        });
+    });
+
+    // 페이지 로딩 시 별점 값이 없다면 기본값으로 5점 설정
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectedStars = document.querySelector('input[name="stars"]:checked');
+        if (!selectedStars) {
+            radioButtons[4].click();  // 5번째 별을 클릭하여 5점으로 설정
+        }
+    });
+
+    function validateAndSubmit() {
+        const selectedStars = document.querySelector('input[name="stars"]:checked');
+        const reviewTextarea = document.querySelector('textarea[name="content"]');
+        
+        if (!selectedStars || reviewTextarea.value.trim() === '') {
+            alert("평점과 리뷰를 모두 입력했는지 확인해주세요.");
+            return false;
+        } else {
+            return true;
+        }
+    }
 </script>
+
 
 <style>
 	.stars1 {

@@ -291,11 +291,24 @@ public class ProductController {
 		// 상품 정보 페이지
 		AllProductDTO APdto = service.selectProductInfo(follow, productnum);
 		// 상품 올린 사람의 주소, 이름, 팔로우 찾기
-		AllProductDTO APdtoNAF = service.selectProductNameAddressFollowers(follow);
+		AllProductDTO APdtoNAF = service.selectProductNameAddressFollowers(follow, productnum);
 		// 상품 옵션들 가져오기
 		List<ProductDTO> Pdto = service.selectProductOptionAll(follow, productnum);
 		// 상품 사진 가져오기
 		List<AllProductDTO> Images = service.selectProductImagesAll(follow, productnum);
+		
+		// 상품 리뷰 수
+		int cnt = service.selectReviewsCount(productnum);
+		// 상품 리뷰 가져오기
+		List<ReviewsDTO> Rdto = service.selectReviewsAll(productnum);
+
+		int totalStars = 0;
+		for (ReviewsDTO dto : Rdto) {
+		    totalStars += dto.getStars();
+		}
+		double stars = (double) totalStars / cnt;
+		stars = Math.round(stars * 10.0) / 10.0; // 반올림
+
 		
 		
 		// 상점 주소 
@@ -317,6 +330,9 @@ public class ProductController {
 		model.addAttribute("address", address);
 		model.addAttribute("Pdto", Pdto);
 		model.addAttribute("Images", Images);
+		model.addAttribute("Rdto", Rdto);
+		model.addAttribute("stars", stars);
+		model.addAttribute("cnt", cnt);
 		return "/product/productInfo";
 	}
 

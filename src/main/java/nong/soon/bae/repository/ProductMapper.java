@@ -116,7 +116,8 @@ public interface ProductMapper {
 										   @Param("productnum") String productnum);
 	
 	// 상품 올린 사람의 주소, 이름, 팔로우 찾기
-	public AllProductDTO selectProductNameAddressFollowers(String follow);
+	public AllProductDTO selectProductNameAddressFollowers(@Param("follow") String follow, 
+														   @Param("productnum") String productnum);
 	
 	// 상품 옵션들 가져오기
 	public List<ProductDTO> selectProductOptionAll(@Param("follow") String follow, 
@@ -165,6 +166,11 @@ public interface ProductMapper {
 	// 상품 리뷰쓰기
 	public void reviewInsert(ReviewsDTO Rdto);
 	
+	// 상품 리뷰 가져오기
+	public List<ReviewsDTO> selectReviewsAll(String productnum);
+	
+	// 상품 리뷰 수
+	public int selectReviewsCount(String productnum);
 	
 	// 상품 전체목록 보기
 	public List<AllProductDTO> selectAllproduct();

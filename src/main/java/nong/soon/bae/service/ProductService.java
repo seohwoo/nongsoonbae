@@ -108,7 +108,7 @@ public interface ProductService {
 	public AllProductDTO selectProductInfo(String follow, String productnum);
 	
 	// 상품 올린 사람의 주소, 이름, 팔로우 찾기
-	public AllProductDTO selectProductNameAddressFollowers(String follow);
+	public AllProductDTO selectProductNameAddressFollowers(String follow, String productnum);
 
 	// 상품 옵션들 가져오기
 	public List<ProductDTO> selectProductOptionAll(String follow, String productnum);
@@ -153,6 +153,12 @@ public interface ProductService {
 
 	// 상품 리뷰쓰기
 	public void reviewInsert(ReviewsDTO Rdto);
+	
+	// 상품 리뷰 가져오기
+	public List<ReviewsDTO> selectReviewsAll(String productnum);
+	
+	// 상품 리뷰 수
+	public int selectReviewsCount(String productnum);
 	
 	// 상품 전체목록 보기
 	public List<AllProductDTO> selectAllproduct();	
