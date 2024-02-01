@@ -63,7 +63,7 @@
                 // Check if the clicked link is "chatlist"
                 if (contentId === 'chatlist') {
                     // Open a popup with the desired URL
-                    window.open('/chat/list', '_blank', 'width=600,height=400');
+                    window.open('/chat/list', '_blank', 'width=600,height=1200');
                 } else {
                     // Load the content into the main page
                     $('#content').load(contentId);
