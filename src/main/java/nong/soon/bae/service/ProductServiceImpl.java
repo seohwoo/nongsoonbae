@@ -11,6 +11,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.repository.ProductMapper;
 
@@ -108,6 +109,96 @@ public class ProductServiceImpl implements ProductService {
 	
 	// TEST
 
+	// 상품 정보 페이지
+	@Override
+	public AllProductDTO selectProductInfo(String follow, String productnum) {
+		return mapper.selectProductInfo(follow, productnum);
+	}	
+	
+	// 상품 올린 사람의 주소, 이름, 팔로우 찾기	
+	@Override
+	public AllProductDTO selectProductNameAddressFollowers(String follow) {
+		return mapper.selectProductNameAddressFollowers(follow);
+	}
+	
+	// 상품 옵션들 가져오기
+	@Override
+	public List<ProductDTO> selectProductOptionAll(String follow, String productnum) {
+		return mapper.selectProductOptionAll(follow, productnum);
+	}	
+	
+	// 상품 사진 가져오기
+	@Override
+	public List<AllProductDTO> selectProductImagesAll(String follow, String productnum) {
+		return mapper.selectProductImagesAll(follow, productnum);
+	}	
+
+	// 상품 찜하기
+	@Override
+	public void InsertProductPick(MyPageDTO MPdto) {
+		mapper.InsertProductPick(MPdto);
+	}
+
+	// 상품에 찜 +1 하기
+	@Override
+	public void allproductWishcntPlus(String productnum) {
+		mapper.allproductWishcntPlus(productnum);
+	}
+	
+	// 상품 찜 유무
+	@Override
+	public int selectPickCount(String username, String productnum) {
+		return mapper.selectPickCount(username, productnum);
+	}
+
+	// 마이페이지에 상품 찜 삭제하기
+	@Override
+	public void deleteProductPick(String username, String productnum) {
+		mapper.deleteProductPick(username, productnum);
+	}
+
+	// Allproduct 상품에 찜 -1 하기
+	@Override
+	public void allproductWishcntMinus(String productnum) {
+		mapper.allproductWishcntMinus(productnum);
+	}
+
+	// 농부 팔로우하기
+	@Override
+	public void InsertUsernameFollow(MyPageDTO MPdto) {
+		mapper.InsertUsernameFollow(MPdto);
+	}	
+
+	// 농부 팔로우하면 userdetails에 followers +1 하기
+	@Override
+	public void userdetailsUpdateFollowersPlus(String follow) {
+		mapper.userdetailsUpdateFollowersPlus(follow);
+	}	
+	
+	// 마이페이지 농부 구독 유무
+	@Override
+	public int selectFollowCount(String username, String follow) {
+		return mapper.selectFollowCount(username, follow);
+	}
+	
+	// 농부 팔로우 취소하기
+	@Override
+	public void deleteFollow(String username, String follow) {
+		mapper.deleteFollow(username, follow);
+	}
+	
+	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
+	@Override
+	public void userdetailsUpdateFollowersMinus(String follow) {
+		mapper.userdetailsUpdateFollowersMinus(follow);
+	}	
+	
+	
+	// TEST
+	
+	
+	
+	
 	
 	// 내 상점 페이지에 필요한 정보들 가져오기
 	@Override
@@ -151,46 +242,39 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectProductImages(follow, productnum);
 	}
 
-	// 상품 찜하기
+
+
+	// 상품 전체목록 보기	
 	@Override
-	public void InsertProductPick(MyPageDTO MPdto) {
-		mapper.InsertProductPick(MPdto);
+	public List<AllProductDTO> selectAllproduct() {
+		return mapper.selectAllproduct();
 	}
 
-	// 상품에 찜 +1 하기
-	@Override
-	public void allproductWishcntPlus(String productnum) {
-		mapper.allproductWishcntPlus(productnum);
-	}
+
+
+
+
+
+
+
 	
-	// 상품 찜 유무
-	@Override
-	public int selectPickCount(String username, String productnum) {
-		return mapper.selectPickCount(username, productnum);
-	}
-
-	// 마이페이지에 상품 찜 삭제하기
-	@Override
-	public void deleteProductPick(String username, String productnum) {
-		mapper.deleteProductPick(username, productnum);
-	}
-
-	// Allproduct 상품에 찜 -1 하기
-	@Override
-	public void allproductWishcntMinus(String productnum) {
-		mapper.allproductWishcntMinus(productnum);
-	}
-
-	// 농부 팔로우하기
-	@Override
-	public void InsertUsernameFollow(MyPageDTO MPdto) {
-		mapper.InsertUsernameFollow(MPdto);
-	}
-
 	@Override
 	public String CheckMyShop(String username) {
 		return mapper.CheckMyShop(username);
 	}
+
+	// 상품 리뷰쓰기
+	@Override
+	public void reviewInsert(ReviewsDTO Rdto) {
+		mapper.reviewInsert(Rdto);
+	}
+
+
+
+
+
+
+
 
 
 

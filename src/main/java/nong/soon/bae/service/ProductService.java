@@ -10,6 +10,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 
 public interface ProductService {
@@ -61,7 +62,60 @@ public interface ProductService {
 	
 	// TEST
 	
-	// // 내 상점 페이지에 필요한 정보들 가져오기
+	// 상품 정보 페이지
+	public AllProductDTO selectProductInfo(String follow, String productnum);
+	
+	// 상품 올린 사람의 주소, 이름, 팔로우 찾기
+	public AllProductDTO selectProductNameAddressFollowers(String follow);
+
+	// 상품 옵션들 가져오기
+	public List<ProductDTO> selectProductOptionAll(String follow, String productnum);
+	
+	// 상품 사진 가져오기
+	public List<AllProductDTO> selectProductImagesAll(String follow, String productnum);
+	
+	// 상품 찜하기
+	public void InsertProductPick(MyPageDTO MPdto);
+	
+	// 상품에 찜 +1 하기
+	public void allproductWishcntPlus(String productnum);
+	
+	// 상품 찜 유무
+	public int selectPickCount(String username, String productnum);
+	
+	// 마이페이지에 상품 찜 삭제하기
+	public void deleteProductPick(String username, String productnum);
+	
+	// Allproduct 상품에 찜 -1 하기
+	public void allproductWishcntMinus(String productnum);
+	
+	// 농부 팔로우하기
+	public void InsertUsernameFollow(MyPageDTO MPdto);
+	
+	// 농부 팔로우하면 userdetails에 followers +1 하기
+	public void userdetailsUpdateFollowersPlus(String follow);	
+	
+	// 마이페이지 농부 구독 유무
+	public int selectFollowCount(String username, String follow);
+	
+	// 농부 팔로우 취소하기
+	public void deleteFollow(String username, String follow);
+	
+	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
+	public void userdetailsUpdateFollowersMinus(String follow);	
+	
+	
+	
+	
+	
+	
+	// TEST
+	
+	
+	
+	
+	
+	// 내 상점 페이지에 필요한 정보들 가져오기
 	public ShopListDTO selectMyShop(String username);
 	
 	// 유저의 상품들 가져오기
@@ -83,23 +137,11 @@ public interface ProductService {
 	// 상품 이미지 가져오기 	
 	public List<ImagesDTO> selectProductImages(String follow, String productnum); 
 
-	// 상품 찜하기
-	public void InsertProductPick(MyPageDTO MPdto);
+	// 상품 리뷰쓰기
+	public void reviewInsert(ReviewsDTO Rdto);
 	
-	// 상품에 찜 +1 하기
-	public void allproductWishcntPlus(String productnum);
-	
-	// 상품 찜 유무
-	public int selectPickCount(String username, String productnum);
-	
-	// 마이페이지에 상품 찜 삭제하기
-	public void deleteProductPick(String username, String productnum);
-	
-	// Allproduct 상품에 찜 -1 하기
-	public void allproductWishcntMinus(String productnum);
-	
-	// 농부 팔로우하기
-	public void InsertUsernameFollow(MyPageDTO MPdto);	
+	// 상품 전체목록 보기
+	public List<AllProductDTO> selectAllproduct();	
 }
 
 

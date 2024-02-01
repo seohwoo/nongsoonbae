@@ -16,6 +16,7 @@
 	</head>
 	
 	<body>
+<<<<<<< HEAD
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<div class="background"></div>
 		<div class="seller">
@@ -28,11 +29,75 @@
 				</div>
 				<p class="text-muted" style="font-size: 12px;">관심 고객 수 : ${SLdto.followers}</p>
 		</div>		
+=======
+		<table width="600" border="1" style="text-align: center;">
+			<img src="/resources/file/profile/${SLdto.image}" width="100px" height="100px" />
+			
+			<input type="button" value="follow" onclick="javascript:window.location='/product/followPro?follow=${follow}'">
+			
+			<tr> 
+				<td width="200">농부이름</td>
+				<td width="400"> 
+					${SLdto.name}	
+				</td>
+			</tr>		
+		
+			<tr> 
+				<td width="200">상점이름</td>
+				<td width="400"> 
+					${SLdto.shopname}	
+				</td>
+			</tr>
+
+			<tr> 
+				<td width="200">상점소개</td>
+				<td width="400"> 
+					${SLdto.shopcontent}	
+				</td>
+			</tr>		
+
+			<tr> 
+				<td width="200">상점주소</td>
+				<td width="400"> 
+					${address}	
+				</td>
+			</tr>
+
+			<tr> 
+				<td width="200">팔로우</td>
+				<td width="400"> 
+					${SLdto.followers}	
+				</td>
+			</tr>												
+		</table>	
+		
+>>>>>>> branch 'sjr/2' of https://github.com/seohwoo/nongsoonbae.git
 		<br /> <hr /> <br />	
 		<div class="sellcontent">
 			<table style="text-align: center;">
 				<tr>
+<<<<<<< HEAD
 					<td>소개 : </td><td colspan="5">${SLdto.shopcontent}</td>
+=======
+					<td>
+						<img src="/resources/realImage/${APdto.filename}" width="100px" height="100px">
+					</td>
+					<td>
+						<a href="/product/productDetail?productnum=${APdto.productnum}">${APdto.productnum}</a>	
+					</td>										
+					<td>
+						${APdto.productname}	
+					</td>
+					<td>
+						${APdto.price}
+					</td>
+					<td>
+						${APdto.wishcnt}
+					</td>
+					<td>
+						${APdto.readcnt}
+					</td>
+>>>>>>> branch 'sjr/2' of https://github.com/seohwoo/nongsoonbae.git
 				</tr>
 				<tr>
 					<td>판매 상품</td>

@@ -21,6 +21,14 @@
 		<table border="1px" style="text-align: center;">
 			${Adto1.areaname}  ${Adto2.areaname}  ${APdto.name} | 팔로워  ${APdto.followers}
 			
+			<tr>
+			    <td>
+			        <c:forEach var="Idto" items="${Idto}">
+			            <img src="/resources/realImage/${Idto.filename}" width="100" height="100">
+			        </c:forEach>
+			    </td>
+			</tr>
+			
 			<tr> 
 				<td width="200">상품이름</td>
 				<td width="200">${APdto.productname}</td>
@@ -47,14 +55,11 @@
 					</select>
 				</td>
 			</tr>
-			
-			<c:forEach var="Idto" items="${Idto}">
-				<img src="/resources/realImage/${Idto.filename}">
-			</c:forEach>
+
 			<tr>
 				<td>
 					<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
-					<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
+					<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?follow=${follow}'">
 				</td>
 			</tr>
 		</table>												

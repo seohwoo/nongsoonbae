@@ -19,7 +19,7 @@
 					<input type="text" name="imagecount" size="15" required="required">
 				</td>
 			</tr>
-
+			
 			<div class="stars1">
 				<label for="star1" class="star" data-rating="1"> <i class="far fa-star" style="color: #ffc83d;"></i></label>
 				<label for="star2" class="star" data-rating="2"> <i class="far fa-star" style="color: #ffc83d;"></i></label>
