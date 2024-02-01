@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.ChartDTO;
 import nong.soon.bae.repository.MembershipMapper;
 
@@ -23,6 +24,10 @@ public class MembershipServiceImpl implements MembershipService{
 	private ArrayList<String> monthList;
 	@Autowired
 	private ArrayList<Double> valueList;
+	@Autowired
+	private ArrayList<Integer> userPriceList;
+	@Autowired
+	private ArrayList<String> userMarketList;
 	
 	@Override
 	public void findDetailChart(Model model, String year, String month, String name, String value) {
@@ -54,7 +59,40 @@ public class MembershipServiceImpl implements MembershipService{
 
 	@Override
 	public void showUserPriceChart(Model model, String cate1, String cate2, String cate3) {
-		
+		userPriceList.clear();
+		userMarketList.clear();
+		membershipMap.put("cate1", cate1);
+		membershipMap.put("cate2", cate2);
+		membershipMap.put("cate3", cate3);
+		int cnt = mapper.userCategoryChartCnt(membershipMap);
+		List<AllProductDTO> list = Collections.EMPTY_LIST;
+		String catename = "";
+		int recentAvgPrice = 0;
+		if(cnt > 0) {
+			list = mapper.showUserCategoryChart(membershipMap);
+			catename = list.get(0).getCatename();
+			membershipMap.put("catename", catename);
+			recentAvgPrice = (int) mapper.findRecentAvgPrice(membershipMap).get(0).getAvgprice();
+			int isJoin = 0;
+			for (int i = 0; i < list.size(); i++) {
+				if(list.get(i).getAvgprice() > recentAvgPrice && isJoin==0) {
+					userPriceList.add(recentAvgPrice);
+					userMarketList.add(catename +  "Æò±Õ°¡");
+					isJoin++;
+				}
+				userPriceList.add(list.get(i).getAvgprice());
+				userMarketList.add(list.get(i).getProductname());
+				if(i == list.size()-1 && isJoin==0) {
+					userPriceList.add(recentAvgPrice);
+					userMarketList.add(catename +  "Æò±Õ°¡");
+					isJoin++;
+				}
+			}
+		}
+		model.addAttribute("isChart", cnt);
+		model.addAttribute("catename", catename);
+		model.addAttribute("userPriceList", userPriceList);
+		model.addAttribute("userMarketList", userMarketList);
 	}
 	
 	

@@ -39,6 +39,7 @@ public class MembershipController {
 		}
 		mainService.cateMenu(model);
 		mainService.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
+		service.showUserPriceChart(model, cate1, cate2, cate3);
 		return "/membership/chart/userPriceChart";
 	}
 	
@@ -58,7 +59,6 @@ public class MembershipController {
 		}
 		mainService.cateMenu(model);
 		mainService.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
-		//service.showChart(model, cate1, cate2, cate3);
 		model.addAttribute("isMembership", isMembership);
 		return "all/main/categoryChart";
 	}

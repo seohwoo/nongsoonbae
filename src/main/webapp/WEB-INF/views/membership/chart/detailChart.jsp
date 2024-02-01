@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<h1>${name}</h1>
-		  	<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
+		<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>		
 		<script>
 		var originalArray = '${monthList}';

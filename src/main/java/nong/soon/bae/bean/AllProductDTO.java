@@ -24,6 +24,7 @@ public class AllProductDTO {
 	private int cate3;
 	private int area1;
 	private int area2;
+	
 	// 추가
 	private String catenum;
 	private String seqnum;
@@ -32,4 +33,11 @@ public class AllProductDTO {
 	private String name;
 	private int followers;
 	private String address;
+	
+	// 카테고리 테이블에서 추가
+	private String catename;
+	private int amount;
+	private String unit;
+	
+	
 }

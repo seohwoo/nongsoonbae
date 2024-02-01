@@ -18,6 +18,16 @@
    		<beans:list value-type="Double"/>
    	</beans:constructor-arg>
    </beans:bean>
+  <beans:bean id="userPriceList" class="java.util.ArrayList">
+   	<beans:constructor-arg>
+   		<beans:list value-type="Integer"/>
+   	</beans:constructor-arg>
+   </beans:bean>
+  <beans:bean id="userMarketList" class="java.util.ArrayList">
+   	<beans:constructor-arg>
+   		<beans:list value-type="String"/>
+   	</beans:constructor-arg>
+   </beans:bean>
    <beans:bean id="membershipMap" class="java.util.HashMap" >
    	<beans:constructor-arg>
     	<beans:map key-type="String" value-type="String" />

@@ -13,4 +13,26 @@
 	<select id="maxAvgPrice" parameterType="String" resultType="int">
 		select max(avgprice) from chart where regdate like #{keyword} and name=#{name}
 	</select>
+	<select id="userCategoryChartCnt" parameterType="hashmap" resultType="int">
+		select count(*) from allproduct 
+		where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade>1
+	</select>
+	<select id="showUserCategoryChart" parameterType="hashmap" resultType="allProductDTO">
+		SELECT ap.*,
+		       pc.catename,
+		       pc.amount,
+		       pc.unit
+		FROM allproduct ap
+		JOIN productcategory pc ON ap.cate1 = pc.cate1
+		                         AND ap.cate2 = pc.cate2
+		                         AND ap.cate3 = pc.cate3
+		WHERE ap.cate1 = #{cate1}
+		  and ap.cate2 = #{cate2}
+		  and ap.cate3 = #{cate3}
+		  AND ap.grade > 1
+		order by ap.avgprice
+	</select>
+	<select id="findRecentAvgPrice" parameterType="hashmap" resultType="chartDTO">
+		select * from chart where name = #{catename} order by regdate desc
+	</select>
 </mapper>
