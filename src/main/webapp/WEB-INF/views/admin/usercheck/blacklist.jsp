@@ -7,6 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>정지 회원 목록</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 			<style>
 		        body {
 		        font-family: Arial, sans-serif;
@@ -96,8 +97,19 @@
 				   </div>
 	</body>
 	<script>
-	 function confirmRecovery(username) {
-	      return confirm(username + ' 님의 계정을 복구하시겠습니까?');
+	 $(document).ready(function() {
+	        var status = <c:out value="${restatus}" default="-1" />;
+	        if (status !== -1) {
+	            if (status === 1) {
+	                alert("복구되었습니다.");
+	            } else if (status === 0) {
+	                alert("복구에 실패하였습니다.");
+	            }
+	        }
+	    });
+
+	    function confirmRecovery(username) {
+	        return confirm(username + ' 님의 계정을 복구하시겠습니까?');
 	    }
 	</script>
 </html>

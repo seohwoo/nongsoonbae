@@ -136,4 +136,12 @@ public class UserController {
 		}
 		return "redirect:/nsb/main";
 	}
+	
+	@RequestMapping("membership")
+	public String membership(Principal principal, Model model) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		model.addAttribute("isMembership", 1);
+		return "/user/mypage/membership";
+	}
 }

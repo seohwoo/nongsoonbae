@@ -9,12 +9,16 @@
 	<body>
 	   <div style="display: flex;">
 		<c:if test="${cntDetail == 0 }" >
-	         <h1> 상품 없음! </h1>
+	         <h1 class="catenull"> 상품 없음! </h1>
 	         </c:if>
 	         <c:if test="${cntDetail >  0 }" >
+	         	<div class="container mx-auto mt-4">
+ 				<div class="row">
 	            <c:forEach var="dto" items="${productlistdetail}">
-	               <h1>${dto.productname}</h1>
+	               <%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 	            </c:forEach>
+	            </div>
+	            </div>
 	         </c:if>	
 	     </div>
    </body>

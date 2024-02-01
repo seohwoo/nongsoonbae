@@ -49,6 +49,8 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
             rdir = "/admin/usercheck";
         } else if (authorities.contains(new SimpleGrantedAuthority("MEMBER"))) {
             rdir = "/user/mypage";
+        } else if(authorities.contains(new SimpleGrantedAuthority("DELETEUSER"))) {
+        	rdir = "/member/logout?error=true";
         }
 		response.sendRedirect(rdir);
 	}

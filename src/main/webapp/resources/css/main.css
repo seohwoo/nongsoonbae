@@ -5,7 +5,13 @@
     font-weight: 400;
     font-style: normal;
 }
-table{
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+table.main, .title{
 	font-family: 'SUITE-Regular';
 	display: -ms-flexbox;
 	-ms-flex-align: center;
@@ -21,9 +27,12 @@ table.table {
 }
 table.chart{
 	width : 80%;
-	margin-bottom: 200px;
+	margin-bottom: 30px;
 	margin-left: auto;
 	margin-right: auto;
+}
+table.chartsub{
+	margin-bottom: 60px;
 }
 table.season{
 	padding-top: 100px;
@@ -57,4 +66,52 @@ td.page{
 	padding-left : 0px;
 	padding-right : 0px;
 	border: none;
+}
+.catelist {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+	background: #fbfcfd;
+	height: 50px;
+	width: 80%;
+	align-items: center;
+	border: 1px solid #ced4d9;
+	justify-content: center;
+}
+.catebtn {
+	border: none;
+	background: none;
+}
+.catenull{
+	margin-left: auto; 
+	margin-right: auto; 
+	margin-top: 30px; 
+	margin-bottom: 30px;
+}
+.areabtn{
+	justify-content: center;
+	border: none;
+	display: flex;
+	margin-bottom: 80px;
+}
+
+<!--메인카드-->
+:root {
+  --gradient: linear-gradient(to left top, #DD2476 10%, #FF512F 90%) !important;
+}
+.card {
+  margin-bottom: 2rem;
+}
+div.farmer {
+	float: right; 
+	display: inline-block; 
+	display: flex;
+}
+div.farmer p {
+	align-self: flex-end;
+}
+div.farmer b {
+	padding: 2px;
+	margin-left: 5px; 
+	margin-right: 5px;
 }

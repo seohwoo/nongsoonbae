@@ -9,11 +9,11 @@
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-	<div style="display: flex; flex-direction: column;">
-		<table class="chart table-borderless main">
+	<div style="align-items: center;">
+		<table class="chart table-borderless">
 			<tr>
 				<td>
-					<h1 class="title">실시간 차트</h1><br />
+					<h1 class="title">사용자 가격 차트</h1><br />
 				</td>
 			</tr>
 			<tr>
@@ -21,7 +21,7 @@
 					<div style="display: flex;">
 						<c:forEach var="dto" items="${catemenu}" >
 						<div style="margin-right: 10px;">
-						<form action="/nsb/chart" method="get">
+						<form action="/membership/userChart" method="get">
 							<input type="hidden" name="cate1" value="${dto.cate1}">
 							<input type="hidden" name="cate2" value="${dto.cate2+1}">
 							<input type="hidden" name="cate3" value="${dto.cate3+1}">
@@ -45,7 +45,7 @@
 						<c:if test="${isCate3>0}">
 							<c:forEach var="cate" items="${cateList}" >
 								<div style="margin-right: 10px;">
-									<form action="/nsb/chart" method="get">
+									<form action="/membership/userChart" method="get">
 										<input type="hidden" name="categoryNum" value="${categoryNum}">
 										<input type="hidden" name="cate1" value="${cate.cate1}">
 										<input type="hidden" name="cate2" value="${cate.cate2}">
@@ -62,13 +62,11 @@
 					</div>
 				</td>
 			</tr>	
-			</table>
-			<table class="chartsub table-borderless main">
 			<tr>
 				<td class="page">
 					<c:if test="${cate1!=null}">
 						<c:if test="${categoryNum>1}">
-							<form action="/nsb/chart" method="get">
+							<form action="/membership/userChart" method="get">
 								<input type="hidden" name="categoryNum" value="${categoryNum-1}">
 								<input type="hidden" name="cate1" value="${cate1}">
 								<input type="hidden" name="cate2" value="${prevCate.cate2}">
@@ -80,7 +78,7 @@
 							<button class="bton" onclick="window.location='#'">⏸</button>
 						</c:if>
 						<c:if test="${categoryNum<maxCategoryNum}">
-							<form action="/nsb/chart" method="get">
+							<form action="/membership/userChart" method="get">
 								<input type="hidden" name="categoryNum" value="${categoryNum+1}">
 								<input type="hidden" name="cate1" value="${cate1}">
 								<input type="hidden" name="cate2" value="${nextCate.cate2}">
@@ -91,15 +89,12 @@
 					</c:if>
 				</td>
 			</tr>
-			</table>
-			<table class="chartsub table-borderless main">
 			<tr>
 				<td>
 					<c:if test="${isChart==0 }">
 						<h1>차트를 준비중입니다...</h1>
 					</c:if>
 					<c:if test="${isChart>0 }">
-						<jsp:include page="/WEB-INF/views/all/main/chart.jsp" />
 					</c:if>
 				</td>
 			</tr>

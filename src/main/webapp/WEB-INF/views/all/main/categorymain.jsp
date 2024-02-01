@@ -18,8 +18,8 @@
 	</head>
 	<body>
 		<%@include file="/WEB-INF/views/include/header.jsp"%>
-			<h1>카테고리</h1>
-			<div style="display: flex;">
+			<h1 class="title">카테고리</h1><br />
+			<div style="display: flex; padding-left : 30%; padding-right: 30%;">
 		    <c:forEach var="dto" items="${catelist}">
 		        <div style="margin-right: 10px;">
 		           <form action="/nsb/menu" method="post" onsubmit="return checkAndRedirect('${dto.cate1}')">
@@ -39,9 +39,13 @@
 		    </c:forEach>
 			</div>
 			<c:if test="${allCnt >  0 }" >
+			<div class="container mx-auto mt-4">
+ 			  <div class="row">
 				<c:forEach var="dto" items="${allprocuctList}">
-					<h1>${dto.productname}</h1>
+					<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 				</c:forEach>
+				</div>
+				</div>
 			</c:if>	
 			<div>
 				<jsp:include page="/WEB-INF/views/all/main/categorylist.jsp" />

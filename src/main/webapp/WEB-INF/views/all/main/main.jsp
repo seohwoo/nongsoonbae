@@ -4,19 +4,20 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>메인입니당</title>		
+		<title>농순배</title>		
 		<script type="text/javascript">
-        var errorParam = '<%= request.getParameter("error") %>';
-        if (errorParam === 'true') {
-            // "error" 값이 true일 때 alert 띄우기
-            alert("접근 권한이 없습니다.");
-        }
-    </script>
+	        var errorParam = '<%= request.getParameter("error") %>';
+	        if (errorParam === 'true') {
+	            // "error" 값이 true일 때 alert 띄우기
+	            alert("접근 권한이 없습니다.");
+	        }
+	    </script>
+	    <script type="text/javascript" src="/resources/js/jquery-1.10.2.min.js"></script>
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-	<table class="table-borderless">
-		<tbody>
+	<table class="table-borderless main">
+		<tbody id="contentContainer">
 			<tr>
 				<td class="title">
 					<h1>🍒🍓🍅 농순배 🥑🥒🥬</h1>
