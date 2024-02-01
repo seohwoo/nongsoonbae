@@ -2,6 +2,8 @@ package nong.soon.bae;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,28 +14,30 @@ import nong.soon.bae.api.UsingKorAPI;
 
 public class test1 {
 
-	
+	/*
+	public static double roundToDecimal(double value) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(1, RoundingMode.HALF_UP);
+
+        return bd.doubleValue();
+    }
+	*/
 
 	public static void main(String[] args) {
 		
-		Date date = new Date();
-		SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");
+	//	System.out.println(roundToDecimal(351/100));
+	//	System.out.println((int) 6321 / (roundToDecimal(351/100)));
+		double avgPrice =  (double) 134 / 100;
 		
-		String day = smf.format(date);		
-		String year = day.split("/")[0].substring(2, 4);
-
+		System.out.println(avgPrice); 
+		avgPrice = (double) 8509 / avgPrice;
+		System.out.println((int) avgPrice); 
 		
-		String productnum = "2411100001";
 		
-		productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);
-		System.out.println(productnum);
-
-        String fullAddress = "충남 천안시 동남구 신부동";
-        String[] addressParts = fullAddress.split(" ");
-        String area1 = addressParts[0];
-        String area2 = addressParts[1];
-        System.out.println(area1);
-        System.out.println(area2);
+		
+		
+		// avgPrice = (int) (optiontotalprice[0] / Math.round((optionunit[0] / optionamount) * 10.0) / 10.0);
+		
 	}
 	
 	

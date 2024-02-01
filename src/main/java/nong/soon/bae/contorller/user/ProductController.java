@@ -40,6 +40,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.service.ProductService;
 
@@ -126,6 +127,7 @@ public class ProductController {
 		return "/product/productWriteForm2";
 	}
 	
+	
 	// cate3 값 가져오기
 	@RequestMapping("productWriteForm3")
 	public String selectCate3(Model model ,int cate1, int cate2) {
@@ -134,13 +136,24 @@ public class ProductController {
 		model.addAttribute("cate3", cate3);
 		return "/product/productWriteForm3";
 	}	
+	// cate3 값 가져오기
+	@RequestMapping("productWriteForm4")
+	public String selectCate4(Model model ,int cate1, int cate2, int cate3) {
+		// cate3 값 가져오기
+		ProductCategoryDTO dto = service.selectCate4(cate1, cate2, cate3);
+		model.addAttribute("catedto", dto);
+		return "/product/firstOption";
+	}	
 	
 	// 상품 등록하기
 	@RequestMapping("productWritePro")
 	public String productWritePro(Principal principal, Model model, String[] fileNames,
-								  int cate1, int cate2, int cate3, 
+								  int cate1, int cate2, int cate3,
 								  HttpServletRequest request, AllProductDTO APdto, 
-								  @RequestParam("optionname") String[] optionname, 
+								  @RequestParam("optionname") String[] optionname,
+								  @RequestParam("optionunit") int[] optionunit,
+								  @RequestParam("optionamount") int optionamount,
+								  @RequestParam("optionrealunit") String optionrealunit,
 								  @RequestParam("optiontotalprice") int[] optiontotalprice,
 								  @RequestParam("optionProductCount") int[] optionProductCount) {
 
@@ -170,7 +183,12 @@ public class ProductController {
 		
 		APdto.setArea1(area1);
 		APdto.setArea2(area2);
-				
+		
+		double avgPrice = 0;
+		
+		avgPrice = (double) optiontotalprice[0] / ((double) optionunit[0] / optionamount);
+		APdto.setAvgprice((int) avgPrice);
+		
 		// AllProduct 상품 등록하기
 		service.productInsert(APdto);
 		
@@ -220,7 +238,7 @@ public class ProductController {
 			ProductDTO Pdto = new ProductDTO();						
 			Pdto.setUsername(username);
 			Pdto.setProductnum(productnum);
-			Pdto.setOptionname(optionname[i]);
+			Pdto.setOptionname(optionname[i] +" ("+ optionunit[i] + optionrealunit + ")" );
 			Pdto.setPrice(optiontotalprice[i]);
 			Pdto.setProductcount(optionProductCount[i]);
 			Pdto.setCatenum(categorynum);
@@ -322,14 +340,67 @@ public class ProductController {
 		return "redirect:/product/productMain";
 	}	
 	
-	// 리뷰 작성하기
+	// 리뷰 작성하는 페이지
 	@RequestMapping("productReview")
 	public String productReview(Principal principal, String optionnum, String productnum, Model model) {
 		String username = principal.getName();
 		// 닉네임 가져오기
 		String name = service.selectMyName(username);
 		
+		model.addAttribute("productnum", productnum);
+		model.addAttribute("optionnum", optionnum);
+		model.addAttribute("name", name);
 		return "/product/productReview";
+	}
+	
+	// 리뷰 작성하기
+	@RequestMapping("productReviewPro")
+	public String productReviewPro(Principal principal, ReviewsDTO Rdto, String[] fileNames, HttpServletRequest request, 
+								   String productnum, String optionnum, String name) {
+		String username = principal.getName();
+
+		
+		// 스마트 에디터?
+		String content = Rdto.getContent();
+		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
+		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
+		int cnt = 1;
+		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
+		int files = 0;
+		if(fileNames != null) {
+			files = fileNames.length;
+			Rdto.setImagecount(files);
+			// 리뷰 등록하기
+			service.reviewInsert(Rdto);
+	    	
+			ImagesDTO  Idto = new ImagesDTO();
+	    	Idto.setProductnum(productnum);
+	    	Idto.setUsername(username);
+	    	isFile(fileNames, content);
+			
+	    	for (String filename : realFiles) {
+				try {
+					File sourceFile = new File(fileRoot+filename);
+					File targetDirectory = new File(realRoot);
+					String ext = filename.substring(filename.lastIndexOf("."));
+					String realname = "P_"+productnum+"_"+cnt+ext;
+					Idto.setFilename(realname);
+					
+					// 파일 넣기
+					service.imagesInsert(Idto);
+					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
+					cnt++;
+					content = content.replace(filename, realname);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}			
+	    	for (String filename : fileNames) {
+				File sourceFile = new File(fileRoot+filename);
+				sourceFile.delete();
+			}
+	    }		
+		return "/product/productReviewPro";
 	}
 	
 	
@@ -376,6 +447,20 @@ public class ProductController {
 		return "redirect:/product/productMain";
 	}
 	
+	// 장바구니 담기
+	@RequestMapping("productShoppingPro")
+	public String ShoppingPro(Principal principal, String productnum, String follow, String optionnum, String count) {
+		String username = principal.getName();
+		MyPageDTO MPdto = new MyPageDTO();
+		MPdto.setUsername(username);
+		MPdto.setFollow(follow);
+		MPdto.setProductnum(productnum);
+		MPdto.setOptionnum(optionnum);
+		MPdto.setCount(Integer.parseInt(count));
+		service.insertShopping(MPdto);
+		
+		return "redirect:/product/productMain";
+	}
 
 	// TEST
 	@RequestMapping("sample")

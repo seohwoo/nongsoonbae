@@ -16,4 +16,6 @@ public class ReviewsDTO {
 	private int stars;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regdate;
+	
+	private String name;
 }

@@ -11,4 +11,6 @@ public class ProductCategoryDTO {
 	private int readcount;
 	private String img;
 	private String month;
+	private String unit;
+	private int amount; 
 }
