@@ -136,42 +136,48 @@
     
     
    <script type="text/javascript">
-	    $(document).ready(function() {
-	        var existingCateNames = [];
-	        <c:forEach var="cate" items="${catelist}">
-	            <c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
-	                existingCateNames.push("${cate.catename}");
-	            </c:if>
-	        </c:forEach>
-	
-	        $('#addCate').on('submit', function(e) {
-	            var newCateName = $('input[name="addCate"]').val().trim();
-	
-	       
-	            if (!newCateName) {
-	                alert('항목을 입력해주세요.');
-	                e.preventDefault(); // 폼 제출 방지
-	                return; 
-	            }
-	
-	            // 중복 체크
-	            if (existingCateNames.includes(newCateName)) {
-	                alert('중복된 항목은 추가할 수 없습니다.');
-	                e.preventDefault(); 
-	                return; 
-	            } 
-	        });
-	
-	        var status = <c:out value="${status}" default="-1" />;
-	            if (status !== -1) {
-	                if (status === 1) {
-	                    alert("추가가 완료되었습니다.");
-	                } else if (status === 0) {
-	                    alert("유효하지 않은 파일 형식입니다.");
-	                }
-	            }
-	        });
-	</script>
+    $(document).ready(function() {
+        var existingCateNames = [];
+        <c:forEach var="cate" items="${catelist}">
+            <c:if test="${cate.cate2 == 0 && cate.cate3 == 0}">
+                existingCateNames.push("${cate.catename}");
+            </c:if>
+        </c:forEach>
+
+        $('#addCate').on('submit', function(e) {
+            var newCateName = $('input[name="addCate"]').val().trim();
+
+            if (!newCateName) {
+                alert('항목을 입력해주세요.');
+                e.preventDefault();
+                return;
+            }
+
+            if (existingCateNames.includes(newCateName)) {
+                alert('중복된 항목은 추가할 수 없습니다.');
+                e.preventDefault();
+                return;
+            }
+        });
+
+        var status = <c:out value="${status}" default="-1" />;
+        if (status !== -1) {
+            if (status === 1) {
+                alert("추가가 완료되었습니다.");
+            } else if (status === 0) {
+                alert("유효하지 않은 파일 형식입니다.");
+            }
+        }
+
+        var substatus = <c:out value="${substatus}" default="-1" />;
+        if (substatus !== -1) {
+            if (substatus === 1) {
+                alert("추가가 완료되었습니다.");
+            }
+        }
+    });
+</script>
+
 </body>
 </html>
 

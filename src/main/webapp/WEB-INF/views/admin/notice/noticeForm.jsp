@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="/resources/summernote/summernote-lite.css">
 	</head>
 	<body>
+	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
 	<h1>공지 작성하기</h1>
 		<form method="post" action="/admin/noticePro" enctype="multipart/form-data" id="notice">
 			<input type="text"  placeholder="제목을 입력해주세요." name="title" style="width: 800px;" >

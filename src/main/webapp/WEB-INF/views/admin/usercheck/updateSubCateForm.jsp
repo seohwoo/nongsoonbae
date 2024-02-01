@@ -41,8 +41,7 @@
 	        <input type="hidden" value="${subMaxNum}"  name="subMaxNum"/>
 	        <input type="hidden" value="${cate1Select}" name="cate1Select" />
 	        <input type="submit" value="카테고리 추가하기">
-	    </form>
-	    
+	    </form>   
 	    <script>
 	        function validateForm() {
 	            var cateCount = ${fn:length(etcList)};
@@ -57,8 +56,7 @@
 	                alert('카테고리 생성은 3개 이상부터 가능합니다.');
 	                return false;
 	            }
-	            alert('추가되었습니다.');
-	            return true;
+	            
 	        }
 	    </script>
 	</body>

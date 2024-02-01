@@ -10,7 +10,7 @@
 			select count(*) from allproduct
 	</select>
 	<select id="allproductList" resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct order by cate1 asc
+		select * from allproduct where grade=100 order by readcnt desc, startdate desc, wishcnt desc 
 	</select>
 	<select id="catelistdetail" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate1=#{area1} and cate2>0 and cate3=0 order by cate2 asc 
@@ -19,12 +19,12 @@
 		select count(*)from allproduct where cate1=#{cate1} 
 	</select>
 	<select id="productlist" resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct where cate1=#{cate1} order by cate1 asc 
+		select * from allproduct where grade=100 and cate1=#{cate1} order by readcnt desc, startdate desc, wishcnt desc 
 	</select>
 	<select id="cntDetail" parameterType="hashMap" resultType="int">
 		select count(*)from allproduct where cate1=#{cate1} and cate2=#{cate2} 
 	</select>
 	<select id="productlistdetail" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct where cate1=#{cate1} and cate2=#{cate2} order by cate2 asc 
+		select * from allproduct where grade=100 and cate1=#{cate1} and cate2=#{cate2} order by readcnt desc, startdate desc, wishcnt
 	</select>
 </mapper>

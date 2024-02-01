@@ -275,20 +275,20 @@ public class UserCheckController {
 		return "admin/usercheck/updateSubCateForm";
 	}
 	
-	
 	@RequestMapping("updateSubCatePro") //기타항목 데이터 업데이트
-	public String updateSubCatePro(Model model,
-			@RequestParam(value="cate1Select",required = false ) String cate1Select,
-			@RequestParam(value="subMaxNum",required = false ) String subMaxNum,
-			@RequestParam(value="newCateName",required = false) String newCateName) {	
-		String etcName = service.findEtcName(Integer.parseInt(cate1Select),Integer.parseInt(subMaxNum));
-		if(newCateName != null) {
-			service.updateCateName(newCateName,Integer.parseInt(cate1Select),Integer.parseInt(subMaxNum));
-			int etcNum = Integer.parseInt(subMaxNum) + 1;
-			service.updateEtcCate(Integer.parseInt(cate1Select),etcNum,etcName);
+	public String updateSubCatePro(Model model, RedirectAttributes redirectAttributes,
+	        @RequestParam(value="cate1Select", required = false ) String cate1Select,
+	        @RequestParam(value="subMaxNum", required = false ) String subMaxNum,
+	        @RequestParam(value="newCateName", required = false) String newCateName) {    
+	    String etcName = service.findEtcName(Integer.parseInt(cate1Select), Integer.parseInt(subMaxNum));
+	    if(newCateName != null) {
+	        service.updateCateName(newCateName, Integer.parseInt(cate1Select), Integer.parseInt(subMaxNum));
+	        int etcNum = Integer.parseInt(subMaxNum) + 1;
+	        service.updateEtcCate(Integer.parseInt(cate1Select), etcNum, etcName);
+
+	        // 성공 메시지 추가
+	        redirectAttributes.addFlashAttribute("substatus", 1);
+	    }
+	    return "redirect:/admin/addcategory";
 		}
-		
-		
-		return "redirect:/admin/addcategory";
 	}
-}

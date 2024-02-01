@@ -122,7 +122,7 @@
 		SELECT MAX(cate2) FROM productcategory where cate1=#{cate1Select}
 	</select>
 	<select id="showDetailCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
-		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3>0 order by cate1,cate2,cate3 desc
+		select * from productcategory where cate1=#{cate1Select} and cate2>=0 and cate3>0 order by cate1,cate2,cate3 desc
 	</select>
 	<select id="subDetailMaxNum" parameterType="hashMap" resultType="int">
 		SELECT MAX(cate3) FROM productcategory where cate1=#{cate1Select} and cate2=#{maxNum}

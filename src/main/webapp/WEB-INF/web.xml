@@ -35,6 +35,7 @@
 				/WEB-INF/spring/appServlet/admin/notice-context.xml
 				/WEB-INF/spring/appServlet/admin/usercheck-context.xml
 				/WEB-INF/spring/appServlet/user/mypage-context.xml
+				/WEB-INF/spring/appServlet/user/ad-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

@@ -63,6 +63,7 @@
         </style>
     </head>
     <body>
+    <%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
         <div class="container">
             <div class="header">
                 <h2>${dto.title}</h2>
