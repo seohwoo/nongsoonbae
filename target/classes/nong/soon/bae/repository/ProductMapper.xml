@@ -47,10 +47,15 @@
 		select * from productcategory where cate1=#{cate1} and cate2 = #{cate2} and cate3 > 0 order by cate3 asc
 	</select>
 	
+	<!-- 카테고리 단위값 -->
+	<select id="selectCate4" resultType="nong.soon.bae.bean.ProductCategoryDTO" >
+		select * from productcategory where cate1=#{cate1} and cate2 = #{cate2} and cate3 = #{cate3}
+	</select>
+	
 	<!-- 상품 등록하기 -->
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.AllProductDTO">
 		insert into allproduct (productnum, productname, username, content, startdate,
-		enddate, cate1, cate2, cate3, area1, area2)
+		enddate, cate1, cate2, cate3, area1, area2, avgprice)
 		values (
 			TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || ${catenum} || LPAD(${seqnum}_seq.nextval, 5, '0')), 
 			#{productname},
@@ -62,7 +67,8 @@
 			#{cate2},
 			#{cate3},
 			#{area1},
-			#{area2} )
+			#{area2},
+			#{avgprice} )
 	</insert>
 	
 	<!-- 상품 등록한 직후의 productnum 구하기 -->
@@ -117,8 +123,75 @@
 			#{price}, 
 			#{productcount} )
 	</insert>
+
+	<!-- 마이페이지에 상품 찜하기 -->
+	<insert id="InsertProductPick" parameterType="nong.soon.bae.bean.MyPageDTO">
+		insert into ${username}_mypage (username, follow, productnum, optionnum, count, wishstatus)
+			values (
+				#{username}, 
+				#{follow}, 
+				#{productnum}, 
+				#{optionnum},
+				#{count}, 
+				1 )
+	</insert>
+	
+	<!-- Allproduct 상품에 찜 +1 하기 -->
+	<update id="allproductWishcntPlus" parameterType="String">
+		update allproduct set wishcnt=wishcnt+1 where productnum=#{productnum}
+	</update>
+	
+	<!-- 마이페이지 상품 찜 유무 -->
+	<select id="selectPickCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage where productnum=#{productnum} and wishstatus=1
+	</select>
+	
+	<!-- 마이페이지에 상품 찜 삭제하기 -->
+	<delete id="deleteProductPick" parameterType="String">
+		delete from ${username}_mypage where productnum=#{productnum} and wishstatus=1
+	</delete>
+	
+	<!-- Allproduct 상품에 찜 -1 하기 -->
+	<delete id="allproductWishcntMinus" parameterType="String">
+		update allproduct set wishcnt=wishcnt-1 where productnum=#{productnum}
+	</delete>
+
+	<!-- 농부 팔로우하기 -->
+	<insert id="InsertUsernameFollow" parameterType="nong.soon.bae.bean.MyPageDTO">
+		insert into ${username}_mypage (username, follow, wishstatus)
+			values (
+				#{username}, 
+				#{follow},  
+				2 )
+	</insert>
+
+	<!-- 농부 팔로우하면 userdetails에 followers +1 하기 -->
+	<update id="userdetailsUpdateFollowersPlus" parameterType="String">
+		UPDATE userdetails SET followers = followers + 1 WHERE username = #{follow}
+	</update>
+
+	<!-- 마이페이지 농부 구독 유무 -->
+	<select id="selectFollowCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage where wishstatus=2 and follow=#{follow}
+	</select>
+	
+	<!-- 농부 팔로우 취소하기 -->
+	<delete id="deleteFollow" parameterType="String">
+		delete from ${username}_mypage where wishstatus=2 and follow=#{follow}
+	</delete>
+
+	<!-- 농부 팔로우 취소하면 userdetails에 followers -1 하기 -->
+	<update id="userdetailsUpdateFollowersMinus" parameterType="String">
+		UPDATE userdetails SET followers = followers - 1 WHERE username = #{follow}
+	</update>
 	
 	<!-- FINISH -->
+	
+	
+	
+	
+	
+	
 	
 	<!-- TEST -->
 	
@@ -153,8 +226,13 @@
 			where ap.productnum=#{productnum}
 	</select>
 
-	<!-- 마이페이지에 상품 찜하기 -->
-	<insert id="InsertProductPick" parameterType="nong.soon.bae.bean.MyPageDTO">
+	
+
+
+
+
+	<!-- 장바구니 담기 -->
+	<insert id="insertShopping" parameterType="nong.soon.bae.bean.MyPageDTO">
 		insert into ${username}_mypage (username, follow, productnum, optionnum, count, wishstatus)
 			values (
 				#{username}, 
@@ -162,60 +240,8 @@
 				#{productnum}, 
 				#{optionnum},
 				#{count}, 
-				1 )
-	</insert>
-	
-	<!-- Allproduct 상품에 찜 +1 하기 -->
-	<update id="allproductWishcntPlus" parameterType="String">
-		update allproduct set wishcnt=wishcnt+1 where productnum=#{productnum}
-	</update>
-	
-	<!-- 마이페이지 상품 찜 유무 -->
-	<select id="selectPickCount" resultType="int" parameterType="String">
-		select count(*) from ${username}_mypage where productnum=#{productnum} and wishstatus=1
-	</select>
-	
-	<!-- 마이페이지에 상품 찜 삭제하기 -->
-	<delete id="deleteProductPick" parameterType="String">
-		delete from ${username}_mypage where productnum=#{productnum} and wishstatus=1
-	</delete>
-	
-	<!-- Allproduct 상품에 찜 -1 하기 -->
-	<delete id="allproductWishcntMinus" parameterType="String">
-		update allproduct set wishcnt=wishcnt-1 where productnum=#{productnum}
-	</delete>	
-
-	<!-- 농부 팔로우하기 -->
-	<insert id="InsertUsernameFollow" parameterType="nong.soon.bae.bean.MyPageDTO">
-		insert into ${username}_mypage (username, follow, wishstatus)
-			values (
-				#{username}, 
-				#{follow},  
-				2 )
-	</insert>
-
-	<!-- 농부 팔로우하면 userdetails에 followers +1 하기 -->
-	<update id="userdetailsUpdateFollowersPlus" parameterType="String">
-		UPDATE userdetails SET followers = followers + 1 WHERE username = #{follow}
-	</update>
-
-	<!-- 마이페이지 농부 구독 유무 -->
-	<select id="selectFollowCount" resultType="int" parameterType="String">
-		select count(*) from ${username}_mypage where wishstatus=2 and follow=#{follow}
-	</select>
-	
-	<!-- 농부 팔로우 취소하기 -->
-	<delete id="deleteFollow" parameterType="String">
-		delete from ${username}_mypage where wishstatus=2 and follow=#{follow}
-	</delete>
-
-	<!-- 농부 팔로우 취소하면 userdetails에 followers -1 하기 -->
-	<update id="userdetailsUpdateFollowersMinus" parameterType="String">
-		UPDATE userdetails SET followers = followers - 1 WHERE username = #{follow}
-	</update>
-
-
-
+				3 )
+	</insert>		
 	
 	
 	<!-- TEST -->
@@ -277,7 +303,7 @@
 
 	<!-- 상품 리뷰쓰기 -->
 	<insert id="reviewInsert" parameterType="nong.soon.bae.bean.ReviewsDTO"> 
-		insert into P_${productnum}_reviews (username, productnum, optionnum content, imagecount, stars, regdate) 
+		insert into P_${productnum}_reviews (username, productnum, optionnum, content, imagecount, stars, regdate) 
 			values (
 				#{name}, 
 				#{productnum}, 

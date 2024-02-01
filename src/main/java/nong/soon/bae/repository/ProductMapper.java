@@ -32,6 +32,9 @@ public interface ProductMapper {
 	// 카테고리 소분류
 	public List<ProductCategoryDTO> selectCate3(@Param("cate1") int cate1, 
 												@Param("cate2") int cate2);	
+	// 카테고리 소분류
+	public ProductCategoryDTO selectCate4(@Param("cate1") int cate1, 
+			@Param("cate2") int cate2, @Param("cate3") int cate3);	
 		
 	// 상품 등록하기
 	public void productInsert(AllProductDTO APdto);
@@ -58,28 +61,6 @@ public interface ProductMapper {
 	// 상품 등록할 때 username_product에 옵션들 넣기
 	public void optionInsert(ProductDTO Pdto);
 	
-	//상점개설여부(유미)
-	String CheckMyShop(String username);
-	
-	// FINISH
-	
-	// TEST
-
-	// 상품 정보 페이지
-	public AllProductDTO selectProductInfo(@Param("follow") String follow, 
-										   @Param("productnum") String productnum);
-	
-	// 상품 올린 사람의 주소, 이름, 팔로우 찾기
-	public AllProductDTO selectProductNameAddressFollowers(String follow);
-	
-	// 상품 옵션들 가져오기
-	public List<ProductDTO> selectProductOptionAll(@Param("follow") String follow, 
-			   									   @Param("productnum") String productnum);
-	
-	// 상품 사진 가져오기
-	public List<AllProductDTO> selectProductImagesAll(@Param("follow") String follow, 
-													  @Param("productnum") String productnum);
-
 	// 상품 찜하기
 	public void InsertProductPick(MyPageDTO MPdto);
 	
@@ -112,14 +93,49 @@ public interface ProductMapper {
 						 	 @Param("follow") String follow);
 	
 	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
-	public void userdetailsUpdateFollowersMinus(String follow);
+	public void userdetailsUpdateFollowersMinus(String follow);	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//상점개설여부(유미)
+	String CheckMyShop(String username);
+	
+	// FINISH
+	
+	// TEST
+
+	// 상품 정보 페이지
+	public AllProductDTO selectProductInfo(@Param("follow") String follow, 
+										   @Param("productnum") String productnum);
+	
+	// 상품 올린 사람의 주소, 이름, 팔로우 찾기
+	public AllProductDTO selectProductNameAddressFollowers(String follow);
+	
+	// 상품 옵션들 가져오기
+	public List<ProductDTO> selectProductOptionAll(@Param("follow") String follow, 
+			   									   @Param("productnum") String productnum);
+	
+	// 상품 사진 가져오기
+	public List<AllProductDTO> selectProductImagesAll(@Param("follow") String follow, 
+													  @Param("productnum") String productnum);
+
+
+
 	
 	
 	
 	
 	// TEST
 	
-	
+	// 장바구니 담기
+	public void insertShopping(MyPageDTO MPdto);
 	
 	
 	// 내 상점 페이지에 필요한 정보들 가져오기

@@ -14,17 +14,37 @@
 			$("#Pdto").on("change", function() {
 				var selectedOptionNum = $("#Pdto").val();
 				$("#selectedOptionNum").val(selectedOptionNum);
+				
+				var selectedOptionText = $("#Pdto option:selected").text();
+                var newRow = $("<tr>").append($("<td>").text(selectedOptionText));
+                
+            	// 증가, 감소 버튼 추가
+                var increaseButton = $("<button>").text("+").click(increaseQuantity);
+                var decreaseButton = $("<button>").text("-").click(decreaseQuantity);
+                var numberText = $("<input type='text' name='count' id='count' value='1'>");
+                
+                newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton));
+                $("table").append(newRow);
 			})
+			
+			function increaseQuantity(e) {
+				e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
+            }
+
+            function decreaseQuantity(e) {
+            	count = parseInt(e.target.previousElementSibling.value);
+            	if(count > 1){
+            		e.target.previousElementSibling.value = parseInt(e.target.previousElementSibling.value)-1 ;
+            	}
+            var number = e.target.nextElementSibling.value;
+            }
 		})
-		
 		
 		function openReviewWindow() {
 			var optionnum = $("#selectedOptionNum").val();
 			var productnum = ${productnum};
-			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=450,height=300,resizable=yes');
-
+			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=600,height=450,resizable=yes');
 		}
-</script>
 	</script>
 	
 	<body>
@@ -76,14 +96,12 @@
 					</select>
 				</td>
 			</tr>
-
-			
-			
 		</table>
-		
+
 		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
 		<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
 		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
+		<input type="button" value="장바구니담기" onclick="javascript:window.location='/product/productShoppingPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val() +'&count='+$('#count').val()">
 		<button onclick="openReviewWindow()">리뷰작성</button>	
 	</body>
 </html>

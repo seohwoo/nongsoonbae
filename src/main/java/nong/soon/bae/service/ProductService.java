@@ -32,6 +32,9 @@ public interface ProductService {
 	// 카테고리 소분류
 	public List<ProductCategoryDTO> selectCate3(int cate1, int cate2);	
 	
+	public ProductCategoryDTO selectCate4(int cate1,int cate2,int cate3);
+	
+	
 	// 상품 등록하기
 	public void productInsert(AllProductDTO APdto);	
 	
@@ -54,7 +57,46 @@ public interface ProductService {
 	public void imagesInsert(ImagesDTO Idto);
 	
 	// 상품 등록할 때 username_product에 옵션들 넣기
-	public void optionInsert(ProductDTO Pdto);	
+	public void optionInsert(ProductDTO Pdto);
+
+	// 상품 찜하기
+	public void InsertProductPick(MyPageDTO MPdto);
+	
+	// 상품에 찜 +1 하기
+	public void allproductWishcntPlus(String productnum);
+	
+	// 상품 찜 유무
+	public int selectPickCount(String username, String productnum);
+	
+	// 마이페이지에 상품 찜 삭제하기
+	public void deleteProductPick(String username, String productnum);
+	
+	// Allproduct 상품에 찜 -1 하기
+	public void allproductWishcntMinus(String productnum);	
+	
+	// 농부 팔로우하기
+	public void InsertUsernameFollow(MyPageDTO MPdto);
+	
+	// 농부 팔로우하면 userdetails에 followers +1 하기
+	public void userdetailsUpdateFollowersPlus(String follow);	
+	
+	// 마이페이지 농부 구독 유무
+	public int selectFollowCount(String username, String follow);
+	
+	// 농부 팔로우 취소하기
+	public void deleteFollow(String username, String follow);
+	
+	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
+	public void userdetailsUpdateFollowersMinus(String follow);		
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	String CheckMyShop(String username);
 	
@@ -73,36 +115,7 @@ public interface ProductService {
 	
 	// 상품 사진 가져오기
 	public List<AllProductDTO> selectProductImagesAll(String follow, String productnum);
-	
-	// 상품 찜하기
-	public void InsertProductPick(MyPageDTO MPdto);
-	
-	// 상품에 찜 +1 하기
-	public void allproductWishcntPlus(String productnum);
-	
-	// 상품 찜 유무
-	public int selectPickCount(String username, String productnum);
-	
-	// 마이페이지에 상품 찜 삭제하기
-	public void deleteProductPick(String username, String productnum);
-	
-	// Allproduct 상품에 찜 -1 하기
-	public void allproductWishcntMinus(String productnum);
-	
-	// 농부 팔로우하기
-	public void InsertUsernameFollow(MyPageDTO MPdto);
-	
-	// 농부 팔로우하면 userdetails에 followers +1 하기
-	public void userdetailsUpdateFollowersPlus(String follow);	
-	
-	// 마이페이지 농부 구독 유무
-	public int selectFollowCount(String username, String follow);
-	
-	// 농부 팔로우 취소하기
-	public void deleteFollow(String username, String follow);
-	
-	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
-	public void userdetailsUpdateFollowersMinus(String follow);	
+
 	
 	
 	
@@ -111,7 +124,8 @@ public interface ProductService {
 	
 	// TEST
 	
-	
+	// 장바구니 담기
+	public void insertShopping(MyPageDTO MPdto);	
 	
 	
 	

@@ -18,6 +18,7 @@ public class AllProductDTO {
 	private Date enddate;
 	private int wishcnt;
 	private int readcnt;
+	private int avgprice;
 	private int cate1;
 	private int cate2;
 	private int cate3;

@@ -57,6 +57,12 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectCate3(cate1, cate2);
 	}	
 	
+	//카테고리 단위값 가져오기
+	@Override
+	public ProductCategoryDTO selectCate4(int cate1, int cate2, int cate3) {
+		return mapper.selectCate4(cate1, cate2, cate3);
+	}
+	
 	// 상품 등록하기
 	@Override
 	public void productInsert(AllProductDTO APdto) {
@@ -104,34 +110,6 @@ public class ProductServiceImpl implements ProductService {
 	public void optionInsert(ProductDTO Pdto) {
 		mapper.optionInsert(Pdto);
 	}
-	
-	// FINISH
-	
-	// TEST
-
-	// 상품 정보 페이지
-	@Override
-	public AllProductDTO selectProductInfo(String follow, String productnum) {
-		return mapper.selectProductInfo(follow, productnum);
-	}	
-	
-	// 상품 올린 사람의 주소, 이름, 팔로우 찾기	
-	@Override
-	public AllProductDTO selectProductNameAddressFollowers(String follow) {
-		return mapper.selectProductNameAddressFollowers(follow);
-	}
-	
-	// 상품 옵션들 가져오기
-	@Override
-	public List<ProductDTO> selectProductOptionAll(String follow, String productnum) {
-		return mapper.selectProductOptionAll(follow, productnum);
-	}	
-	
-	// 상품 사진 가져오기
-	@Override
-	public List<AllProductDTO> selectProductImagesAll(String follow, String productnum) {
-		return mapper.selectProductImagesAll(follow, productnum);
-	}	
 
 	// 상품 찜하기
 	@Override
@@ -192,6 +170,53 @@ public class ProductServiceImpl implements ProductService {
 	public void userdetailsUpdateFollowersMinus(String follow) {
 		mapper.userdetailsUpdateFollowersMinus(follow);
 	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	// FINISH
+	
+	// TEST
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 상품 정보 페이지
+	@Override
+	public AllProductDTO selectProductInfo(String follow, String productnum) {
+		return mapper.selectProductInfo(follow, productnum);
+	}	
+	
+	// 상품 올린 사람의 주소, 이름, 팔로우 찾기	
+	@Override
+	public AllProductDTO selectProductNameAddressFollowers(String follow) {
+		return mapper.selectProductNameAddressFollowers(follow);
+	}
+	
+	// 상품 옵션들 가져오기
+	@Override
+	public List<ProductDTO> selectProductOptionAll(String follow, String productnum) {
+		return mapper.selectProductOptionAll(follow, productnum);
+	}	
+	
+	// 상품 사진 가져오기
+	@Override
+	public List<AllProductDTO> selectProductImagesAll(String follow, String productnum) {
+		return mapper.selectProductImagesAll(follow, productnum);
+	}	
+
+
+	
 	
 	
 	// TEST
@@ -268,6 +293,14 @@ public class ProductServiceImpl implements ProductService {
 	public void reviewInsert(ReviewsDTO Rdto) {
 		mapper.reviewInsert(Rdto);
 	}
+
+	// 장바구니 담기
+	@Override
+	public void insertShopping(MyPageDTO MPdto) {
+		mapper.insertShopping(MPdto);
+	}
+
+	
 
 
 
