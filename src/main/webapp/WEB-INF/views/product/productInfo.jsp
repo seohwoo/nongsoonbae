@@ -84,6 +84,10 @@
 			</tr>
 			
 			<tr>
+				<td>리뷰수 / 평점</td>
+				<td>${cnt}개  ${stars}/5</td>
+			<tr>
+			
 				<td>상품 옵션</td>
 				<td>
 					<select id="Pdto" name="Pdto">
@@ -103,5 +107,10 @@
 		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
 		<input type="button" value="장바구니담기" onclick="javascript:window.location='/product/productShoppingPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val() +'&count='+$('#count').val()">
 		<button onclick="openReviewWindow()">리뷰작성</button>	
+	
+		<br /><br /><br /><br /> <hr /> <br />
+		<table>
+			<h3>ㅁㅁㅁㅁ</h3>
+		</table>
 	</body>
 </html>

@@ -209,7 +209,7 @@
 			LEFT JOIN users u ON u.username = ap.username
 			LEFT JOIN userdetails ud ON u.username = ud.username
 			LEFT JOIN shoplist sl ON u.username = sl.username
-			WHERE ap.username = #{follow}
+			WHERE ap.username = #{follow} and ap.productnum=#{productnum}
 	</select>
 	
 	<!-- 상품 옵션들 가져오기 -->
@@ -243,6 +243,7 @@
 				3 )
 	</insert>		
 	
+
 	
 	<!-- TEST -->
 	
@@ -314,8 +315,15 @@
 				sysdate )
 	</insert>
 
+	<!-- 상품 리뷰 가져오기 -->
+	<select id="selectReviewsAll" resultType="nong.soon.bae.bean.ReviewsDTO" parameterType="String">
+		select * from P_${productnum}_reviews where productnum=#{productnum}
+	</select>
 
-
+	<!-- 상품 리뷰 수 -->	
+	<select id="selectReviewsCount" resultType="int" parameterType="String">
+		select count(*) from P_${productnum}_reviews where productnum=#{productnum}
+	</select>
 	
 	
 	<!-- 상품 전체목록 보기 -->
