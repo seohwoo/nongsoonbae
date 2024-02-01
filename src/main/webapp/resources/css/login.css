@@ -124,6 +124,7 @@
     font-size: 16px;
     font-weight: 600;
     color: #fff;
+    z-index: 2;
 	}
 	
 	.log_wrap span {
