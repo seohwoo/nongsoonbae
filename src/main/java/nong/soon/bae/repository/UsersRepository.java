@@ -24,4 +24,7 @@ public interface UsersRepository extends JpaRepository<Member, Long> {
 	void addDetails(UserDetailsDTO details);
 	
 	void changePass(@Param("password") String password,@Param("username") String username);
+	
+	int UserDelete(String username);
+	String checkIfUserIsDeleted(String username);
 }

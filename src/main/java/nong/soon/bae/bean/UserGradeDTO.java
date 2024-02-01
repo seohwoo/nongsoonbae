@@ -6,5 +6,6 @@ import lombok.Data;
 public class UserGradeDTO {
 	private String grade;
 	private String username;
+	private String gradenum;
 }
 

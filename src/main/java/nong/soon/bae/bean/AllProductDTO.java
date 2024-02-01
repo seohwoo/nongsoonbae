@@ -18,6 +18,7 @@ public class AllProductDTO {
 	private Date enddate;
 	private int wishcnt;
 	private int readcnt;
+	private int avgprice;
 	private int cate1;
 	private int cate2;
 	private int cate3;
@@ -28,4 +29,7 @@ public class AllProductDTO {
 	private String seqnum;
 	private String filename;
 	private int price;
+	private String name;
+	private int followers;
+	private String address;
 }

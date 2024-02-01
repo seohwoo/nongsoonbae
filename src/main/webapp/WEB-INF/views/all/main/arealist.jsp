@@ -15,7 +15,7 @@
 	            	<input type="hidden" name="areaNum" value="${areaNum}" />
 	                <input type="hidden" name="area1" value="${area.area1}" />
 	                <input type="hidden" name="area2" value="${area.area2}" />
-	                <button type="submit">${area.areaname}</button>
+	                <button class="catebtn" type="submit">${area.areaname}</button>
 	            </form>
 	        </div>
 	    </c:forEach>
@@ -37,9 +37,13 @@
 	</div>
 	<div style="display: flex;">
 		<c:if test="${cnt >  0 }" >
+		<div class="container mx-auto mt-4">
+ 			<div class="row">
 			<c:forEach var="dto" items="${productlist}">
 			     <%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 			</c:forEach>  
+			</div>
+		</div>
 		</c:if>	
 	</div>
 	<div id="resultDiv">

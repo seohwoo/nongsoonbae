@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
@@ -112,7 +113,6 @@ public class MypageServiceImpl implements MypageService {
 		    SelectMyCartMap.put("optionnum", myPageDTO.getOptionnum());
 		    List<MyPageDTO> tempList = mapper.selectMyCart(SelectMyCartMap);
 		    list.addAll(tempList);
-		    System.out.println(list);
 		}
 		model.addAttribute("MyCart", list);
 	}
@@ -122,6 +122,30 @@ public class MypageServiceImpl implements MypageService {
 		dto.setUsername(username);
 		dto.setOptionnum(optionnum);
 		mapper.deleteCart(dto);	
+	}
+
+	@Override
+	public List<PaymentDTO> selectPay(String username) {
+		return mapper.selectPay(username);
+	}
+
+	@Override
+	public void selectPayDetail(String username, Model model) {
+		List<PaymentDTO> pay = selectPay(username);
+		System.out.println(pay);
+		List<MyPageDTO> list = new ArrayList<>();
+		for (PaymentDTO PaymentDTO : pay) {
+		    HashMap<String, String> SelectPayMap = new HashMap<>();
+		    SelectPayMap.put("username", username);
+		    SelectPayMap.put("follow", PaymentDTO.getFollow());
+		    System.out.println(username);
+		    System.out.println(PaymentDTO.getFollow());
+		    List<MyPageDTO> tempList = mapper.selectPayDetail(SelectPayMap);
+		    list.addAll(tempList);
+		    System.out.println(list);
+		}
+		model.addAttribute("paylist", list);
+		
 	}
 	
 }

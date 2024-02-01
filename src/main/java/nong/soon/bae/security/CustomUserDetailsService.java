@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.CustomUser;
@@ -32,19 +33,26 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("=========CustomUserDetailsService=========");
-		UsersDTO dto = mapper.login(username);
-		String grade = mapper.GetByAuth(username);
-		List<GrantedAuthority> roles = new ArrayList<>(1);
-		if(grade=="ADMIN") {
-        	roles.add(new SimpleGrantedAuthority("ADMIN"));
-        }else {
-        	roles.add(new SimpleGrantedAuthority("USER"));
-        }
-		Authentication auth = new UsernamePasswordAuthenticationToken(username, dto.getPassword(), roles);
-		logger.warn("auth : " + auth);
-        SecurityContextHolder.getContext().setAuthentication(auth);
-		logger.info(""+dto);
-		return dto == null ? null : new CustomUser(dto);
+			UsersDTO dto = mapper.login(username);
+			String grade = mapper.GetByAuth(username);
+			List<GrantedAuthority> roles = new ArrayList<>(1);
+			if(grade=="ADMIN") {
+	        	roles.add(new SimpleGrantedAuthority("ADMIN"));
+	        }else if(grade == "DELETEUSER") {
+	        	roles.add(new SimpleGrantedAuthority("DELETEUSER"));
+	        }else {
+	        	roles.add(new SimpleGrantedAuthority("USER"));
+	        }
+			
+			Authentication auth = new UsernamePasswordAuthenticationToken(username, dto.getPassword(), roles);
+			logger.warn("auth : " + auth);
+	        
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			logger.info(""+dto);
+			
+			return dto == null ? null : new CustomUser(dto);
+		
 	}
+	
 }
 

@@ -22,4 +22,5 @@ public class ProductListDTO {
 	private String area_name1;
 	private String area_name2;
 	private String image_filename;
+	private int total_stars;
 }

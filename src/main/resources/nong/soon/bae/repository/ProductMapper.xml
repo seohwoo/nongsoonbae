@@ -31,15 +31,31 @@
 			productcount number not null,
 			sellnount number default 0 not null )
 	</insert>
+
+	<!-- 카테고리 대분류 -->
+	<select id="selectCate1" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1>0 and cate2=0 and cate3=0 order by cate1 asc
+	</select>
 	
-	<!-- FINISH -->
+	<!-- 카테고리 중분류 -->
+	<select id="selectCate2" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1} and cate2 > 0 and cate3=0 order by cate2 asc
+	</select>
 	
-	<!-- TEST -->
+	<!-- 카테고리 소분류 -->
+	<select id="selectCate3" resultType="nong.soon.bae.bean.ProductCategoryDTO" >
+		select * from productcategory where cate1=#{cate1} and cate2 = #{cate2} and cate3 > 0 order by cate3 asc
+	</select>
+	
+	<!-- 카테고리 단위값 -->
+	<select id="selectCate4" resultType="nong.soon.bae.bean.ProductCategoryDTO" >
+		select * from productcategory where cate1=#{cate1} and cate2 = #{cate2} and cate3 = #{cate3}
+	</select>
 	
 	<!-- 상품 등록하기 -->
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.AllProductDTO">
 		insert into allproduct (productnum, productname, username, content, startdate,
-		enddate, cate1, cate2, cate3, area1, area2)
+		enddate, cate1, cate2, cate3, area1, area2, avgprice)
 		values (
 			TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || ${catenum} || LPAD(${seqnum}_seq.nextval, 5, '0')), 
 			#{productname},
@@ -51,7 +67,25 @@
 			#{cate2},
 			#{cate3},
 			#{area1},
-			#{area2} )
+			#{area2},
+			#{avgprice} )
+	</insert>
+	
+	<!-- 상품 등록한 직후의 productnum 구하기 -->
+	<select id="selectAllProductLastProductNum" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
+		select * from allproduct where username=#{username} order by startdate desc
+	</select>	
+
+	<!-- 상품 등록할 때 상품 리뷰 테이블 만들기 -->
+	<insert id="createReviews" parameterType="String">
+		create table ${createReviewsProductnum}_reviews (
+			username varchar2(50) not null,
+			productnum varchar2(50) not null,
+			optionnum varchar2(50) not null,
+			content varchar2(4000) not null,
+			imagecount number default 0 not null,
+			stars number default 5 not null,
+			regdate date not null )
 	</insert>
 	
 	<!-- 상점 주소 가져오는 코드 -->
@@ -68,8 +102,6 @@
 	<select id="selectArea2" resultType="int">
 		select area2 from area where areaname=#{area2Address} and area1=#{area1}
 	</select>
-	
-
 	
 	<!-- 상품 등록할 때 이미지 넣기 -->
 	<insert id="imagesInsert" parameterType="nong.soon.bae.bean.ImagesDTO">
@@ -91,27 +123,132 @@
 			#{price}, 
 			#{productcount} )
 	</insert>
+
+	<!-- 마이페이지에 상품 찜하기 -->
+	<insert id="InsertProductPick" parameterType="nong.soon.bae.bean.MyPageDTO">
+		insert into ${username}_mypage (username, follow, productnum, optionnum, count, wishstatus)
+			values (
+				#{username}, 
+				#{follow}, 
+				#{productnum}, 
+				#{optionnum},
+				#{count}, 
+				1 )
+	</insert>
 	
-	<!-- 카테고리 대분류 -->
-	<select id="selectCate1" resultType="nong.soon.bae.bean.ProductCategoryDTO">
-		select * from productcategory where cate1>0 and cate2=0 and cate3=0 order by cate1 asc
+	<!-- Allproduct 상품에 찜 +1 하기 -->
+	<update id="allproductWishcntPlus" parameterType="String">
+		update allproduct set wishcnt=wishcnt+1 where productnum=#{productnum}
+	</update>
+	
+	<!-- 마이페이지 상품 찜 유무 -->
+	<select id="selectPickCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage where productnum=#{productnum} and wishstatus=1
 	</select>
 	
-	<!-- 카테고리 중분류 -->
-	<select id="selectCate2" resultType="nong.soon.bae.bean.ProductCategoryDTO">
-		select * from productcategory where cate1=#{cate1} and cate2 > 0 and cate3=0 order by cate2 asc
+	<!-- 마이페이지에 상품 찜 삭제하기 -->
+	<delete id="deleteProductPick" parameterType="String">
+		delete from ${username}_mypage where productnum=#{productnum} and wishstatus=1
+	</delete>
+	
+	<!-- Allproduct 상품에 찜 -1 하기 -->
+	<delete id="allproductWishcntMinus" parameterType="String">
+		update allproduct set wishcnt=wishcnt-1 where productnum=#{productnum}
+	</delete>
+
+	<!-- 농부 팔로우하기 -->
+	<insert id="InsertUsernameFollow" parameterType="nong.soon.bae.bean.MyPageDTO">
+		insert into ${username}_mypage (username, follow, wishstatus)
+			values (
+				#{username}, 
+				#{follow},  
+				2 )
+	</insert>
+
+	<!-- 농부 팔로우하면 userdetails에 followers +1 하기 -->
+	<update id="userdetailsUpdateFollowersPlus" parameterType="String">
+		UPDATE userdetails SET followers = followers + 1 WHERE username = #{follow}
+	</update>
+
+	<!-- 마이페이지 농부 구독 유무 -->
+	<select id="selectFollowCount" resultType="int" parameterType="String">
+		select count(*) from ${username}_mypage where wishstatus=2 and follow=#{follow}
 	</select>
 	
-	<!-- 카테고리 소분류 -->
-	<select id="selectCate3" resultType="nong.soon.bae.bean.ProductCategoryDTO" >
-		select * from productcategory where cate1=#{cate1} and cate2 = #{cate2} and cate3 > 0 order by cate3 asc
+	<!-- 농부 팔로우 취소하기 -->
+	<delete id="deleteFollow" parameterType="String">
+		delete from ${username}_mypage where wishstatus=2 and follow=#{follow}
+	</delete>
+
+	<!-- 농부 팔로우 취소하면 userdetails에 followers -1 하기 -->
+	<update id="userdetailsUpdateFollowersMinus" parameterType="String">
+		UPDATE userdetails SET followers = followers - 1 WHERE username = #{follow}
+	</update>
+	
+	<!-- FINISH -->
+	
+	
+	
+	
+	
+	
+	
+	<!-- TEST -->
+	
+	<!-- 상품 정보 페이지 -->
+	<select id="selectProductInfo" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
+		SELECT ap.*, dp.price FROM AllProduct ap 
+       		LEFT JOIN (SELECT productnum, MIN(price) AS price FROM ${follow}_product
+    			GROUP BY productnum) dp ON ap.productnum = dp.productnum
+				WHERE ap.productnum = #{productnum}
 	</select>
+	
+	<!-- 상품 올린 사람의 주소, 이름, 팔로우 찾기 -->
+	<select id="selectProductNameAddressFollowers" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
+		SELECT u.name, ud.followers, sl.address FROM allproduct ap
+			LEFT JOIN users u ON u.username = ap.username
+			LEFT JOIN userdetails ud ON u.username = ud.username
+			LEFT JOIN shoplist sl ON u.username = sl.username
+			WHERE ap.username = #{follow}
+	</select>
+	
+	<!-- 상품 옵션들 가져오기 -->
+	<select id="selectProductOptionAll" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
+		SELECT p.* FROM allproduct ap
+			JOIN ${follow}_product p ON ap.productnum = p.productnum
+			where ap.productnum=#{productnum}
+	</select>
+	
+	<!-- 상품 사진 가져오기 -->	
+	<select id="selectProductImagesAll" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
+		SELECT i.* FROM allproduct ap
+			JOIN ${follow}_images i ON ap.productnum = i.productnum
+			where ap.productnum=#{productnum}
+	</select>
+
 	
 
-	<!-- 상품 등록한 직후의 productnum 구하기 -->
-	<select id="selectAllProductLastProductNum" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
-		select * from allproduct where username=#{username} order by startdate desc
-	</select>
+
+
+
+	<!-- 장바구니 담기 -->
+	<insert id="insertShopping" parameterType="nong.soon.bae.bean.MyPageDTO">
+		insert into ${username}_mypage (username, follow, productnum, optionnum, count, wishstatus)
+			values (
+				#{username}, 
+				#{follow}, 
+				#{productnum}, 
+				#{optionnum},
+				#{count}, 
+				3 )
+	</insert>		
+	
+	
+	<!-- TEST -->
+	
+	
+	
+	
 	
 	
 	<!-- 내 상점 페이지에 필요한 정보들 가져오기 -->
@@ -121,8 +258,7 @@
   		JOIN users u ON s.username = u.username
   		JOIN userdetails ud ON s.username = ud.username
 		WHERE s.username = #{username}
-	</select>
-	
+	</select>	
 	
 	<!-- 유저의 상품들 가져오기 -->
 	<select id="selectUsernameProduct" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
@@ -135,24 +271,63 @@
 			WHERE ap.username = #{username}
 	</select>
 	
-	<!-- 상품 등록할 때 상품 리뷰 테이블 만들기 -->
-	<insert id="createReviews" parameterType="String">
-		create table ${createReviewsProductnum}_reviews (
-			username varchar2(50) not null,
-			productnum varchar2(50) not null,
-			optionnum varchar2(50) not null,
-			content varchar2(4000) not null,
-			imagecount number default 0 not null,
-			stars number default 5 not null,
-			regdate date not null )
-	</insert>
 
-	<!-- sample -->
-	<select id="sampleAddress" resultType="String" parameterType="String">
-		select Address from shoplist where username=#{username} 
+
+	<!-- 이름이랑 상품에 대한 정보 가져오는 코드 -->
+	<select id="selectAllProductPlusNameFollowers" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
+		SELECT allproduct.*, users.name, userdetails.followers FROM allproduct
+			LEFT JOIN users ON allproduct.username = users.username
+			LEFT JOIN userdetails ON users.username = userdetails.username
+			WHERE allproduct.productnum = #{productnum}
 	</select>
 
+	<!-- 상품 등록한 상점 area1 주소 -->
+	<select id="selectArea1Address" resultType="nong.soon.bae.bean.AreaDTO" parameterType="int">
+		select * from area where area1=#{area1} and area2=0
+	</select>
 
+	<!-- 상품 등록한 상점 area2 주소 -->
+	<select id="selectArea2Address" resultType="nong.soon.bae.bean.AreaDTO" parameterType="int">
+		select * from area where area1=#{area1} and area2=#{area2}
+	</select>	
+
+	<!-- 상품 옵션 가져오기 -->
+	<select id="selectProductOption" resultType="nong.soon.bae.bean.ProductDTO" parameterType="String">
+		select * from ${follow}_product where productnum=#{productnum}
+	</select>
+	
+	<!-- 상품 이미지 가져오기 -->
+	<select id="selectProductImages" resultType="nong.soon.bae.bean.ImagesDTO" parameterType="String">
+		select * from ${follow}_images where productnum=#{productnum}
+	</select>
+
+	<!-- 상품 리뷰쓰기 -->
+	<insert id="reviewInsert" parameterType="nong.soon.bae.bean.ReviewsDTO"> 
+		insert into P_${productnum}_reviews (username, productnum, optionnum, content, imagecount, stars, regdate) 
+			values (
+				#{name}, 
+				#{productnum}, 
+				#{optionnum}, 
+				#{content}, 
+				#{imagecount}, 
+				#{stars}, 
+				sysdate )
+	</insert>
+
+
+
+	
+	
+	<!-- 상품 전체목록 보기 -->
+	<select id="selectAllproduct" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct order by startdate desc
+	</select>
+	
+	<!-- mypage에서 상점 개설여부 확인용 -->
+	<select id="CheckMyShop" resultType="String">
+		select username from shoplist where username=#{username}
+	</select>
+	
 </mapper>    
 
 

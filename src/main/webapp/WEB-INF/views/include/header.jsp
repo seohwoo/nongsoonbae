@@ -5,6 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <link href="/resources/css/login.css" rel="stylesheet" type="text/css">
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/product.css" rel="stylesheet" type="text/css">
     <!-- 헤더 -->
     <header>
         <!-- 로고 -->
@@ -32,6 +33,9 @@
           	<sec:authorize access="isAuthenticated()">
 				<!-- 로그인(인증된) 사용자인 경우 -->	
 				<span class="log-links"><a href="/product/productMain" class="nav-link link-dark px-2">상품등록</a>
+				<sec:authorize access="hasRole('ADMIN')">
+					<a href="/admin/usercheck" class="nav-link link-dark px-2">관리자</a>
+				</sec:authorize>
 				<a href="/user/mypage" class="nav-link link-dark px-2">마이페이지</a>
 				<a href="/member/logout" class="nav-link link-dark px-2">로그아웃</a></span>
 			</sec:authorize>

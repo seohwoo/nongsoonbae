@@ -123,13 +123,7 @@
 		});
 	});	
 	
- 	$(function(){
- 		$("#option").on("click",function(){
- 			$("#op").append("<input type='text' name='optionname' placeholder='상품명' />"); 			
- 			$("#op").append("<input type='number' name='optiontotalprice' placeholder='상품가격' />");
- 			$("#op").append("<input type='number' name='optionProductCount' placeholder='상품재고' /> <br />");
- 		}); 		
- 	});
+ 	
 	</script>
 
 	<body>
@@ -163,13 +157,8 @@
 		
 			    <tr> 
 				    <td width="200">옵션</td>
-				    <td width="400">				   		
-				   		<input type="button" value="추가" id="option" >
-				   		<div id="op"></div>
-				   		
-				   		<input type="text" name="optionname" placeholder="상품명" /> 			
-			 			<input type="number" name="optiontotalprice" placeholder="상품가격" />
-			 			<input type="number" name="optionProductCount" placeholder="상품재고" /> <br />
+				    <td width="400">
+				    	<div id="firstOption"></div>
 				    </td>
 				</tr>
 				

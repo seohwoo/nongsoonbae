@@ -6,14 +6,18 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import nong.soon.bae.bean.MyPageDTO;
+import nong.soon.bae.bean.PaymentDTO;
+import nong.soon.bae.repository.UsersRepository;
 import nong.soon.bae.service.MypageService;
 
 @Controller
@@ -24,6 +28,8 @@ public class UserController {
 	
 	@Autowired
 	MypageService service;
+	@Autowired
+	UsersRepository user;
 	
 	@RequestMapping("mypage")
 	public String mypage(Principal principal, Model model) {
@@ -80,12 +86,12 @@ public class UserController {
 	public String cart(Principal principal, Model model) {
 		String username = principal.getName();
 		List<MyPageDTO> cart = service.selectcart(username);
-		logger.info("========"+cart+"=======");
 		if(cart == null) {
 			model.addAttribute("cartstatus", 0);
 		}else {
 			model.addAttribute("cartstatus", 1);
 			service.selectMyCart(username, model);
+			model.addAttribute("isMembership", 0);
 		}
 		return "user/mypage/cart";
 	}
@@ -99,8 +105,43 @@ public class UserController {
 	}
 	
 	@RequestMapping("buylist")
-	public String buylist() {
-		
+	public String buylist(Principal principal, Model model) {
+		String username = principal.getName();
+		List<PaymentDTO> buy = service.selectPay(username);
+		if(buy==null) {
+			model.addAttribute("buystatus", 0);
+		}else {
+			model.addAttribute("buystatus", 1);
+			service.selectPayDetail(username, model);
+		}
 		return "/user/mypage/buylist";
+	}
+	
+	@RequestMapping("delete")
+	public String deleteUser(Principal principal, Model model) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		return "/user/mypage/delete";
+	}
+	
+	@RequestMapping("deletePro")
+	public String deletePro(String username, RedirectAttributes redirectAttrs) {
+		int result = user.UserDelete(username);
+		if(result>0) {
+			redirectAttrs.addFlashAttribute("msg", "성공적으로 회원정보를 삭제했습니다.");
+			SecurityContextHolder.clearContext();
+		}
+		else {
+			redirectAttrs.addFlashAttribute("msg", "회원정보삭제에 실패했습니다.");
+		}
+		return "redirect:/nsb/main";
+	}
+	
+	@RequestMapping("membership")
+	public String membership(Principal principal, Model model) {
+		String username = principal.getName();
+		model.addAttribute("username", username);
+		model.addAttribute("isMembership", 1);
+		return "/user/mypage/membership";
 	}
 }
