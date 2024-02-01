@@ -19,7 +19,7 @@
 	<body>
 		<%@include file="/WEB-INF/views/include/header.jsp"%>
 			<h1 class="title">카테고리</h1><br />
-			<div style="display: flex; padding-left : 25%; padding-right: 25%;">
+			<div style="display: flex; padding-left : 30%; padding-right: 30%;">
 		    <c:forEach var="dto" items="${catelist}">
 		        <div style="margin-right: 10px;">
 		           <form action="/nsb/menu" method="post" onsubmit="return checkAndRedirect('${dto.cate1}')">

@@ -16,7 +16,7 @@
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-	<table class="table-borderless">
+	<table class="table-borderless main">
 		<tbody id="contentContainer">
 			<tr>
 				<td class="title">

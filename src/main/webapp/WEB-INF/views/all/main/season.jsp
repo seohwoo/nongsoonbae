@@ -30,7 +30,7 @@
 				</tr>
 			</table>
 		<br><div></div>
-			<table class="table-borderless">
+			<table class="table-borderless main">
 				<tr>
 					<td class="page">
 					<c:if test="${categoryNum>1}">

@@ -10,7 +10,7 @@
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<div style="display: flex; flex-direction: column;">
-		<table class="chart table-borderless">
+		<table class="chart table-borderless main">
 			<tr>
 				<td>
 					<h1 class="title">실시간 차트</h1><br />
@@ -63,7 +63,7 @@
 				</td>
 			</tr>	
 			</table>
-			<table class="chartsub table-borderless">
+			<table class="chartsub table-borderless main">
 			<tr>
 				<td class="page">
 					<c:if test="${cate1!=null}">
@@ -92,7 +92,7 @@
 				</td>
 			</tr>
 			</table>
-			<table class="chartsub table-borderless">
+			<table class="chartsub table-borderless main">
 			<tr>
 				<td>
 					<c:if test="${isChart==0 }">

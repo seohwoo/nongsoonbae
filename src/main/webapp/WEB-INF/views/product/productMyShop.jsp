@@ -17,13 +17,14 @@
 	
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
+		<div class="background"></div>
 		<div class="seller">
 			<img class="sellimg" src="/resources/file/profile/${SLdto.image}" /><br />
 				<b class="h3">${SLdto.name}</b>
 				<p>${SLdto.shopname}</p>
 				<div class="container">
 					<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/productMain'">
-					<input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="" />
+					<input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="javascript:window.location='/chat/room" />
 				</div>
 				<p class="text-muted" style="font-size: 12px;">관심 고객 수 : ${SLdto.followers}</p>
 		</div>		
@@ -82,9 +83,10 @@
 				</c:forEach>
 			</table>
 		</div>
-		<p>소재지 : ${address}</p>
-		<div id="map" style="width:40%;height:240px;"></div>
-		
+		<div class="map">
+			<p>소재지 : ${address}</p>
+			<div id="map"></div>
+		</div>
 		<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = {
