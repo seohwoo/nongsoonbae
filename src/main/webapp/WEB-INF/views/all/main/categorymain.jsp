@@ -38,6 +38,14 @@
 		        </div>
 		    </c:forEach>
 			</div>
+			 <c:if test="${request.getRequestURI() eq '/nsb/menu'}">
+		        <select id="pageSelect">
+		            <option value="">정렬방식</option>
+		            <option value="page1.jsp">인기순</option>
+		            <option value="page2.jsp">최신순</option>
+		            <option value="page3.jsp">찜많은순</option>
+		        </select>
+ 		   </c:if>
 			<c:if test="${allCnt >  0 }" >
 				<c:forEach var="dto" items="${allprocuctList}">
 					<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
@@ -50,6 +58,16 @@
 				<jsp:include page="/WEB-INF/views/all/main/catelistDetail.jsp" />
 			</div>
 			<%@include file="/WEB-INF/views/include/footer.jsp"%>
+			
+			<script>
+			document.getElementById('pageSelect').addEventListener('change', function() {
+			    var page = this.value;
+			    if(page) {
+			        window.location.href = page;
+			    }
+			});
+			</script>
+			
 	</body>
 </html>
 

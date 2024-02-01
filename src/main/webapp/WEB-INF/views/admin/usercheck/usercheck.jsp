@@ -125,7 +125,7 @@
 	            alert("사유를 선택해주세요!");
 	            return false; 
 	        } else {
-	            return confirm(username + '님을 정지하시겠습니까? 상점이 있는 경우 상점도 같이 정지 됩니다.'); 
+	            return confirm(username + '님을 정지하시겠습니까? 상점이 있는 경우 상점도 정지 됩니다.'); 
 	        }
 	    }
 	$(document).ready(function() {

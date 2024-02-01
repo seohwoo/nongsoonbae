@@ -51,10 +51,11 @@
 		</style>
 	</head>
 	<body>
+	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
 			<div class="container">
 				<div class="header">
 					<h1>🍓🍓 공지게시판 🍓🍓</h1>
-					<button class="btn"><input type="button" value="글쓰기" onclick="window.location='/admin/noticeForm'"></button>
+					<button class="btn" onclick="window.location='/admin/noticeForm'">글쓰기</button>
 				</div>
 				<c:if test="${count > 0}">
 					<c:forEach var="article" items="${list}">
@@ -113,7 +114,7 @@
 	            if (deleteStatus === 1) {
 	                alert("삭제되었습니다.");
 	            } else if (deleteStatus === 0) {
-	                alert("삭제에 실패되었습니다.");
+	                alert("삭제에 실패하였습니다.");
 	            }
 	        }
 	    });

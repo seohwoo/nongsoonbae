@@ -8,9 +8,11 @@ import lombok.Data;
 public class AdDTO {
 	private int num;
 	private String username;
-	private String productname;
+	private String productnum;
+	private Date submitdate;
 	private Date startdate;
 	private Date enddate;
-	private int readcount;
+	private int days;
 	private int price;
+	private int adstatus;
 }
