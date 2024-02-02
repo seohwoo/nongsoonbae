@@ -60,6 +60,12 @@
         box-shadow: 0px 0px 10px #ccc; /* 박스에 그림자 추가 */
     }
     </style>
+	<script type="text/javascript">
+        // "나의 광고 보기" 버튼 클릭 시 호출될 함수
+        function viewMyAds() {
+            window.location.href = '/product/myAd'; // 지정된 경로로 이동
+        }
+    </script>
 </head>
 <body>
     <div class="content-box"> 
@@ -76,6 +82,7 @@
             <input type="hidden" name="userId" value="${username}" /> 
             <button type="submit">신청하기</button>
         </form>
+        <button onclick="viewMyAds()">나의 광고 보기</button>
     </div>
 </body>
 </html>
