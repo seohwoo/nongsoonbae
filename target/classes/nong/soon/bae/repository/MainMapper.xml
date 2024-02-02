@@ -14,8 +14,8 @@
 		<![CDATA[
 			select * from 
 			(select c.* , rownum r from 
-			(select * from productcategory where cate3>0 
-			and month like #{keyword} order by readcount) c) 
+			(select * from productcategory 
+			where month like #{keyword} order by cate1, readcount) c) 
 			where r >= #{start} and r <= #{end}
 		]]>
 	</select>

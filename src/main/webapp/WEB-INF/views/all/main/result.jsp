@@ -13,13 +13,11 @@
 			<h1>검색어 : ${userSearch}</h1>
 			<hr />
 			<c:if test="${searchCnt==0}">
-				<h1>검색결과가 없습니다😭😭😭😭</h1>
+				<h1>검색결과가 없습니다</h1>
 			</c:if>
 			<c:if test="${searchCnt>0}">
 				<c:forEach var="dto" items="${searchList}">
-					<h1>상품명 : ${dto.productname}</h1>
-					<h1>농부명 : ${dto.username}</h1>
-					<hr />
+					<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 				</c:forEach>
 			</c:if>
 		</div>

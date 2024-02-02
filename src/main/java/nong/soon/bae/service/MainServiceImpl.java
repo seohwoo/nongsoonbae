@@ -197,10 +197,11 @@ public class MainServiceImpl implements MainService {
 		if(cnt > 0) {
 			page(searchPageSize, searchNum);
 			alprList = mapper.searchProduct(seasonCategoryMap);
+			showProduct(alprList);
 		}
 		model.addAttribute("userSearch", userSearch);
 		model.addAttribute("searchCnt", cnt);
-		model.addAttribute("searchList", alprList);
+		model.addAttribute("searchList", productList);
 	}
 	
 	/**

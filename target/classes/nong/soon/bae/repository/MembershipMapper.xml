@@ -23,9 +23,10 @@
 		       pc.amount,
 		       pc.unit
 		FROM allproduct ap
-		JOIN productcategory pc ON ap.cate1 = pc.cate1
-		                         AND ap.cate2 = pc.cate2
-		                         AND ap.cate3 = pc.cate3
+		JOIN productcategory pc 
+		ON ap.cate1 = pc.cate1
+		AND ap.cate2 = pc.cate2
+		AND ap.cate3 = pc.cate3
 		WHERE ap.cate1 = #{cate1}
 		  and ap.cate2 = #{cate2}
 		  and ap.cate3 = #{cate3}
