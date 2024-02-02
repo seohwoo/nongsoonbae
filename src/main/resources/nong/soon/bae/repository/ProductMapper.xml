@@ -317,9 +317,11 @@
 
 	<!-- 상품 리뷰 가져오기 -->
 	<select id="selectReviewsAll" resultType="nong.soon.bae.bean.ReviewsDTO" parameterType="String">
-		select * from P_${productnum}_reviews where productnum=#{productnum}
+		select r.*, p.optionname from P_${productnum}_reviews r
+		    left join ${follow}_product p ON r.optionnum = p.optionnum
+		    where r.productnum=#{productnum}
 	</select>
-
+ 
 	<!-- 상품 리뷰 수 -->	
 	<select id="selectReviewsCount" resultType="int" parameterType="String">
 		select count(*) from P_${productnum}_reviews where productnum=#{productnum}
@@ -335,6 +337,27 @@
 	<select id="CheckMyShop" resultType="String">
 		select username from shoplist where username=#{username}
 	</select>
+
+	<!-- shoplist에서 내 상점 정보 삭제하기 -->
+	<delete id="deleteShoplist" parameterType="String">
+		delete from shoplist where username=#{username}
+	</delete>
+
+	<!-- productnum 값으로 리뷰 테이블 삭제하기 -->
+	<update id="dropReviewsTable" parameterType="String">
+		DROP TABLE ${value}
+	</update>
+
+	<!-- username으로 productnum 가져오기 -->
+	<select id="selectUsernameProductnum" resultType="String" parameterType="String">
+		select productnum from allproduct where username=#{username}
+	</select>
+
+	
+	<update id="allproductUpdateContent" parameterType="nong.soon.bae.bean.AllProductDTO">
+		update allproduct set content=#{content} where productnum=#{productnum} 
+	</update>
+
 	
 </mapper>    
 

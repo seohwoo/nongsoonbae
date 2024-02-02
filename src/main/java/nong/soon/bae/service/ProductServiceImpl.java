@@ -296,8 +296,8 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 리뷰 가져오기
 	@Override
-	public List<ReviewsDTO> selectReviewsAll(String productnum) {
-		return mapper.selectReviewsAll(productnum);
+	public List<ReviewsDTO> selectReviewsAll(String follow, String productnum) {
+		return mapper.selectReviewsAll(follow, productnum);
 	}	
 
 	// 상품 리뷰 수
@@ -310,6 +310,29 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void insertShopping(MyPageDTO MPdto) {
 		mapper.insertShopping(MPdto);
+	}
+
+	// shoplist에서 내 상점 정보 삭제하기	
+	@Override
+	public void deleteShoplist(String username) {
+		mapper.deleteShoplist(username);
+	}
+
+	// productnum 값으로 리뷰 테이블 삭제하기
+	@Override
+	public void dropReviewsTable(String productnum) {
+		mapper.dropReviewsTable(productnum);
+	}
+
+	// username으로 productnum 가져오기
+	@Override
+	public List<String> selectUsernameProductnum(String username) {
+		return mapper.selectUsernameProductnum(username);
+	}
+
+	@Override
+	public void allproductUpdateContent(AllProductDTO dto) {
+		mapper.allproductUpdateContent(dto);
 	}
 
 

@@ -6,18 +6,35 @@
 		<meta charset="UTF-8">
 		<title>일단 상점 메인</title>
 	</head>
+                              
+	<script>
+	    function openNewWindow() {
+	        // 새 창을 열기
+	        var width = 460;
+	        var height = 300;
 	
+	        // 화면 중앙에 위치하도록 계산
+	        var left = (window.innerWidth - width) / 2;
+	        var top = (window.innerHeight - height) / 2;
+	
+	        window.open('/product/deleteShoplist', '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+	    }
+	</script>
+	   
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<div class="table" style="height: 800px">
-			<form action="/product/createProduct?myName=${myName}" method="post">
 			<c:if test="${status==0}">
-				<h3>아직 내 상점이 없습니다. 지금 바로 개설해보세요!</h3>
-				<input type="submit" value="나의 상점 만들기">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<form action="/product/createProduct?myName=${myName}" method="post">
+					<h3>아직 내 상점이 없습니다. 지금 바로 개설해보세요!</h3>
+					<input type="submit" value="나의 상점 만들기">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</form>
 			</c:if>
+			
 			<c:if test="${status!=0}">
 			<h3>${myName} 페이지</h3><br />
+				<button onclick="openNewWindow()">상점 폐쇄하기</button>
 				<input type="button" value="나의 상점 정보" onclick="javascript:window.location='/product/productMyShop?username=${username}'">
 				<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
 				<input type="button" value="나의 상점 관리" onclick="javascript:window.location='/product/myProduct'">
@@ -35,7 +52,7 @@
 				</div>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</c:if>
-			</form>
+			
 		</div>
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
