@@ -45,7 +45,7 @@
 	    <img src="https://www.dropbox.com/s/pem8kaorr488apn/universe.jpg?raw=1" style="opacity: 0;">
 	  </div>
 	  <div class="intro-header">
-	    <h1>🍒🍓🍅 농순배 🥑🥒🥬</h1>
+	    <h1>농순배</h1>
 	    <p>농산물 순식간에 배송해드립니다</p>
 	  </div>
 	</header>

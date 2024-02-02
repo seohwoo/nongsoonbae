@@ -115,7 +115,10 @@ div.farmer {
 	display: inline-block; 
 	display: flex;
 }
-div.farmer p {
+p {
+	
+}
+div.farmer a {
 	align-self: flex-end;
 }
 div.farmer b {
