@@ -94,6 +94,15 @@ public class MembershipServiceImpl implements MembershipService{
 		model.addAttribute("userPriceList", userPriceList);
 		model.addAttribute("userMarketList", userMarketList);
 	}
+
+	@Override
+	public int findAvgPrice(int optionPrice, int optionunit,int cateunit, String catename) {
+		membershipMap.put("catename", catename);
+		double avgPrice = mapper.findRecentAvgPrice(membershipMap).get(0).getAvgprice();
+		int realPrce = (int) (avgPrice * (optionunit / cateunit));
+		int result = (int) (realPrce - optionPrice);
+		return result;
+	}
 	
 	
 	
