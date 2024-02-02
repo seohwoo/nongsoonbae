@@ -167,13 +167,26 @@ public interface ProductMapper {
 	public void reviewInsert(ReviewsDTO Rdto);
 	
 	// 상품 리뷰 가져오기
-	public List<ReviewsDTO> selectReviewsAll(String productnum);
+	public List<ReviewsDTO> selectReviewsAll(@Param("follow") String follow, 
+											 @Param("productnum") String productnum);
 	
 	// 상품 리뷰 수
 	public int selectReviewsCount(String productnum);
 	
 	// 상품 전체목록 보기
 	public List<AllProductDTO> selectAllproduct();
+	
+	// shoplist에서 내 상점 정보 삭제하기
+	public void deleteShoplist(String username);
+	
+	// productnum 값으로 리뷰 테이블 삭제하기
+	public void dropReviewsTable(String productnum);
+	
+	// username으로 productnum 가져오기
+	public List<String> selectUsernameProductnum(String username);
+	
+	public void allproductUpdateContent(AllProductDTO dto);
+	
 }
 	
 	

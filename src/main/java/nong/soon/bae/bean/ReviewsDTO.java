@@ -18,4 +18,6 @@ public class ReviewsDTO {
 	private Date regdate;
 	
 	private String name;
+	private String optionname;
+	private String filename;
 }

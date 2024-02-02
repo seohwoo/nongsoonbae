@@ -193,6 +193,7 @@ public class ProductController {
 		service.productInsert(APdto);
 		
 		String productnum = service.selectAllProductLastProductNum(username).get(0).getProductnum();
+		APdto.setProductnum(productnum);
 		String createReviewsProductnum = "P_"+productnum;
 		
 		// 상품 번호로 리뷰 테이블 만들기
@@ -223,6 +224,8 @@ public class ProductController {
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
 					cnt++;
 					content = content.replace(filename, realname);
+					APdto.setContent(content);
+					service.allproductUpdateContent(APdto);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -300,7 +303,7 @@ public class ProductController {
 		// 상품 리뷰 수
 		int cnt = service.selectReviewsCount(productnum);
 		// 상품 리뷰 가져오기
-		List<ReviewsDTO> Rdto = service.selectReviewsAll(productnum);
+		List<ReviewsDTO> Rdto = service.selectReviewsAll(follow, productnum);
 
 		int totalStars = 0;
 		for (ReviewsDTO dto : Rdto) {
@@ -407,6 +410,7 @@ public class ProductController {
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
 					cnt++;
 					content = content.replace(filename, realname);
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -486,9 +490,28 @@ public class ProductController {
 		return "product/sample";
 	}
 	
+	// 상점 폐쇄하기
+	@RequestMapping("deleteShoplist")
+	public String deleteShoplist() {
+		return "product/deleteShoplist";
+	}
 	
-	
-	
+	// 상점 폐쇄하기
+	@RequestMapping("deleteShoplistPro")
+	public String deleteShoplistPro(Principal principal) {
+		String username = principal.getName();
+		List<String> productnumList = service.selectUsernameProductnum(username);
+
+		for (String productnum2 : productnumList) {
+			String productnum = "P_" + productnum2 + "_reviews";
+		    service.dropReviewsTable(productnum);
+		}
+
+		
+		service.deleteShoplist(username);
+		
+		return "product/deleteShoplistPro";
+	}	
 	
 	
 	
