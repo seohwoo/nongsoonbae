@@ -6,7 +6,7 @@
 	<main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
       
       		<h1>${username}님! 어서오세요.</h1><br />
-      		<div class="col d-flex">
+      		<div class="col d-flex" >
 	      		<div class="col p-4 m-4 d-flex flex-column position-static bg-body-tertiary border rounded-3">
 		          <strong class="d-inline-block mb-2 text-primary">Modify</strong>
 		          <h3 class="mb-0">내 정보 수정</h3>

@@ -8,8 +8,10 @@
 	</head>
 	<body>
 		<form action="/nsb/result" method="post">
-			<input type="text" name="userSearch" id="userSearch" placeholder="검색어를 입력하세요😁😁😁"/>
-			<input type="submit" id="searchButton" value="🔎">
+			<div style="display: flex; margin-bottom: 10px;">
+				<input type="text" name="userSearch" id="userSearch" class="form-control" placeholder="검색어를 입력하세요😁😁😁" style="width: 500px;"/>
+				<input type="submit" id="searchButton" value="🔎" style="border-radius: var(--bs-border-radius);">
+			</div>
 		</form>
 	</body>
 	<script>
@@ -23,5 +25,5 @@
 	      }
 	    });
 	  });
-</script>
+	</script>
 </html>
