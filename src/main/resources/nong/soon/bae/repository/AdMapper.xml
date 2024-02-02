@@ -3,9 +3,52 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.AdMapper">
-	
 	<select id="myproduct" resultType="nong.soon.bae.bean.AllProductDTO" >
 		select * from allproduct where username=#{username} order by productnum
 	</select>
-	
+	<select id="myAd" resultType="nong.soon.bae.bean.AdDTO" >
+		select a.*,p.* from ad a join allproduct p on a.username = p.username and a.productnum=p.productnum where a.username = #{username} order by num desc
+	</select>
+	<select id="myAdCnt" parameterType="String" resultType="int">
+		select count(*) from ad where username=#{username}
+	</select>
+	<insert id="submitAd" parameterType="hashMap">
+			insert into ad(num,username,productnum,
+						submitdate,days,price,adstatus) values(
+						ad_seq.NEXTVAL,
+						#{username},
+						#{adSelect},
+						sysdate,
+						#{daySelect},
+			            #{price},
+			            41
+					)
+	</insert>
+	<select id="submitCnt" resultType="int">
+		select count(*) from ad where adstatus = 41
+	</select>
+	<select id="adList" resultType="nong.soon.bae.bean.AdDTO">
+		select a.*,p.* from ad a join allproduct p on a.username = p.username and a.productnum=p.productnum where adstatus=41 order by submitdate 
+	</select>
+	<update id="adStart" parameterType="hashMap">
+		update ad set adstatus=40, startdate=sysdate, enddate=sysdate+#{days} where productnum=#{productnum}
+	</update>
+	<update id="updateStatus" parameterType="String">
+		update allproduct set grade=40 where productnum=#{productnum}
+	</update>
+	<update id="adNo" parameterType="hashMap">
+		update ad set adstatus=42 where num=#{num} and productnum=#{productnum} and username=#{username}
+	</update>
+	<select id="endSoonCnt" resultType="int">
+		select count(*) from ad where TRUNC(enddate) = TRUNC(SYSDATE) and adstatus = 40
+	</select>
+	<select id="adEndSoon" resultType="nong.soon.bae.bean.AdDTO">
+		select a.*,p.* from ad a join allproduct p on a.username = p.username and a.productnum=p.productnum where TRUNC(a.enddate) = TRUNC(SYSDATE) and adstatus=40 order by a.enddate
+	</select>
+	<update id="adEnd" parameterType="hashMap">
+		update ad set adstatus=43 where num=#{num} and username=#{username} and productnum=#{productnum} 
+	</update>
+	<update id="reUpdateStatus" parameterType="hashMap">
+		update allproduct set grade=100 where username=#{username} and productnum=#{productnum} 
+	</update>
 </mapper>

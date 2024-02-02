@@ -22,6 +22,7 @@
 				<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
 				<input type="button" value="나의 상점 관리" onclick="javascript:window.location='/product/myProduct'">
 				<input type="button" value="전체 상품 조회" onclick="javascript:window.location='/product/allProduct'">
+				<input type="button" value="광고신청하기" onclick="javascript:window.location='/product/adMain'">
 				<br />
 				<div>
 					<div class="col p-4 d-flex flex-column position-static bg-body-tertiary border rounded-3" style="width: 30%; margin-left: auto; margin-right: auto; margin-top: 5%">

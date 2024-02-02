@@ -9,6 +9,7 @@ public class AdDTO {
 	private int num;
 	private String username;
 	private String productnum;
+	private String productname;
 	private Date submitdate;
 	private Date startdate;
 	private Date enddate;
