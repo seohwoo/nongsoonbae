@@ -100,7 +100,10 @@
 	        if (status !== -1) {
 	            if (status === 1) {
 	                alert("신청이 완료되었습니다.");
-	            } else if (status === 0) {
+	            } else if (status === 2){
+	            	alert("이미 광고중이거나 광고 검토 진행 중인 상품입니다.");
+	            	 history.go(-1);
+	            }else if (status === 0) {
 	                alert("신청에 실패하였습니다.");
 	            }
 	        }

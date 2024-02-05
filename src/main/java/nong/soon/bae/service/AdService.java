@@ -1,7 +1,11 @@
 package nong.soon.bae.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+
+import nong.soon.bae.bean.AdDTO;
 
 @Service
 public interface AdService {
@@ -17,5 +21,5 @@ public interface AdService {
 	public void adEnd (int num,String username,String productnum);
 	public void reUpdateStatus (String username,String productnum);
 	public void adNo (String productnum, String username,int num);
-	
+	public List<AdDTO> checkAd (String adSelect, String username);
 }

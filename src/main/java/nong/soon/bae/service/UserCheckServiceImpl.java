@@ -327,13 +327,6 @@ public class UserCheckServiceImpl implements UserCheckService{
 		checkMap.put("addCate",addCate);
 		return mapper.deleteCate(checkMap);
 	}
-
-	
-
-	
-	
-	
-
 	
 	}
 

@@ -2,6 +2,9 @@ package nong.soon.bae.contorller.user;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import nong.soon.bae.bean.AdDTO;
 import nong.soon.bae.service.AdService;
 
 
@@ -29,14 +33,14 @@ public class AdController {
 		return "product/ad/adMain";
 	}
 	
-	@RequestMapping("/product/myAd")
+	@RequestMapping("/product/myAd") //내가 신청한 광고 확인
 	public String myAd(Model model,Principal principal) {
 		String username = principal.getName();	
 		service.myAd(model,username);
 		return "product/ad/myAd";
 	}
 	
-	@RequestMapping("/product/adForm")
+	@RequestMapping("/product/adForm") //광고 신청 폼
 	public String adFrom(Model model,Principal principal,
 			@RequestParam("userId") String username) {
 		service.myproduct(model,username);
@@ -48,26 +52,46 @@ public class AdController {
 	                        @RequestParam("adSelect") String adSelect,
 	                        @RequestParam("daysSelect") String daysSelect,
 	                        @RequestParam("price") String price,
-	                        RedirectAttributes redirectAttributes) {
-	    String username = principal.getName();	
-	    if(adSelect != null && daysSelect != null && price != null) {
+	                        RedirectAttributes redirectAttributes,
+	                        HttpServletRequest request) {
+	    String username = principal.getName();
+	    List<AdDTO> check = service.checkAd(adSelect,username);
+	    if (check == null || check.isEmpty()) { // 광고가 존재하지 않는 경우
+	        if (adSelect != null && daysSelect != null && price != null) {
+	            service.submitAd(username, adSelect, Integer.parseInt(daysSelect), Integer.parseInt(price));
+	            redirectAttributes.addFlashAttribute("submitStatus", 1);
+	        } else {
+	            redirectAttributes.addFlashAttribute("submitStatus", 0); // 필수 값 중 하나라도 null인 경우
+	        }
+	    } else { // 광고가 이미 존재하는 경우
+	        redirectAttributes.addFlashAttribute("submitStatus", 2);
+	    }
+	    
+	    return "redirect:/product/myAd";
+	}
+
+	   /* if(adSelect != null && daysSelect != null && price != null && check == null) {
 	        service.submitAd(username, adSelect, Integer.parseInt(daysSelect), Integer.parseInt(price));
 	        redirectAttributes.addFlashAttribute("submitStatus", 1);
-	    } else {
+	    } if(check != null ){
+	    	redirectAttributes.addFlashAttribute("submitStatus", 2);
+	    }else {
 	        redirectAttributes.addFlashAttribute("submitStatus", 0);
 	    }
 	    
 	    return "redirect:/product/myAd";
 	}
-	@RequestMapping("/admin/adList")
-	public String adList(Model model) {
+*/
+	
+	@RequestMapping("/admin/adList") //들어온 광고 목록들 확인하기 
+	public String adList(Model model) { 
 		Date today = new Date();
         model.addAttribute("today", today);
 		service.adList(model);
 		return "admin/ad/adList";
 	}
 	
-	@RequestMapping("/admin/adPro")
+	@RequestMapping("/admin/adPro") //광고 승인
 	public String adPro(Model model,
 			@RequestParam("startDate") String startDateStr,
 			@RequestParam("days") int days,
@@ -85,7 +109,7 @@ public class AdController {
 		return "redirect:/admin/adList";
 	}
 	
-	@RequestMapping("/admin/adNoPro")
+	@RequestMapping("/admin/adNoPro") //광고 거절
 	public String adNoPro(Model model,
 			@RequestParam("productnum") String productnum,
 			@RequestParam("username") String username,
@@ -102,14 +126,14 @@ public class AdController {
 	}
 	
 	
-	@RequestMapping("/admin/adEndSoon")
+	@RequestMapping("/admin/adEndSoon")//오늘 날짜로 끝나는 광고 목록
 	public String adEndSoon(Model model) {
 		service.adEndSoon(model);
 		return "admin/ad/adEndSoon";
 	}
 	
 	
-	@RequestMapping("/admin/adEndPro")
+	@RequestMapping("/admin/adEndPro") //광고 내리기
 	public String adEndPro(Model model,
 			@RequestParam("username") String username,
 			@RequestParam("productnum") String productnum,

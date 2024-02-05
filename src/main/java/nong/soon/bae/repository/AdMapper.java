@@ -20,4 +20,7 @@ public interface AdMapper {
 	public int endSoonCnt ();
 	public int submitCnt ();
 	int adNo(HashMap map);
+	
+	public List<AdDTO> checkAd(HashMap map);
+	
 }
