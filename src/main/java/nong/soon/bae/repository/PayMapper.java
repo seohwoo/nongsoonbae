@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.PaymentDTO;
+import nong.soon.bae.bean.UserGradeDTO;
+import nong.soon.bae.bean.UsersDTO;
 
 public interface PayMapper {
 
@@ -17,5 +19,9 @@ public interface PayMapper {
 	public List<PaymentDTO> isFirstMembership(HashMap<String, String> map);
 	public int insertUsersPayment(PaymentDTO dto);
 	public void deleteUsersAddCart(String username);
+	public UsersDTO isMembership(String username);
+	public UserGradeDTO findGrade(String gradename);
+	public void changeGrade(HashMap<String, String> map);
+	public List<PaymentDTO> lastMembershipPayDate(String username);
 	
 }

@@ -1,6 +1,7 @@
 package nong.soon.bae.contorller.user;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.repository.UsersRepository;
 import nong.soon.bae.service.MypageService;
+import nong.soon.bae.service.PayService;
 
 @Controller
 @RequestMapping("/user/*")
@@ -28,6 +30,9 @@ public class UserController {
 	
 	@Autowired
 	MypageService service;
+	@Autowired
+	private PayService payService;
+	
 	@Autowired
 	UsersRepository user;
 	
@@ -141,8 +146,20 @@ public class UserController {
 	@RequestMapping("membership")
 	public String membership(Principal principal, Model model) {
 		String username = principal.getName();
+		boolean ismem = false;
+		Date lastMembershipPayDate = null;
+		if(payService.isMembership(username).getGrade().get(0).getGrade().equals("ROLE_MEMBERSHIP")) {
+			ismem = true;
+			lastMembershipPayDate = payService.lastMembershipPayDate(username).get(0).getOrderdate();
+		}
+		model.addAttribute("lastMembershipPayDate", lastMembershipPayDate);
+		model.addAttribute("ismem", ismem);
 		model.addAttribute("username", username);
 		model.addAttribute("isMembership", 1);
 		return "/user/mypage/membership";
+	}
+	@RequestMapping("quitMembership")
+	public String quitMembership(Principal principal) {
+		return "redirect:/product/productMain";
 	}
 }

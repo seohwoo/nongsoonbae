@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.PaymentDTO;
+import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.PayMapper;
 
 @Service
@@ -92,7 +93,7 @@ public class PayServiceImpl implements PayService{
 		}
 	}
 	@Override
-	public void isMembershipSuccess(String username, String sid) {
+	public int isMembershipSuccess(String username, String sid) {
 		dto.setUsername(username);
 		dto.setProductnum("membership");
 		dto.setOptionnum("membership");
@@ -100,7 +101,33 @@ public class PayServiceImpl implements PayService{
 		dto.setTotalprice(4900);
 		dto.setQuantity(1);
 		dto.setSid(sid);
-		mapper.insertUsersPayment(dto);
+		return mapper.insertUsersPayment(dto);
+	}
+	@Override
+	public void changeGrade(String username) {
+		String grade = mapper.isMembership(username).getGrade().get(0).getGrade();
+		System.out.println(grade);
+		String gradename = "¸â¹ö½±";
+		gradename = mapper.findGrade(gradename).getGrade();
+		if(!grade.equals(gradename)) {
+			paymentMap.put("username", username);
+			paymentMap.put("gradename", gradename);
+			mapper.changeGrade(paymentMap);
+		}
+	}
+	@Override
+	public UsersDTO isMembership(String username) {
+		return mapper.isMembership(username);
+	}
+	
+	@Override
+	public void userQuitMembership(String username) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public List<PaymentDTO> lastMembershipPayDate(String username) {
+		return mapper.lastMembershipPayDate(username);
 	}
 	
 }

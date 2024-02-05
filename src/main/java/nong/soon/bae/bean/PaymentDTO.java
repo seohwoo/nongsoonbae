@@ -1,6 +1,8 @@
 package nong.soon.bae.bean;
 
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -15,7 +17,7 @@ public class PaymentDTO {
 	private int realprice;
 	private int totalprice;
 	private int quantity;
-	private String orderdate;
+	private Date orderdate;
 	private String sid;
 	private int status;
 }

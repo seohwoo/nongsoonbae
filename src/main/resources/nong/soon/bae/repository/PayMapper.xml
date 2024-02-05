@@ -24,10 +24,39 @@
 		select * from ${username}_payment where productnum='membership'
 	</select>
 	<insert id="insertUsersPayment" parameterType="paymentDTO">
-		insert into ${username}_payment(username, productnum, optionnum, realprice, totalprice, quantity, sid)
-		values(#{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid})
+		insert into ${username}_payment(username, productnum, optionnum, realprice, totalprice, quantity, sid, status)
+		values(#{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid}, 101)
 	</insert>
 	<delete id="deleteUsersAddCart" parameterType="String">
 		delete from ${username}_mypage where wishstatus=3
 	</delete>
+	
+	<resultMap type="nong.soon.bae.bean.UsersDTO" id="memberMap">
+	    <id property="username" column="username"/>
+	    <result property="username" column="username"/>
+	    <result property="password" column="password"/>
+	    <result property="name" column="name"/>
+	    <result property="email" column="email"/>
+	    <result property="birth" column="birth"/>
+	    <result property="gender" column="gender"/>
+	    <result property="regsite" column="regsite"/>
+	    <collection property="grade" resultMap="authMap">
+	    </collection> 
+	  </resultMap>
+	  <resultMap type="nong.soon.bae.bean.UserGradeDTO" id="authMap">
+	    <result property="grade" column="grade"/>
+	    <result property="username" column="username"/>
+	  </resultMap>
+	<select id="isMembership" parameterType="String" resultMap="memberMap">
+		select * from users where username=#{username}
+	</select>
+	<select id="findGrade" parameterType="String" resultType="userGradeDTO">
+		select * from usergrade where name=#{gradename}
+	</select>
+	<update id="changeGrade" parameterType="String">
+		update users set grade=#{gradename} where username=#{username}
+	</update>
+	<select id="lastMembershipPayDate" parameterType="String" resultType="paymentDTO">
+		select * from ${username}_payment where productnum='membership'order by orderdate desc
+	</select>
 </mapper>

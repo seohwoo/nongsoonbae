@@ -60,7 +60,10 @@ public class PayController {
 		KakaoApproveResponse kakaoApprove = kakaoPayService.ApproveResponse(pgToken);
 		String username = pri.getName();
 		if(kakaoApprove.getItem_name().equals("멤버십정기결제")) {
-			service.isMembershipSuccess(username, pgToken);
+			int result = service.isMembershipSuccess(username, pgToken);
+			if(result==1) {
+				service.changeGrade(username);
+			}
 		}else {
 			service.isproductSuccess(username);
 		}
