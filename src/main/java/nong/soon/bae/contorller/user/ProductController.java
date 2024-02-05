@@ -285,6 +285,18 @@ public class ProductController {
 	public String selectAllproduct(Model model) {
 		List<AllProductDTO> APdto = service.selectAllproduct();
 		model.addAttribute("APdto", APdto);
+		
+		for (AllProductDTO dto : APdto) {
+		    String productnum = dto.getProductnum();
+		    String username = dto.getUsername();
+		    logger.info("productnum==="+productnum);
+		    logger.info("username==="+username);
+		    service.deleteAllproduct(username, productnum);
+		    logger.info("username==="+username);
+		    logger.info("productnum==="+productnum);
+		    service.deleteProductOption(username, productnum);
+		}
+		
 		return "/product/allProduct";
 	}
 	
