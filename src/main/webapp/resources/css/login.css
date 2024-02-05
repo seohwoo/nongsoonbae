@@ -89,6 +89,7 @@
     position: absolute;
     top: 20px;
     left: 9%;
+    z-index: 2;
 	}
 
 	.logo h2 {
@@ -101,6 +102,7 @@
     position: relative;
     font-size: 0;
     text-align: center;
+    z-index: 1;
 	}
 	
 	.menu {
@@ -122,6 +124,7 @@
     font-size: 16px;
     font-weight: 600;
     color: #fff;
+    z-index: 2;
 	}
 	
 	.log_wrap span {

@@ -45,10 +45,18 @@ h1.page-header {
     margin-top: 0;
     margin-bottom: 20px;
 }
-td.title{
-	
+.notice {
+  position: relative;
+  margin-top: 1em;
+  background: #F9F9F9;
+  padding: 1em 1em 1em 2em;
+  border-left: 4px solid #DDD;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
 }
-td.season{
+.success {
+  border-color: #2ECC40;
+}
+td.search{
 	
 }
 td.chart{
@@ -107,11 +115,77 @@ div.farmer {
 	display: inline-block; 
 	display: flex;
 }
-div.farmer p {
+p {
+	
+}
+div.farmer a {
 	align-self: flex-end;
 }
 div.farmer b {
 	padding: 2px;
 	margin-left: 5px; 
 	margin-right: 5px;
+}
+
+<!--메인 슬라이드-->
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.intro-header {
+  font-family: 'SUITE-Regular';
+  background-color: #000;
+  color: #fff;
+}
+
+.intro {
+  height: 50vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.1rem;
+  margin-top: -6%;
+  margin-bottom: 4%;
+  z-index: -1;
+}
+.intro-slideshow img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index:-1;
+  /* filter: brightness(50%); */ /* 0% black, 100% original image, values > 100% are allowed for brighter than original image. */
+  /* display: none; */
+  opacity: 0;
+  transition: opacity 0.75s ease-in-out;
+}
+/* .intro-slideshow img:first-child {
+  display: block;
+  opacity: 1;
+} */
+.intro .intro-header {
+  border-radius: 0.5rem;
+  padding: 2rem 2.5rem;
+  background-color: rgba(0,0,0,0.5);
+}
+.intro h1 {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+.intro p {
+  font-size: 1.75rem;
+}
+
+@media (max-width: 700px) {
+  html { font-size: 12px; }
+  .intro-header { padding: 1.5rem 2rem; }
+  .intro h1 { font-size: 2.5rem; }
+  .intro p { font-size: 1.25rem; }
 }

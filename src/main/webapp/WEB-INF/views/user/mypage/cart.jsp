@@ -159,14 +159,14 @@
 		  <div class="cart">
 		  	<div class="container-cart">
 				<section id="cart"> 
-				<c:if test="${cartstatus==0}">
+				<c:if test="${cartstatus eq 0}">
 					<article class="product">
 						<div class="content">
 							<p>장바구니에 담긴 상품이 없습니다.</p>
 						</div>
 					</article>
 				</c:if>
-				<c:if test="${cartstatus!=0}">
+				<c:if test="${cartstatus eq 1}">
 					<c:forEach var="cart" items="${MyCart}">
 						<article class="product">
 							<div class="cart-image">

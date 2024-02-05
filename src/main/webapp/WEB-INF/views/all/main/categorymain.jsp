@@ -6,10 +6,12 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>카테고리별</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript">
             function checkAndRedirect(cate1Value) {
                 if (cate1Value === '0') {
                     window.location.href = '/nsb/menu';
+                    $('#catelist').hide();
                     return false; 
                 }
                 return true; // 폼 제출 허용
@@ -55,7 +57,7 @@
 				</div>
 				</div>
 			</c:if>	
-			<div>
+			<div id="catelist">
 				<jsp:include page="/WEB-INF/views/all/main/categorylist.jsp" />
 			</div>	
 			<div>

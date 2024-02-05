@@ -57,7 +57,7 @@
 		  </div>
 		</nav>
 		<div class="tab-content" id="nav-tabContent">
-		  <c:if test="${likestatus==0 }">
+		  <c:if test="${likestatus eq 0 }">
 		  	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -69,7 +69,7 @@
 			</div>
 		  </c:if>
 		  
-		  <c:if test="${likestatus != 0}">
+		  <c:if test="${likestatus eq 1}">
 		  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -96,7 +96,7 @@
 		</div>
 		</c:if>
 		<div class="tab-content" id="nav-tabContent">
-		  <c:if test="${farmerstatus==0 }">
+		  <c:if test="${farmerstatus eq 0 }">
 		  	<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -107,7 +107,7 @@
 			</table>
 			</div>
 		  </c:if>
-		  <c:if test="${farmerstatus != 0}">
+		  <c:if test="${farmerstatus eq 1}">
 		<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 			<table cellspacing="0" class="g-table-list product">
 				<thead>

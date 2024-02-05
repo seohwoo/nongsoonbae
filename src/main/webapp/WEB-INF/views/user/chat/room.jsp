@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -350,7 +353,7 @@
          </main>
          <c:if test="${isAdmin}">
 			<div style="width : auto; overflow: scroll;">
-			   <div class="btn-group-vertical">
+			   <div class="btn-group-vertical" style="width: 100%;">
 			      <button type="button" class="btn btn-outline-primary" id="button1">로그인 / 개인정보수정 / 탈퇴 / 정지 안내</button>
 			      <button type="button" class="btn btn-outline-primary" id="button2">주문/결제/배송관련 안내</button>
 			      <button type="button" class="btn btn-outline-primary" id="button3">포인트 사용 / 멤버쉽 안내</button>

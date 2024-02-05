@@ -7,7 +7,7 @@
 <main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: 17%">
 	<div class="container like">
       <h1>구매내역</h1><br />
-		  <c:if test="${buystatus==0 }">
+		  <c:if test="${buystatus eq 0 }">
 		  	<div>
 			<table cellspacing="0" class="g-table-list product">
 				<thead>
@@ -19,7 +19,7 @@
 			</div>
 		  </c:if>
 		  
-		  <c:if test="${buystatus != 0}">
+		  <c:if test="${buystatus eq 1}">
 		  <div>
 			<table cellspacing="0" class="g-table-list product">
 				<thead>

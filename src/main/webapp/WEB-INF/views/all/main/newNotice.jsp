@@ -7,12 +7,13 @@
 		<meta charset="UTF-8">
 	</head>
 	<body>
+	<div class="notice success">
 		<form action="/nsb/noticeView" method="get">
 			<input type="hidden" name="num" value="${notice.num}">
 			<input type="hidden" name="pageNum" value="1">
 			<button type="submit" style="background:none; border:none; padding:0; margin:0; font: inherit; color: blue; text-decoration: underline; cursor: pointer;">
-			<h5>${notice.title}</h5>
+			<h5 class="icon-link icon-link-hover">${notice.title}</h5>
 			</button>
-		</form>
+		</form></div>
 	</body>
 </html>

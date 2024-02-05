@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>상품 페이지</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 		<script src="/resources/js/jquery-3.7.1.min.js"></script>
 	</head>
 
@@ -24,7 +25,7 @@
                 var numberText = $("<input type='text' name='count' id='count' value='1'>");
                 
                 newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton));
-                $("table").append(newRow);
+                $("#finish").append(newRow);
 			})
 			
 			function increaseQuantity(e) {
@@ -48,7 +49,7 @@
 	</script>
 	
 	<body>
-		<table border="1px" style="text-align: center;">
+		<table border="1px" style="text-align: center;" id="finish">
 			<tr> 
 				<td>농부 이름</td>
 				<td>${APdtoNAF.name}</td>
@@ -109,8 +110,43 @@
 		<button onclick="openReviewWindow()">리뷰작성</button>	
 	
 		<br /><br /><br /><br /> <hr /> <br />
-		<table>
-			<h3>ㅁㅁㅁㅁ</h3>
+		<table border="1" style="text-align: center;">
+			<tr>
+				<td>이름</td>
+				<td>상품 이름</td>
+				<td>별점</td>
+				<td>작성일</td>
+				<td>content</td>
+			</tr>		
+			
+			<c:forEach var="Rdto" items="${Rdto}">
+				<tr>
+					<td>${Rdto.username}</td>
+					<td>${Rdto.optionname}</td>
+					<td>
+						<c:forEach begin="1" end="${Rdto.stars}" step="1" var="i">
+							<i class="fas fa-star" style="color: #ffc83d;"></i>
+						</c:forEach>
+					</td>
+					<td><fmt:formatDate value="${Rdto.regdate}" dateStyle="short" type="date"/></td>
+					<td>${Rdto.content}</td>
+				</tr>
+			</c:forEach>
 		</table>
+		
+		<br /><br /><br /><br /> <hr /> <br />
+		<tr>${APdto.content}</tr>
+		
 	</body>
 </html>
+
+<style>
+	.stars1 {
+    	font-size: 30px;
+    	cursor: pointer;
+	}
+	.stars1 .star {
+		color: #FFA500;
+    	transition: color 0.3s;
+	}
+</style>
