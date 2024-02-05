@@ -73,7 +73,8 @@
 			totalprice number not null,
 			quantity number not null,
 			orderdate date default sysdate,
-			sid varchar2(50))
+			sid varchar2(50),
+			status number not null)
 	</insert>
 	<insert id="createImages">
 		create table ${username}_images ( 

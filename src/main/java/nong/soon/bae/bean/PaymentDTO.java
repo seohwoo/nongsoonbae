@@ -17,5 +17,5 @@ public class PaymentDTO {
 	private int quantity;
 	private String orderdate;
 	private String sid;
-	
+	private int status;
 }
