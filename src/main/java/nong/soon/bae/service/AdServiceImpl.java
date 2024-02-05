@@ -41,6 +41,16 @@ public class AdServiceImpl implements AdService {
 	
 	
 	@Override
+	public List<AdDTO> checkAd(String adSelect, String username) {
+		adMap.clear();
+		adMap.put("adSelect", adSelect);
+		adMap.put("username", username);
+		return mapper.checkAd(adMap);
+	}
+
+	
+	
+	@Override
 	public void submitAd(String username, String adSelect, int daySelect, int price) {
 		adMap.clear();
 		adMap.put("username", username);
@@ -112,6 +122,7 @@ public class AdServiceImpl implements AdService {
 		mapper.reUpdateStatus(adMap);
 	}
 
+	
 
 	
 }

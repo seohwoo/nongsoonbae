@@ -27,8 +27,7 @@
 		
 		.sub-nav li a:hover {
 		    background-color: #ddd;
-		}
-	
+		}	
 	</style>
 	</head>
 	<body>
@@ -36,7 +35,8 @@
 		    <ul>
 		        <li><a href="/admin/adList">광고신청</a></li>
 		        <li><a href="/admin/adEndSoon">오늘 끝나는 광고</a></li>
-		        <li><a href="#">종료된 광고 </a></li>
+		        <li><a href="/admin/adIng">현재 광고 중 </a></li>
+		        <li><a href="/admin/adEnd">종료된 광고 </a></li>
 		    </ul>
 		</nav>
 	

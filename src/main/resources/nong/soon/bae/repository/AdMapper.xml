@@ -12,6 +12,12 @@
 	<select id="myAdCnt" parameterType="String" resultType="int">
 		select count(*) from ad where username=#{username}
 	</select>
+	<select id="checkAd" parameterType="hashMap" resultType="nong.soon.bae.bean.AdDTO">
+		<![CDATA[
+        select * from ad where username=#{username} and productnum= #{adSelect} and adstatus <= 41
+      ]]>
+	</select>
+	
 	<insert id="submitAd" parameterType="hashMap">
 			insert into ad(num,username,productnum,
 						submitdate,days,price,adstatus) values(
