@@ -99,6 +99,9 @@
 	            <input type="hidden" id="hiddenPrice" name="price" value="0" />
 	            <button type="submit">신청하기</button>  
 	        </form>
+	        <form action="/product/adMain" method="get">
+       			 <button type="submit" style="margin-top: 20px;">돌아가기</button>
+   			</form>
     	</div>
 	</body>
 </html>

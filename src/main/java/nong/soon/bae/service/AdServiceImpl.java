@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import nong.soon.bae.bean.AdDTO;
 import nong.soon.bae.bean.AllProductDTO;
+import nong.soon.bae.bean.NoticeBoardDTO;
 import nong.soon.bae.repository.AdMapper;
 
 
@@ -91,7 +92,9 @@ public class AdServiceImpl implements AdService {
 	
 	@Override
 	public void updateStatus(String productnum) {
-		mapper.updateStatus(productnum);
+		adMap.clear();
+		adMap.put("productnum", productnum);
+		mapper.updateStatus(adMap);
 		
 	}
 
@@ -122,7 +125,68 @@ public class AdServiceImpl implements AdService {
 		mapper.reUpdateStatus(adMap);
 	}
 
-	
+	@Override
+	public void adIngList(int pageNum,Model model) {
+		int pageSize = 10;
+	    int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
+	    int adIngCnt = mapper.adIngCnt();
+	    List<AdDTO> list = Collections.EMPTY_LIST;
+	    if(adIngCnt > 0) {
+	    	adMap.put("start", startRow);
+	    	adMap.put("end", endRow);
+	    	list = mapper.adIngList(adMap);
+	    }	
+	    model.addAttribute("list",list);
+	    model.addAttribute("adIngCnt",adIngCnt);
+	    model.addAttribute("pageNum",pageNum);
+	    model.addAttribute("pageSize",pageSize);
+	    
+	    int pageCount = adIngCnt / pageSize + ( adIngCnt % pageSize == 0 ? 0 : 1);
+		 
+        int startPage = (int)(pageNum/10)*10+1;
+		int pageBlock=10;
+        int endPage = startPage + pageBlock-1;
+        if (endPage > pageCount) {
+			endPage = pageCount;
+        }				
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("pageBlock",pageBlock);
+        model.addAttribute("endPage",endPage);
+		}
+
+	@Override
+	public void adEndList(int pageNum, Model model) {
+		int pageSize = 10;
+	    int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
+	    int adEndCnt = mapper.adEndCnt();
+	    List<AdDTO> endList = Collections.EMPTY_LIST;
+	    if(adEndCnt > 0) {
+	    	adMap.put("start", startRow);
+	    	adMap.put("end", endRow);
+	    	endList = mapper.adEndList(adMap);
+	    }	
+	    model.addAttribute("endList",endList);
+	    model.addAttribute("adEndCnt",adEndCnt);
+	    model.addAttribute("pageNum",pageNum);
+	    model.addAttribute("pageSize",pageSize);
+	    
+	    int pageCount = adEndCnt / pageSize + ( adEndCnt % pageSize == 0 ? 0 : 1);
+		 
+        int startPage = (int)(pageNum/10)*10+1;
+		int pageBlock=10;
+        int endPage = startPage + pageBlock-1;
+        if (endPage > pageCount) {
+			endPage = pageCount;
+        }				
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("pageBlock",pageBlock);
+        model.addAttribute("endPage",endPage);
+		}		
+	}
+
 
 	
-}

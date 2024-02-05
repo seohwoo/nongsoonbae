@@ -61,6 +61,7 @@
 	        <input type="hidden" name="username" value="${list.username}"> 
 	        <input type="hidden" name="productnum" value="${list.productnum}" />
 	        <input type="hidden" name="num" value="${list.num}" />
+	           <h5>No.${list.num}</h5>
 	            <h2> ${list.productname} (${list.productnum}) </h2>
 	            <h3> 판매자 ${list.username}</h3>
 	            <h3> 신청기간 ${list.days}일 (단가 ${list.price}원) </h3>

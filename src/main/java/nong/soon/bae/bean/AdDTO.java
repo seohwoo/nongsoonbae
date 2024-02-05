@@ -16,4 +16,6 @@ public class AdDTO {
 	private int days;
 	private int price;
 	private int adstatus;
+	private String p_productname;
+	
 }

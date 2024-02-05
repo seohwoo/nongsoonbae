@@ -55,7 +55,7 @@
 	<body>
 	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
 	<%@include file="/WEB-INF/views/admin/ad/adNav.jsp"%>
-	<h2>광고신청 (${submitCnt}개)</h2>
+	<h2>광고신청 (${submitCnt})</h2>
 	<c:forEach var="list" items="${adList}">
         <div class="adList">
            <form method="post" >
@@ -63,6 +63,7 @@
             <input type="hidden" name="productnum" value="${list.productnum}" />
             <input type="hidden" name="num" value="${list.num}" />
             <input type="hidden" name="days" value="${list.days}" />
+                <h5>No.${list.num}</h5>
                 <h2> ${list.productname} (${list.productnum}) </h2>
                 <h3> 판매자 ${list.username}</h3>
                 <h3> 신청기간 ${list.days}일 (단가 ${list.price}원) </h3>

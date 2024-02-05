@@ -10,7 +10,8 @@
 		select a.*,p.* from ad a join allproduct p on a.username = p.username and a.productnum=p.productnum where a.username = #{username} order by num desc
 	</select>
 	<select id="myAdCnt" parameterType="String" resultType="int">
-		select count(*) from ad where username=#{username}
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+			AND a.productnum = p.productnum WHERE a.username=#{username}
 	</select>
 	<select id="checkAd" parameterType="hashMap" resultType="nong.soon.bae.bean.AdDTO">
 		<![CDATA[
@@ -31,7 +32,8 @@
 					)
 	</insert>
 	<select id="submitCnt" resultType="int">
-		select count(*) from ad where adstatus = 41
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+		AND a.productnum = p.productnum WHERE a.adstatus = 41
 	</select>
 	<select id="adList" resultType="nong.soon.bae.bean.AdDTO">
 		select a.*,p.* from ad a join allproduct p on a.username = p.username and a.productnum=p.productnum where adstatus=41 order by submitdate 
@@ -39,14 +41,15 @@
 	<update id="adStart" parameterType="hashMap">
 		update ad set adstatus=40, startdate=sysdate, enddate=sysdate+#{days} where productnum=#{productnum}
 	</update>
-	<update id="updateStatus" parameterType="String">
+	<update id="updateStatus" parameterType="hashMap">
 		update allproduct set grade=40 where productnum=#{productnum}
 	</update>
 	<update id="adNo" parameterType="hashMap">
 		update ad set adstatus=42 where num=#{num} and productnum=#{productnum} and username=#{username}
 	</update>
 	<select id="endSoonCnt" resultType="int">
-		select count(*) from ad where TRUNC(enddate) = TRUNC(SYSDATE) and adstatus = 40
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+		AND a.productnum = p.productnum WHERE TRUNC(a.enddate) = TRUNC(SYSDATE) and a.adstatus = 40
 	</select>
 	<select id="adEndSoon" resultType="nong.soon.bae.bean.AdDTO">
 		select a.*,p.* from ad a join allproduct p on a.username = p.username and a.productnum=p.productnum where TRUNC(a.enddate) = TRUNC(SYSDATE) and adstatus=40 order by a.enddate
@@ -57,4 +60,36 @@
 	<update id="reUpdateStatus" parameterType="hashMap">
 		update allproduct set grade=100 where username=#{username} and productnum=#{productnum} 
 	</update>
+	<select id="adIngCnt" resultType="int">
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+			AND a.productnum = p.productnum WHERE a.adstatus = 40
+	</select>
+	<select id="adIngList" resultType="nong.soon.bae.bean.AdDTO" >
+		<![CDATA[
+		SELECT * FROM 
+    	(SELECT b.*, ROWNUM r FROM 
+        	(SELECT a.*, p.productname AS p_productname
+         	FROM ad a
+         		JOIN allproduct p ON a.username = p.username AND a.productnum = p.productnum
+        		 WHERE a.adstatus = 40
+         			ORDER BY a.num DESC) b) 
+					where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="adEndCnt" resultType="int">
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+			AND a.productnum = p.productnum WHERE a.adstatus = 43
+	</select>
+	<select id="adEndList" resultType="nong.soon.bae.bean.AdDTO" >
+		<![CDATA[
+		SELECT * FROM 
+    	(SELECT b.*, ROWNUM r FROM 
+        	(SELECT a.*, p.productname AS p_productname
+         	FROM ad a
+         		JOIN allproduct p ON a.username = p.username AND a.productnum = p.productnum
+        		 WHERE a.adstatus = 43
+         			ORDER BY a.num DESC) b) 
+					where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
 </mapper>
