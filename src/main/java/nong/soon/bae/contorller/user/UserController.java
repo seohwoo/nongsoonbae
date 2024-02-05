@@ -86,6 +86,7 @@ public class UserController {
 	public String cart(Principal principal, Model model) {
 		String username = principal.getName();
 		List<MyPageDTO> cart = service.selectcart(username);
+		System.out.println(cart);
 		if(cart == null) {
 			model.addAttribute("cartstatus", 0);
 		}else {
