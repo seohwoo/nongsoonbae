@@ -26,28 +26,28 @@ public class AdController {
 	@Autowired
 	private AdService service; 
 
-	@RequestMapping("/product/adMain")
+	@RequestMapping("/user/adMain")
 	public String adMain(Model model,Principal principal) {
 		String username = principal.getName();	
 		model.addAttribute("username",username);
 		return "product/ad/adMain";
 	}
 	
-	@RequestMapping("/product/myAd") //내가 신청한 광고 확인
+	@RequestMapping("/user/myAd") //내가 신청한 광고 확인
 	public String myAd(Model model,Principal principal) {
 		String username = principal.getName();	
 		service.myAd(model,username);
 		return "product/ad/myAd";
 	}
 	
-	@RequestMapping("/product/adForm") //광고 신청 폼
+	@RequestMapping("/user/adForm") //광고 신청 폼
 	public String adFrom(Model model,Principal principal,
 			@RequestParam("userId") String username) {
-		service.myproduct(model,username);
+		service.myproduct(model,username);;
 		return "product/ad/adForm";
 	}
 	
-	@RequestMapping("/product/adFormPro")
+	@RequestMapping("/user/adFormPro")
 	public String adFormPro(Model model, Principal principal,
 	                        @RequestParam("adSelect") String adSelect,
 	                        @RequestParam("daysSelect") String daysSelect,
@@ -56,7 +56,7 @@ public class AdController {
 	                        HttpServletRequest request) {
 	    String username = principal.getName();
 	    List<AdDTO> check = service.checkAd(adSelect,username);
-	    if (check == null || check.isEmpty()) { // 광고가 존재하지 않는 경우
+	    if (check == null || check.isEmpty()) { 
 	        if (adSelect != null && daysSelect != null && price != null) {
 	            service.submitAd(username, adSelect, Integer.parseInt(daysSelect), Integer.parseInt(price));
 	            redirectAttributes.addFlashAttribute("submitStatus", 1);

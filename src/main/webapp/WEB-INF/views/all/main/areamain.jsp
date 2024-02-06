@@ -8,12 +8,20 @@
 	    <title>지역별</title>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	    <script type="text/javascript">
-	        function checkAndRedirect(e, area1Value) {
-	            if (area1Value === '0') {
-	                window.location.href = '/nsb/area';
-	                e.preventDefault(); // 기본 동작 방지
-	            }
-	        }
+	        $(document).ready(function(){
+	            // 정렬 버튼 클릭 이벤트
+	            $(".sort-btn").click(function(){
+	                var sort = $(this).data("sort");
+	                $("#sortForm input[name='sort']").val(sort);
+	                $("#sortForm").submit();
+	            });
+	        });
+		    function checkAndRedirect(e, area1Value) {
+		            if (area1Value === '0') {
+		                window.location.href = '/nsb/area';
+		                e.preventDefault(); // 기본 동작 방지
+		            }
+		        }
 	    </script>
 	</head>
 	<body>
@@ -46,6 +54,11 @@
 	</c:if>
 	</div>
 	<c:if test="${allCnt > 0}">
+		<form id="sortForm" action="/nsb/area" method="post">
+    		<input type="hidden" name="sort" value=""/>
+    		<button type="submit" name="sort" value="readcnt">추천순</button>
+    		<button type="submit" name="sort" value="wishcnt">최신순</button>
+		</form>
 	<div class="container mx-auto mt-4">
  			<div class="row">
 	    <c:forEach var="dto" items="${allprocuctList}">
@@ -57,8 +70,28 @@
 	<div id="targetDiv">
 	    <jsp:include page="/WEB-INF/views/all/main/arealist.jsp" />
 	</div>
-	
+	<div class="pagination">
+	<c:if test="${!isAreaSelected}">
+		<c:if test="${startPage > 10}">
+			<form action="/nsb/area" method="post">
+				<input type="hidden" name="pageNum" value="${startPage-10}">
+				<button type="submit">이전</button>
+			</form>
+		</c:if>
+		<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			<form action="/nsb/area" method="post">
+				<input type="hidden" name="pageNum" value="${i}">
+				<button type="submit">${i}</button>
+			</form>
+		</c:forEach>
+		<c:if test="${endPage < pageCount}">
+			<form action="/nsb/area" method="post">
+				<input type="hidden" name="pageNum" value="${startPage+10}">
+				<button type="submit">다음</button>
+			</form>
+		</c:if>
+		</c:if>					
+		</div>				    
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
-	
 	</body>
 </html>

@@ -13,7 +13,10 @@ public interface AreaMapper {
 
 	public List<AreaDTO> arealist();
 	public int allCnt();
-	public List<AllProductDTO> allproductList ();
+	public List<AllProductDTO> allproductList (HashMap<String, String> map);
+	public List<AllProductDTO> readListAll (HashMap<String, String> map);
+	public List<AllProductDTO> wishListAll (HashMap<String, String> map);
+	
 	public List<AreaDTO> arealistdetail (String area1);
 	public List<AllProductDTO>productlist (String area1);
 	public int productCnt(int area1);
