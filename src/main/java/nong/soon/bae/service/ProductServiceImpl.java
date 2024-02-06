@@ -335,6 +335,17 @@ public class ProductServiceImpl implements ProductService {
 		mapper.allproductUpdateContent(dto);
 	}
 
+	// 2024.02.05 TEST
+	@Override
+	public void deleteProductOption(String username, String productnum) {
+		mapper.deleteProductOption(username, productnum);
+	}
+
+	@Override
+	public void deleteAllproduct(String username, String productnum) {
+		mapper.deleteAllproduct(username, productnum);
+	}
+
 
 
 

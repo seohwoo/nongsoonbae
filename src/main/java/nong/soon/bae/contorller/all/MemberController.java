@@ -74,8 +74,6 @@ public class MemberController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		users.setPassword(passwordEncoder.encode(users.getPassword()));
 		String username = users.getUsername();
-		logger.info("===============register================");
-		logger.info("==============="+username+"================");
 		memberservice.save(users);
 		usersRepository.createDetails(username);
 		usersRepository.createReviews(username);
@@ -87,15 +85,12 @@ public class MemberController {
 	}
 	@ExceptionHandler(IllegalStateException.class)
     public String handleIllegalStateException(IllegalStateException e, Model model) {
-		logger.info("=============error==============");
 		model.addAttribute("errorMessage", e.getMessage());
 	    return "all/regForm";
     }
 	
 	@RequestMapping("/welcome")
 	public String regSucess(Model model) {
-		
-		logger.info("===============register success================");
 		return "user/welcome";
 	}
 	
@@ -107,12 +102,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/details")
-	public String detailPro(MultipartFile image, HttpServletRequest request, Model model, Principal principal, AddressDTO adto, String phone) {
+	public String detailPro(Model model, Principal principal, AddressDTO adto, String phone) {
 		UserDetailsDTO dto = new UserDetailsDTO();
 		String username = principal.getName();
-		logger.info("==============="+adto+"================");
 		String address = adto.getRoadAddress() + " " + adto.getDetailAddress() + adto.getExtraAddress();
-		logger.info("==============="+address+"================");
+		dto.setUsername(username);
+		dto.setAddress(address);
+		dto.setPhone(phone);
+		usersRepository.addDetails(dto);	
+		
+		return "redirect:/user/mypage";
+	}
+	
+	@RequestMapping("/img")
+	public String changeImg(MultipartFile image, HttpServletRequest request, Model model, Principal principal, AddressDTO adto, String phone) {
+		UserDetailsDTO dto = new UserDetailsDTO();
+		String username = principal.getName();
 		String path = request.getServletContext().getRealPath("/resources/file/profile/");
 		String filename = image.getOriginalFilename();
 		if(!filename.equals("")) {
@@ -129,16 +134,14 @@ public class MemberController {
 			dto.setImage("default.png");
 		}
 		dto.setUsername(username);
-		dto.setAddress(address);
 		dto.setPhone(phone);
-		usersRepository.addDetails(dto);	
+		usersRepository.changeImg(dto);	
 		
 		return "redirect:/user/mypage";
 	}
 	
 	@RequestMapping("/logout")
 	public String logout() {
-		logger.info("post custom logout");
 		return "user/logout";
 	}
 	
@@ -150,8 +153,6 @@ public class MemberController {
 	@GetMapping("/mailCheck")
 	@ResponseBody
 	public String mailCheck(String email) {
-		System.out.println("이메일 인증 요청이 들어옴!");
-		System.out.println("이메일 인증 이메일 : " + email);
 		return mailService.joinEmail(email);
 	}
 	

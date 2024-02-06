@@ -53,7 +53,6 @@ public class KakaoController {
 
         // 접속자 정보 get
         Map<String, Object> result = kakaoService.getUserInfo(kakaoToken);
-        log.info("result:: " + result);
         String username = (String) result.get("id");
         String name = (String) result.get("name");
         String email = (String) result.get("email");
@@ -68,7 +67,6 @@ public class KakaoController {
         // 분기
         UsersDTO usersDTO = new UsersDTO();
         // 일치하는 username 없을 시 회원가입
-        System.out.println(memberService.login(username));
         if (memberService.login(username) == null) {
             log.warn("카카오로 회원가입");
             usersDTO.setUsername(username);
@@ -87,15 +85,11 @@ public class KakaoController {
         }
 
        
-        log.warn("카카오로 로그인");
         UsersDTO vo = memberService.FindByUser(username);
         String grade = memberService.GetByAuth(username);
-        log.warn("member:: " + vo);
-        log.warn("grade : " + grade);
             /*Security Authentication에 붙이는 과정*/
         	/*CustomUserDetailsService*/
         CustomUser user = new CustomUser(vo);
-        log.warn("user : " + user);
         
         List<GrantedAuthority> roles = new ArrayList<>(1);
         String roleStr = grade.equals("ADMIN") ? "ADMIN" : "MEMBER";
@@ -106,7 +100,6 @@ public class KakaoController {
         }
         roles.add(new SimpleGrantedAuthority(roleStr));
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
-        log.warn("auth : " + auth);
         SecurityContextHolder.getContext().setAuthentication(auth);
         
         /* 로그아웃 처리 시, 사용할 토큰 값 */

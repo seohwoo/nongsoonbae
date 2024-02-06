@@ -49,7 +49,7 @@
 	    <p>농수산물 순식간에 배송해드립니다</p>
 	  </div>
 	</header>
-	
+	<jsp:include page="/WEB-INF/views/include/loading.jsp" />
 	
 	<table class="table-borderless main">
 		<tbody id="contentContainer">

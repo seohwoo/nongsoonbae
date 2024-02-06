@@ -173,7 +173,11 @@ public interface ProductService {
 	public List<String> selectUsernameProductnum(String username);	
 	
 	public void allproductUpdateContent(AllProductDTO dto);
+
+	// 2024.02.05 TEST
+	public void deleteProductOption(String username, String productnum);
 	
+	public void deleteAllproduct(String username, String productnum);
 }
 
 
