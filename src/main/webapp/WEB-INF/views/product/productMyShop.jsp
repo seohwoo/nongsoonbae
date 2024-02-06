@@ -23,7 +23,7 @@
 				<b class="h3">${SLdto.name}</b>
 				<p>${SLdto.shopname}</p>
 				<div class="container">
-					<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/productMain'">
+					<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/followPro?follow=${follow}'">
 					<input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="javascript:window.location='/chat/room" />
 				</div>
 				<p class="text-muted" style="font-size: 12px;">관심 고객 수 : ${SLdto.followers}</p>
@@ -123,7 +123,7 @@
 							<img src="/resources/realImage/${APdto.filename}">
 						</td>
 						<td>
-							<a href="/product/productDetail?productnum=${APdto.productnum}">${APdto.productnum}</a>	
+							<a href="/product/productInfo?productnum=${APdto.productnum}&follow=${APdto.username}">${APdto.productnum}</a>	
 						</td>										
 						<td>
 							${APdto.productname}	

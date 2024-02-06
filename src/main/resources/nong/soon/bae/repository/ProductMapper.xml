@@ -29,7 +29,7 @@
 			optionname varchar2(200) not null,
 			price number not null,
 			productcount number not null,
-			sellnount number default 0 not null )
+			sellcount number default 0 not null )
 	</insert>
 
 	<!-- 카테고리 대분류 -->
@@ -309,11 +309,19 @@
 				#{productnum}, 
 				#{optionnum}, 
 				#{content}, 
-				#{imagecount}, 
+				#{files}, 
 				#{stars}, 
 				sysdate )
 	</insert>
 
+	<!-- 리뷰 등록할 때 이미지 넣기 -->
+	<insert id="ReviewsimagesInsert" parameterType="nong.soon.bae.bean.ImagesDTO">
+		insert into ${username}_images values (
+			#{productnum},
+			#{username},
+			#{filename} )
+	</insert>	
+	
 	<!-- 상품 리뷰 가져오기 -->
 	<select id="selectReviewsAll" resultType="nong.soon.bae.bean.ReviewsDTO" parameterType="String">
 		select r.*, p.optionname from P_${productnum}_reviews r
@@ -357,8 +365,10 @@
 		update allproduct set content=#{content} where productnum=#{productnum} 
 	</update>
 
+
 	
-	<!-- 2024.02.05 TEST -->
+	
+	
 	
 	<!-- username_product 상품삭제 -->
 	<delete id="deleteProductOption" parameterType="String">
@@ -381,7 +391,30 @@
       )
 	</delete>
 
+
+	<!-- 상품 판매시 재고 업데이트 -->
+	<update id="updateProductSellcount" parameterType="String">
+		UPDATE ${follow}_product
+		SET productcount = productcount - (
+        SELECT count
+        FROM ${username}_mypage
+        WHERE optionnum = #{optionnum}
+    	),
+	    sellcount = sellcount + (
+	        SELECT count
+	        FROM ${username}_mypage
+	        WHERE optionnum = #{optionnum}
+	    )
+		WHERE optionnum = #{optionnum}
+	</update>
 	
+	<select id="selectMypage3" resultType="nong.soon.bae.bean.MyPageDTO" parameterType="String">
+		select * from ${username}_mypage where wishstatus=3
+	</select>
+	
+	<update id="updateProductCount">
+		update ${follow}_product set productcount= productcount-#{cnt} , sellcount=sellcount+#{cnt}
+	</update>
 </mapper>    
 
 

@@ -3,6 +3,7 @@ package nong.soon.bae.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
@@ -152,7 +153,10 @@ public interface ProductService {
 	public List<ImagesDTO> selectProductImages(String follow, String productnum); 
 
 	// 상품 리뷰쓰기
-	public void reviewInsert(ReviewsDTO Rdto);
+	public int reviewInsert(String productnum, List<MultipartFile> files, ReviewsDTO Rdto, String path);
+	
+	// 리뷰 등록할 때 이미지 넣기
+	public int ReviewsimagesInsert(List<MultipartFile> files, String path, String productnum);
 	
 	// 상품 리뷰 가져오기
 	public List<ReviewsDTO> selectReviewsAll(String follow, String productnum);
@@ -174,10 +178,17 @@ public interface ProductService {
 	
 	public void allproductUpdateContent(AllProductDTO dto);
 
-	// 2024.02.05 TEST
+
 	public void deleteProductOption(String username, String productnum);
 	
 	public void deleteAllproduct(String username, String productnum);
+	
+	// 상품 판매시 재고 업데이트
+	public void updateProductSellcount(String username, String follow, String optionnum);
+
+	public MyPageDTO selectMypage3(String username);
+	
+	public void updateProductCount(String follow, int cnt);
 }
 
 

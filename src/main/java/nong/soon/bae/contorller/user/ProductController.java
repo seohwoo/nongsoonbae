@@ -289,11 +289,8 @@ public class ProductController {
 		for (AllProductDTO dto : APdto) {
 		    String productnum = dto.getProductnum();
 		    String username = dto.getUsername();
-		    logger.info("productnum==="+productnum);
-		    logger.info("username==="+username);
+
 		    service.deleteAllproduct(username, productnum);
-		    logger.info("username==="+username);
-		    logger.info("productnum==="+productnum);
 		    service.deleteProductOption(username, productnum);
 		}
 		
@@ -402,7 +399,7 @@ public class ProductController {
 			files = fileNames.length;
 			Rdto.setImagecount(files);
 			// 리뷰 등록하기
-			service.reviewInsert(Rdto);
+			//service.reviewInsert(Rdto);
 	    	
 			ImagesDTO  Idto = new ImagesDTO();
 	    	Idto.setProductnum(productnum);

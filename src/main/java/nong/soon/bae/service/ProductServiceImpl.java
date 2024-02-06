@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
@@ -290,10 +291,25 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 리뷰쓰기
 	@Override
-	public void reviewInsert(ReviewsDTO Rdto) {
-		mapper.reviewInsert(Rdto);
+	public int reviewInsert(String productnum, List<MultipartFile> filelist, ReviewsDTO Rdto, String path) {
+		int check = 0;
+		int files = 0;
+		for (MultipartFile file : filelist) {
+			if(!file.getOriginalFilename().equals("")) {
+				files++;
+			}
+		}
+		Rdto.setImagecount(files);
+		//check = mapper.reviewInsert(Rdto);  
+		return check;
 	}
 
+	@Override
+	public int ReviewsimagesInsert(List<MultipartFile> files, String path, String productnum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}	
+	
 	// 상품 리뷰 가져오기
 	@Override
 	public List<ReviewsDTO> selectReviewsAll(String follow, String productnum) {
@@ -335,7 +351,7 @@ public class ProductServiceImpl implements ProductService {
 		mapper.allproductUpdateContent(dto);
 	}
 
-	// 2024.02.05 TEST
+
 	@Override
 	public void deleteProductOption(String username, String productnum) {
 		mapper.deleteProductOption(username, productnum);
@@ -345,6 +361,26 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteAllproduct(String username, String productnum) {
 		mapper.deleteAllproduct(username, productnum);
 	}
+
+	// 상품 판매시 재고 업데이트
+	@Override
+	public void updateProductSellcount(String username, String follow, String optionnum) {
+		mapper.updateProductSellcount(username, follow, optionnum);
+	}
+
+	@Override
+	public MyPageDTO selectMypage3(String username) {
+		return mapper.selectMypage3(username);
+	}
+
+	@Override
+	public void updateProductCount(String follow, int cnt) {
+		mapper.updateProductCount(follow, cnt);
+	}
+
+
+
+
 
 
 
