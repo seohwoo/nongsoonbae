@@ -5,15 +5,18 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link href="/resources/css/chat.css" rel="stylesheet" type="text/css">
 		<title>채팅방목록</title>
 	</head>
 	<body>
+	<div class="container">
 		<h1><a href="/chat/admin">➕Q&A</a></h1>
+		<br />
 		<c:if test="${cnt==0}">
 			<h1>아직 채팅이 없어요..</h1>
 		</c:if>
 		<c:if test="${cnt>0}">
-			<table border="1">
+			<table>
 				<tr>
 					<td>채팅방명</td>
 				</tr>
@@ -32,5 +35,6 @@
 				</c:forEach>
 			</table>
 		</c:if>
+	</div>
 	</body>
 </html>

@@ -67,6 +67,41 @@
 	  border-top-right-radius: 0;
 	  display: inline-block;
 	}
+	.details{
+		width: 100%;
+		max-width: 500px;
+		margin-left: auto;
+	  	margin-right: auto;
+	  	padding: 15px;
+	}
+	.form-details {
+		width: 100%;
+		max-width: 500px;
+		padding: 15px;
+	 	
+	}
+	.form-details img {
+		width: 100%;
+		max-width: 150px;
+		max-height: 150px;
+		margin: 1em;
+	}
+	#detailAddress, #extraAddress {
+		float: left;
+		margin-bottom: 1em;
+	}
+	#postcode {
+		width: 28%;
+	}
+	#roadAddress {
+		width: 100%;
+	}
+	#detailAddress {
+		width: 50%;
+	}
+	#extraAddress {
+		width: 50%;
+	}
 	header {
 	margin: 0;
     padding: 0;

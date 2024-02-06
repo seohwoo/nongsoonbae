@@ -42,6 +42,7 @@ import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
+import nong.soon.bae.service.PayService;
 import nong.soon.bae.service.ProductService;
 
 @Controller
@@ -54,6 +55,9 @@ public class ProductController {
 	private ProductService service;
 	
 	@Autowired
+	private PayService payservice;
+	
+	@Autowired
 	private ArrayList<String> srcValues;
 	
 	@Autowired
@@ -64,6 +68,17 @@ public class ProductController {
 	public String productMain(Model model, Principal principal) {
 		String username = principal.getName();		
 		String check = service.CheckMyShop(username);
+		boolean isMembership = false;
+		boolean quitMembership = false;
+		if(payservice.isMembership(username).getGrade().get(0).getGrade().equals("ROLE_MEMBERSHIP")) {
+			isMembership = true;
+			if(payservice.lastMembershipPayDate(username).get(0).getSid().equals("¸â¹ö½± ÇØÁö")) {
+				quitMembership = true;
+			}
+		}
+		model.addAttribute("isMembership", isMembership);
+		model.addAttribute("quitMembership", quitMembership);
+		
 		if(check == null) {
 			model.addAttribute("status", 0);
 		}else {

@@ -8,9 +8,9 @@
 	</head>
 	<body>
 		<form action="/nsb/result" method="post">
-			<div style="display: flex; margin-bottom: 10px;">
-				<input type="text" name="userSearch" id="userSearch" class="form-control" placeholder="검색어를 입력하세요😁😁😁" style="width: 500px;"/>
-				<input type="submit" id="searchButton" value="🔎" style="border-radius: var(--bs-border-radius);">
+			<div id="serchWrapper" style="display: flex; margin: 30px 0px 50px 0px; align-items: center; justify-content: center;">
+				<input type="text" name="userSearch" id="userSearch" class="serch-input" placeholder="검색어를 입력하세요." />
+				<input type="submit" id="searchButton" value="🔎">
 			</div>
 		</form>
 	</body>
@@ -20,7 +20,7 @@
 	      var userInput = $("#userSearch").val();
 	
 	      if (userInput === "") {
-	        alert("검색어를 입력하세요😠😠😠");
+	        alert("검색어를 다시 입력하세요.");
 	        return false;
 	      }
 	    });

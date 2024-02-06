@@ -20,7 +20,7 @@
 							<input type="hidden" name="cate2" value="${dto.cate2}"/>
 							<input type="hidden" name="cate3" value="${dto.cate3}"/>
 							<button class="btn" type="submit">
-								<img src="${dto.img}" width="100px" height="100px" class="bd-placeholder-img rounded-circle" />
+								<img src="${dto.img}" width="80px" height="80px" class="bd-placeholder-img rounded-circle" />
 								<br />
 								<span>${dto.catename}</span>						
 							</button>
@@ -36,16 +36,16 @@
 					<c:if test="${categoryNum>1}">
 						<form action="/nsb/main" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum-1}"/>
-							<button class="bton" type="submit">⏪</button>
+							<button class="btn btn-success" type="submit">«</button>
 						</form>
 					</c:if>
 					<c:if test="${categoryNum==1 || categoryNum>=maxCategoryNum}">
-						<button class="bton" onclick="window.location='#'">⏸</button>
+						<button class="btn btn-success" onclick="window.location='#'">＝</button>
 					</c:if>
 					<c:if test="${categoryNum<maxCategoryNum}">
 						<form action="/nsb/main" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum+1}"/>
-							<button class="bton" type="submit">⏩</button>
+							<button class="btn btn-success" type="submit">»</button>
 						</form>
 					</c:if>
 					</td>

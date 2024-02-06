@@ -39,16 +39,29 @@
 				<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
 				<input type="button" value="나의 상점 관리" onclick="javascript:window.location='/product/myProduct'">
 				<input type="button" value="전체 상품 조회" onclick="javascript:window.location='/product/allProduct'">
+				<input type="button" value="광고신청하기" onclick="javascript:window.location='/product/adMain'">
 				<br />
 				<div>
-					<div class="col p-4 d-flex flex-column position-static bg-body-tertiary border rounded-3" style="width: 30%; margin-left: auto; margin-right: auto; margin-top: 5%">
-			          <strong class="d-inline-block mb-2 text-primary">Membership</strong>
-			          <h3 class="mb-0">멤버쉽 가입</h3>
-			          <div class="mb-1 text-muted"><hr></div>
-			          <div>더욱 상세한 차트를 통해 수익을 올려보세요.</div>
-			          <p class="card-text mb-auto"></p>
-			          <a class="text-primary" href="../user/membership">이동하기 ></a>
-			        </div>
+					<c:if test="${!isMembership}">
+						<div class="col p-4 d-flex flex-column position-static bg-body-tertiary border rounded-3" style="width: 30%; margin-left: auto; margin-right: auto; margin-top: 5%">
+				          <strong class="d-inline-block mb-2 text-primary">Membership</strong>
+				          <h3 class="mb-0">멤버쉽 가입</h3>
+				          <div class="mb-1 text-muted"><hr></div>
+				          <div>더욱 상세한 차트를 통해 수익을 올려보세요.</div>
+				          <p class="card-text mb-auto"></p>
+				          <a class="text-primary" href="../user/membership">이동하기 ></a>
+				        </div>
+			        </c:if>
+					<c:if test="${isMembership && !quitMembership}">
+						<div class="col p-4 d-flex flex-column position-static bg-body-tertiary border rounded-3" style="width: 30%; margin-left: auto; margin-right: auto; margin-top: 5%">
+				          <strong class="d-inline-block mb-2 text-primary">Membership</strong>
+				          <h3 class="mb-0">멤버쉽 해지</h3>
+				          <div class="mb-1 text-muted"><hr></div>
+				          <div>더욱 상세한 차트를 통해 수익을 올려보세요.</div>
+				          <p class="card-text mb-auto"></p>
+				          <a class="text-primary" href="../user/membership">이동하기 ></a>
+				        </div>
+			        </c:if>
 				</div>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</c:if>

@@ -9,10 +9,13 @@ public class AdDTO {
 	private int num;
 	private String username;
 	private String productnum;
+	private String productname;
 	private Date submitdate;
 	private Date startdate;
 	private Date enddate;
 	private int days;
 	private int price;
 	private int adstatus;
+	private String p_productname;
+	
 }

@@ -38,18 +38,18 @@
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<header class="intro">
 	  <div class="intro-slideshow">
-	    <img src="https://www.dropbox.com/s/h8rds5ozk0u3s2f/coder.jpg?raw=1" style="opacity: 0;">
-	    <img src="https://www.dropbox.com/s/lf29ifrd354ngyv/coffee.jpg?raw=1" style="opacity: 0;">
-	    <img src="https://www.dropbox.com/s/lxnf1mxej90qoae/library.jpg?raw=1" style="opacity: 0;">
-	    <img src="https://www.dropbox.com/s/15gdoyzoai94j6j/path.jpg?raw=1" style="opacity: 1;">
-	    <img src="https://www.dropbox.com/s/pem8kaorr488apn/universe.jpg?raw=1" style="opacity: 0;">
+	    <img src="https://images.unsplash.com/photo-1619082737911-1119bc3167ec?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 0;">
+	    <img src="https://images.unsplash.com/photo-1504309250229-4f08315f3b5c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 0;">
+	    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 0;">
+	    <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 1;">
+	    <img src="https://images.unsplash.com/photo-1560693225-b8507d6f3aa9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 0;">
 	  </div>
 	  <div class="intro-header">
 	    <h1>농순배</h1>
-	    <p>농산물 순식간에 배송해드립니다</p>
+	    <p>농수산물 순식간에 배송해드립니다</p>
 	  </div>
 	</header>
-	
+	<jsp:include page="/WEB-INF/views/include/loading.jsp" />
 	
 	<table class="table-borderless main">
 		<tbody id="contentContainer">

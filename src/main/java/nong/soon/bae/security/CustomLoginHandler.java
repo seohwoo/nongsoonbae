@@ -24,13 +24,9 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
-		logger.info("=========CustomLoginHandler=========");
-		
+			Authentication authentication) throws IOException, ServletException {		
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		
-		logger.info("========="+authorities+"=========");
-		
+				
 	/*	String username = authentication.getName();
 		logger.info("========="+username+"=========");
 		UserDetails userDetails;

@@ -73,7 +73,8 @@
 			totalprice number not null,
 			quantity number not null,
 			orderdate date default sysdate,
-			sid varchar2(50))
+			sid varchar2(50),
+			status number not null)
 	</insert>
 	<insert id="createImages">
 		create table ${username}_images ( 
@@ -83,7 +84,10 @@
 	</insert>
 	
 	<update id="addDetails"  parameterType="nong.soon.bae.bean.UserDetailsDTO">
-		update userdetails set image=#{image}, address=#{address}, phone=#{phone}, updatedate=sysdate where username=#{username}
+		update userdetails set address=#{address}, phone=#{phone}, updatedate=sysdate where username=#{username}
+	</update>
+	<update id="changeImg" parameterType="nong.soon.bae.bean.UserDetailsDTO">
+		update userdetails set image=#{image}, updatedate=sysdate where username=#{username}
 	</update>
 	
 	<update id="changePass" parameterType="hashMap">

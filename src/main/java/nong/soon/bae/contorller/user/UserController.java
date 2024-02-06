@@ -1,6 +1,8 @@
 package nong.soon.bae.contorller.user;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.repository.UsersRepository;
 import nong.soon.bae.service.MypageService;
+import nong.soon.bae.service.PayService;
 
 @Controller
 @RequestMapping("/user/*")
@@ -28,6 +31,11 @@ public class UserController {
 	
 	@Autowired
 	MypageService service;
+	@Autowired
+	private PayService payService;
+	@Autowired
+	private SimpleDateFormat simpleDateFormat;
+	
 	@Autowired
 	UsersRepository user;
 	
@@ -86,6 +94,7 @@ public class UserController {
 	public String cart(Principal principal, Model model) {
 		String username = principal.getName();
 		List<MyPageDTO> cart = service.selectcart(username);
+		System.out.println(cart);
 		if(cart == null) {
 			model.addAttribute("cartstatus", 0);
 		}else {
@@ -140,8 +149,23 @@ public class UserController {
 	@RequestMapping("membership")
 	public String membership(Principal principal, Model model) {
 		String username = principal.getName();
+		boolean ismem = false;
+		if(payService.isMembership(username).getGrade().get(0).getGrade().equals("ROLE_MEMBERSHIP")) {
+			ismem = true;
+			Date lastMembershipPayDate = payService.lastMembershipPayDate(username).get(0).getOrderdate();
+			String[] arDate = simpleDateFormat.format(lastMembershipPayDate).split("/");
+			int month = Integer.parseInt(arDate[1])+1 > 12 ? 1 : Integer.parseInt(arDate[1])+1;
+			String nextPayDate = arDate[0] + "³â " + month + "¿ù " + arDate[2] + "ÀÏ"; 
+			model.addAttribute("nextPayDate", nextPayDate);
+		}
+		model.addAttribute("ismem", ismem);
 		model.addAttribute("username", username);
 		model.addAttribute("isMembership", 1);
 		return "/user/mypage/membership";
+	}
+	@RequestMapping("quitMembership")
+	public String quitMembership(Principal principal) {
+		payService.userQuitMembership(principal.getName());
+		return "redirect:/product/productMain";
 	}
 }

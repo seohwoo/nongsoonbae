@@ -86,19 +86,19 @@
 			</c:forEach>	
 				<div class="pagination">
 				    <c:if test="${startPage > 10}">
-				        <form action="/admin/userall" method="post">
+				        <form action="/admin/usercheck" method="post">
 				            <input type="hidden" name="pageNum" value="${startPage-10}">
 				            <button type="submit">[이전]</button>
 				        </form>
 				    </c:if>
 				    <c:forEach var="i" begin="${startPage}" end="${endPage}">
-				        <form action="/admin/userall" method="post">
+				        <form action="/admin/usercheck" method="post">
 				            <input type="hidden" name="pageNum" value="${i}">
 				            <button type="submit">[${i}]</button>
 				        </form>
 				    </c:forEach>
 				    <c:if test="${endPage < pageCount}">
-				        <form action="/admin/userall" method="post">
+				        <form action="/admin/usercheck" method="post">
 				            <input type="hidden" name="pageNum" value="${startPage+10}">
 				            <button type="submit">[다음]</button>
 				        </form>

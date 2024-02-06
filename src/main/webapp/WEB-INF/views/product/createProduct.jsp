@@ -73,6 +73,7 @@
 	</script>
 	
 	<body>
+	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<h3>${myName} 페이지</h3>
 		<form class="form-signin" action="/product/createProductPro" method="post" id="createProduct">
 			<table width="850" border="1">
@@ -90,16 +91,18 @@
 						<input type="text" name="shopcontent" required="required">
 					</td>
 			    </tr>
-			    
+			    <tr>
+			    	<td>
+			    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			    주소 <input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호" readonly>
 					<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
 					<input type="text" class="form-control" name="roadAddress" id="roadAddress" placeholder="도로명주소" readonly>
 					<span id="guide" class="form-control" style="color:#999;display:none"></span>
 					<input type="text" class="form-control" name="detailAddress" id="detailAddress" placeholder="상세주소" required>
 					<input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly>
-		
-			    
-			    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</td>
+			    </tr>
+			   
 			    
 			    <tr> 
 					<td colspan="2" align="center"> 
@@ -110,5 +113,6 @@
 				</tr>			    
 			</table>	
 		</form>
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
