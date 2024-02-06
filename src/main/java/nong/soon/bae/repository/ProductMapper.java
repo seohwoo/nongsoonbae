@@ -187,6 +187,13 @@ public interface ProductMapper {
 	
 	public void allproductUpdateContent(AllProductDTO dto);
 	
+	// 2024.02.05 TEST
+	public void deleteProductOption(@Param("username") String username, 
+			   						@Param("productnum") String productnum);
+
+	public void deleteAllproduct(@Param("username") String username, 
+								 @Param("productnum") String productnum);
+
 }
 	
 	

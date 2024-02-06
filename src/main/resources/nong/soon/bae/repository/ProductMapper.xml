@@ -55,14 +55,13 @@
 	<!-- 상품 등록하기 -->
 	<insert id="productInsert" parameterType="nong.soon.bae.bean.AllProductDTO">
 		insert into allproduct (productnum, productname, username, content, startdate,
-		enddate, cate1, cate2, cate3, area1, area2, avgprice)
+		cate1, cate2, cate3, area1, area2, avgprice)
 		values (
 			TO_NUMBER(TO_CHAR(SYSDATE, 'YY') || ${catenum} || LPAD(${seqnum}_seq.nextval, 5, '0')), 
 			#{productname},
 			#{username},
 			#{content},
 			sysdate,
-			#{enddate},
 			#{cate1},
 			#{cate2},
 			#{cate3},
@@ -357,6 +356,30 @@
 	<update id="allproductUpdateContent" parameterType="nong.soon.bae.bean.AllProductDTO">
 		update allproduct set content=#{content} where productnum=#{productnum} 
 	</update>
+
+	
+	<!-- 2024.02.05 TEST -->
+	
+	<!-- username_product 상품삭제 -->
+	<delete id="deleteProductOption" parameterType="String">
+		DELETE FROM ${username}_product WHERE productnum = #{productnum}
+  		AND EXISTS (SELECT 1 FROM ${username}_product
+    	WHERE productnum = #{productnum} AND productcount = 0)
+	</delete>
+		
+	<delete id="deleteAllproduct" parameterType="String">
+		    DELETE FROM allproduct
+    WHERE productnum = #{productnum}
+      AND productnum IN (
+        SELECT productnum
+        FROM ${username}_product
+        WHERE productnum = #{productnum} AND productcount = 0
+        GROUP BY productnum
+        HAVING COUNT(*) = (SELECT COUNT(*)
+                          FROM ${username}_product
+                          WHERE productnum = #{productnum})
+      )
+	</delete>
 
 	
 </mapper>    
