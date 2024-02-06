@@ -63,7 +63,7 @@
 			<div class="adList">
 		     	아직 신청한 광고가 없습니다. 
 		     </div>
-			<input type="button" value="돌아가기" onclick="javascript:window.location='/product/adMain'">
+			<input type="button" value="돌아가기" onclick="javascript:window.location='/user/adMain'">
 		</c:if>
 	    <c:if test="${myAdCnt > 0 }">
 			<h2>나의 광고 ${myAdCnt}개</h2>
@@ -92,7 +92,7 @@
 			       </div>
 			    </div>
 			</c:forEach>
-			<input type="button" value="돌아가기" onclick="javascript:window.location='/product/adMain'">
+			<input type="button" value="돌아가기" onclick="javascript:window.location='/user/adMain'">
 		</c:if>
 	<script type="text/javascript">
 		$(document).ready(function() {

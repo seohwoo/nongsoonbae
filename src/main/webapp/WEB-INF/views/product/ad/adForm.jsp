@@ -80,7 +80,7 @@
 	<body onload="calculatePrice()">
 	    <div class="form-box">
         <h2>신청폼 작성하기</h2>
-	        <form id="adSubmitForm" action="/product/adFormPro" method="post" onsubmit="return validateForm()">
+	        <form id="adSubmitForm" action="/user/adFormPro" method="post" onsubmit="return validateForm()">
 	            <select id="adSelect" name="adSelect">
 	                <option value="notChoice">상품 선택</option>
 	                <c:forEach var="my" items="${myproduct}">
@@ -99,7 +99,7 @@
 	            <input type="hidden" id="hiddenPrice" name="price" value="0" />
 	            <button type="submit">신청하기</button>  
 	        </form>
-	        <form action="/product/adMain" method="get">
+	        <form action="/user/adMain" method="get">
        			 <button type="submit" style="margin-top: 20px;">돌아가기</button>
    			</form>
     	</div>

@@ -98,29 +98,22 @@ public class MainController{
 			cate1 = "0";
 			model.addAttribute("cate1", Integer.parseInt(cate1));
 		}
-		
-		
-		
 		return "all/main/categorymain";
 	}
 	
 	@RequestMapping("area")
 	public String area(Model model, @RequestParam(value="areaNum", defaultValue="1") int areaNum,  
-											String area1, String area2 ) {
+						@RequestParam(value="sort", required=false) String sort,
+						@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+						String area1, String area2 ) {
 		areaservice.arealist(areaNum,model);
-		//List<AreaDTO> arealist = areaservice.areaMenu(model);
-		//model.addAttribute("arealist",arealist);
 		if (area1 == null && area2 == null) { //전체항목리스트 
-			areaservice.allproductlist(model); 
+			areaservice.allproductlist(model,sort,pageNum); 
+			model.addAttribute("isAreaSelected", false);
 		} 
 		if (area1 != null && area2 == null) {
-			//areaservice.arealistpage (areaNum,model,area1);
-			areaservice.arealistdeatil(model, area1);  //area1 리스트
-			areaservice.areaprodutlist (model, area1); //area1  상품리스트
-		}
-		if(area1 != null && area2 != null ){
-			areaservice.arealistdeatil(model, area1);
-			areaservice.areaprodictlistdetail (model, area1,area2); // area2 상품리스트 
+			areaservice.areaprodutlist(model, area1); //area1  상품리스트
+			model.addAttribute("isAreaSelected", true);
 		}
 		if(area1==null) {
 			area1 = "0";
@@ -128,5 +121,4 @@ public class MainController{
 		}
 		return "all/main/areamain";
 	}
-	
 }
