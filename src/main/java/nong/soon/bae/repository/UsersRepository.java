@@ -22,6 +22,7 @@ public interface UsersRepository extends JpaRepository<Member, Long> {
 	void createPayment(String username);
 	void createImages(String username);
 	void addDetails(UserDetailsDTO details);
+	void changeImg(UserDetailsDTO details);
 	
 	void changePass(@Param("password") String password,@Param("username") String username);
 	

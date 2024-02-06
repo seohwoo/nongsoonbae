@@ -93,28 +93,34 @@
 <body>
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<form class="form-signin" action="/member/details" method="POST" id="detailsForm" enctype="multipart/form-data" >
-	<h1 class="h3 mb-3 font-weight-normal">회원정보 입력</h1>
+<div class="details">
+<h1 class="h3 mb-3 font-weight-normal">회원정보 입력</h1>
+<form class="form-details" action="/member/img" method="POST" id="imgForm" enctype="multipart/form-data" >
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	<img src="/resources/img/default.png" id="imagePreview" style=" max-width: 50%;  height: auto;"> <br />
+	<img src="/resources/img/default.png" id="imagePreview"> <br />
 	<input type="file" class="form-control" onchange="chooseImage(this)" id="image" name="image" required />
-	
-	비밀변호 변경 <br /><input type="button" class="btn btn-primary" onclick="window.location.href='/member/renamePass'" value="변경하러 이동" /><br />
+	<div class="d-grid gap-2  mx-auto">
+	  <input class="btn" type="submit" id="update" value="사진 변경하기" style="width: 80%; margin-left: auto; margin-right: auto; margin-top: 1px; border-color: #000;" />
+	</div>
+</form>
 
-	주소<input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호" readonly>
-		<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
+<form class="form-details" action="/member/details" method="post" id="addressForm">
+	주소
+		<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기" style="width: 30%;"><br>
+		<input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호" readonly>
 		<input type="text" class="form-control" name="roadAddress" id="roadAddress" placeholder="도로명주소" readonly>
 		<span id="guide" class="form-control" style="color:#999;display:none"></span>
 		<input type="text" class="form-control" name="detailAddress" id="detailAddress" placeholder="상세주소" required>
-		<input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly>
+		<input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly><br />
 	전화번호<input type="text" name="phone" class="form-control" placeholder="PHONE NUMBER" required>
 	<br />
 	<div class="d-grid gap-2  mx-auto">
-	  <input class="btn btn-lg btn-primary btn-block" type="submit" id="update" value="UPDATE" />
+	  <input class="btn btn-lg btn-primary btn-block" type="submit" id="update" value="UPDATE" style="width: 80%; margin-left: auto; margin-right: auto; margin-bottom: 5%;" />
 	</div>
-	
-	<p class="mt-5 mb-3 text-muted">detailsForm.jsp</p>
 </form>
+
+비밀변호 변경<input type="button" class="btn btn-primary" onclick="window.location.href='/member/renamePass'" value="변경하러 이동" style="margin-left: 10%;"/><br />
+</div>
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
 </body>
 </html>

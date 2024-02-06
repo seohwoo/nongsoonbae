@@ -73,11 +73,11 @@
 								<input type="hidden" name="cate1" value="${cate1}">
 								<input type="hidden" name="cate2" value="${prevCate.cate2}">
 								<input type="hidden" name="cate3" value="${prevCate.cate3}">
-								<button class="bton" type="submit">⏪</button>
+								<button class="btn btn-success" type="submit">«</button>
 							</form>
 						</c:if>
 						<c:if test="${categoryNum==1 || categoryNum>=maxCategoryNum}">
-							<button class="bton" onclick="window.location='#'">⏸</button>
+							<button class="btn btn-success" onclick="window.location='#'">＝</button>
 						</c:if>
 						<c:if test="${categoryNum<maxCategoryNum}">
 							<form action="/nsb/chart" method="get">
@@ -85,7 +85,7 @@
 								<input type="hidden" name="cate1" value="${cate1}">
 								<input type="hidden" name="cate2" value="${nextCate.cate2}">
 								<input type="hidden" name="cate3" value="${nextCate.cate3}">
-								<button class="bton" type="submit">⏩</button>
+								<button class="btn btn-success" type="submit">»</button>
 							</form>
 						</c:if>
 					</c:if>

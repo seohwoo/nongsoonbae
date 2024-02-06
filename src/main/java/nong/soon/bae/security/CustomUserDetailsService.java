@@ -32,7 +32,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@SuppressWarnings("null")
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		logger.info("=========CustomUserDetailsService=========");
 			UsersDTO dto = mapper.login(username);
 			String grade = mapper.GetByAuth(username);
 			List<GrantedAuthority> roles = new ArrayList<>(1);
@@ -45,10 +44,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	        }
 			
 			Authentication auth = new UsernamePasswordAuthenticationToken(username, dto.getPassword(), roles);
-			logger.warn("auth : " + auth);
 	        
 			SecurityContextHolder.getContext().setAuthentication(auth);
-			logger.info(""+dto);
 			
 			return dto == null ? null : new CustomUser(dto);
 		

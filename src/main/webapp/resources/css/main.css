@@ -49,14 +49,18 @@ h1.page-header {
   position: relative;
   margin-top: 1em;
   background: #F9F9F9;
-  padding: 1em 1em 1em 2em;
+  padding: 1em 1em 1em 1em;
   border-left: 4px solid #DDD;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .success {
   border-color: #2ECC40;
 }
 td.search{
+	
 	
 }
 td.chart{
@@ -74,6 +78,9 @@ td.page{
 	padding-left : 0px;
 	padding-right : 0px;
 	border: none;
+}
+.btn {
+	margin: 1px;
 }
 .catelist {
 	margin-left: auto;
@@ -189,3 +196,30 @@ div.farmer b {
   .intro h1 { font-size: 2.5rem; }
   .intro p { font-size: 1.25rem; }
 }
+
+
+.serch-input {    
+	height:60px;
+    width:700px;
+    min-width: 150px;
+    box-sizing: border-box;
+    border: 4px solid #198754;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    padding: 0px 12px 0px 12px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    display: block;
+    text-align: center;
+  
+   -webkit-border-radius: 50px;
+   -moz-border-radius: 50px;
+   border-radius: 50px;
+   color: #198754;
+    }   
+#searchButton{
+	box-sizing: border-box;
+    border: none;
+    padding: 0px 12px 0px 12px;
+    }
