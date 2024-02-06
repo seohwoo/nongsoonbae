@@ -23,5 +23,6 @@ public interface PayMapper {
 	public UserGradeDTO findGrade(String gradename);
 	public void changeGrade(HashMap<String, String> map);
 	public List<PaymentDTO> lastMembershipPayDate(String username);
+	public void updateRegularPayment(HashMap<String, String> map);
 	
 }

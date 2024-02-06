@@ -69,10 +69,15 @@ public class ProductController {
 		String username = principal.getName();		
 		String check = service.CheckMyShop(username);
 		boolean isMembership = false;
+		boolean quitMembership = false;
 		if(payservice.isMembership(username).getGrade().get(0).getGrade().equals("ROLE_MEMBERSHIP")) {
 			isMembership = true;
+			if(payservice.lastMembershipPayDate(username).get(0).getSid().equals("¸â¹ö½± ÇØÁö")) {
+				quitMembership = true;
+			}
 		}
 		model.addAttribute("isMembership", isMembership);
+		model.addAttribute("quitMembership", quitMembership);
 		
 		if(check == null) {
 			model.addAttribute("status", 0);

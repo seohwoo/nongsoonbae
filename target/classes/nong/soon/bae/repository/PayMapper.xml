@@ -59,4 +59,7 @@
 	<select id="lastMembershipPayDate" parameterType="String" resultType="paymentDTO">
 		select * from ${username}_payment where productnum='membership'order by orderdate desc
 	</select>
+	<update id="updateRegularPayment" parameterType="hashmap">
+		update ${username}_payment set sid=#{newsid} where sid=#{lastsid}
+	</update>
 </mapper>

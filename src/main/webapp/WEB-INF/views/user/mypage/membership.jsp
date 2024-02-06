@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
+    pageEncoding="UTF-8"%>  
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -36,8 +35,8 @@
 			</script>
 		</c:if>
 		<c:if test="${ismem}">
-			<h1>마지막 결제일</h1>
-			<h1><fmt:formatDate value="${lastMembershipPayDate}" dateStyle="long" type="both"/></h1>
+			<h1>다음 결제일</h1>
+			<h1>${nextPayDate}</h1>
 			<button type="button" id="btn_kakao-pay" class="btn btn-success" style ="margin-top : 30px; margin-bottom: 30px; background-color: red;" onclick="window.location.href='/user/quitMembership'">멤버쉽 해지하기</button>
 		</c:if>
 	</div>

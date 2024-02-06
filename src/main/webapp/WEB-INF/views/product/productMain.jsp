@@ -52,7 +52,7 @@
 				          <a class="text-primary" href="../user/membership">이동하기 ></a>
 				        </div>
 			        </c:if>
-					<c:if test="${isMembership}">
+					<c:if test="${isMembership && !quitMembership}">
 						<div class="col p-4 d-flex flex-column position-static bg-body-tertiary border rounded-3" style="width: 30%; margin-left: auto; margin-right: auto; margin-top: 5%">
 				          <strong class="d-inline-block mb-2 text-primary">Membership</strong>
 				          <h3 class="mb-0">멤버쉽 해지</h3>
