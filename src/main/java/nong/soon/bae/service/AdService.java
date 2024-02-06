@@ -22,4 +22,6 @@ public interface AdService {
 	public void reUpdateStatus (String username,String productnum);
 	public void adNo (String productnum, String username,int num);
 	public List<AdDTO> checkAd (String adSelect, String username);
+	public void adIngList (int pageNum,Model model);
+	public void adEndList (int pageNum, Model model);
 }

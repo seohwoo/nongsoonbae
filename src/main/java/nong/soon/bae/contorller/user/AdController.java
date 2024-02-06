@@ -63,25 +63,12 @@ public class AdController {
 	        } else {
 	            redirectAttributes.addFlashAttribute("submitStatus", 0); // 필수 값 중 하나라도 null인 경우
 	        }
-	    } else { // 광고가 이미 존재하는 경우
+	    } else { // 광고가 이미 존재하는 경우 (검토중 OR 광고중)
 	        redirectAttributes.addFlashAttribute("submitStatus", 2);
 	    }
 	    
 	    return "redirect:/product/myAd";
 	}
-
-	   /* if(adSelect != null && daysSelect != null && price != null && check == null) {
-	        service.submitAd(username, adSelect, Integer.parseInt(daysSelect), Integer.parseInt(price));
-	        redirectAttributes.addFlashAttribute("submitStatus", 1);
-	    } if(check != null ){
-	    	redirectAttributes.addFlashAttribute("submitStatus", 2);
-	    }else {
-	        redirectAttributes.addFlashAttribute("submitStatus", 0);
-	    }
-	    
-	    return "redirect:/product/myAd";
-	}
-*/
 	
 	@RequestMapping("/admin/adList") //들어온 광고 목록들 확인하기 
 	public String adList(Model model) { 
@@ -97,7 +84,6 @@ public class AdController {
 			@RequestParam("days") int days,
 			@RequestParam("productnum") String productnum,
 			RedirectAttributes redirectAttributes) {
-	
         if(productnum != null) {
         	service.adStart(productnum,days);
         	service.updateStatus(productnum);
@@ -148,6 +134,19 @@ public class AdController {
 	    }
 		
 		return "redirect:/admin/adEndSoon";
+	}
+	
+	@RequestMapping("/admin/adIng")//현재 광고 중인 상품
+	public String adIng(Model model,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum) {
+		service.adIngList(pageNum,model);
+		return "admin/ad/adIng";
+	}
+	@RequestMapping("/admin/adEnd")//현재 광고 중인 상품
+	public String adEnd(Model model,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum) {
+		service.adEndList(pageNum,model);
+		return "admin/ad/adEnd";
 	}
 	
 }
