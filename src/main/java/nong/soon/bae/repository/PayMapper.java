@@ -25,4 +25,7 @@ public interface PayMapper {
 	public List<PaymentDTO> lastMembershipPayDate(String username);
 	public void updateRegularPayment(HashMap<String, String> map);
 	
+	// Á¤·æ Ãß°¡
+	public int insertUsersPayment102(PaymentDTO dto);
+	//
 }

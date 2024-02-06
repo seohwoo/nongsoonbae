@@ -76,10 +76,10 @@ public class PayController {
 			
 			// 업데이트
 			//int cnt = kakaoApprove.getQuantity();
-			//MyPageDTO MPdto = productService.selectMypage3(username);
-			//String follow = MPdto.getFollow();
+			MyPageDTO MPdto = productService.selectMypage3(username);
+			String follow = MPdto.getFollow();
 			//productService.updateProductCount(follow, cnt);
-			
+			service.isproductSuccess102(follow);
 			service.isproductSuccess(username);
 		}
 		model.addAttribute("kakaoApprove", kakaoApprove);

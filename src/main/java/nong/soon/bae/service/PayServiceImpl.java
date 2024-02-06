@@ -85,6 +85,9 @@ public class PayServiceImpl implements PayService{
 			paymentMap.put("seller", seller);
 			cartList = mapper.findAddCart(paymentMap);
 			for (MyPageDTO cartDTO : cartList) {
+				// Á¤·æ Ãß°¡
+				dto.setFollow(cartDTO.getFollow());
+				//
 				dto.setUsername(cartDTO.getUsername());
 				dto.setProductnum(cartDTO.getProductnum());
 				dto.setOptionnum(cartDTO.getOptionnum());
@@ -94,11 +97,43 @@ public class PayServiceImpl implements PayService{
 				dto.setSid("simple payment");
 			}
 			cnt += mapper.insertUsersPayment(dto);
+			
 			if(cnt == addCartCnt) {
 				mapper.deleteUsersAddCart(username);
 			}
 		}
 	}
+	
+	// Á¤·æ Ãß°¡
+	@Override
+	public void isproductSuccess102(String username) {
+		paymentMap.put("username", username);
+		List<String> sellerList = Collections.EMPTY_LIST;
+		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
+		sellerList = mapper.findAddCartSeller(paymentMap);
+		int addCartCnt = mapper.findAddCartCnt(paymentMap);
+		int cnt = 0;
+		for (String seller : sellerList) {
+			paymentMap.put("seller", seller);
+			cartList = mapper.findAddCart(paymentMap);
+			for (MyPageDTO cartDTO : cartList) {
+				dto.setFollow(cartDTO.getUsername());
+				dto.setUsername(cartDTO.getFollow());
+				dto.setProductnum(cartDTO.getProductnum());
+				dto.setOptionnum(cartDTO.getOptionnum());
+				dto.setRealprice(cartDTO.getCount() * cartDTO.getPrice());
+				dto.setTotalprice(dto.getRealprice());
+				dto.setQuantity(cartDTO.getCount());
+				dto.setSid("simple payment");
+			}
+			cnt += mapper.insertUsersPayment102(dto);
+			
+			if(cnt == addCartCnt) {
+				mapper.deleteUsersAddCart(username);
+			}
+		}
+	}
+	//
 	@Override
 	public int isMembershipSuccess(String username, String sid) {
 		dto.setUsername(username);
