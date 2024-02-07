@@ -302,10 +302,11 @@ public class ProductController {
 		List<AllProductDTO> APdto = service.selectAllproduct();
 		model.addAttribute("APdto", APdto);
 		
+		// allproduct 재고수 0인 상품들 삭제
 		for (AllProductDTO dto : APdto) {
 		    String productnum = dto.getProductnum();
 		    String username = dto.getUsername();
-
+		    
 		    service.deleteAllproduct(username, productnum);
 		    service.deleteProductOption(username, productnum);
 		}
@@ -512,7 +513,6 @@ public class ProductController {
 		    service.dropReviewsTable(productnum);
 		}
 
-		
 		service.deleteShoplist(username);
 		
 		return "product/deleteShoplistPro";

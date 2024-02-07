@@ -171,6 +171,7 @@ public interface ProductMapper {
 								   @Param("username") String username,
 								   @Param("productnum") String productnum);
 	
+
 	// 상품 리뷰 가져오기
 	public List<ReviewsDTO> selectReviewsAll(@Param("follow") String follow, 
 											 @Param("productnum") String productnum);
