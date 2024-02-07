@@ -199,13 +199,8 @@ public interface ProductMapper {
 								 @Param("productnum") String productnum);
 
 	
-	// 상품 판매시 재고 업데이트
-	public void updateProductSellcount(@Param("username") String username, 
-			 						   @Param("follow") String follow,
-			 						   @Param("optionnum") String optionnum);
-	
-	public MyPageDTO selectMypage3(String username);
-	
+	// 상품 판매시 재고 업데이트	
+	public MyPageDTO selectMypage3(String username);	
 	public void updateProductCount(@Param("follow") String follow, 
 			 					   @Param("cnt") int cnt);
 }

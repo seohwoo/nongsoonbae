@@ -106,8 +106,8 @@ public class PayServiceImpl implements PayService{
 	
 	// Á¤·æ Ãß°¡
 	@Override
-	public void isproductSuccess102(String username) {
-		paymentMap.put("username", username);
+	public void isproductSuccess102(String follow) {
+		paymentMap.put("follow", follow);
 		List<String> sellerList = Collections.EMPTY_LIST;
 		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
 		sellerList = mapper.findAddCartSeller(paymentMap);
@@ -129,7 +129,7 @@ public class PayServiceImpl implements PayService{
 			cnt += mapper.insertUsersPayment102(dto);
 			
 			if(cnt == addCartCnt) {
-				mapper.deleteUsersAddCart(username);
+				mapper.deleteUsersAddCart(follow);
 			}
 		}
 	}

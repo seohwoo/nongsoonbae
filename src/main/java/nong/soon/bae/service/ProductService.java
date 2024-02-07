@@ -184,8 +184,6 @@ public interface ProductService {
 	public void deleteAllproduct(String username, String productnum);
 	
 	// 상품 판매시 재고 업데이트
-	public void updateProductSellcount(String username, String follow, String optionnum);
-
 	public MyPageDTO selectMypage3(String username);
 	
 	public void updateProductCount(String follow, int cnt);

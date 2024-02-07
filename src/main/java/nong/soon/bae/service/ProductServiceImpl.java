@@ -364,11 +364,6 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 판매시 재고 업데이트
 	@Override
-	public void updateProductSellcount(String username, String follow, String optionnum) {
-		mapper.updateProductSellcount(username, follow, optionnum);
-	}
-
-	@Override
 	public MyPageDTO selectMypage3(String username) {
 		return mapper.selectMypage3(username);
 	}
