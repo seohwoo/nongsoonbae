@@ -1,5 +1,6 @@
 package nong.soon.bae.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -291,7 +292,7 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 리뷰쓰기
 	@Override
-	public int reviewInsert(String productnum, List<MultipartFile> filelist, ReviewsDTO Rdto, String path) {
+	public int reviewInsert(List<MultipartFile> filelist, ReviewsDTO Rdto, String path) {
 		int check = 0;
 		int files = 0;
 		for (MultipartFile file : filelist) {
@@ -300,14 +301,31 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		Rdto.setImagecount(files);
-		//check = mapper.reviewInsert(Rdto);  
+		check = mapper.reviewInsert(Rdto);  
 		return check;
 	}
 
 	@Override
-	public int ReviewsimagesInsert(List<MultipartFile> files, String path, String productnum) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int ReviewsimagesInsert(List<MultipartFile> filelist, String path, String username, String productnum) {
+		int result = 0;
+		// int boardnum = mapper.maxNum();
+		// String productnum = "111111";
+		for (int i = 1; i <= filelist.size(); i++) {
+			MultipartFile file = filelist.get(i-1);
+			String filename = file.getOriginalFilename();
+			if(!filename.equals("")) {
+				String ext = filename.substring(filename.lastIndexOf("."));
+				filename = "P_"+productnum+"_"+i+ext;
+				File copy = new File(path+filename);
+				result = mapper.ReviewsimagesInsert(filename, username, productnum);
+				try {
+					file.transferTo(copy);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;		
 	}	
 	
 	// 상품 리뷰 가져오기

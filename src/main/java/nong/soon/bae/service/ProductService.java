@@ -153,10 +153,10 @@ public interface ProductService {
 	public List<ImagesDTO> selectProductImages(String follow, String productnum); 
 
 	// 상품 리뷰쓰기
-	public int reviewInsert(String productnum, List<MultipartFile> files, ReviewsDTO Rdto, String path);
+	public int reviewInsert(List<MultipartFile> files, ReviewsDTO Rdto, String path);
 	
 	// 리뷰 등록할 때 이미지 넣기
-	public int ReviewsimagesInsert(List<MultipartFile> files, String path, String productnum);
+	public int ReviewsimagesInsert(List<MultipartFile> files, String path, String username, String productnum);
 	
 	// 상품 리뷰 가져오기
 	public List<ReviewsDTO> selectReviewsAll(String follow, String productnum);

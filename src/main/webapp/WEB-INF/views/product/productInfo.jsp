@@ -44,7 +44,7 @@
 		function openReviewWindow() {
 			var optionnum = $("#selectedOptionNum").val();
 			var productnum = ${productnum};
-			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=600,height=450,resizable=yes');
+			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=400,height=300,resizable=yes');
 		}
 	</script>
 	

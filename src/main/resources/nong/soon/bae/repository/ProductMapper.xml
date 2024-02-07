@@ -309,7 +309,7 @@
 				#{productnum}, 
 				#{optionnum}, 
 				#{content}, 
-				#{files}, 
+				#{imagecount}, 
 				#{stars}, 
 				sysdate )
 	</insert>

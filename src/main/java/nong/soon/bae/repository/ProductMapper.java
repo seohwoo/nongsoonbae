@@ -164,11 +164,12 @@ public interface ProductMapper {
 											   @Param("productnum") String productnum);
 
 	// 상품 리뷰쓰기
-	public void reviewInsert(ReviewsDTO Rdto);
+	public int reviewInsert(ReviewsDTO Rdto);
 	
 	// 리뷰 등록할 때 이미지 넣기
-	public int ReviewsimagesInsert(@Param("productnum") String productnum, 
-								   @Param("filename") String filename);
+	public int ReviewsimagesInsert(@Param("filename") String filename, 
+								   @Param("username") String username,
+								   @Param("productnum") String productnum);
 	
 	// 상품 리뷰 가져오기
 	public List<ReviewsDTO> selectReviewsAll(@Param("follow") String follow, 
