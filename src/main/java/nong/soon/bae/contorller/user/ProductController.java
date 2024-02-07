@@ -40,6 +40,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ProductReadcountDTO;
 import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.service.PayService;
@@ -314,7 +315,9 @@ public class ProductController {
 	
 	// 상품 상세정보
 	@RequestMapping("productInfo")
-	public String productInfo(String productnum, Model model, String follow) {
+	public String productInfo(Principal principal, String productnum, Model model, String follow) {
+		String username = principal.getName();
+		
 		// 상품 정보 페이지
 		AllProductDTO APdto = service.selectProductInfo(follow, productnum);
 		// 상품 올린 사람의 주소, 이름, 팔로우 찾기
@@ -349,6 +352,22 @@ public class ProductController {
 		// 주소 합쳐
 		String address = area1Address + " " + area2Address;		
 		
+		ProductReadcountDTO PRCdto = new ProductReadcountDTO();
+		// 오늘 날짜 구하는 코드
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd");
+		String todaydate = simpleDateFormat.format(date);
+		PRCdto.setTodaydate(todaydate);
+		
+		// 오늘 상품 조회한 유저 찾기
+		int ReadCnt = service.selectTodayReadcntUsername(username, productnum, todaydate);
+		
+		if(ReadCnt == 0) {
+			// 상품 조회수 증가
+			service.updateReadcntPlus(productnum);
+			// 상품 조회한 유저정보 넣기
+			service.productReadcntInsert(username, productnum);
+		}
 		
 		model.addAttribute("follow", follow);
 		model.addAttribute("productnum", productnum);

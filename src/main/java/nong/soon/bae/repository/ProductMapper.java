@@ -203,6 +203,19 @@ public interface ProductMapper {
 	public MyPageDTO selectMypage3(String username);	
 	public void updateProductCount(@Param("follow") String follow, 
 			 					   @Param("cnt") int cnt);
+	
+	// 상품 조회수 증가
+	public void updateReadcntPlus(String productnum);
+	
+	// 상품 조회한 유저정보 넣기
+	public void productReadcntInsert(@Param("username") String username, 
+									 @Param("productnum") String productnum);
+
+	// 오늘 상품 조회한 유저 찾기
+	public int selectTodayReadcntUsername(@Param("username") String username, 
+			 							  @Param("productnum") String productnum, 
+			 							  @Param("todaydate") String todaydate);
+
 }
 	
 	

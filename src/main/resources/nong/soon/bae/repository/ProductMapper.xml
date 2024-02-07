@@ -402,6 +402,26 @@
 	<update id="updateProductCount">
 		update ${follow}_product set productcount= productcount-#{cnt} , sellcount=sellcount+#{cnt}
 	</update>
+	
+	<!--  상품 조회수 증가 -->
+	<update id="updateReadcntPlus" parameterType="String">
+		update allproduct set readcnt = readcnt+1 where productnum=#{productnum}
+	</update>
+	
+	<!-- 상품 조회한 유저정보 넣기 -->
+	<insert id="productReadcntInsert" parameterType="String">
+		insert into productReadcount (username, productnum, regdate) 
+			values (#{username}, #{productnum}, sysdate ) 
+	</insert>
+	
+	<!-- 오늘 상품 조회한 유저 찾기 -->
+	<select id="selectTodayReadcntUsername" resultType="int" parameterType="String">		
+ 		select count(*) from productReadcount 
+ 			where TRUNC(regdate) = TO_DATE(#{todaydate}, 'YY/MM/DD') 
+ 			and productnum=#{productnum} 
+ 			and username=#{username}	
+	</select>
+	
 </mapper>    
 
 

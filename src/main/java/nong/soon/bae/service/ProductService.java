@@ -187,6 +187,15 @@ public interface ProductService {
 	public MyPageDTO selectMypage3(String username);
 	
 	public void updateProductCount(String follow, int cnt);
+	
+	// 상품 조회수 증가
+	public void updateReadcntPlus(String productnum);
+	
+	// 상품 조회한 유저정보 넣기
+	public void productReadcntInsert(String username, String productnum);
+	
+	// 오늘 상품 조회한 유저 찾기
+	public int selectTodayReadcntUsername(String username, String productnum, String todaydate);
 }
 
 

@@ -373,6 +373,24 @@ public class ProductServiceImpl implements ProductService {
 		mapper.updateProductCount(follow, cnt);
 	}
 
+	// 상품 조회수 증가
+	@Override
+	public void updateReadcntPlus(String productnum) {
+		mapper.updateReadcntPlus(productnum);
+	}
+
+	// 상품 조회한 유저정보 넣기
+	@Override
+	public void productReadcntInsert(String username, String productnum) {
+		mapper.productReadcntInsert(username, productnum);
+	}
+
+	// 오늘 상품 조회한 유저 찾기
+	@Override
+	public int selectTodayReadcntUsername(String username, String productnum, String todaydate) {
+		return mapper.selectTodayReadcntUsername(username, productnum, todaydate);
+	}
+
 
 
 
