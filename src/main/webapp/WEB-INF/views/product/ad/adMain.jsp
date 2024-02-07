@@ -78,7 +78,7 @@
         </div>
         <h5>광고 등록 과정 : 판매자 신청 폼 작성 - 관리자 승인 - 승인 후 바로 판매자가 등록한 광고 일수 만큼 광고 시작</h5> <br />
         <h5>광고 상품은 사이트의 광고 일정에 따라 신청이 반려될 수 있음을 알립니다. </h5> <br />
-        <form action="/product/adForm" method="get">
+        <form action="/user/adForm" method="get">
             <input type="hidden" name="userId" value="${username}" /> 
             <button type="submit">신청하기</button>
         </form>

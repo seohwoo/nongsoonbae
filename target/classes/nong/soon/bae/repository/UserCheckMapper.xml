@@ -4,13 +4,13 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.UserCheckMapper">
 	<select id="count" resultType="int">
-		select count(*) from users where grade='ROLE_USER'
+		select count(*) from users where grade='ROLE_USER' or grade='ROLE_MEMBERSHIP'
 	</select>
 	<select id="userlist" resultType="nong.soon.bae.bean.UserCheckDTO" >
 		<![CDATA[
          SELECT * FROM 
     		(SELECT b.*, rownum r FROM 
-      		  (SELECT * FROM users WHERE grade = 'ROLE_USER' ORDER BY birth DESC) b) 
+      		  (SELECT * FROM users WHERE grade = 'ROLE_USER' or grade='ROLE_MEMBERSHIP' ORDER BY birth DESC) b) 
 				WHERE r >= #{start} AND r <= #{end}
       ]]>
 	</select>
