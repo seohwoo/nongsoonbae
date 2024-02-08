@@ -54,17 +54,17 @@ public class MessageChat extends DefaultEmbeddableVerticle {
             });
             
             socket.on("outRoom", roomOutEvent -> {
-            	String username = roomOutEvent.getString("username");
-            	String sendname = roomOutEvent.getString("sendname");
-            	String chatno = roomOutEvent.getString("chatno");
-            	String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
-            	io.sockets().in(roomIdentifier).emit("out", roomOutEvent);
-            	socket.leave(roomIdentifier);
+               String username = roomOutEvent.getString("username");
+               String sendname = roomOutEvent.getString("sendname");
+               String chatno = roomOutEvent.getString("chatno");
+               String roomIdentifier = getRoomIdentifier(username, sendname, chatno);
+               io.sockets().in(roomIdentifier).emit("out", roomOutEvent);
+               socket.leave(roomIdentifier);
             });
 
         });
 
-        server.listen(9898);
+        server.listen(9899);
     }
 
     private String getRoomIdentifier(String username, String sendname, String chatno) {
