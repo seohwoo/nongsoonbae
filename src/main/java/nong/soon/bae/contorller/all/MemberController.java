@@ -177,7 +177,7 @@ public class MemberController {
 		return "user/mail";
 	}
 	
-	@PostMapping("/renamePass")
+	@RequestMapping("/renamePass")
 	public String renamePass(Model model, String username, Principal principal) {
 		if(username == null) {
 			username = principal.getName();

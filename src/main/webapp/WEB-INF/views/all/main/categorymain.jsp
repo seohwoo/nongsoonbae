@@ -20,8 +20,17 @@
 	</head>
 	<body>
 		<%@include file="/WEB-INF/views/include/header.jsp"%>
-			<h1 class="title">카테고리</h1><br />
-			<div style="display: flex; padding-left : 30%; padding-right: 30%;">
+			<header class="intro">
+			  <div class="intro-slideshow">
+			    <img src="https://images.unsplash.com/photo-1610576375407-23f9a9455daa?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 1;">
+			  </div>
+			  <div class="intro-back">
+			  	<div class="intro-header">
+			    	<h1>카테고리</h1>
+			  	</div>
+			  </div>
+			</header>
+			<div style="display: flex; align-items: center; justify-content: center;">
 		    <c:forEach var="dto" items="${catelist}">
 		        <div style="margin-right: 10px;">
 		           <form action="/nsb/menu" method="post" onsubmit="return checkAndRedirect('${dto.cate1}')">

@@ -42,7 +42,7 @@ public class KaKaoPayServiceImpl implements KaKaoPayService{
         parameters.add("approval_url", "http://"+FileRoot.getIp()+":8080/user/pay/success"); // 성공 시 redirect url
         parameters.add("cancel_url", "http://"+FileRoot.getIp()+":8080/user/pay/cancel"); 	// 취소 시 redirect url
         parameters.add("fail_url", "http://"+FileRoot.getIp()+":8080/user/pay/fail"); 		// 실패 시 redirect url
-        
+         
         
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());

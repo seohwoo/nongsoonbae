@@ -9,16 +9,21 @@
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
+	<header class="intro">
+	  <div class="intro-slideshow">
+	    <img src="https://images.unsplash.com/photo-1519897831810-a9a01aceccd1?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 1;">
+	  </div>
+	  <div class="intro-back">
+	  	<div class="intro-header">
+	    	<h1>실시간 차트</h1>
+	  	</div>
+	  </div>
+	</header>
 	<div style="display: flex; flex-direction: column;">
 		<table class="chart table-borderless main">
 			<tr>
 				<td>
-					<h1 class="title">실시간 차트</h1><br />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div style="display: flex;">
+					<div style="display: flex; align-items: center; justify-content: center;">
 						<c:forEach var="dto" items="${catemenu}" >
 						<div style="margin-right: 10px;">
 						<form action="/nsb/chart" method="get">
@@ -38,7 +43,7 @@
 			</tr>
 			<tr>
 				<td>
-					<div style="display: flex;">
+					<div style="display: flex; ">
 						<c:if test="${isCate3==0}">
 							<h1>해당 카테고리의 소분류를 준비중입니다..</h1>
 						</c:if>

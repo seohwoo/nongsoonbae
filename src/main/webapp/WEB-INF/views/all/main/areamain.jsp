@@ -26,7 +26,16 @@
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-	<h1 class="title"> 지역별 카테고리</h1>
+	<header class="intro">
+	  <div class="intro-slideshow">
+	    <img src="https://images.unsplash.com/photo-1500732917506-30dc38b6477f?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 1;">
+	  </div>
+	  <div class="intro-back">
+	  	<div class="intro-header">
+	    	<h1>전국 특산품</h1>
+	  	</div>
+	  </div>
+	</header>
 	<div style="display: flex;" class="catelist">
 	    <form action="/nsb/area" method="get">
 	        <button class="catebtn" type="submit" style="margin-right: 10px;">전체</button>

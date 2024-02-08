@@ -71,7 +71,7 @@ public class PayController {
 		model.addAttribute("amount", kakaoApprove.getAmount());
 		return "user/pay/success";
 	}
-
+ 
 	/**
 	 * 결제 진행 중 취소
 	 */

@@ -44,9 +44,11 @@
 	    <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 1;">
 	    <img src="https://images.unsplash.com/photo-1560693225-b8507d6f3aa9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="opacity: 0;">
 	  </div>
-	  <div class="intro-header">
-	    <h1>농순배</h1>
-	    <p>농수산물 순식간에 배송해드립니다</p>
+	  <div class="intro-back">
+	  	<div class="intro-header">
+	    	<h1>농순배</h1>
+	    	<p>농수산물 순식간에 배송해드립니다</p>
+	  	</div>
 	  </div>
 	</header>
 	<jsp:include page="/WEB-INF/views/include/loading.jsp" />
