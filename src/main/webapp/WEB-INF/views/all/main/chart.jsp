@@ -45,7 +45,6 @@
 		  if(${isMembership}) {
 			  document.getElementById("myChart").onclick = function clickHandler(evt) {
 				    var points = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-					console.log(points);
 				    if (points.length) {
 				        var firstPoint = points[0];
 				        var month = myChart.data.labels[firstPoint.index];
@@ -56,9 +55,6 @@
 				    }
 				}
 		  }
-		  
-		  
-		  
 		</script>
 	</body>
 </html>

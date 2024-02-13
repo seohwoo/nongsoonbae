@@ -36,7 +36,12 @@
 			<h3>${myName} 페이지</h3><br />
 				<button onclick="openNewWindow()">상점 폐쇄하기</button>
 				<input type="button" value="나의 상점 정보" onclick="javascript:window.location='/product/productMyShop?username=${username}'">
-				<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
+				<c:if test="${!isMembership}">
+					<input type="button" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
+				</c:if>
+				<c:if test="${isMembership}">
+					<input type="button" value="상품 등록" onclick="javascript:window.location='/membership/write?myName=${myName}'">
+				</c:if>
 				<input type="button" value="나의 상점 관리" onclick="javascript:window.location='/product/myProduct'">
 				<input type="button" value="전체 상품 조회" onclick="javascript:window.location='/product/allProduct'">
 				<input type="button" value="광고신청하기" onclick="javascript:window.location='/user/adMain'">
