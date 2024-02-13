@@ -34,7 +34,7 @@
 				<!-- 로그인(인증된) 사용자인 경우 -->	
 				<span class="log-links"><a href="/product/productMain" class="nav-link link-dark px-2">상품등록</a>
 				<sec:authorize access="hasRole('ADMIN')">
-					<a href="/admin/usercheck" class="nav-link link-dark px-2">관리자</a>
+					<a href="/admin/home" class="nav-link link-dark px-2">관리자</a>
 				</sec:authorize>
 				<a href="/user/mypage" class="nav-link link-dark px-2">마이페이지</a>
 				<a href="/member/logout" class="nav-link link-dark px-2">로그아웃</a></span>

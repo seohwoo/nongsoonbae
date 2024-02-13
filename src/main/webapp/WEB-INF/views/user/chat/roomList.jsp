@@ -9,7 +9,7 @@
 		<title>채팅방목록</title>
 	</head>
 	<body>
-	<div class="container">
+	<div>
 		<h1><a href="/chat/admin">➕Q&A</a></h1>
 		<br />
 		<c:if test="${cnt==0}">
