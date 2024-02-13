@@ -16,4 +16,8 @@ public interface PayService {
 	public UsersDTO isMembership(String username);
 	public void userQuitMembership(String username);
 	public List<PaymentDTO> lastMembershipPayDate(String username);
+	
+	// Á¤·æ Ãß°¡
+	public void isproductSuccess102(String follow);
+	//
 }

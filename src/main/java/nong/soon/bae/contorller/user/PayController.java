@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +21,14 @@ import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.service.KaKaoPayService;
 import nong.soon.bae.service.PayService;
+import nong.soon.bae.service.ProductService;
 
 @RequestMapping("/user/pay/*")
 @RequiredArgsConstructor
 @Controller
 public class PayController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
 	private final KaKaoPayService kakaoPayService;
@@ -33,6 +38,9 @@ public class PayController {
 	
 	@Autowired
 	private PaymentDTO paymentDTO;
+	
+	@Autowired
+	private ProductService productService;
 	
 	/**
 	 * 결제요청
@@ -65,6 +73,19 @@ public class PayController {
 				service.changeGrade(username);
 			}
 		}else {
+			
+			// 정룡
+			// 업데이트
+			int cnt = kakaoApprove.getQuantity();
+			MyPageDTO MPdto = productService.selectMypage3(username);
+			logger.info("username========"+username);
+			String follow = MPdto.getFollow();
+			logger.info("follow======"+follow);
+			productService.updateProductCount(follow, cnt);
+			service.isproductSuccess102(follow);
+			logger.info("username========"+username);
+			logger.info("follow======"+follow);
+			//
 			service.isproductSuccess(username);
 		}
 		model.addAttribute("kakaoApprove", kakaoApprove);

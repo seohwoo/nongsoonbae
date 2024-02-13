@@ -20,4 +20,5 @@ public class ReviewsDTO {
 	private String name;
 	private String optionname;
 	private String filename;
+	private int files;
 }
