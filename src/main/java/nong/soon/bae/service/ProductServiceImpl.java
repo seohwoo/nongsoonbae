@@ -409,6 +409,11 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectTodayReadcntUsername(username, productnum, todaydate);
 	}
 
+	@Override
+	public AllProductDTO findProductInfoToReadcnt(String productnum) {
+		return mapper.findProductInfoToReadcnt(productnum);
+	}
+
 
 
 

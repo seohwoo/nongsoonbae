@@ -226,8 +226,10 @@
 	</select>
 
 	
-
-
+	<!-- 상품정보가져오기 -->
+	<select id="findProductInfoToReadcnt" parameterType="String" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where productnum=#{productnum}
+	</select>
 
 
 	<!-- 장바구니 담기 -->

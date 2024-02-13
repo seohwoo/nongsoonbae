@@ -317,7 +317,10 @@ public class ProductController {
 	// 상품 상세정보
 	@RequestMapping("productInfo")
 	public String productInfo(Principal principal, String productnum, Model model, String follow) {
-		String username = principal.getName();
+		String username = "";
+		if(principal!=null) {
+			username = principal.getName();
+		}
 		
 		// 상품 정보 페이지
 		AllProductDTO APdto = service.selectProductInfo(follow, productnum);
@@ -360,16 +363,17 @@ public class ProductController {
 		String todaydate = simpleDateFormat.format(date);
 		PRCdto.setTodaydate(todaydate);
 		
-		// 오늘 상품 조회한 유저 찾기
-		int ReadCnt = service.selectTodayReadcntUsername(username, productnum, todaydate);
-		
-		if(ReadCnt == 0) {
-			// 상품 조회수 증가
-			service.updateReadcntPlus(productnum);
-			// 상품 조회한 유저정보 넣기
-			service.productReadcntInsert(username, productnum);
+		if(principal!=null) {
+			// 오늘 상품 조회한 유저 찾기
+			int ReadCnt = service.selectTodayReadcntUsername(username, productnum, todaydate);
+			
+			if(ReadCnt == 0 ) {
+				// 상품 조회수 증가
+				service.updateReadcntPlus(productnum);
+				// 상품 조회한 유저정보 넣기
+				service.productReadcntInsert(username, productnum);
+			}
 		}
-		
 		model.addAttribute("follow", follow);
 		model.addAttribute("productnum", productnum);
 		model.addAttribute("APdto", APdto);

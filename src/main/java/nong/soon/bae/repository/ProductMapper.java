@@ -95,8 +95,8 @@ public interface ProductMapper {
 	// 농부 팔로우 취소하면 userdetails에 followers -1 하기
 	public void userdetailsUpdateFollowersMinus(String follow);	
 	
-	
-	
+	//상품정보를 가져옴
+	public AllProductDTO findProductInfoToReadcnt(String productnum);
 	
 	
 	
