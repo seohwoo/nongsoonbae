@@ -40,6 +40,7 @@ import nong.soon.bae.bean.ImagesDTO;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
+import nong.soon.bae.bean.ProductReadcountDTO;
 import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 import nong.soon.bae.service.PayService;
@@ -301,14 +302,12 @@ public class ProductController {
 		List<AllProductDTO> APdto = service.selectAllproduct();
 		model.addAttribute("APdto", APdto);
 		
+		// allproduct 재고수 0인 상품들 삭제
 		for (AllProductDTO dto : APdto) {
 		    String productnum = dto.getProductnum();
 		    String username = dto.getUsername();
-		    logger.info("productnum==="+productnum);
-		    logger.info("username==="+username);
+		    
 		    service.deleteAllproduct(username, productnum);
-		    logger.info("username==="+username);
-		    logger.info("productnum==="+productnum);
 		    service.deleteProductOption(username, productnum);
 		}
 		
@@ -317,7 +316,9 @@ public class ProductController {
 	
 	// 상품 상세정보
 	@RequestMapping("productInfo")
-	public String productInfo(String productnum, Model model, String follow) {
+	public String productInfo(Principal principal, String productnum, Model model, String follow) {
+		String username = principal.getName();
+		
 		// 상품 정보 페이지
 		AllProductDTO APdto = service.selectProductInfo(follow, productnum);
 		// 상품 올린 사람의 주소, 이름, 팔로우 찾기
@@ -352,6 +353,22 @@ public class ProductController {
 		// 주소 합쳐
 		String address = area1Address + " " + area2Address;		
 		
+		ProductReadcountDTO PRCdto = new ProductReadcountDTO();
+		// 오늘 날짜 구하는 코드
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd");
+		String todaydate = simpleDateFormat.format(date);
+		PRCdto.setTodaydate(todaydate);
+		
+		// 오늘 상품 조회한 유저 찾기
+		int ReadCnt = service.selectTodayReadcntUsername(username, productnum, todaydate);
+		
+		if(ReadCnt == 0) {
+			// 상품 조회수 증가
+			service.updateReadcntPlus(productnum);
+			// 상품 조회한 유저정보 넣기
+			service.productReadcntInsert(username, productnum);
+		}
 		
 		model.addAttribute("follow", follow);
 		model.addAttribute("productnum", productnum);
@@ -401,52 +418,14 @@ public class ProductController {
 	
 	// 리뷰 작성하기
 	@RequestMapping("productReviewPro")
-	public String productReviewPro(Principal principal, ReviewsDTO Rdto, String[] fileNames, HttpServletRequest request, 
+	public String productReviewPro(Principal principal, ReviewsDTO Rdto, List<MultipartFile> filelist, HttpServletRequest request, 
 								   String productnum, String optionnum, String name) {
 		String username = principal.getName();
 
-		
-		// 스마트 에디터?
-		String content = Rdto.getContent();
-		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
-		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
-		int cnt = 1;
-		content = content.replace("src=\"/resources/summernoteImage/", "src=\"/resources/realImage/");
-		int files = 0;
-		if(fileNames != null) {
-			files = fileNames.length;
-			Rdto.setImagecount(files);
-			// 리뷰 등록하기
-			service.reviewInsert(Rdto);
-	    	
-			ImagesDTO  Idto = new ImagesDTO();
-	    	Idto.setProductnum(productnum);
-	    	Idto.setUsername(username);
-	    	isFile(fileNames, content);
-			
-	    	for (String filename : realFiles) {
-				try {
-					File sourceFile = new File(fileRoot+filename);
-					File targetDirectory = new File(realRoot);
-					String ext = filename.substring(filename.lastIndexOf("."));
-					String realname = "P_"+productnum+"_"+cnt+ext;
-					Idto.setFilename(realname);
-					
-					// 파일 넣기
-					service.imagesInsert(Idto);
-					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
-					cnt++;
-					content = content.replace(filename, realname);
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}			
-	    	for (String filename : fileNames) {
-				File sourceFile = new File(fileRoot+filename);
-				sourceFile.delete();
-			}
-	    }		
+		String path = request.getServletContext().getRealPath("/resources/file/reviews/");
+		int check = service.reviewInsert(filelist, Rdto, path);
+		int result = service.ReviewsimagesInsert(filelist, path, username, productnum);
+		/////////////////////////
 		return "/product/productReviewPro";
 	}
 	
@@ -534,7 +513,6 @@ public class ProductController {
 		    service.dropReviewsTable(productnum);
 		}
 
-		
 		service.deleteShoplist(username);
 		
 		return "product/deleteShoplistPro";

@@ -1,9 +1,11 @@
 package nong.soon.bae.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
@@ -290,10 +292,42 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 리뷰쓰기
 	@Override
-	public void reviewInsert(ReviewsDTO Rdto) {
-		mapper.reviewInsert(Rdto);
+	public int reviewInsert(List<MultipartFile> filelist, ReviewsDTO Rdto, String path) {
+		int check = 0;
+		int files = 0;
+		for (MultipartFile file : filelist) {
+			if(!file.getOriginalFilename().equals("")) {
+				files++;
+			}
+		}
+		Rdto.setImagecount(files);
+		check = mapper.reviewInsert(Rdto);  
+		return check;
 	}
 
+	@Override
+	public int ReviewsimagesInsert(List<MultipartFile> filelist, String path, String username, String productnum) {
+		int result = 0;
+		// int boardnum = mapper.maxNum();
+		// String productnum = "111111";
+		for (int i = 1; i <= filelist.size(); i++) {
+			MultipartFile file = filelist.get(i-1);
+			String filename = file.getOriginalFilename();
+			if(!filename.equals("")) {
+				String ext = filename.substring(filename.lastIndexOf("."));
+				filename = "P_"+productnum+"_"+i+ext;
+				File copy = new File(path+filename);
+				result = mapper.ReviewsimagesInsert(filename, username, productnum);
+				try {
+					file.transferTo(copy);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;		
+	}	
+	
 	// 상품 리뷰 가져오기
 	@Override
 	public List<ReviewsDTO> selectReviewsAll(String follow, String productnum) {
@@ -335,7 +369,7 @@ public class ProductServiceImpl implements ProductService {
 		mapper.allproductUpdateContent(dto);
 	}
 
-	// 2024.02.05 TEST
+
 	@Override
 	public void deleteProductOption(String username, String productnum) {
 		mapper.deleteProductOption(username, productnum);
@@ -345,6 +379,41 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteAllproduct(String username, String productnum) {
 		mapper.deleteAllproduct(username, productnum);
 	}
+
+	// 상품 판매시 재고 업데이트
+	@Override
+	public MyPageDTO selectMypage3(String username) {
+		return mapper.selectMypage3(username);
+	}
+
+	@Override
+	public void updateProductCount(String follow, int cnt) {
+		mapper.updateProductCount(follow, cnt);
+	}
+
+	// 상품 조회수 증가
+	@Override
+	public void updateReadcntPlus(String productnum) {
+		mapper.updateReadcntPlus(productnum);
+	}
+
+	// 상품 조회한 유저정보 넣기
+	@Override
+	public void productReadcntInsert(String username, String productnum) {
+		mapper.productReadcntInsert(username, productnum);
+	}
+
+	// 오늘 상품 조회한 유저 찾기
+	@Override
+	public int selectTodayReadcntUsername(String username, String productnum, String todaydate) {
+		return mapper.selectTodayReadcntUsername(username, productnum, todaydate);
+	}
+
+
+
+
+
+
 
 
 

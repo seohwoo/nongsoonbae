@@ -117,7 +117,11 @@
 
 	<body>
 		<form action="/product/productReviewPro" method="post" name="form" enctype="multipart/form-data" id = "addProduct">
-			<textarea id="summernote" name="content" placeholder="리뷰작성"></textarea>
+			
+			<textarea placeholder="리뷰 작성" name="content"></textarea>
+			
+			<input type="file" class="btns2" name="filelist"  multiple="multiple"  onchange="displayFileCount()" />
+			
 			
 			<div class="stars1">
 				<label for="star1" class="star" data-rating="1"> <i class="far fa-star" style="color: #ffc83d;"></i></label>

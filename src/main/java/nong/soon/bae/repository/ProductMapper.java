@@ -164,8 +164,14 @@ public interface ProductMapper {
 											   @Param("productnum") String productnum);
 
 	// 상품 리뷰쓰기
-	public void reviewInsert(ReviewsDTO Rdto);
+	public int reviewInsert(ReviewsDTO Rdto);
 	
+	// 리뷰 등록할 때 이미지 넣기
+	public int ReviewsimagesInsert(@Param("filename") String filename, 
+								   @Param("username") String username,
+								   @Param("productnum") String productnum);
+	
+
 	// 상품 리뷰 가져오기
 	public List<ReviewsDTO> selectReviewsAll(@Param("follow") String follow, 
 											 @Param("productnum") String productnum);
@@ -187,12 +193,30 @@ public interface ProductMapper {
 	
 	public void allproductUpdateContent(AllProductDTO dto);
 	
-	// 2024.02.05 TEST
+
 	public void deleteProductOption(@Param("username") String username, 
 			   						@Param("productnum") String productnum);
 
 	public void deleteAllproduct(@Param("username") String username, 
 								 @Param("productnum") String productnum);
+
+	
+	// 상품 판매시 재고 업데이트	
+	public MyPageDTO selectMypage3(String username);	
+	public void updateProductCount(@Param("follow") String follow, 
+			 					   @Param("cnt") int cnt);
+	
+	// 상품 조회수 증가
+	public void updateReadcntPlus(String productnum);
+	
+	// 상품 조회한 유저정보 넣기
+	public void productReadcntInsert(@Param("username") String username, 
+									 @Param("productnum") String productnum);
+
+	// 오늘 상품 조회한 유저 찾기
+	public int selectTodayReadcntUsername(@Param("username") String username, 
+			 							  @Param("productnum") String productnum, 
+			 							  @Param("todaydate") String todaydate);
 
 }
 	
