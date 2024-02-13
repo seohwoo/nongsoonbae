@@ -16,6 +16,23 @@
 	                $("#sortForm").submit();
 	            });
 	        });
+	        function setSortAndSubmit(sortValue) {
+		        var form = document.getElementById('sortForm');
+		        form.sort.value = sortValue;
+		        form.submit();
+		    }
+	        function goToPageWithSort(pageNum, sortValue) {
+	            var form = document.getElementById('sortForm'); // 폼 ID
+	            if (!form.pageNum) {
+	                var pageNumInput = document.createElement('input');
+	                pageNumInput.type = 'hidden';
+	                pageNumInput.name = 'pageNum';
+	                form.appendChild(pageNumInput);
+	            }
+	            form.pageNum.value = pageNum;
+	            form.sort.value = sortValue;
+	            form.submit(); // 폼 제출
+	        }
 		    function checkAndRedirect(e, area1Value) {
 		            if (area1Value === '0') {
 		                window.location.href = '/nsb/area';
@@ -42,7 +59,7 @@
 	    </form>
 	    <c:forEach var="dto" items="${arealist}" varStatus="status">
 	        <div style="margin-right: 10px;">
-	            <form class="areaSelectForm" action="/nsb/area" method="post" onsubmit="checkAndRedirect(event, '${dto.area1}')">
+	            <form class="areaSelectForm" action="/nsb/area" method="get" onsubmit="checkAndRedirect(event, '${dto.area1}')">
 	                <input type="hidden" name="areaNum" value="${areaNum}" />
 	                <input type="hidden" name="area1" value="${dto.area1}" />
 	                <button type="submit" class="catebtn">${dto.areaname}</button>
@@ -63,11 +80,13 @@
 	</c:if>
 	</div>
 	<c:if test="${allCnt > 0}">
-		<form id="sortForm" action="/nsb/area" method="post">
-    		<input type="hidden" name="sort" value=""/>
-    		<button type="submit" name="sort" value="readcnt">추천순</button>
-    		<button type="submit" name="sort" value="wishcnt">최신순</button>
+		<form id="sortForm" action="/nsb/area" method="get">
+    		<input type="hidden" name="pageNum" value="${pageNum}" />
+    		<input type="hidden" name="sort" /> 
+    		<button type="button" onclick="setSortAndSubmit('readcnt')">추천순</button>
+    		<button type="button" onclick="setSortAndSubmit('wishcnt')">찜순</button>
 		</form>
+		
 	<div class="container mx-auto mt-4">
  			<div class="row">
 	    <c:forEach var="dto" items="${allprocuctList}">
@@ -80,26 +99,47 @@
 	    <jsp:include page="/WEB-INF/views/all/main/arealist.jsp" />
 	</div>
 	<div class="pagination">
-	<c:if test="${!isAreaSelected}">
+	<c:if test="${!isAreaSelected && !empty sort}">
 		<c:if test="${startPage > 10}">
-			<form action="/nsb/area" method="post">
-				<input type="hidden" name="pageNum" value="${startPage-10}">
-				<button type="submit">이전</button>
-			</form>
+    		<form action="/nsb/area" method="get">
+       			<input type="hidden" name="pageNum" value="${startPage-10}">
+       			<input type="hidden" name="sort" value="${sort}"> <!-- 정렬 기준 포함 -->
+       			<button type="submit">이전</button>
+    		</form>
 		</c:if>
 		<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<form action="/nsb/area" method="post">
-				<input type="hidden" name="pageNum" value="${i}">
-				<button type="submit">${i}</button>
-			</form>
+   		 <form action="/nsb/area" method="get">
+        	<button type="button" onclick="goToPageWithSort(${i}, '${sort}')">${i}</button>
+    	 </form>
 		</c:forEach>
 		<c:if test="${endPage < pageCount}">
-			<form action="/nsb/area" method="post">
-				<input type="hidden" name="pageNum" value="${startPage+10}">
-				<button type="submit">다음</button>
-			</form>
+    		<form action="/nsb/area" method="get">
+     	   		<input type="hidden" name="pageNum" value="${startPage+10}">
+        		<input type="hidden" name="sort" value="${sort}"> <!-- 정렬 기준 포함 -->
+        		<button type="submit">다음</button>
+    		</form>
 		</c:if>
-		</c:if>					
+		</c:if>	
+		<c:if test="${!isAreaSelected && empty sort}">
+		<c:if test="${startPage > 10}">
+    		<form action="/nsb/area" method="get">
+       			<input type="hidden" name="pageNum" value="${startPage-10}">
+       			<button type="submit">이전</button>
+    		</form>
+		</c:if>
+		<c:forEach var="i" begin="${startPage}" end="${endPage}">
+   		 <form action="/nsb/area" method="get">
+   		 	<input type="hidden" name="pageNum" value="${i}">
+			<button type="submit">${i}</button>
+    	 </form>
+		</c:forEach>
+		<c:if test="${endPage < pageCount}">
+    		<form action="/nsb/area" method="get">
+     	   		<input type="hidden" name="pageNum" value="${startPage+10}">
+        		<button type="submit">다음</button>
+    		</form>
+		</c:if>
+		</c:if>								
 		</div>				    
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>

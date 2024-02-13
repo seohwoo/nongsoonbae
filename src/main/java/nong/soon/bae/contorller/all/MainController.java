@@ -112,7 +112,7 @@ public class MainController{
 			model.addAttribute("isAreaSelected", false);
 		} 
 		if (area1 != null && area2 == null) {
-			areaservice.areaprodutlist(model, area1); //area1  상품리스트
+			areaservice.areaprodutlist(model, areaNum,pageNum,area1,sort); //area1  상품리스트
 			model.addAttribute("isAreaSelected", true);
 		}
 		if(area1==null) {
