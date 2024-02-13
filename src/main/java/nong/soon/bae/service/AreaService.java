@@ -11,6 +11,6 @@ import nong.soon.bae.bean.ProductCategoryDTO;
 public interface AreaService {
 	public List<AreaDTO> areaMenu(Model model);
 	public void allproductlist(Model model,String sort,int pageNum);
-	public void areaprodutlist (Model model,String area1);
+	public void areaprodutlist (Model model,int areaNum, int pageNum,String area1,String sort);
 	public void arealist(int areaNum,Model model);	
 }
