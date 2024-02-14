@@ -11,7 +11,7 @@
 
 		<security:http>
 		<!-- <security:intercept-url pattern="/member/renamePass" access="isAuthenticated()" />  -->	
-			<security:intercept-url pattern="/user/**" access="hasAnyRole('USER', 'ADMIN', 'MEMBERSHIP')" />
+			<security:intercept-url pattern="/user/**" access="hasAnyRole('USER', 'MEMBERSHIP', 'ADMIN')" />
 			<security:intercept-url pattern="/membership/**" access="hasAnyRole('MEMBERSHIP', 'ADMIN')" />
 			<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 			<security:intercept-url pattern="/all/**" access="permitAll" />

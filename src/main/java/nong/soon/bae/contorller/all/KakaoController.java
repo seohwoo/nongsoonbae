@@ -92,13 +92,13 @@ public class KakaoController {
         CustomUser user = new CustomUser(vo);
         
         List<GrantedAuthority> roles = new ArrayList<>(1);
-        String roleStr = grade.equals("ADMIN") ? "ADMIN" : "MEMBER";
         if(grade=="ADMIN") {
-        	roles.add(new SimpleGrantedAuthority("ADMIN"));
+        	roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }else if(grade == "DELETEUSER") {
+        	roles.add(new SimpleGrantedAuthority("ROLE_DELETEUSER"));
         }else {
-        	roles.add(new SimpleGrantedAuthority("MEMBER"));
+        	roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
-        roles.add(new SimpleGrantedAuthority(roleStr));
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
         SecurityContextHolder.getContext().setAuthentication(auth);
         
@@ -108,7 +108,7 @@ public class KakaoController {
         if(status==1) {	//회원가입 시
         	return "redirect:/user/welcome";
         }else {			//로그인
-        	return "redirect:/main/main";
+        	return "redirect:/user/mypage";
         }
     }
 
