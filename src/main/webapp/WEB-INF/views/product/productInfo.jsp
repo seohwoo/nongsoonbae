@@ -12,8 +12,12 @@
 
 	<script>
 		$(function() {
+			var selectedOptionCount;
+			
 			$("#Pdto").on("change", function() {
-				var selectedOptionNum = $("#Pdto").val();
+				var selectedOptionVal = $("#Pdto").val();
+				var selectedOptionNum = selectedOptionVal.split("-")[0];
+					selectedOptionCount = selectedOptionVal.split("-")[1];
 				$("#selectedOptionNum").val(selectedOptionNum);
 				
 				var selectedOptionText = $("#Pdto option:selected").text();
@@ -22,15 +26,21 @@
             	// 증가, 감소 버튼 추가
                 var increaseButton = $("<button>").text("+").click(increaseQuantity);
                 var decreaseButton = $("<button>").text("-").click(decreaseQuantity);
-                var numberText = $("<input type='text' name='count' id='count' value='1'>");
+                var numberText = $("<input type='text' name='count' id='count' value='1' readonly>");
                 
                 newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton));
                 $("#finish").append(newRow);
 			})
 			
 			function increaseQuantity(e) {
-				e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
-            }
+				
+				if(parseInt(selectedOptionCount) > e.target.nextElementSibling.value) {
+					e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
+				}else{
+					alert("재고 수가 부족합니다.");
+				}
+			}
+			
 
             function decreaseQuantity(e) {
             	count = parseInt(e.target.previousElementSibling.value);
@@ -40,12 +50,18 @@
             var number = e.target.nextElementSibling.value;
             }
 		})
+
+		
+
 		
 		function openReviewWindow() {
 			var optionnum = $("#selectedOptionNum").val();
 			var productnum = ${productnum};
 			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=400,height=300,resizable=yes');
 		}
+		
+
+		
 	</script>
 	
 	<body>
@@ -94,7 +110,7 @@
 					<select id="Pdto" name="Pdto">
 						<option value="-------">-------</option>
 							<c:forEach var="Pdto" items="${Pdto}">
-								<option value="${Pdto.optionnum}">
+								<option value="${Pdto.optionnum}-${Pdto.productcount}">
 									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount}
 								</option>
 							</c:forEach>
@@ -106,8 +122,8 @@
 		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
 		<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
 		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-		<input type="button" value="장바구니담기" onclick="javascript:window.location='/product/productShoppingPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val() +'&count='+$('#count').val()">
-		<button onclick="openReviewWindow()">리뷰작성</button>	
+		<input type="button"  value="장바구니담기" onclick="javascript:window.location='/product/productShoppingPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val() +'&count='+$('#count').val()">
+		<button  onclick="openReviewWindow()">리뷰작성</button>	
 	
 		<br /><br /><br /><br /> <hr /> <br />
 		<table border="1" style="text-align: center;">

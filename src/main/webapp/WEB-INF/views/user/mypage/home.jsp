@@ -21,7 +21,7 @@
 		          <div class="mb-1 text-muted"><hr></div>
 		          <div></div>
 		          <p class="card-text mb-auto">개인 상점 개설부터 관리까지. 지금 바로 농순배에서 직거래 시작.</p>
-		          <a href="../product/productMain">이동하기 ></a>
+		          <a href="../product/productMyShop?username=${username}">이동하기 ></a>
 		        </div>
       		</div>
       <a class="mt-5 mb-3 text-muted" href="/user/delete">회원 탈퇴</a>

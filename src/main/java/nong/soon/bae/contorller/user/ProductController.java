@@ -274,25 +274,56 @@ public class ProductController {
 	// 상점 정보 가져오는 주소
 	@RequestMapping("productMyShop")
 	public String selectMyShop(Principal principal, Model model, String username) {
+		String Session = principal.getName();
+		// 14
+		String check = service.CheckMyShop(username);
+		boolean isMembership = false;
+		boolean quitMembership = false;
+		if(payservice.isMembership(username).getGrade().get(0).getGrade().equals("ROLE_MEMBERSHIP")) {
+			isMembership = true;
+			if(payservice.lastMembershipPayDate(username).get(0).getSid().equals("멤버쉽 해지")) {
+				quitMembership = true;
+			}
+		}
+		model.addAttribute("isMembership", isMembership);
+		model.addAttribute("quitMembership", quitMembership);
 		
-		ShopListDTO SLdto = service.selectMyShop(username);
-		List<AllProductDTO> APdto = service.selectUsernameProduct(username);
-				
-		// 상점 주소 
-		String fullAddress = SLdto.getAddress();
-		// 공백 기준으로 자르기
-		String[] addressParts = fullAddress.split(" ");
-		// area1 주소
-		String area1Address = addressParts[0];
-		// area2 주소
-		String area2Address = addressParts[1];
-		// 주소 합쳐
-		String address = area1Address + " " + area2Address;
+		if(check == null) {
+			model.addAttribute("status", 0);
+		}else {
+			model.addAttribute("status", 1);
+			// 내 이름 가져오기
+			String myName = service.selectMyName(username);
+			
+			model.addAttribute("myName", myName);
+			model.addAttribute("username", username);
+
+			// 14 T
+			ShopListDTO SLdto = service.selectMyShop(username);
+			List<AllProductDTO> APdto = service.selectUsernameProduct(username);
+					
+			// 상점 주소 
+			String fullAddress = SLdto.getAddress();
+			// 공백 기준으로 자르기
+			String[] addressParts = fullAddress.split(" ");
+			// area1 주소
+			String area1Address = addressParts[0];
+			// area2 주소
+			String area2Address = addressParts[1];
+			// 주소 합쳐
+			String address = area1Address + " " + area2Address;
+			
+			model.addAttribute("address" , address);
+			model.addAttribute("SLdto", SLdto);
+			model.addAttribute("APdto", APdto);
+			model.addAttribute("follow", username);		
+			model.addAttribute("Session", Session);		
+		}
+		//
 		
-		model.addAttribute("address" , address);
-		model.addAttribute("SLdto", SLdto);
-		model.addAttribute("APdto", APdto);
-		model.addAttribute("follow", username);
+		
+		
+
 		return "/product/productMyShop";
 	}
 	
@@ -318,7 +349,7 @@ public class ProductController {
 	@RequestMapping("productInfo")
 	public String productInfo(Principal principal, String productnum, Model model, String follow) {
 		String username = principal.getName();
-		
+
 		// 상품 정보 페이지
 		AllProductDTO APdto = service.selectProductInfo(follow, productnum);
 		// 상품 올린 사람의 주소, 이름, 팔로우 찾기
