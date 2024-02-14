@@ -44,7 +44,7 @@ public class KakaoController {
     @SuppressWarnings("null")
 	@RequestMapping(value = "/login/oauth2/code/kakao", method = RequestMethod.GET)
     public String redirectkakao(@RequestParam String code, HttpSession session) throws IOException {
-        System.out.println("code:: " + code);
+        //System.out.println("code:: " + code);
 
         // 접속토큰 get
         String kakaoToken = kakaoService.getReturnAccessToken(code);
@@ -62,7 +62,7 @@ public class KakaoController {
         String birth = birthyear.substring(2)+birthday;
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();	//password 인코딩
         String password = passwordEncoder.encode(email);
-        System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+password);
+        //System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+password);
 
         // 분기
         UsersDTO usersDTO = new UsersDTO();

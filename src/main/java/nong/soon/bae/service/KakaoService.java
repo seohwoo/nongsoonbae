@@ -88,7 +88,7 @@ public class KakaoService {
                 conn.setRequestProperty("Authorization", "Bearer " + access_token);
 
                 int responseCode = conn.getResponseCode();
-                System.out.println("responseCode : " + responseCode);
+                //System.out.println("responseCode : " + responseCode);
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
 
                 String br_line = "";
@@ -98,15 +98,15 @@ public class KakaoService {
                 while ((br_line = br.readLine()) != null) {
                     result += new String(URLDecoder.decode(br_line, "UTF-8"));
                 }
-               System.out.println("response:" + result);
+               //System.out.println("response:" + result);
 
 
                 JsonParser parser = new JsonParser();
                 JsonElement element = parser.parse(result);
-                log.warn("element:: " + element);
+                //log.warn("element:: " + element);
                 JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
                 JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-                log.warn("id:: "+element.getAsJsonObject().get("id").getAsString());
+                //log.warn("id:: "+element.getAsJsonObject().get("id").getAsString());
                 String id = element.getAsJsonObject().get("id").getAsString();
                 String nickname = properties.getAsJsonObject().get("nickname").getAsString();
                 String email = kakao_account.getAsJsonObject().get("email").getAsString();
@@ -115,7 +115,7 @@ public class KakaoService {
                 String birthyear = kakao_account.getAsJsonObject().get("birthyear").getAsString();
                 String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
                 
-                log.warn("email:: " + email);
+                //log.warn("email:: " + email);
                 resultMap.put("nickname", nickname);
                 resultMap.put("id", id);
                 resultMap.put("email", email);
