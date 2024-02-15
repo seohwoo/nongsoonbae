@@ -409,6 +409,31 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.selectTodayReadcntUsername(username, productnum, todaydate);
 	}
 
+	@Override
+	public void allproductDeleteMyUsername(String username) {
+		mapper.allproductDeleteMyUsername(username);
+	}
+
+	@Override
+	public void dropUsernameProduct(String username) {
+		mapper.dropUsernameProduct(username);
+	}
+
+	@Override
+	public List<String> selectReviewsUsername(String productnum) {
+		return mapper.selectReviewsUsername(productnum);
+	}
+
+	@Override
+	public List<ReviewsDTO> ReviewsInfoFinal(String productnum, String follow, String usernames) {
+		return mapper.ReviewsInfoFinal(productnum, follow, usernames);
+	}
+
+	@Override
+	public void myReviewsDelete(String productnum, String myName) {
+		mapper.myReviewsDelete(productnum, myName);
+	}
+
 
 
 

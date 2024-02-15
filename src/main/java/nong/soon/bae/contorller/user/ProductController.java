@@ -320,9 +320,6 @@ public class ProductController {
 			model.addAttribute("Session", Session);		
 		}
 		//
-		
-		
-		
 
 		return "/product/productMyShop";
 	}
@@ -332,7 +329,8 @@ public class ProductController {
 	public String selectAllproduct(Model model) {
 		List<AllProductDTO> APdto = service.selectAllproduct();
 		model.addAttribute("APdto", APdto);
-		
+	
+		/*
 		// allproduct 재고수 0인 상품들 삭제
 		for (AllProductDTO dto : APdto) {
 		    String productnum = dto.getProductnum();
@@ -341,7 +339,7 @@ public class ProductController {
 		    service.deleteAllproduct(username, productnum);
 		    service.deleteProductOption(username, productnum);
 		}
-		
+		*/
 		return "/product/allProduct";
 	}
 	
@@ -364,6 +362,19 @@ public class ProductController {
 		// 상품 리뷰 가져오기 
 		List<ReviewsDTO> Rdto = service.selectReviewsAll(follow, productnum);
 
+		
+		
+		// 상품 리뷰 가져오기 
+		List<String> ReviewsName = service.selectReviewsUsername(productnum);
+		List<ReviewsDTO> allReviews = new ArrayList<>();
+		
+		for (String usernames : ReviewsName) {
+		    List<ReviewsDTO> reviews = service.ReviewsInfoFinal(productnum, follow, usernames);
+		    allReviews.addAll(reviews);
+		}
+		
+		String myName = service.selectMyName(username);
+		
 		int totalStars = 0;
 		for (ReviewsDTO dto : Rdto) {
 		    totalStars += dto.getStars();
@@ -411,6 +422,9 @@ public class ProductController {
 		model.addAttribute("Rdto", Rdto);
 		model.addAttribute("stars", stars);
 		model.addAttribute("cnt", cnt);
+		model.addAttribute("allReviews", allReviews);
+		model.addAttribute("ReviewsName", ReviewsName);
+		model.addAttribute("myName", myName);
 		return "/product/productInfo";
 	}
 
@@ -545,12 +559,31 @@ public class ProductController {
 		}
 
 		service.deleteShoplist(username);
+		service.allproductDeleteMyUsername(username);
+		service.dropUsernameProduct(username);
 		
 		return "product/deleteShoplistPro";
 	}	
 	
-	
-	
+	// 리뷰 삭제하기
+	@RequestMapping("reviewsDelete")
+	public String reviewsDelete(String productnum, String myName, Model model) {
+
+		model.addAttribute("myName", myName);
+		model.addAttribute("productnum", productnum);
+		logger.info("myName======"+myName);
+		logger.info("productnum======"+productnum);
+		return "product/reviewsDelete";
+	}		
+
+	@RequestMapping("reviewsDeletePro")
+	public String reviewsDeletePro(String productnum, String myName) {
+		service.myReviewsDelete(productnum, myName);
+
+		logger.info("myName======"+myName);
+		logger.info("productnum======"+productnum);		
+		return "product/reviewsDeletePro";
+	}	
 	
 	
 	

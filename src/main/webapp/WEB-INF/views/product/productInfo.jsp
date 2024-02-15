@@ -58,8 +58,13 @@
 		
 		function addToCart() {
 			var pdtoVal = $("#Pdto").val();
+			var selectedOptionVal = $("#Pdto").val();
+			    selectedOptionCount = selectedOptionVal.split("-")[1];
+			    
 			if ('-------' == pdtoVal) {
 				alert("상품 옵션을 선택해주세요.");
+		    } else if (parseInt(selectedOptionCount) === 0) {
+		        alert("상품 재고가 없습니다.");	
 			} else {
 				var optionnum = $("#selectedOptionNum").val();
 				var productnum = ${productnum};
@@ -79,9 +84,18 @@
 			}
 		}
 		
+	    function openDeleteWindow(productnum, myName) {
+	        // 새 창을 열기
+	        var width = 460;
+	        var height = 300;
 
+	        // 화면 중앙에 위치하도록 계산
+	        var left = (window.innerWidth - width) / 2;
+	        var top = (window.innerHeight - height) / 2;
 
-		
+	        window.open('/product/reviewsDelete?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+	    }
+				
 	</script>
 	
 	<body>
@@ -132,6 +146,7 @@
 							<c:forEach var="Pdto" items="${Pdto}">
 								<option value="${Pdto.optionnum}-${Pdto.productcount}">
 									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount}
+									<c:if test="${Pdto.productcount == 0}">(품절)</c:if>
 								</option>
 							</c:forEach>
 					</select>
@@ -153,21 +168,31 @@
 				<td>별점</td>
 				<td>작성일</td>
 				<td>content</td>
+				<td>사진</td>
+				<td>리뷰삭제</td>
 			</tr>		
 			
-			<c:forEach var="Rdto" items="${Rdto}">
+			<c:forEach var="allReviews" items="${allReviews}">
 				<tr>
-					<td>${Rdto.username}</td>
-					<td>${Rdto.optionname}</td>
+					<td>${allReviews.username}</td>
+					<td>${allReviews.optionname}</td>
 					<td>
-						<c:forEach begin="1" end="${Rdto.stars}" step="1" var="i">
+						<c:forEach begin="1" end="${allReviews.stars}" step="1" var="i">
 							<i class="fas fa-star" style="color: #ffc83d;"></i>
 						</c:forEach>
 					</td>
-					<td><fmt:formatDate value="${Rdto.regdate}" dateStyle="short" type="date"/></td>
-					<td>${Rdto.content}</td>
-				</tr>
-			</c:forEach>
+					<td><fmt:formatDate value="${allReviews.regdate}" dateStyle="short" type="date"/></td>
+					<td>${allReviews.content}</td>
+					<td>
+						<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70">
+					</td>
+					
+					<td>
+						<c:if test="${allReviews.username eq myName}">
+							<button onclick="openDeleteWindow('${productnum}', '${myName}')">리뷰 삭제</button>
+						</c:if>
+					</td>			
+			</c:forEach>  
 		</table>
 		
 		<br /><br /><br /><br /> <hr /> <br />
