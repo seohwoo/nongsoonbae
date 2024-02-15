@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
+	<main class="col-7 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
       
       		<h1>${username}님! 어서오세요.</h1><br />
       		<div class="col d-flex" >

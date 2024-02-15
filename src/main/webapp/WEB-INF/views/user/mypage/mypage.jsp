@@ -56,6 +56,7 @@
                 e.preventDefault();
                 $('.navitem').removeClass('active');
                 $('.navitem').addClass('link-dark');
+                $(this).removeClass('link-dark');
                 $(this).addClass('active');
 
                 var contentId = $(this).attr('id');
@@ -72,14 +73,34 @@
                 sessionStorage.setItem('lastClickedLink', contentId);
             });
 
-            // Retrieve and load the last clicked link on page load
+            // 새로고침해도 페이지를 기억함
             var lastClickedLink = sessionStorage.getItem('lastClickedLink');
+            var refreshing = sessionStorage.getItem('refreshing');
+            
             if (lastClickedLink) {
                 $('.navitem').removeClass('active');
                 $('.navitem').addClass('link-dark');
+                $('#' + lastClickedLink).removeClass('link-dark');
                 $('#' + lastClickedLink).addClass('active');
                 $('#content').load(lastClickedLink);
             }
+            // 페이지를 벗어나면 저장한 링크 삭제
+            if (refreshing) {
+			    // Clear the refreshing flag
+			    sessionStorage.removeItem('refreshing');
+			} else {
+			    // Clear sessionStorage when leaving mypage
+			    $(window).on('beforeunload', function() {
+			        sessionStorage.removeItem('lastClickedLink');
+			    });
+			}
+            $(document).ready(function() {
+                // Check if this is a refresh
+                if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                    // Set refreshing flag
+                    sessionStorage.setItem('refreshing', true);
+                }
+            });
         });
     </script>
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
