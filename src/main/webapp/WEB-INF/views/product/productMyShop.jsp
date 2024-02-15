@@ -14,17 +14,49 @@
     		}
 	    </style>
 	</head>
+
+	<script>
+	    function openNewWindow() {
+	        // 새 창을 열기
+	        var width = 460;
+	        var height = 300;
+	
+	        // 화면 중앙에 위치하도록 계산
+	        var left = (window.innerWidth - width) / 2;
+	        var top = (window.innerHeight - height) / 2;
+	
+	        window.open('/product/deleteShoplist', '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+	    }
+	</script>
 	
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
+		<c:if test="${status==0}">
+			<form action="/product/createProduct" method="post">
+				<h3>아직 내 상점이 없습니다. 지금 바로 개설해보세요!</h3>
+				<input type="submit" value="나의 상점 만들기">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			</form>
+		</c:if>
+		
+		<c:if test="${status!=0}">
+		
 		<div class="background"></div>
 		<div class="seller">
 			<img class="sellimg" src="/resources/file/profile/${SLdto.image}" /><br />
 				<b class="h3">${SLdto.name}</b>
 				<p>${SLdto.shopname}</p>
 				<div class="container">
+					<c:if test="${Session!=follow}">
 					<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/followPro?follow=${follow}'">
 					<input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="javascript:window.location='/chat/room" />
+					</c:if>
+					<c:if test="${Session==follow}">
+					<button class="sellbutton" onclick="openNewWindow()">상점 폐쇄하기</button>
+					<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
+					<input type="button" class="sellbutton" value="멤버쉽" onclick="javascript:window.location='/user/membership'">
+					<input type="button" class="sellbutton" value="광고신청하기" onclick="javascript:window.location='/user/adMain'">
+					</c:if>
 				</div>
 				<p class="text-muted" style="font-size: 12px;">관심 고객 수 : ${SLdto.followers}</p>
 		</div>		
@@ -145,6 +177,8 @@
 			<p>소재지 : ${address}</p>
 			<div id="map"></div>
 		</div>
+		</c:if>
+		
 		<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = {

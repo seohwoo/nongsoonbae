@@ -324,6 +324,13 @@
 	
 	
 
+	<!-- 상품 리뷰 쓴 사람 가져오기  -->
+	<select id="selectReviewsUsername" resultType="String" parameterType="String">
+		select u.username from P_${productnum}_reviews r
+    		left join users u ON u.name = r.username
+	</select>
+	
+
 	<!-- 상품 리뷰 가져오기 -->
 	<select id="selectReviewsAll" resultType="nong.soon.bae.bean.ReviewsDTO" parameterType="String">
 		select r.*, p.optionname from P_${productnum}_reviews r
@@ -424,7 +431,8 @@
  			and productnum=#{productnum} 
  			and username=#{username}	
 	</select>
-	
+
+
 </mapper>    
 
 

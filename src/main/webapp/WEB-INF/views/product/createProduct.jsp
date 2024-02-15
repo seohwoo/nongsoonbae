@@ -74,7 +74,6 @@
 	
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-		<h3>${myName} 페이지</h3>
 		<form class="form-signin" action="/product/createProductPro" method="post" id="createProduct">
 			<table width="850" border="1">
 
