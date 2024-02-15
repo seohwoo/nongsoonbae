@@ -51,15 +51,35 @@
             }
 		})
 
+
 		
+		
+		
+		
+		function addToCart() {
+			var pdtoVal = $("#Pdto").val();
+			if ('-------' == pdtoVal) {
+				alert("상품 옵션을 선택해주세요.");
+			} else {
+				var optionnum = $("#selectedOptionNum").val();
+				var productnum = ${productnum};
+				window.location = '/product/productShoppingPro?follow=${follow}&productnum=' + productnum + '&optionnum=' + $('#selectedOptionNum').val() + '&count=' + $('#count').val();
+			}
+		}
 
 		
 		function openReviewWindow() {
+			var pdtoVal= $("#Pdto").val();
+			if('-------' == pdtoVal){
+				alert("상품 옵션을 선택해주세요.");
+			}else{
 			var optionnum = $("#selectedOptionNum").val();
 			var productnum = ${productnum};
 			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=400,height=300,resizable=yes');
+			}
 		}
 		
+
 
 		
 	</script>
@@ -118,12 +138,12 @@
 				</td>
 			</tr>
 		</table>
-
+<!-- ----------- -->
 		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
 		<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
 		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-		<input type="button"  value="장바구니담기" onclick="javascript:window.location='/product/productShoppingPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val() +'&count='+$('#count').val()">
-		<button  onclick="openReviewWindow()">리뷰작성</button>	
+		<input type="button" value="장바구니담기" onclick="addToCart()">
+		<button onclick="openReviewWindow()">리뷰작성</button>	
 	
 		<br /><br /><br /><br /> <hr /> <br />
 		<table border="1" style="text-align: center;">
