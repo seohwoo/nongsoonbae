@@ -13,10 +13,22 @@
 				});
 			});
 		});
+		
+		
+		// 카테고리 선택 여부 확인 함수
+		function cate2Check() {
+		    // 선택한 카테고리 확인
+		    var selectedCategory = $("#cate2").val();
+		    // 만약 값이 "-------"이면 알림 표시
+		    if (selectedCategory === "-------") {
+		        alert("카테고리를 선택하세요.");
+		        return false; // 폼 제출 방지
+		    }
+		}		
 	</script>
 	
 	<body>
-		<select id="cate2" name="cate2">
+		<select id="cate2" name="cate2" onchange="cate2Check()">
 			<option value="-------">-------</option>
 			<c:forEach var="cate2" items="${cate2}">
 				<option value="${cate2.cate2}">${cate2.catename}</option>
