@@ -72,42 +72,47 @@
 		}); 
 	</script>
 	
-	<body>
+	<body style="min-height: 600px;">
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
-		<form class="form-signin" action="/product/createProductPro" method="post" id="createProduct">
+		<form class="form-product" action="/product/createProductPro" method="post" id="createProduct" style="margin-bottom:300px; margin-left: auto; margin-right: auto; width: 850px">
+			<h3>상점 정보 입력</h3>
 			<table width="850" border="1">
-
-			    <tr> 
+				<tr> 
 					<td width="200">상점이름</td>
 					<td width="400"> 
-						<input type="text" name="shopname" size="15" required="required">
+						<input type="text" name="shopname" class="form-control" required="required" style="width: 76%;">
 					</td>
 			    </tr>
 			    
 			    <tr> 
 					<td width="200">상점소개</td>
 					<td width="400"> 
-						<input type="text" name="shopcontent" required="required">
+						<input type="text" name="shopcontent" class="form-control" required="required" style="width: 76%;">
 					</td>
 			    </tr>
 			    <tr>
 			    	<td>
-			    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			    주소 <input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호" readonly>
-					<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
-					<input type="text" class="form-control" name="roadAddress" id="roadAddress" placeholder="도로명주소" readonly>
-					<span id="guide" class="form-control" style="color:#999;display:none"></span>
-					<input type="text" class="form-control" name="detailAddress" id="detailAddress" placeholder="상세주소" required>
-					<input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly>
+			    	주소 
+			    	</td>
+			    	<td>
+			    	<div style="width: 80%; padding-right: 10px; padding-left: 10px;">
+				    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				   		<input type="text" class="form-control" name="postcode" id="postcode" placeholder="우편번호" readonly>
+						<input type="button" class="form-control" onclick="DaumPostcode()" value="우편번호 찾기"><br>
+						<input type="text" class="form-control" name="roadAddress" id="roadAddress" placeholder="도로명주소" readonly>
+						<span id="guide" class="form-control" style="color:#999;display:none"></span>
+						<input type="text" class="form-control" name="detailAddress" id="detailAddress" placeholder="상세주소" required>
+						<input type="text" class="form-control" name="extraAddress" id="extraAddress" placeholder="참고항목" readonly>
+					</div>
 					</td>
 			    </tr>
 			   
 			    
 			    <tr> 
 					<td colspan="2" align="center"> 
-						<input type="submit" value="나의 상점 만들기" >
-						<input type="reset" name="reset" value="다시입력">
-						<input type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">
+						<input class="sellbutton" type="submit" value="나의 상점 만들기" >
+						<input class="sellbutton" type="reset" name="reset" value="다시입력">
+						<input class="sellbutton" type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">
 					</td>
 				</tr>			    
 			</table>	
