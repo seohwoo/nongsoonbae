@@ -64,6 +64,7 @@ public class AreaServiceImpl implements AreaService{
 		model.addAttribute("allCnt",allCnt);
 		model.addAttribute("pageNum",pageNum);
 	    model.addAttribute("pageSize",pageSize);
+	    model.addAttribute("sort",sort);
 	    
 	    int pageCount = allCnt / pageSize + ( allCnt % pageSize == 0 ? 0 : 1);
 		 
@@ -80,7 +81,7 @@ public class AreaServiceImpl implements AreaService{
 	}
 	
 	@Override
-	public void areaprodutlist(Model model, String area1) {//area1 상품리스트
+	public void areaprodutlist(Model model,int areaNum, int pageNum,String area1,String sort) {//area1 상품리스트
 		int cnt = mapper.productCnt(Integer.parseInt(area1));
 		List<AllProductDTO> productlist = Collections.EMPTY_LIST ;
 		if(cnt>0){
