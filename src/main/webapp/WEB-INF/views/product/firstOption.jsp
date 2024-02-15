@@ -5,11 +5,11 @@
     $(function () {
         $("#option").on("click", function () {
             $("#op").append("<div class='optionContainer'>" +
-                "<input type='text' name='optionname' placeholder='상품명' required />" +
-                "<input type='number' name='optionunit' placeholder='단위' required />" +
+                "<input type='text' name='optionname' placeholder='상품명' required='required' />" +
+                "<input type='number' name='optionunit' placeholder='단위' required='required' />" +
                 "${catedto.unit}" +
-                "<input type='number' name='optiontotalprice' placeholder='상품가격' required />" +
-                "<input type='number' name='optionProductCount' placeholder='상품재고' required />" +
+                "<input type='number' name='optiontotalprice' placeholder='상품가격' required='required' />" +
+                "<input type='number' name='optionProductCount' placeholder='상품재고' required='required' />" +
                 "<br />" +
                 "<button type='button' class='removeOptionBtn'>삭제</button>" +
                 "</div>");
@@ -30,10 +30,12 @@
 <input type="button" value="추가" id="option" >
 <div id="op"></div>
 
-<input type="text" name="optionname" placeholder="상품명" /> 			
-<input type="number" name="optionunit" placeholder="단위" />
+<input type="text" name="optionname" placeholder="상품명" required="required" /> 			
+<input type="number" name="optionunit" placeholder="단위" required="required" />
 ${catedto.unit} 
 <input type="hidden" name="optionamount" value="${catedto.amount}"/>
 <input type="hidden" name="optionrealunit" value="${catedto.unit}"/><br />
-<input type="number" name="optiontotalprice" placeholder="상품가격" />
-<input type="number" name="optionProductCount" placeholder="상품재고" /> <br />
+<input type="number" name="optiontotalprice" placeholder="상품가격" required="required" />
+<input type="number" name="optionProductCount" placeholder="상품재고" required="required" /> <br />
+
+

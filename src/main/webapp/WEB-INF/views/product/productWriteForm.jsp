@@ -123,7 +123,22 @@
 		});
 	});	
 	
- 	
+
+
+	// 상품 등록 버튼 클릭 시 실행되는 함수
+	function confirmProductRegistration() {
+	    // 선택한 카테고리 확인
+	    var selectedCategory1 = $("#cate1").val();
+	    var selectedCategory2 = $("#cate2").val();
+	    var selectedCategory3 = $("#cate3").val();
+
+	    // 카테고리 1이나 카테고리 2 중 하나라도 "-------"이면 알림 표시 및 폼 제출 방지
+	    if (selectedCategory1 === "-------" || selectedCategory2 === "-------" || selectedCategory3 === "-------") {
+	        alert("카테고리를 선택하세요.");
+	        return false; // 폼 제출 방지
+	    }
+	}	
+	
 	</script>
 
 	<body>
@@ -148,7 +163,7 @@
 					</td>
 			    </tr>
 			    
-			    <textarea id="summernote" name="content"></textarea>
+			    <textarea id="summernote" name="content" required="required"></textarea>
 		
 			    <tr> 
 				    <td width="200">옵션</td>
@@ -162,7 +177,7 @@
 			    
 			    <tr> 
 					<td colspan="2" align="center"> 
-						<input type="submit" name="confirm" value="상품등록">
+						<input type="submit" name="confirm" value="상품등록" onclick="return confirmProductRegistration()"">
 						<input type="reset" name="reset" value="다시입력">
 						<input type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">
 					</td>
