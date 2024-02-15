@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 public class CustomLoginHandler implements AuthenticationSuccessHandler {
@@ -43,7 +44,7 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 		String rdir = "/nsb/main";
 		if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
             rdir = "/admin/usercheck";
-        } else if (authorities.contains(new SimpleGrantedAuthority("MEMBER"))) {
+        } else if (authorities.contains(new SimpleGrantedAuthority("USER"))) {
             rdir = "/user/mypage";
         } else if(authorities.contains(new SimpleGrantedAuthority("DELETEUSER"))) {
         	rdir = "/member/logout?error=true";

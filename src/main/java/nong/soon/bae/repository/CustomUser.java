@@ -25,8 +25,6 @@ public class CustomUser extends User {
 	public CustomUser(UsersDTO dto) {
 		super(dto.getUsername(), dto.getPassword(), dto.getGrade().stream().map(grade -> 
 		new SimpleGrantedAuthority(grade.getGrade())).collect(Collectors.toList()));
-		logger.info("=========CustomUser=========");
 		this.dto = dto;
-		logger.info("========="+dto+"=========");
 	}
 }

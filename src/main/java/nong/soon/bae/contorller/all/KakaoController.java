@@ -44,7 +44,7 @@ public class KakaoController {
     @SuppressWarnings("null")
 	@RequestMapping(value = "/login/oauth2/code/kakao", method = RequestMethod.GET)
     public String redirectkakao(@RequestParam String code, HttpSession session) throws IOException {
-        System.out.println("code:: " + code);
+        //System.out.println("code:: " + code);
 
         // 접속토큰 get
         String kakaoToken = kakaoService.getReturnAccessToken(code);
@@ -62,7 +62,7 @@ public class KakaoController {
         String birth = birthyear.substring(2)+birthday;
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();	//password 인코딩
         String password = passwordEncoder.encode(email);
-        System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+password);
+        //System.out.println(""+username+","+name+","+email+","+gender+","+birth+","+password);
 
         // 분기
         UsersDTO usersDTO = new UsersDTO();
@@ -92,13 +92,13 @@ public class KakaoController {
         CustomUser user = new CustomUser(vo);
         
         List<GrantedAuthority> roles = new ArrayList<>(1);
-        String roleStr = grade.equals("ADMIN") ? "ADMIN" : "MEMBER";
         if(grade=="ADMIN") {
-        	roles.add(new SimpleGrantedAuthority("ADMIN"));
+        	roles.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }else if(grade == "DELETEUSER") {
+        	roles.add(new SimpleGrantedAuthority("ROLE_DELETEUSER"));
         }else {
-        	roles.add(new SimpleGrantedAuthority("MEMBER"));
+        	roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
-        roles.add(new SimpleGrantedAuthority(roleStr));
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, roles);
         SecurityContextHolder.getContext().setAuthentication(auth);
         
@@ -108,7 +108,7 @@ public class KakaoController {
         if(status==1) {	//회원가입 시
         	return "redirect:/user/welcome";
         }else {			//로그인
-        	return "redirect:/main/main";
+        	return "redirect:/user/mypage";
         }
     }
 

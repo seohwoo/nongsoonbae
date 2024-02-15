@@ -361,7 +361,7 @@ public class ProductController {
 		
 		// 상품 리뷰 수
 		int cnt = service.selectReviewsCount(productnum);
-		// 상품 리뷰 가져오기
+		// 상품 리뷰 가져오기 
 		List<ReviewsDTO> Rdto = service.selectReviewsAll(follow, productnum);
 
 		int totalStars = 0;
