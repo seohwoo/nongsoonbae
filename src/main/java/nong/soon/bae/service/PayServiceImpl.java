@@ -103,36 +103,7 @@ public class PayServiceImpl implements PayService{
 		}
 	}
 	
-	// Á¤·æ Ãß°¡
-	@Override
-	public void isproductSuccess102(String follow) {
-		PaymentDTO dto = new PaymentDTO();
-		paymentMap.put("username", follow);
-		List<String> sellerList = Collections.EMPTY_LIST;
-		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
-		sellerList = mapper.findAddCartSeller(paymentMap);
-		int addCartCnt = mapper.findAddCartCnt(paymentMap);
-		int cnt = 0;
-		for (String seller : sellerList) {
-			paymentMap.put("seller", seller);
-			cartList = mapper.findAddCart(paymentMap);
-			for (MyPageDTO cartDTO : cartList) {
-				dto.setUsername(cartDTO.getUsername());
-				dto.setFollow(cartDTO.getFollow());
-				dto.setProductnum(cartDTO.getProductnum());
-				dto.setOptionnum(cartDTO.getOptionnum());
-				dto.setRealprice(cartDTO.getCount() * cartDTO.getPrice());
-				dto.setTotalprice(dto.getRealprice());
-				dto.setQuantity(cartDTO.getCount());
-				dto.setSid("simple payment");
-				cnt += mapper.insertUsersPayment102(dto);
-			}
-		}
-		if(cnt == addCartCnt) {
-			mapper.deleteUsersAddCart(follow);
-		}
-	}
-	//
+	
 	@Override
 	public int isMembershipSuccess(String username, String sid) {
 		PaymentDTO dto = new PaymentDTO();

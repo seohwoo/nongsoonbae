@@ -80,9 +80,8 @@ public class PayController {
 			for (MyPageDTO MPdto : MPdtoList) {
 				int cnt = MPdto.getCount();
 				String follow = MPdto.getFollow();
-				productService.updateProductCount(follow, cnt);
-				//판매자의 판매목록
-				service.isproductSuccess102(follow);
+				String optionnum = MPdto.getOptionnum();
+				productService.updateProductCount(follow, cnt, optionnum);
 			}
 			//내 구매목록 기록
 			service.isproductSuccess(username);	

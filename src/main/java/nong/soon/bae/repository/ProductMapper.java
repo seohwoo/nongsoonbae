@@ -204,7 +204,8 @@ public interface ProductMapper {
 	// 상품 판매시 재고 업데이트	
 	public List<MyPageDTO> selectMypage3(String username);	
 	public void updateProductCount(@Param("follow") String follow, 
-			 					   @Param("cnt") int cnt);
+			 					   @Param("cnt") int cnt,
+			 					  @Param("optionnum") String optionnum);
 	
 	// 상품 조회수 증가
 	public void updateReadcntPlus(String productnum);

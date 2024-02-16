@@ -145,8 +145,8 @@
 						<option value="-------">-------</option>
 							<c:forEach var="Pdto" items="${Pdto}">
 								<option value="${Pdto.optionnum}-${Pdto.productcount}">
-									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount}
-									<c:if test="${Pdto.productcount == 0}">(품절)</c:if>
+									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount - Pdto.sellcount}
+									<c:if test="${(Pdto.productcount - Pdto.sellcount) == 0}">(품절)</c:if>
 								</option>
 							</c:forEach>
 					</select>

@@ -387,8 +387,8 @@ public class ProductServiceImpl implements ProductService {
    }
 
    @Override
-   public void updateProductCount(String follow, int cnt) {
-      mapper.updateProductCount(follow, cnt);
+   public void updateProductCount(String follow, int cnt, String optionnum) {
+      mapper.updateProductCount(follow, cnt, optionnum);
    }
 
    // 상품 조회수 증가
