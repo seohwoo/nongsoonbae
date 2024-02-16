@@ -405,7 +405,7 @@
 	</select>
 	
 	<update id="updateProductCount">
-		update ${follow}_product set productcount= productcount-#{cnt} , sellcount=sellcount+#{cnt}
+		update ${follow}_product set sellcount=sellcount+#{cnt}
 	</update>
 	
 	<!--  상품 조회수 증가 -->

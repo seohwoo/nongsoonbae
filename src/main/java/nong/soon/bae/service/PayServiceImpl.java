@@ -24,14 +24,13 @@ public class PayServiceImpl implements PayService{
 	@Autowired
 	private HashMap<String, String> paymentMap;
 	@Autowired
-	private PaymentDTO dto;
-	@Autowired
     private TaskScheduler taskScheduler;
 	@Autowired
 	private SimpleDateFormat simpleDateFormat;
 	
 	@Override
 	public PaymentDTO isProductReady(String username) {
+		PaymentDTO dto = new PaymentDTO();
 		paymentMap.put("username", username);
 		int cnt = mapper.findAddCartCnt(paymentMap);
 		List<String> sellerList = Collections.EMPTY_LIST;
@@ -61,6 +60,7 @@ public class PayServiceImpl implements PayService{
 	}
 	@Override
 	public PaymentDTO isMembershipReady(String username) {
+		PaymentDTO dto = new PaymentDTO();
 		paymentMap.put("username", username);
 		int first = mapper.isFirstMembershipCnt(paymentMap);
 			
@@ -75,6 +75,7 @@ public class PayServiceImpl implements PayService{
 	}
 	@Override
 	public void isproductSuccess(String username) {
+		PaymentDTO dto = new PaymentDTO();
 		paymentMap.put("username", username);
 		List<String> sellerList = Collections.EMPTY_LIST;
 		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
@@ -85,9 +86,7 @@ public class PayServiceImpl implements PayService{
 			paymentMap.put("seller", seller);
 			cartList = mapper.findAddCart(paymentMap);
 			for (MyPageDTO cartDTO : cartList) {
-				// Á¤·æ Ãß°¡
 				dto.setFollow(cartDTO.getFollow());
-				//
 				dto.setUsername(cartDTO.getUsername());
 				dto.setProductnum(cartDTO.getProductnum());
 				dto.setOptionnum(cartDTO.getOptionnum());
@@ -95,19 +94,20 @@ public class PayServiceImpl implements PayService{
 				dto.setTotalprice(dto.getRealprice());
 				dto.setQuantity(cartDTO.getCount());
 				dto.setSid("simple payment");
+				cnt += mapper.insertUsersPayment(dto);
+				mapper.insertUsersPayment102(dto);
 			}
-			cnt += mapper.insertUsersPayment(dto);
-			
-			if(cnt == addCartCnt) {
-				mapper.deleteUsersAddCart(username);
-			}
+		}
+		if(cnt == addCartCnt) {
+			mapper.deleteUsersAddCart(username);
 		}
 	}
 	
 	// Á¤·æ Ãß°¡
 	@Override
 	public void isproductSuccess102(String follow) {
-		paymentMap.put("follow", follow);
+		PaymentDTO dto = new PaymentDTO();
+		paymentMap.put("username", follow);
 		List<String> sellerList = Collections.EMPTY_LIST;
 		List<MyPageDTO> cartList = Collections.EMPTY_LIST;
 		sellerList = mapper.findAddCartSeller(paymentMap);
@@ -117,25 +117,25 @@ public class PayServiceImpl implements PayService{
 			paymentMap.put("seller", seller);
 			cartList = mapper.findAddCart(paymentMap);
 			for (MyPageDTO cartDTO : cartList) {
-				dto.setFollow(cartDTO.getUsername());
-				dto.setUsername(cartDTO.getFollow());
+				dto.setUsername(cartDTO.getUsername());
+				dto.setFollow(cartDTO.getFollow());
 				dto.setProductnum(cartDTO.getProductnum());
 				dto.setOptionnum(cartDTO.getOptionnum());
 				dto.setRealprice(cartDTO.getCount() * cartDTO.getPrice());
 				dto.setTotalprice(dto.getRealprice());
 				dto.setQuantity(cartDTO.getCount());
 				dto.setSid("simple payment");
+				cnt += mapper.insertUsersPayment102(dto);
 			}
-			cnt += mapper.insertUsersPayment102(dto);
-			
-			if(cnt == addCartCnt) {
-				mapper.deleteUsersAddCart(follow);
-			}
+		}
+		if(cnt == addCartCnt) {
+			mapper.deleteUsersAddCart(follow);
 		}
 	}
 	//
 	@Override
 	public int isMembershipSuccess(String username, String sid) {
+		PaymentDTO dto = new PaymentDTO();
 		dto.setUsername(username);
 		dto.setProductnum("membership");
 		dto.setOptionnum("membership");
@@ -148,7 +148,6 @@ public class PayServiceImpl implements PayService{
 	@Override
 	public void changeGrade(String username) {
 		String grade = mapper.isMembership(username).getGrade().get(0).getGrade();
-		System.out.println(grade);
 		String gradename = "¸â¹ö½±";
 		gradename = mapper.findGrade(gradename).getGrade();
 		if(!grade.equals(gradename)) {

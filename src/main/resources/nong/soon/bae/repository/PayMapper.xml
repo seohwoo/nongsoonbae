@@ -3,13 +3,13 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nong.soon.bae.repository.PayMapper">
-	<select id="findAddCartCnt" parameterType="String" resultType="int">
+	<select id="findAddCartCnt" parameterType="hashmap" resultType="int">
 		select count(*) from ${username}_mypage where wishstatus=3
 	</select>
-	<select id="findAddCartSeller" parameterType="String" resultType="String">
+	<select id="findAddCartSeller" parameterType="hashmap" resultType="String">
 		select distinct follow from ${username}_mypage where wishstatus=3
 	</select>
-	<select id="findAddCart" resultType="myPageDTO">
+	<select id="findAddCart" parameterType="hashmap" resultType="myPageDTO">
 		SELECT cart.*, pl.price, pl.optionname
 		FROM ${username}_mypage cart
 		JOIN ${seller}_product pl 
@@ -31,7 +31,7 @@
 	<!-- 정룡 추가 -->
 	<insert id="insertUsersPayment102" parameterType="paymentDTO">
 		insert into ${follow}_payment(username, follow, productnum, optionnum, realprice, totalprice, quantity, sid, status)
-		values(#{username}, #{follow}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid}, 102)
+		values(#{follow}, #{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid}, 102)
 	</insert>
 	<!--  -->
 	

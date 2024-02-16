@@ -76,13 +76,16 @@ public class PayController {
 			
 			// 정룡
 			// 업데이트
-			int cnt = kakaoApprove.getQuantity();
-			MyPageDTO MPdto = productService.selectMypage3(username);
-			String follow = MPdto.getFollow();
-			productService.updateProductCount(follow, cnt);
-			service.isproductSuccess102(follow);
-			//
-			service.isproductSuccess(username);
+			List<MyPageDTO> MPdtoList = productService.selectMypage3(username);
+			for (MyPageDTO MPdto : MPdtoList) {
+				int cnt = MPdto.getCount();
+				String follow = MPdto.getFollow();
+				productService.updateProductCount(follow, cnt);
+				//판매자의 판매목록
+				service.isproductSuccess102(follow);
+			}
+			//내 구매목록 기록
+			service.isproductSuccess(username);	
 		}
 		model.addAttribute("kakaoApprove", kakaoApprove);
 		model.addAttribute("amount", kakaoApprove.getAmount());

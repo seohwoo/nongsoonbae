@@ -202,7 +202,7 @@ public interface ProductMapper {
 
 	
 	// 상품 판매시 재고 업데이트	
-	public MyPageDTO selectMypage3(String username);	
+	public List<MyPageDTO> selectMypage3(String username);	
 	public void updateProductCount(@Param("follow") String follow, 
 			 					   @Param("cnt") int cnt);
 	
