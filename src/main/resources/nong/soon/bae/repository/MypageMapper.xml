@@ -46,7 +46,7 @@
 		<![CDATA[
 			select m.count, i.filename, p.optionname, p.price, p.optionnum, s.shopname from
 			(select * from ${follow}_product where optionnum=#{optionnum}) p
-			left join ${follow}_images i on p.productnum=i.productnum AND i.filename LIKE '%\_1%' escape '\'
+			left join ${follow}_images i on p.productnum=i.productnum AND i.filename LIKE '%\_1%' escape '\' and i.filename NOT LIKE '%P\_%' escape '\'
 			left join ${username}_mypage m on m.follow=p.username
 			left join shoplist s on s.username=p.username
 		]]>

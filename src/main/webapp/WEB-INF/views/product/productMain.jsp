@@ -25,7 +25,7 @@
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<div class="table" style="height: 800px">
 			<c:if test="${status==0}">
-				<form action="/product/createProduct?myName=${myName}" method="post">
+				<form action="/product/createProduct?myName=${myName}" method="post" style="min-height: 600px;">
 					<h3>아직 내 상점이 없습니다. 지금 바로 개설해보세요!</h3>
 					<input type="submit" value="나의 상점 만들기">
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

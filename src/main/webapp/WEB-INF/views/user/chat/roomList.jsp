@@ -18,18 +18,20 @@
 		<c:if test="${cnt>0}">
 			<table>
 				<tr>
-					<td>채팅방명</td>
+					<td><h3 style="align-items: center; padding: 10px;">채팅방 리스트</h3></td>
 				</tr>
 				<c:forEach var="dto" items="${chatList}">
 					<tr>
 						<td>
-							<img src="/resources/file/profile/${dto.sendname_img}" width="100px" height="100px" />
-							<br />
-							<a href="room?chatno=${dto.chatno}">${dto.sendname_name}</a>
-							<br />
-							<c:if test="${dto.noread>0}">
-								<span>${dto.noread}</span>
-							</c:if>
+							<div class="roomcell">
+								<img src="/resources/file/profile/${dto.sendname_img}" width="100px" height="100px" />
+								<br />
+								<a href="room?chatno=${dto.chatno}">${dto.sendname_name}</a>
+								<br />
+								<c:if test="${dto.noread>0}">
+									<span>${dto.noread}</span>
+								</c:if>
+							</div>
 						</td>
 					</tr>
 				</c:forEach>

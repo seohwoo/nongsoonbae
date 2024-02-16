@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-	<main class="col-9 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
+	<main class="col-7 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
       
       		<h1>${username}님! 어서오세요.</h1><br />
       		<div class="col d-flex" >
@@ -21,7 +21,7 @@
 		          <div class="mb-1 text-muted"><hr></div>
 		          <div></div>
 		          <p class="card-text mb-auto">개인 상점 개설부터 관리까지. 지금 바로 농순배에서 직거래 시작.</p>
-		          <a href="../product/productMain">이동하기 ></a>
+		          <a href="../product/productMyShop?username=${username}">이동하기 ></a>
 		        </div>
       		</div>
       <a class="mt-5 mb-3 text-muted" href="/user/delete">회원 탈퇴</a>

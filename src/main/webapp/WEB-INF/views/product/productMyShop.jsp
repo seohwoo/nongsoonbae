@@ -14,17 +14,49 @@
     		}
 	    </style>
 	</head>
+
+	<script>
+	    function openNewWindow() {
+	        // 새 창을 열기
+	        var width = 460;
+	        var height = 300;
+	
+	        // 화면 중앙에 위치하도록 계산
+	        var left = (window.innerWidth - width) / 2;
+	        var top = (window.innerHeight - height) / 2;
+	
+	        window.open('/product/deleteShoplist', '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+	    }
+	</script>
 	
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
+		<c:if test="${status==0}">
+			<form action="/product/createProduct" method="post" style="min-height: 500px;">
+				<h3>아직 내 상점이 없습니다. 지금 바로 개설해보세요!</h3>
+				<input type="submit" value="나의 상점 만들기">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			</form>
+		</c:if>
+		
+		<c:if test="${status!=0}">
+		
 		<div class="background"></div>
 		<div class="seller">
 			<img class="sellimg" src="/resources/file/profile/${SLdto.image}" /><br />
 				<b class="h3">${SLdto.name}</b>
 				<p>${SLdto.shopname}</p>
 				<div class="container">
+					<c:if test="${Session!=follow}">
 					<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/followPro?follow=${follow}'">
 					<input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="javascript:window.location='/chat/room" />
+					</c:if>
+					<c:if test="${Session==follow}">
+					<button class="sellbutton" onclick="openNewWindow()">상점 폐쇄하기</button>
+					<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
+					<input type="button" class="sellbutton" value="멤버쉽" onclick="javascript:window.location='/user/membership'">
+					<input type="button" class="sellbutton" value="광고신청하기" onclick="javascript:window.location='/user/adMain'">
+					</c:if>
 				</div>
 				<p class="text-muted" style="font-size: 12px;">관심 고객 수 : ${SLdto.followers}</p>
 		</div>		
@@ -36,115 +68,38 @@
 				</tr>
 				<tr>
 					<td>판매 상품</td>
+					
 					<td colspan="5">
-						
+					<c:forEach var="APdto" items="${APdto}"> 
 							<div class="p-4" style="width: 900px;">
 						      <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
 						        <div class="col p-4 d-flex flex-column position-static">
-						          <strong class="d-inline-block mb-2 text-primary-emphasis">가격</strong>
-						          <h3 class="mb-0">상품이름</h3>
-						          <div class="mb-1 text-body-secondary">상품넘버</div></br>
-						          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+						          <strong class="d-inline-block mb-2 text-primary-emphasis">${APdto.productnum}</strong>
+						          <h3 class="mb-0">${APdto.productname}</h3>
+						          <div class="mb-1 text-body-secondary">${APdto.price}원</div></br>
+						          <a href="/product/productInfo?productnum=${APdto.productnum}&follow=${APdto.username}" class="icon-link gap-1 icon-link-hover stretched-link">
 						            상품 페이지 이동 >
 						          </a>
 						        </div>
 						        <div class="col-auto d-none d-lg-block">
-						          <svg class="bd-placeholder-img" width="200" height="190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+						          <img src="/resources/realImage/${APdto.filename}" width="200" height="190" />
 						        </div>
 						      </div>
 						    </div>
-						
-						<div class="p-4" style="width: 900px;">
-						      <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
-						        <div class="col p-4 d-flex flex-column position-static">
-						          <strong class="d-inline-block mb-2 text-primary-emphasis">가격</strong>
-						          <h3 class="mb-0">상품이름</h3>
-						          <div class="mb-1 text-body-secondary">상품넘버</div></br>
-						          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-						            상품 페이지 이동 >
-						          </a>
-						        </div>
-						        <div class="col-auto d-none d-lg-block">
-						          <svg class="bd-placeholder-img" width="200" height="190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-						        </div>
-						      </div>
-						    </div>
-						    <div class="p-4" style="width: 900px;">
-						      <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
-						        <div class="col p-4 d-flex flex-column position-static">
-						          <strong class="d-inline-block mb-2 text-primary-emphasis">가격</strong>
-						          <h3 class="mb-0">상품이름</h3>
-						          <div class="mb-1 text-body-secondary">상품넘버</div></br>
-						          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-						            상품 페이지 이동 >
-						          </a>
-						        </div>
-						        <div class="col-auto d-none d-lg-block">
-						          <svg class="bd-placeholder-img" width="200" height="190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-						        </div>
-						      </div>
-						    </div>
-						    <div class="p-4" style="width: 900px;">
-						      <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
-						        <div class="col p-4 d-flex flex-column position-static">
-						          <strong class="d-inline-block mb-2 text-primary-emphasis">가격</strong>
-						          <h3 class="mb-0">상품이름</h3>
-						          <div class="mb-1 text-body-secondary">상품넘버</div></br>
-						          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-						            상품 페이지 이동 >
-						          </a>
-						        </div>
-						        <div class="col-auto d-none d-lg-block">
-						          <svg class="bd-placeholder-img" width="200" height="190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-						        </div>
-						      </div>
-						    </div>
-						    <div class="p-4" style="width: 900px;">
-						      <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
-						        <div class="col p-4 d-flex flex-column position-static">
-						          <strong class="d-inline-block mb-2 text-primary-emphasis">가격</strong>
-						          <h3 class="mb-0">상품이름</h3>
-						          <div class="mb-1 text-body-secondary">상품넘버</div></br>
-						          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-						            상품 페이지 이동 >
-						          </a>
-						        </div>
-						        <div class="col-auto d-none d-lg-block">
-						          <svg class="bd-placeholder-img" width="200" height="190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-						        </div>
-						      </div>
-						    </div>
+						    </c:forEach>
 					</td>	
+					
 				</tr>
 				
-				<c:forEach var="APdto" items="${APdto}"> 
-					<tr>
-						<td>
-							<img src="/resources/realImage/${APdto.filename}">
-						</td>
-						<td>
-							<a href="/product/productInfo?productnum=${APdto.productnum}&follow=${APdto.username}">${APdto.productnum}</a>	
-						</td>										
-						<td>
-							${APdto.productname}	
-						</td>
-						<td>
-							${APdto.price}
-						</td>
-						<td>
-							${APdto.wishcnt}
-						</td>
-						<td>
-							${APdto.readcnt}
-						</td>
-					</tr>
-				</c:forEach>
+				
 			</table>
 		</div>
 		<div class="map">
 			<p>소재지 : ${address}</p>
 			<div id="map"></div>
 		</div>
+		</c:if>
+		
 		<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = {

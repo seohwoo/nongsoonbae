@@ -426,6 +426,39 @@
  			and productnum=#{productnum} 
  			and username=#{username}	
 	</select>
+
+	<!-- 상점 폐쇄할 때 allproduct 상품 삭제 -->
+	<delete id="allproductDeleteMyUsername" parameterType="String">
+		delete from allproduct where username=#{username}
+	</delete>
+
+	<!-- 상점 폐쇄할 때 username_Product 드랍 -->
+	<update id="dropUsernameProduct" parameterType="String">
+		drop table ${username}_product
+	</update>
+
+
+	<!-- 상품 리뷰 쓴 사람 가져오기  -->
+	<select id="selectReviewsUsername" resultType="String" parameterType="String">
+		select u.username from P_${productnum}_reviews r
+    		left join users u ON u.name = r.username
+	</select>
+
+	<!-- 리뷰 쓴 사람들 가져오기 최종 -->
+	<select id="ReviewsInfoFinal" resultType="nong.soon.bae.bean.ReviewsDTO" parameterType="String">
+		select r.*, p.optionname, i.filename, u.username from P_${productnum}_reviews r
+            left join users u ON u.name = r.username
+          left join ${follow}_product p ON r.optionnum = p.optionnum
+            left join (SELECT productnum, filename FROM ${usernames}_images
+          WHERE filename LIKE '%\_1%' escape '\' ORDER BY filename ASC)
+            i ON r.productnum = i.productnum
+          where r.productnum=#{productnum} and u.username=#{usernames}
+	</select>
+	
+	<!-- 리뷰 삭제하기 -->
+	<delete id="myReviewsDelete" parameterType="String">
+		delete from  P_${productnum}_reviews where username=#{myName}
+	</delete>
 	
 </mapper>    
 

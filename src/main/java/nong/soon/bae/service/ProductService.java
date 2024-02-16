@@ -198,6 +198,21 @@ public interface ProductService {
 	
 	// 오늘 상품 조회한 유저 찾기
 	public int selectTodayReadcntUsername(String username, String productnum, String todaydate);
+
+	// 상점 폐쇄할 때 allproduct 상품 삭제
+	public void allproductDeleteMyUsername(String username);
+	
+	// 상점 폐쇄할 때 username_Product 드랍
+	public void dropUsernameProduct(String username);
+	
+	// 상품 리뷰 쓴 사람 가져오기
+	public List<String> selectReviewsUsername(String productnum);
+	
+	// 리뷰 쓴 사람들 가져오기 최종
+	public List<ReviewsDTO> ReviewsInfoFinal(String productnum, String follow, String usernames);
+
+	// 리뷰 삭제하기
+	public void myReviewsDelete(String productnum, String myName);
 }
 
 

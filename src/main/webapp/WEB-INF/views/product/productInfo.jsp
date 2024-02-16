@@ -12,8 +12,12 @@
 
 	<script>
 		$(function() {
+			var selectedOptionCount;
+			
 			$("#Pdto").on("change", function() {
-				var selectedOptionNum = $("#Pdto").val();
+				var selectedOptionVal = $("#Pdto").val();
+				var selectedOptionNum = selectedOptionVal.split("-")[0];
+					selectedOptionCount = selectedOptionVal.split("-")[1];
 				$("#selectedOptionNum").val(selectedOptionNum);
 				
 				var selectedOptionText = $("#Pdto option:selected").text();
@@ -22,15 +26,21 @@
             	// 증가, 감소 버튼 추가
                 var increaseButton = $("<button>").text("+").click(increaseQuantity);
                 var decreaseButton = $("<button>").text("-").click(decreaseQuantity);
-                var numberText = $("<input type='text' name='count' id='count' value='1'>");
+                var numberText = $("<input type='text' name='count' id='count' value='1' readonly>");
                 
                 newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton));
                 $("#finish").append(newRow);
 			})
 			
 			function increaseQuantity(e) {
-				e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
-            }
+				
+				if(parseInt(selectedOptionCount) > e.target.nextElementSibling.value) {
+					e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
+				}else{
+					alert("재고 수가 부족합니다.");
+				}
+			}
+			
 
             function decreaseQuantity(e) {
             	count = parseInt(e.target.previousElementSibling.value);
@@ -40,12 +50,52 @@
             var number = e.target.nextElementSibling.value;
             }
 		})
+
+
+		
+		
+		
+		
+		function addToCart() {
+			var pdtoVal = $("#Pdto").val();
+			var selectedOptionVal = $("#Pdto").val();
+			    selectedOptionCount = selectedOptionVal.split("-")[1];
+			    
+			if ('-------' == pdtoVal) {
+				alert("상품 옵션을 선택해주세요.");
+		    } else if (parseInt(selectedOptionCount) === 0) {
+		        alert("상품 재고가 없습니다.");	
+			} else {
+				var optionnum = $("#selectedOptionNum").val();
+				var productnum = ${productnum};
+				window.location = '/product/productShoppingPro?follow=${follow}&productnum=' + productnum + '&optionnum=' + $('#selectedOptionNum').val() + '&count=' + $('#count').val();
+			}
+		}
+
 		
 		function openReviewWindow() {
+			var pdtoVal= $("#Pdto").val();
+			if('-------' == pdtoVal){
+				alert("상품 옵션을 선택해주세요.");
+			}else{
 			var optionnum = $("#selectedOptionNum").val();
 			var productnum = ${productnum};
 			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=400,height=300,resizable=yes');
+			}
 		}
+		
+	    function openDeleteWindow(productnum, myName) {
+	        // 새 창을 열기
+	        var width = 460;
+	        var height = 300;
+
+	        // 화면 중앙에 위치하도록 계산
+	        var left = (window.innerWidth - width) / 2;
+	        var top = (window.innerHeight - height) / 2;
+
+	        window.open('/product/reviewsDelete?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+	    }
+				
 	</script>
 	
 	<body>
@@ -94,19 +144,20 @@
 					<select id="Pdto" name="Pdto">
 						<option value="-------">-------</option>
 							<c:forEach var="Pdto" items="${Pdto}">
-								<option value="${Pdto.optionnum}">
+								<option value="${Pdto.optionnum}-${Pdto.productcount}">
 									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount}
+									<c:if test="${Pdto.productcount == 0}">(품절)</c:if>
 								</option>
 							</c:forEach>
 					</select>
 				</td>
 			</tr>
 		</table>
-
+<!-- ----------- -->
 		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
 		<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
 		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-		<input type="button" value="장바구니담기" onclick="javascript:window.location='/product/productShoppingPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val() +'&count='+$('#count').val()">
+		<input type="button" value="장바구니담기" onclick="addToCart()">
 		<button onclick="openReviewWindow()">리뷰작성</button>	
 	
 		<br /><br /><br /><br /> <hr /> <br />
@@ -117,21 +168,31 @@
 				<td>별점</td>
 				<td>작성일</td>
 				<td>content</td>
+				<td>사진</td>
+				<td>리뷰삭제</td>
 			</tr>		
 			
-			<c:forEach var="Rdto" items="${Rdto}">
+			<c:forEach var="allReviews" items="${allReviews}">
 				<tr>
-					<td>${Rdto.username}</td>
-					<td>${Rdto.optionname}</td>
+					<td>${allReviews.username}</td>
+					<td>${allReviews.optionname}</td>
 					<td>
-						<c:forEach begin="1" end="${Rdto.stars}" step="1" var="i">
+						<c:forEach begin="1" end="${allReviews.stars}" step="1" var="i">
 							<i class="fas fa-star" style="color: #ffc83d;"></i>
 						</c:forEach>
 					</td>
-					<td><fmt:formatDate value="${Rdto.regdate}" dateStyle="short" type="date"/></td>
-					<td>${Rdto.content}</td>
-				</tr>
-			</c:forEach>
+					<td><fmt:formatDate value="${allReviews.regdate}" dateStyle="short" type="date"/></td>
+					<td>${allReviews.content}</td>
+					<td>
+						<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70">
+					</td>
+					
+					<td>
+						<c:if test="${allReviews.username eq myName}">
+							<button onclick="openDeleteWindow('${productnum}', '${myName}')">리뷰 삭제</button>
+						</c:if>
+					</td>			
+			</c:forEach>  
 		</table>
 		
 		<br /><br /><br /><br /> <hr /> <br />
