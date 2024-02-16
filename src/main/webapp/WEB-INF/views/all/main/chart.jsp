@@ -17,16 +17,20 @@
 		    data: {
 		      labels: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		      datasets: [{
-		        label: '${lastYear}',
-		        data: ${lastlist},
+		        label: '${oldestYear}',
+		        data: ${oldestlist},
 		        borderWidth: 1
 		      },
+		      {
+		          label: '${lastYear}',
+		          data: ${lastlist},
+		          borderWidth: 1
+		        },
 		      {
 		          label: '${thisYear}',
 		          data: ${thislist},
 		          borderWidth: 1
-		        }
-		      
+		        },
 		      ]
 		    },
 		    options: {

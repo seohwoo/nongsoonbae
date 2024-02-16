@@ -38,7 +38,7 @@
 		select count(*) from chart where name=#{catename}
 	</select>
 	
-	<select id="productChart" parameterType="hashmap" resultType="double">
+	<select id="productChart" parameterType="hashmap" resultType="String">
 		select avg(avgprice) from chart where regdate like #{keyword} and name=#{catename}
 	</select>
 	

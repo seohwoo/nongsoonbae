@@ -23,7 +23,7 @@ public interface MainMapper {
 	/** 해당 카테고리의 정보가 차트에 있는지 확인*/
 	public int isChart(HashMap<String, String> map);
 	/** 한달기준 농수산물의 평균 가격 차트*/
-	public double productChart(HashMap<String, String> map);
+	public String productChart(HashMap<String, String> map);
 	/** 해당 카테고리 중 가장 높은 평균 가격 */
 	public int maxAvgPrice(String catename);
 	/** 대분류 안에 있는 소분류 리스트(10개씩 출력) */

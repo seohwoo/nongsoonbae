@@ -27,9 +27,11 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private HashMap<String, String> seasonCategoryMap;
 	@Autowired
-	private ArrayList<Double> thislist;
+	private ArrayList<Integer> thislist;
 	@Autowired
-	private ArrayList<Double> lastlist;
+	private ArrayList<Integer> lastlist;
+	@Autowired
+	private ArrayList<Integer> oldestlist;
 	@Autowired
 	private ArrayList<ProductListDTO> productList;
 
@@ -88,8 +90,10 @@ public class MainServiceImpl implements MainService {
 	public void showChart(Model model, String cate1, String cate2, String cate3) {
 		thislist.clear();
 		lastlist.clear();
-		String thisYear = String.valueOf((Integer.parseInt(todayInfo()[0])-1));
-		String lastYear = String.valueOf((Integer.parseInt(todayInfo()[0])-2));
+		oldestlist.clear();
+		String thisYear = String.valueOf((Integer.parseInt(todayInfo()[0])));
+		String lastYear = String.valueOf((Integer.parseInt(todayInfo()[0])-1));
+		String oldestYear = String.valueOf((Integer.parseInt(todayInfo()[0])-2));
 		seasonCategoryMap.put("cate1", cate1);
 		seasonCategoryMap.put("cate2", cate2);
 		seasonCategoryMap.put("cate3", cate3);
@@ -113,16 +117,25 @@ public class MainServiceImpl implements MainService {
 			for (int i = 1; i <= 12; i++) {
 				keyword = "%" + thisYear + "년" + i + "월%";
 				seasonCategoryMap.put("keyword", keyword);
-				thislist.add(mapper.productChart(seasonCategoryMap));
+				if(mapper.productChart(seasonCategoryMap) != null) {
+					thislist.add((int) Double.parseDouble(mapper.productChart(seasonCategoryMap)));
+				} else {
+					thislist.add(0); 
+				}
 				keyword = "%" + lastYear + "년" + i + "월%";
 				seasonCategoryMap.put("keyword", keyword);
-				lastlist.add(mapper.productChart(seasonCategoryMap));
+				lastlist.add((int) Double.parseDouble(mapper.productChart(seasonCategoryMap)));
+				keyword = "%" + oldestYear + "년" + i + "월%";
+				seasonCategoryMap.put("keyword", keyword);
+				oldestlist.add((int) Double.parseDouble(mapper.productChart(seasonCategoryMap)));
 			}
 			model.addAttribute("thisYear", thisYear);
 			model.addAttribute("lastYear", lastYear);
+			model.addAttribute("oldestYear", oldestYear);
 			model.addAttribute("yValue", yValue);
 			model.addAttribute("thislist", thislist);
 			model.addAttribute("lastlist", lastlist);
+			model.addAttribute("oldestlist", oldestlist);
 		}
 		model.addAttribute("catename", catename);
 		model.addAttribute("isChart", cnt);
