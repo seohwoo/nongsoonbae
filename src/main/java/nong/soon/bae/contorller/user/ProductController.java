@@ -115,7 +115,7 @@ public class ProductController {
       service.shopListInsert(SLdto);
       // 내 상점 테이블 만들기
       service.createProduct(username);      
-      return "redirect:/product/productMain";
+      return "redirect:/product/productMyShop?username="+username;
    }
    
    // FINISH
