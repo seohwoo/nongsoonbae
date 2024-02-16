@@ -89,15 +89,18 @@ public class MainController{
 		List<ProductCategoryDTO> catelist = cateservice.cateMenu(model);
 		model.addAttribute("catelist",catelist);
 		if (cate1 == null && cate2 == null) { //전체항목리스트 
+			cateservice.adallproductlist(model); //광고
 			cateservice.allproductlist(model,sort,pageNum); 
 			model.addAttribute("isCateSelect", 0);
 		} if (cate1 != null && cate2 == null) {
 			cateservice.catelistdeatil(model, cate1);  //cate1 리스트
+			cateservice.adcateprodutlist(model, cate1); //광고
 			cateservice.cateprodutlist(model, cate1, pageNum, sort);//cate1  상품리스트
 			model.addAttribute("isCateSelect", 1);
 		}if(cate1 != null && cate2 != null ){
 			cateservice.catelistdeatil(model, cate1);
-			cateservice.cateprodictlistdetail (model,cate1 ,cate2,pageNum,sort); // cate2 상품리스트 
+			cateservice.adcateproductdetail (model,cate1 ,cate2); // cate2 광고 상품리스트 
+			cateservice.cateproductlistdetail (model,cate1 ,cate2,pageNum,sort); // cate2 상품리스트 
 			model.addAttribute("isCateSelect", 2);
 		}
 		if(cate1==null) {
@@ -117,10 +120,13 @@ public class MainController{
 		areaservice.arealist(areaNum,model);
 		if (area1 == null && area2 == null) { //전체항목리스트 
 			areaservice.allproductlist(model,sort,pageNum); 
+			areaservice.adallproductlist(model);
 			model.addAttribute("isAreaSelected", false);
 		} 
 		if (area1 != null && area2 == null) {
 			areaservice.areaprodutlist(model, areaNum,pageNum,area1,sort); //area1  상품리스트
+			areaservice.adareaprodutlist(model,area1); //area1 광고  상품리스트
+			
 			model.addAttribute("isAreaSelected", true);
 		}
 		if(area1==null) {

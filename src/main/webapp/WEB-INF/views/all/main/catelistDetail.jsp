@@ -57,13 +57,21 @@
 					   		<option value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option>
 					    </select>
     			</form>
-	       
+    			<c:if test="${adCntDetail >  0 }" >
+	    			<div class="container mx-auto mt-4">
+		 				<div class="row">
+				            <c:forEach var="ad" items="${adproductdetail}">
+				               <%@include file="/WEB-INF/views/all/main/adListComponent.jsp"%>
+				            </c:forEach>
+			            </div>
+		            </div>
+	       		</c:if>
 	         	<div class="container mx-auto mt-4">
- 				<div class="row">
-	            <c:forEach var="dto" items="${productlistdetail}">
-	               <%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
-	            </c:forEach>
-	            </div>
+	 				<div class="row">
+		            <c:forEach var="dto" items="${productlistdetail}">
+		               <%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
+		            </c:forEach>
+		            </div>
 	            </div>
 	         </c:if>	
 	     </div>

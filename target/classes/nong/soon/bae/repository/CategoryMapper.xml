@@ -6,8 +6,11 @@
 	<select id="catelist" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate2=0 order by cate1
 	</select>
-	<select id="allCnt" parameterType="hashMap" resultType="int" >
-			select count(*) from allproduct
+	<select id="allCnt"  resultType="int" >
+			select count(*) from allproduct where grade = 100
+	</select>
+	<select id="adAllCnt"  resultType="int" >
+			select count(*) from allproduct where grade = 40
 	</select>
 	<select id="allproductList" parameterType="hashMap"  resultType="nong.soon.bae.bean.AllProductDTO">
 		<![CDATA[
@@ -16,6 +19,9 @@
 	         (select * from allproduct where grade = 100 order by startdate desc ) b) 
          where r >= #{start} and r <= #{end}
       ]]>
+	</select>
+	<select id="adAllProduct"  resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
 	</select>
 	<select id="readListAll" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
 		<![CDATA[
@@ -73,6 +79,9 @@
          where r >= #{start} and r <= #{end}
       ]]>
 	</select>
+	<select id="adcateprodutList" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE cate1=#{cate1} and grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
+	</select>
 	<select id="readListDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
 		<![CDATA[
          select * from 
@@ -105,15 +114,22 @@
          where r >= #{start} and r <= #{end}
       ]]>
 	</select>
-
+	<select id="adproductdetail" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE cate1=#{cate1} and cate2=#{cate2} and grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
+	</select>
 	<select id="catelistdetail" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate1=#{area1} and cate2>0 and cate3=0 order by cate2 asc 
 	</select>
 	<select id="productCnt" parameterType="int" resultType="int">
-		select count(*)from allproduct where cate1=#{cate1} 
+		select count(*)from allproduct where cate1=#{cate1} and grade = 100 
 	</select>
-	
+	<select id="adProductCnt" parameterType="int" resultType="int">
+		select count(*)from allproduct where cate1=#{cate1} and grade = 40
+	</select>
 	<select id="cntDetail" parameterType="hashMap" resultType="int">
-		select count(*)from allproduct where cate1=#{cate1} and cate2=#{cate2} 
+		select count(*)from allproduct where cate1=#{cate1} and cate2=#{cate2} and grade=100 
+	</select>
+	<select id="adCntDetail" parameterType="hashMap" resultType="int">
+		select count(*)from allproduct where cate1=#{cate1} and cate2=#{cate2} and grade=40
 	</select>
 </mapper>

@@ -14,6 +14,9 @@
 	<select id="allCnt" parameterType="hashMap" resultType="int" >
 			select count(*) from allproduct
 	</select>
+	<select id="adAllCnt"  resultType="int" >
+			select count(*) from allproduct where grade = 40
+	</select>
 	<select id="allproductList" parameterType="hashMap"  resultType="nong.soon.bae.bean.AllProductDTO">
 		<![CDATA[
          select * from 
@@ -21,6 +24,9 @@
 	         (select * from allproduct where grade = 100 order by startdate desc ) b) 
          where r >= #{start} and r <= #{end}
       ]]>
+	</select>
+	<select id="adAllProduct"  resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
 	</select>
 	<select id="readListAll" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
 		<![CDATA[
@@ -80,5 +86,11 @@
 	</select>
 	<select id="productCnt" parameterType="int" resultType="int">
 		select count(*)from allproduct where grade = 100 and area1=#{area1} 
+	</select>
+	<select id="adProductCnt" parameterType="int" resultType="int">
+		select count(*)from allproduct where area1=#{area1} and grade = 40
+	</select>
+	<select id="adareaprodutList" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE area1=#{area1} and grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
 	</select>
 </mapper>

@@ -58,6 +58,7 @@
 			</div>
 			<div style="display: flex;">
 				<c:if test="${cnt >  0 }" >
+				<div>
 					<form id="sortForm" action="/nsb/menu" method="get">
 				        <input type="hidden" name="pageNum" value="1" />
 				        <input type="hidden" name="cate1" value="${cate1}" />
@@ -69,6 +70,15 @@
 					    	<option value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option>
 					    </select>
     				</form>
+    				</div>
+    				<!-- 광고상품 -->
+    				<div class="container mx-auto mt-4">
+	 			 		<div class="row">
+					    <c:forEach var="ad" items="${adproductlist}">
+					    	<%@include file="/WEB-INF/views/all/main/adListComponent.jsp"%>
+					    </c:forEach>  
+					    </div>
+					</div>
 					<div class="container mx-auto mt-4">
 	 			 		<div class="row">
 					    <c:forEach var="dto" items="${productlist}">

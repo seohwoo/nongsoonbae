@@ -90,9 +90,19 @@
 				        <option value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option>
 				    </select>
 				</form>
+				<!-- 광고상품 4개 랜덤 -->
+				<c:if test="${adAllCnt >  0 }" >
+					<div class="container mx-auto mt-4">
+		 			  	<div class="row">
+							<c:forEach var="ad" items="${adAllprocuct}">
+								<%@include file="/WEB-INF/views/all/main/adListComponent.jsp"%>
+							</c:forEach>
+						</div>
+					</div>
+				</c:if>
 				<div class="container mx-auto mt-4">
 	 			  	<div class="row">
-						<c:forEach var="dto" items="${allprocuctList}">
+						<c:forEach var="dto" items="${allproductList}">
 							<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 						</c:forEach>
 					</div>
