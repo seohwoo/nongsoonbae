@@ -67,14 +67,15 @@ public class AdController {
 	        redirectAttributes.addFlashAttribute("submitStatus", 2);
 	    }
 	    
-	    return "redirect:/product/myAd";
+	    return "redirect:/user/myAd";
 	}
 	
 	@RequestMapping("/admin/adList") //들어온 광고 목록들 확인하기 
-	public String adList(Model model) { 
+	public String adList(Model model,
+						@RequestParam(value="pageNum", defaultValue="1") int pageNum) { 
 		Date today = new Date();
         model.addAttribute("today", today);
-		service.adList(model);
+		service.adList(model,pageNum);
 		return "admin/ad/adList";
 	}
 	
@@ -83,9 +84,10 @@ public class AdController {
 			@RequestParam("startDate") String startDateStr,
 			@RequestParam("days") int days,
 			@RequestParam("productnum") String productnum,
+			@RequestParam("num") int num,
 			RedirectAttributes redirectAttributes) {
         if(productnum != null) {
-        	service.adStart(productnum,days);
+        	service.adStart(productnum,days,num);
         	service.updateStatus(productnum);
         	redirectAttributes.addFlashAttribute("adStatus", 1);
 	    } else {
@@ -113,8 +115,9 @@ public class AdController {
 	
 	
 	@RequestMapping("/admin/adEndSoon")//오늘 날짜로 끝나는 광고 목록
-	public String adEndSoon(Model model) {
-		service.adEndSoon(model);
+	public String adEndSoon(Model model,
+			@RequestParam(value="pageNum", defaultValue="1") int pageNum) {
+		service.adEndSoon(model,pageNum);
 		return "admin/ad/adEndSoon";
 	}
 	

@@ -282,6 +282,8 @@ public class UserCheckServiceImpl implements UserCheckService{
 		checkMap.put("cate1Select",cate1Select);
 		checkMap.put("subMaxNum",subMaxNum);
 		etcList = mapper.showEtcCate(checkMap);
+		int etcCnt = mapper.etcCnt(checkMap);
+		model.addAttribute("etcCnt",etcCnt);
 		model.addAttribute("etcList",etcList);
 		}
 

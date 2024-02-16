@@ -58,12 +58,15 @@
 		<div>
 			<jsp:include page="/WEB-INF/views/admin/usercheck/userSearch.jsp" />
 		</div>
-		<h4>일반 회원 목록 (${count} 명)</h4>	 
+		<h4>전체 회원 목록 (${count} 명)</h4>	 
 			<c:forEach var="list" items="${list}">
 				<div class="userlist">
 					<form action="/admin/stopPro" method="post" onsubmit="return confirmSubmission(this)">
 		                <input type="hidden" name="username" value="${list.username}"> 
-				            <h2>💟 ID : ${list.username}</h2>
+				            <h1>💟 ID : ${list.username}
+				            <c:if test="${list.grade == 'ROLE_MEMBERSHIP' }" > <!-- 멤버쉽 구분 -->
+				            🎫
+				            </c:if></h1>
 				            <h3>이름 : ${list.name}</h3>
 		                	<input type="button" value="정지하기" onclick="toggleOptions(this)"/>
 		                <div class="options" style="display:none;">
@@ -94,7 +97,7 @@
 				    <c:forEach var="i" begin="${startPage}" end="${endPage}">
 				        <form action="/admin/usercheck" method="post">
 				            <input type="hidden" name="pageNum" value="${i}">
-				            <button type="submit">[${i}]</button>
+				            <button type="submit">${i}</button>
 				        </form>
 				    </c:forEach>
 				    <c:if test="${endPage < pageCount}">
@@ -125,7 +128,7 @@
 	            alert("사유를 선택해주세요!");
 	            return false; 
 	        } else {
-	            return confirm(username + '님을 정지하시겠습니까? 상점이 있는 경우 상점도 정지 됩니다.'); 
+	            return confirm(username + '님을 정지하시겠습니까? 판매 중인 상품이 있는 경우 상품판매도 중지 됩니다.'); 
 	        }
 	    }
 	$(document).ready(function() {

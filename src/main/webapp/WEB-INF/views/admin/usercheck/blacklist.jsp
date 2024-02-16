@@ -85,7 +85,7 @@
 				    <c:forEach var="i" begin="${startPage}" end="${endPage}">
 				        <form action="/admin/blacklist" method="post">
 				            <input type="hidden" name="pageNum" value="${i}">
-				            <button type="submit">[${i}]</button>
+				            <button type="submit">${i}</button>
 				        </form>
 				    </c:forEach>
 				    <c:if test="${endPage < pageCount}">

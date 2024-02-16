@@ -56,6 +56,15 @@
 	        color: #666;
 	        margin-top: 10px;
 	    }
+	    .status-green {
+        color: green;
+	    }
+	    .status-blue {
+	        color: blue;
+	    }
+	    .status-red {
+	        color: red;
+	    }
 	</style>
 	</head>
 	<body>
@@ -77,18 +86,19 @@
 			           </p>
 			       </div>
 			       <div class="status-meta">
-			       	   <c:if test="${list.adstatus == 40 }">
-				       		<p> 현재 해당 상품 광고 중 입니다. </p>
-				       </c:if>
-				       <c:if test="${list.adstatus == 41 }">
-				       		<p> 관리자 검토 중 </p>
-				       </c:if>
-				       <c:if test="${list.adstatus == 42 }">
-				       		<p> 광고 일정에 따라 신청이 반려되었습니다. </p>
-				       </c:if>
-				       <c:if test="${list.adstatus == 43 }">
-				       		<p> 광고 일정이 종료된 상품입니다. </p>
-				       </c:if>
+			       	    <c:if test="${list.adstatus == 40 }">
+						    <p class="status-green"> 현재 해당 상품 광고 중입니다. </p>
+						</c:if>
+						<c:if test="${list.adstatus == 41 }">
+						    <p class="status-blue"> 관리자 검토 중 </p>
+						</c:if>
+						<c:if test="${list.adstatus == 42 }">
+						    <p class="status-red"> 광고 일정에 따라 신청이 반려되었습니다. </p>
+						</c:if>
+						<c:if test="${list.adstatus == 43 }">
+						    <p> 광고 일정이 종료된 상품입니다. </p>
+						</c:if>
+
 			       </div>
 			    </div>
 			</c:forEach>

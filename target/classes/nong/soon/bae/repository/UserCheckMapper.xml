@@ -63,7 +63,7 @@
 	<select id="searchUserCnt" parameterType="String" resultType="int">
 		<![CDATA[
 		SELECT COUNT(*) FROM users WHERE 	
-			(username LIKE #{keyword} OR name LIKE #{keyword}) AND grade = 'ROLE_USER'
+			(username LIKE #{keyword} OR name LIKE #{keyword})  AND (grade = 'ROLE_USER' OR grade = 'ROLE_MEMBERSHIP')
 		
 		 ]]>
 	</select>
@@ -73,7 +73,7 @@
     		(SELECT b.*, rownum r FROM 
         		(SELECT * FROM users 
          			WHERE (username LIKE #{keyword} OR name LIKE #{keyword}) 
-          				 AND grade = 'ROLE_USER' 
+          				 AND (grade = 'ROLE_USER' OR grade = 'ROLE_MEMBERSHIP') 
          					ORDER BY username DESC) b) 
                 WHERE r >= #{start} AND r <= #{end}
                 
@@ -99,7 +99,7 @@
       ]]>
 	</select>
 	<select id="showCate" resultType="nong.soon.bae.bean.ProductCategoryDTO">
-		select * from productcategory order by cate1 asc
+		select * from productcategory order by cate1 asc, cate2 asc
 	</select>
 	<select id="maxNum" >
 		SELECT MAX(cate1) FROM productcategory
@@ -139,6 +139,9 @@
 	<update id="addDetailFile" parameterType="hashMap">
 		update productcategory set img=#{realname} where catename=#{addDetail}
 	</update>
+	<select id="etcCnt" parameterType="hashMap" resultType="int">
+		select count(*) from productcategory where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3>0
+	</select>
 	<select id="showEtcCate" parameterType="hashMap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
 		select * from productcategory where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3>0 order by cate3
 	</select>
@@ -163,5 +166,4 @@
 	<delete id="deleteCate" parameterType="hashMap">
 		delete from productcategory where cate1=#{cateNum} and catename=#{addCate}
 	</delete>
-	
 </mapper>

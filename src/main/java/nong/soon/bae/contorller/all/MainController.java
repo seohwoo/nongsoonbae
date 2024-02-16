@@ -81,18 +81,24 @@ public class MainController{
 		return "all/main/categoryChart";
 	}
 	
+	//카테고리별 분류
 	@RequestMapping("menu")
-	public String main(Model model, String cate1, String cate2) {	
+	public String main(Model model, String cate1, String cate2,
+					@RequestParam(value="sort", required=false) String sort,
+					@RequestParam(value="pageNum", defaultValue="1") int pageNum) {	
 		List<ProductCategoryDTO> catelist = cateservice.cateMenu(model);
 		model.addAttribute("catelist",catelist);
 		if (cate1 == null && cate2 == null) { //전체항목리스트 
-			cateservice.allproductlist(model); 
+			cateservice.allproductlist(model,sort,pageNum); 
+			model.addAttribute("isCateSelect", 0);
 		} if (cate1 != null && cate2 == null) {
 			cateservice.catelistdeatil(model, cate1);  //cate1 리스트
-			cateservice.cateprodutlist (model, cate1); //cate1  상품리스트
+			cateservice.cateprodutlist(model, cate1, pageNum, sort);//cate1  상품리스트
+			model.addAttribute("isCateSelect", 1);
 		}if(cate1 != null && cate2 != null ){
 			cateservice.catelistdeatil(model, cate1);
-			cateservice.cateprodictlistdetail (model,cate1 ,cate2); // cate2 상품리스트 
+			cateservice.cateprodictlistdetail (model,cate1 ,cate2,pageNum,sort); // cate2 상품리스트 
+			model.addAttribute("isCateSelect", 2);
 		}
 		if(cate1==null) {
 			cate1 = "0";
@@ -101,6 +107,8 @@ public class MainController{
 		return "all/main/categorymain";
 	}
 	
+	
+	//지역별 분류
 	@RequestMapping("area")
 	public String area(Model model, @RequestParam(value="areaNum", defaultValue="1") int areaNum,  
 						@RequestParam(value="sort", required=false) String sort,

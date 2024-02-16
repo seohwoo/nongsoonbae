@@ -47,16 +47,23 @@
             margin-top: 20px;
         }
     	</style>
-	     <script>
-	        function calculatePrice() {
-	            var selectElement = document.getElementById('daysSelect');
-	            var value = selectElement.value;
-	            var price = value * 10000;
-	            var formattedPrice = price.toLocaleString();
-	           
-	            document.getElementById('calculatedPrice').innerText = '광고단가 : ' + formattedPrice + '원';
-	            document.getElementById('hiddenPrice').value = price;        
-	        }
+		     <script>
+		     function calculatePrice() {
+		    	    var selectElement = document.getElementById('daysSelect');
+		    	    var value = selectElement.value;
+		    	    var price = 0; // 기본 가격을 0으로 초기화
+	
+		    	    // 숫자로 변환 가능한 값인지 확인 후 가격 계산
+		    	    if (value !== 'notChoice2') {
+		    	        price = parseInt(value) * 10000;
+		    	    }
+	
+		    	    var formattedPrice = price.toLocaleString();
+	
+		    	    document.getElementById('calculatedPrice').innerText = price > 0 ? '광고단가 : ' + formattedPrice + '원' : ''; // 가격이 0보다 크면 표시, 아니면 빈 문자열
+		    	    document.getElementById('hiddenPrice').value = price;        
+		    	}
+
 	
 	        function validateForm() {
 	            var productSelect = document.getElementById('adSelect').value;

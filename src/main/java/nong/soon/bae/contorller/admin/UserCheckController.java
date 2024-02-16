@@ -114,7 +114,7 @@ public class UserCheckController {
 		int maxNum = service.maxNum();
 		model.addAttribute("num", maxNum);
 		if(cate1Select != null) {
-		service.showSubCate(model,Integer.parseInt(cate1Select));
+			service.showSubCate(model,Integer.parseInt(cate1Select));
 		}
 		
 		return "admin/usercheck/addcategory";
