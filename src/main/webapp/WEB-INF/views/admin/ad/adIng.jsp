@@ -51,11 +51,22 @@
 		<div class="header">
 			<h2>광고중인 상품(${adIngCnt}) </h2>			
 		</div>
+		<c:if test="${adIngCnt == 0}">
+			<div class="adList">
+				<h2>현재 광고중인 상품이 없습니다. </h2>
+			</div>
+		</c:if>
 		<c:if test="${adIngCnt > 0}">
 			<c:forEach var="list" items="${list}">
 				<div class="adList">
 					<h5>No.${list.num}</h5>
-					<h2> ${list.p_productname} (${list.productnum}) </h2>
+					<form action="/product/productInfo" method="get" style="display: inline;">
+            			<input type="hidden" name="productnum" value="${list.productnum}" />
+            			<input type="hidden" name="follow" value="${list.username}" />
+            			<h2 style="display: inline; cursor: pointer;" onclick="this.parentNode.submit();" title="상품 확인하기">
+             			 ${list.p_productname} (${list.productnum})
+            			</h2>
+        			</form>
                 	<h3> 판매자 ${list.username}</h3>
                 	<p> 광고기간: 
 	                <fmt:formatDate value="${list.startdate}" pattern="yyyy년 MM월 dd일" /> 

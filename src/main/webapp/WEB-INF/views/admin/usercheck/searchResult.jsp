@@ -64,7 +64,10 @@
 					<div class="userlist">
 						<form action="/admin/stopPro" method="post" onsubmit="return confirmSubmission(this)">
 			                <input type="hidden" name="username" value="${searchlist.username}"> 
-				            <h2>💟 ID : ${searchlist.username}</h2>
+				            <h1>💟 ID : ${searchlist.username}
+				            <c:if test="${searchlist.grade == 'ROLE_MEMBERSHIP' }" > <!-- 멤버쉽 구분 -->
+				            💲 
+				            </c:if></h1>
 				            <h3>이름 : ${searchlist.name}</h3>
 			                	<input type="button" value="정지하기" onclick="toggleOptions(this)"/>
 			                <div class="options" style="display:none;">

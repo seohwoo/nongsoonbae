@@ -29,34 +29,36 @@ public class AreaServiceImpl implements AreaService{
 	@Autowired
 	private ArrayList<ProductListDTO> productList;
 	
-	@Override
-	public List<AreaDTO> areaMenu(Model model) {
-	
-		return mapper.arealist();
-	}	
+	//전체항목리스트
 	@Override
 	public void allproductlist(Model model,String sort,int pageNum) { //전체항목
-		int pageSize = 10;
+		int pageSize = 12;
 	    int startRow = (pageNum - 1) * pageSize + 1;
 	    int endRow = pageNum * pageSize;
 		int allCnt = mapper.allCnt();
 		List<AllProductDTO> allprocuctList = Collections.EMPTY_LIST ;
-		if(allCnt >0 ) {
+		if(allCnt >0 ) { 
+			//추천, 찜, 최신순으로 정렬하기 
 			 if ("readcnt".equals(sort)) {		
 				 	categoryMap.clear();
 				 	categoryMap.put("start", String.valueOf(startRow));
 				 	categoryMap.put("end", String.valueOf(endRow));
-				 	allprocuctList = mapper.readListAll(categoryMap); // 추천순 정렬
+				 	allprocuctList = mapper.readListAll(categoryMap); // 인기순(조회수) 정렬
 		        } else if ("wishcnt".equals(sort)) {
 		        	categoryMap.clear();
 				 	categoryMap.put("start", String.valueOf(startRow));
 				 	categoryMap.put("end", String.valueOf(endRow));
-		            allprocuctList = mapper.wishListAll(categoryMap); // 최신순 정렬
+		            allprocuctList = mapper.wishListAll(categoryMap); // 찜 많은 순 정렬
+		        }else if ("cheap".equals(sort)) {
+		        	categoryMap.clear();
+				 	categoryMap.put("start", String.valueOf(startRow));
+				 	categoryMap.put("end", String.valueOf(endRow));
+		            allprocuctList = mapper.cheapListAll(categoryMap); // 가격낮은순 정렬
 		        } else {
 		        	categoryMap.clear();
 				 	categoryMap.put("start", String.valueOf(startRow));
 				 	categoryMap.put("end", String.valueOf(endRow));
-		            allprocuctList = mapper.allproductList(categoryMap); // 기본 정렬
+		            allprocuctList = mapper.allproductList(categoryMap); // 기본(최신)정렬
 		        }
 		        showProduct(allprocuctList);
 		    }
@@ -80,16 +82,65 @@ public class AreaServiceImpl implements AreaService{
         model.addAttribute("endPage",endPage);
 	}
 	
+	
+	//area1의 값을 받아 넘어온 상품 목록 ex: 서울(area1=1)에 대한 상품리스트
 	@Override
 	public void areaprodutlist(Model model,int areaNum, int pageNum,String area1,String sort) {//area1 상품리스트
-		int cnt = mapper.productCnt(Integer.parseInt(area1));
+		int pageSize = 12;
+	    int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
+	    int cnt = mapper.productCnt(Integer.parseInt(area1));
 		List<AllProductDTO> productlist = Collections.EMPTY_LIST ;
-		if(cnt>0){
-			productlist = mapper.productlist(area1);
-			showProduct(productlist);
-		}
-		model.addAttribute("cnt",cnt);		
+		
+		if(cnt >0 ) {
+			 if ("readcnt".equals(sort)) {		
+				 	categoryMap.clear();
+				 	categoryMap.put("start", String.valueOf(startRow));
+				 	categoryMap.put("end", String.valueOf(endRow));
+				 	categoryMap.put("area1", area1);
+				  	productlist = mapper.readList(categoryMap); // 인기순(조회수) 정렬
+		        } else if ("wishcnt".equals(sort)) {
+		        	categoryMap.clear();
+				 	categoryMap.put("start", String.valueOf(startRow));
+				 	categoryMap.put("end", String.valueOf(endRow));
+				 	categoryMap.put("area1", area1);
+				 	productlist = mapper.wishList(categoryMap); // 찜많은순 정렬
+		        }else if ("cheap".equals(sort)) {
+		        	categoryMap.clear();
+				 	categoryMap.put("start", String.valueOf(startRow));
+				 	categoryMap.put("end", String.valueOf(endRow));
+				 	categoryMap.put("area1", area1);
+				 	productlist = mapper.cheapList(categoryMap); // 찜많은순 정렬
+		        } else {
+		        	categoryMap.clear();
+				 	categoryMap.put("start", String.valueOf(startRow));
+				 	categoryMap.put("end", String.valueOf(endRow));
+				 	categoryMap.put("area1", area1);
+				 	productlist = mapper.areaprodutList(categoryMap); // 기본(최신순) 정렬
+		        }
+		        showProduct(productlist);
+		    }
 		model.addAttribute("productlist",productList);
+		model.addAttribute("cnt",cnt);
+		model.addAttribute("pageNum",pageNum);
+	    model.addAttribute("pageSize",pageSize);
+	    model.addAttribute("sort",sort);
+	    model.addAttribute("area1",Integer.parseInt(area1));
+		
+	    
+	    int pageCount = cnt / pageSize + ( cnt % pageSize == 0 ? 0 : 1);
+		 
+        int startPage = (int)(pageNum/10)*10+1;
+		int pageBlock=10;
+        int endPage = startPage + pageBlock-1;
+        if (endPage > pageCount) {
+			endPage = pageCount;
+        }				
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("pageBlock",pageBlock);
+        model.addAttribute("endPage",endPage);
+  
 	}
 	
 	
@@ -106,6 +157,8 @@ public class AreaServiceImpl implements AreaService{
 		}
 	}
 	
+	
+	//지역 분류 (서울,경기,인천 etc...)
 	@Override
 	public void arealist(int areaNum, Model model) {
 		int pageSize = 8;

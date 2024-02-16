@@ -55,6 +55,12 @@
 	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
 	<%@include file="/WEB-INF/views/admin/ad/adNav.jsp"%>
 	<h2>광고종료예정상품 (${endSoonCnt})</h2>
+	<c:if test='${endSoonCnt == 0}'>
+		 <div class="adList">
+			<h2> 종료 예정인 상품이 없습니다. </h2>
+		 </div>
+	</c:if> 
+	<c:if test='${endSoonCnt > 0}'>
 	<c:forEach var="list" items="${endSoonList}">
 	    <div class="adList">
 	       <form action="/admin/adEndPro" method="post" onsubmit="return confirmEnd();">
@@ -63,6 +69,7 @@
 	        <input type="hidden" name="num" value="${list.num}" />
 	           <h5>No.${list.num}</h5>
 	            <h2> ${list.productname} (${list.productnum}) </h2>
+	            <button type="button" onclick="location.href='/product/productInfo?productnum=${list.productnum}&follow=${list.username}'" title="상품 확인하기">상품 확인</button>
 	            <h3> 판매자 ${list.username}</h3>
 	            <h3> 신청기간 ${list.days}일 (단가 ${list.price}원) </h3>
 	            <div class="day-meta">
@@ -76,6 +83,28 @@
 	        </form>             
 	    </div>
 	</c:forEach>
+	</c:if>
+	<div class="pagination">
+			<c:if test="${startPage > 10}">
+				<form action="/admin/adEndSoon" method="post">
+					<input type="hidden" name="pageNum" value="${startPage-10}">
+					    <button type="submit">이전</button>
+				</form>
+			</c:if>
+			<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			  <form action="/admin/adEndSoon" method="post">
+				   <input type="hidden" name="pageNum" value="${i}">
+				   <button type="submit">${i}</button>
+				</form>	      
+			</c:forEach>
+				    <c:if test="${endPage < pageCount}">
+			    <form action="/admin/adEndSoon" method="post">
+				            <input type="hidden" name="pageNum" value="${startPage+10}">
+				            <button type="submit">다음</button>
+				        </form>
+				    </c:if>
+				</div>
+	
 	<script type="text/javascript">
 		$(document).ready(function() {
 	        var status = <c:out value="${endAdStatus}" default="-1" />;

@@ -63,19 +63,43 @@ public class AdServiceImpl implements AdService {
 	}
 
 	@Override
-	public void adList(Model model) {
-		 List<AdDTO> adList = Collections.EMPTY_LIST;
-		 adList = mapper.adList();
-		 int submitCnt = mapper.submitCnt();
-		 model.addAttribute("submitCnt",submitCnt);
-		 model.addAttribute("adList",adList);
+	public void adList(Model model,int pageNum) {
+		int pageSize = 10;
+	    int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
+	    int submitCnt = mapper.submitCnt();
+	    List<AdDTO> adList = Collections.EMPTY_LIST;
+	    if(submitCnt > 0) {
+	    	adMap.put("start", startRow);
+	    	adMap.put("end", endRow);
+	    	adList = mapper.adList(adMap);
+	    }	
+	    model.addAttribute("adList",adList);
+	    model.addAttribute("submitCnt",submitCnt);
+	    model.addAttribute("pageNum",pageNum);
+	    model.addAttribute("pageSize",pageSize);
+	    
+	    int pageCount = submitCnt / pageSize + ( submitCnt % pageSize == 0 ? 0 : 1);
+		 
+        int startPage = (int)(pageNum/10)*10+1;
+		int pageBlock=10;
+        int endPage = startPage + pageBlock-1;
+        if (endPage > pageCount) {
+			endPage = pageCount;
+        }				
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("pageBlock",pageBlock);
+        model.addAttribute("endPage",endPage);
+	
 	}
 
 	@Override
-	public void adStart(String productnum,int days) {
+	public void adStart(String productnum,int days,int num) {
 		adMap.clear();
 		adMap.put("productnum", productnum);
 		adMap.put("days", days);
+		adMap.put("num", num);
 		mapper.adStart(adMap);
 	}
 	
@@ -99,12 +123,34 @@ public class AdServiceImpl implements AdService {
 	}
 
 	@Override
-	public void adEndSoon(Model model) {
+	public void adEndSoon(Model model,int pageNum ) {
+		int pageSize = 10;
+	    int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
+	    int endSoonCnt = mapper.endSoonCnt();
 		List<AdDTO> endSoonList = Collections.EMPTY_LIST;
-		endSoonList = mapper.adEndSoon();
-		int endSoonCnt = mapper.endSoonCnt();
-		model.addAttribute("endSoonCnt",endSoonCnt);
-		model.addAttribute("endSoonList",endSoonList);
+	    if(endSoonCnt > 0) {
+	    	adMap.put("start", startRow);
+	    	adMap.put("end", endRow);
+	    	endSoonList = mapper.adEndSoon(adMap);
+	    }	
+	    model.addAttribute("endSoonList",endSoonList);
+	    model.addAttribute("endSoonCnt",endSoonCnt);
+	    model.addAttribute("pageNum",pageNum);
+	    model.addAttribute("pageSize",pageSize);
+	    
+	    int pageCount = endSoonCnt / pageSize + ( endSoonCnt % pageSize == 0 ? 0 : 1);
+		 
+        int startPage = (int)(pageNum/10)*10+1;
+		int pageBlock=10;
+        int endPage = startPage + pageBlock-1;
+        if (endPage > pageCount) {
+			endPage = pageCount;
+        }				
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("pageBlock",pageBlock);
+        model.addAttribute("endPage",endPage);
 	}
 
 	@Override

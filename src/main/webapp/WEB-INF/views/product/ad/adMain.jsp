@@ -63,7 +63,7 @@
 	<script type="text/javascript">
         // "나의 광고 보기" 버튼 클릭 시 호출될 함수
         function viewMyAds() {
-            window.location.href = '/product/myAd'; // 지정된 경로로 이동
+            window.location.href = '/user/myAd'; // 지정된 경로로 이동
         }
     </script>
 </head>

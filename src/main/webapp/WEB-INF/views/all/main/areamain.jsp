@@ -8,8 +8,7 @@
 	    <title>지역별</title>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	    <script type="text/javascript">
-	        $(document).ready(function(){
-	            // 정렬 버튼 클릭 이벤트
+		    $(document).ready(function(){
 	            $(".sort-btn").click(function(){
 	                var sort = $(this).data("sort");
 	                $("#sortForm input[name='sort']").val(sort);
@@ -17,12 +16,12 @@
 	            });
 	        });
 	        function setSortAndSubmit(sortValue) {
-		        var form = document.getElementById('sortForm');
-		        form.sort.value = sortValue;
-		        form.submit();
-		    }
+	            var form = document.getElementById('sortForm');
+	            form.sort.value = sortValue;
+	            form.submit();
+	        }
 	        function goToPageWithSort(pageNum, sortValue) {
-	            var form = document.getElementById('sortForm'); // 폼 ID
+	            var form = document.getElementById('sortForm');
 	            if (!form.pageNum) {
 	                var pageNumInput = document.createElement('input');
 	                pageNumInput.type = 'hidden';
@@ -31,14 +30,19 @@
 	            }
 	            form.pageNum.value = pageNum;
 	            form.sort.value = sortValue;
-	            form.submit(); // 폼 제출
+	            form.submit();
 	        }
-		    function checkAndRedirect(e, area1Value) {
-		            if (area1Value === '0') {
-		                window.location.href = '/nsb/area';
-		                e.preventDefault(); // 기본 동작 방지
-		            }
-		        }
+	        function checkAndRedirect(e, area1Value) {
+	            if (area1Value === '0') {
+	                window.location.href = '/nsb/area';
+	                e.preventDefault();
+	            }
+	        }
+	        function setSortAndSubmitDropdown() {
+	            var selectedSort = document.getElementById('sortSelect').value;
+	            document.getElementById('sortInput').value = selectedSort;
+	            document.getElementById('sortForm').submit();
+	        }
 	    </script>
 	</head>
 	<body>
@@ -81,12 +85,15 @@
 	</div>
 	<c:if test="${allCnt > 0}">
 		<form id="sortForm" action="/nsb/area" method="get">
-    		<input type="hidden" name="pageNum" value="${pageNum}" />
-    		<input type="hidden" name="sort" /> 
-    		<button type="button" onclick="setSortAndSubmit('readcnt')">추천순</button>
-    		<button type="button" onclick="setSortAndSubmit('wishcnt')">찜순</button>
+		    <input type="hidden" name="pageNum" value="1" />
+		    <input type="hidden" name="sort" id="sortInput" /> 
+		    <select id="sortSelect" onchange="setSortAndSubmitDropdown()">
+		        <option value="">기본정렬(최신순)</option>
+		        <option value="readcnt" ${sort == 'readcnt' ? 'selected' : ''}>인기순</option>
+		        <option value="wishcnt" ${sort == 'wishcnt' ? 'selected' : ''}>찜 많은 순</option>
+		        <option value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option> 
+		    </select>
 		</form>
-		
 	<div class="container mx-auto mt-4">
  			<div class="row">
 	    <c:forEach var="dto" items="${allprocuctList}">
@@ -98,49 +105,49 @@
 	<div id="targetDiv">
 	    <jsp:include page="/WEB-INF/views/all/main/arealist.jsp" />
 	</div>
-	<div class="pagination">
-	<c:if test="${!isAreaSelected && !empty sort}">
-		<c:if test="${startPage > 10}">
-    		<form action="/nsb/area" method="get">
-       			<input type="hidden" name="pageNum" value="${startPage-10}">
-       			<input type="hidden" name="sort" value="${sort}"> <!-- 정렬 기준 포함 -->
-       			<button type="submit">이전</button>
-    		</form>
-		</c:if>
-		<c:forEach var="i" begin="${startPage}" end="${endPage}">
-   		 <form action="/nsb/area" method="get">
-        	<button type="button" onclick="goToPageWithSort(${i}, '${sort}')">${i}</button>
-    	 </form>
-		</c:forEach>
-		<c:if test="${endPage < pageCount}">
-    		<form action="/nsb/area" method="get">
-     	   		<input type="hidden" name="pageNum" value="${startPage+10}">
-        		<input type="hidden" name="sort" value="${sort}"> <!-- 정렬 기준 포함 -->
-        		<button type="submit">다음</button>
-    		</form>
-		</c:if>
+	<div class="pagination"> <!-- 정렬순에 따른 페이징 -->
+		<c:if test="${!isAreaSelected && !empty sort}">
+			<c:if test="${startPage > 10}">
+	    		<form action="/nsb/area" method="get">
+	       			<input type="hidden" name="pageNum" value="${startPage-10}">
+	       			<input type="hidden" name="sort" value="${sort}"> <!-- 정렬 기준 포함 -->
+	       			<button type="submit">이전</button>
+	    		</form>
+			</c:if>
+			<c:forEach var="i" begin="${startPage}" end="${endPage}">
+		   		 <form action="/nsb/area" method="get">
+		        	<button type="button" onclick="goToPageWithSort(${i}, '${sort}')">${i}</button>
+		    	 </form>
+			</c:forEach>
+			<c:if test="${endPage < pageCount}">
+	    		<form action="/nsb/area" method="get">
+	     	   		<input type="hidden" name="pageNum" value="${startPage+10}">
+	        		<input type="hidden" name="sort" value="${sort}"> <!-- 정렬 기준 포함 -->
+	        		<button type="submit">다음</button>
+	    		</form>
+			</c:if>
 		</c:if>	
 		<c:if test="${!isAreaSelected && empty sort}">
-		<c:if test="${startPage > 10}">
-    		<form action="/nsb/area" method="get">
-       			<input type="hidden" name="pageNum" value="${startPage-10}">
-       			<button type="submit">이전</button>
-    		</form>
-		</c:if>
-		<c:forEach var="i" begin="${startPage}" end="${endPage}">
-   		 <form action="/nsb/area" method="get">
-   		 	<input type="hidden" name="pageNum" value="${i}">
-			<button type="submit">${i}</button>
-    	 </form>
-		</c:forEach>
-		<c:if test="${endPage < pageCount}">
-    		<form action="/nsb/area" method="get">
-     	   		<input type="hidden" name="pageNum" value="${startPage+10}">
-        		<button type="submit">다음</button>
-    		</form>
-		</c:if>
-		</c:if>								
-		</div>				    
+			<c:if test="${startPage > 10}">
+	    		<form action="/nsb/area" method="get">
+	       			<input type="hidden" name="pageNum" value="${startPage-10}">
+	       			<button type="submit">이전</button>
+	    		</form>
+			</c:if>
+			<c:forEach var="i" begin="${startPage}" end="${endPage}">
+		   		 <form action="/nsb/area" method="get">
+		   		 	<input type="hidden" name="pageNum" value="${i}">
+					<button type="submit">${i}</button>
+		    	 </form>
+			</c:forEach>
+			<c:if test="${endPage < pageCount}">
+	    		<form action="/nsb/area" method="get">
+	     	   		<input type="hidden" name="pageNum" value="${startPage+10}">
+	        		<button type="submit">다음</button>
+	    		</form>
+			</c:if>
+		</c:if>									
+	</div>				    
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>

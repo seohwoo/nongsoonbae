@@ -12,8 +12,9 @@ public interface AdMapper {
 	public List<AdDTO> myAd(String username);
 	public int myAdCnt (String username);
 	public void submitAd (HashMap map);
-	public List<AdDTO> adList();
-	public List<AdDTO> adEndSoon();	
+	
+	public List<AdDTO> adList(HashMap map);
+	public List<AdDTO> adEndSoon(HashMap map);	
 	int adStart (HashMap map);
 	int updateStatus (HashMap map);
 	int adEnd(HashMap map);

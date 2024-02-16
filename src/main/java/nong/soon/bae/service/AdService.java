@@ -14,9 +14,9 @@ public interface AdService {
 	public void myAd(Model model,String username);
 	
 	public void submitAd (String username, String adSelect,int daySelect,int price);
-	public void adList (Model model);
-	public void adEndSoon (Model model);
-	public void adStart(String productnum, int days);
+	public void adList (Model model,int pageNum);
+	public void adEndSoon (Model model,int pageNum);
+	public void adStart(String productnum, int days,int num);
 	public void updateStatus (String productnum);
 	public void adEnd (int num,String username,String productnum);
 	public void reUpdateStatus (String username,String productnum);

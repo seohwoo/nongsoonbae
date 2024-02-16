@@ -32,6 +32,10 @@
 	    </style>
 	</head>
 	<body>
+		<c:if test="${etcCnt  == 0 }" >
+			<h3> 아직 기타 품목에 추가된 상품이 없습니다. </h3>
+		</c:if>
+		<c:if test="${etcCnt  > 0 }" >
 	    <form action="/admin/updateSubCatePro" method="post" onsubmit="return validateForm()">
 	        <h3> 아래 품목으로 중분류 카테고리 생성하기 (3개부터 카테고리를 추가할 수 있습니다.)</h3>
 		        <c:forEach var="cate" items="${etcList}">
@@ -42,6 +46,7 @@
 	        <input type="hidden" value="${cate1Select}" name="cate1Select" />
 	        <input type="submit" value="카테고리 추가하기">
 	    </form>   
+	    </c:if>
 	    <script>
 	        function validateForm() {
 	            var cateCount = ${fn:length(etcList)};

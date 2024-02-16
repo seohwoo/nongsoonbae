@@ -43,6 +43,8 @@ public interface UserCheckMapper {
 	public int subDetailMaxNum(HashMap map);	
 	int insertDetailCate(HashMap map);
 	int addDetailFile (HashMap map);
+	
+	public int etcCnt (HashMap map);
 	public List<ProductCategoryDTO> showEtcCate(HashMap map);
 	public String findEtcName(HashMap map);
 	int updateCateName (HashMap map);
