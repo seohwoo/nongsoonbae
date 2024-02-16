@@ -78,13 +78,9 @@ public class PayController {
 			// 업데이트
 			int cnt = kakaoApprove.getQuantity();
 			MyPageDTO MPdto = productService.selectMypage3(username);
-			logger.info("username========"+username);
 			String follow = MPdto.getFollow();
-			logger.info("follow======"+follow);
 			productService.updateProductCount(follow, cnt);
 			service.isproductSuccess102(follow);
-			logger.info("username========"+username);
-			logger.info("follow======"+follow);
 			//
 			service.isproductSuccess(username);
 		}

@@ -104,17 +104,21 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public void selectMyCart(String username, Model model) {
-		List<MyPageDTO> user = selectcart(username);
-		List<MyPageDTO> list = new ArrayList<>();
-		for (MyPageDTO myPageDTO : user) {
-		    HashMap<String, String> SelectMyCartMap = new HashMap<>();
-		    SelectMyCartMap.put("username", username);
+		ArrayList<MyPageDTO> list = new ArrayList<MyPageDTO>();
+		List<MyPageDTO> cartCnt = mapper.findCartInfo(username);
+		System.out.println(cartCnt);
+		for (MyPageDTO myPageDTO : cartCnt) {
+			HashMap<String, String> SelectMyCartMap = new HashMap<>();
+		    SelectMyCartMap.put("username", myPageDTO.getUsername());
 		    SelectMyCartMap.put("follow", myPageDTO.getFollow());
 		    SelectMyCartMap.put("optionnum", myPageDTO.getOptionnum());
 		    List<MyPageDTO> tempList = mapper.selectMyCart(SelectMyCartMap);
-		    
-		    list.addAll(tempList);
+		    System.out.println(tempList);
+		    for (MyPageDTO dto : tempList) {
+		    	list.add(dto);
+			}
 		}
+		System.out.println(list);
 		model.addAttribute("MyCart", list);
 	}
 
