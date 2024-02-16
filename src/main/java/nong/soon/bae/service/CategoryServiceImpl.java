@@ -46,30 +46,22 @@ public class CategoryServiceImpl implements CategoryService{
 		int allCnt = mapper.allCnt();
 		List<AllProductDTO> allprocuctList = Collections.EMPTY_LIST ;
 		if(allCnt >0 ) {
+			categoryMap.clear();
+		 	categoryMap.put("start", String.valueOf(startRow));
+		 	categoryMap.put("end", String.valueOf(endRow));
 			 if ("readcnt".equals(sort)) {		
-				 	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
 				 	allprocuctList = mapper.readListAll(categoryMap); // 인기순(조회수) 정렬
 		        } else if ("wishcnt".equals(sort)) {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
 		            allprocuctList = mapper.wishListAll(categoryMap); // 찜 정렬
 		        }else if ("cheap".equals(sort)) {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
 		            allprocuctList = mapper.cheapListAll(categoryMap); // 가격낮은순 정렬
 		        } else {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
 		            allprocuctList = mapper.allproductList(categoryMap); // 기본(최신순) 정렬
 		        }
-		        showProduct(allprocuctList);
+			 	ArrayList<ProductListDTO> localProductList = showProduct(allprocuctList);
+		        model.addAttribute("allproductList", localProductList);
 		    }
-		model.addAttribute("allprocuctList",productList);
+		
 		model.addAttribute("allCnt",allCnt);
 		model.addAttribute("pageNum",pageNum);
 	    model.addAttribute("pageSize",pageSize);
@@ -87,6 +79,20 @@ public class CategoryServiceImpl implements CategoryService{
         model.addAttribute("startPage",startPage);
         model.addAttribute("pageBlock",pageBlock);
         model.addAttribute("endPage",endPage);
+	}
+	
+	@Override
+	public void adallproductlist(Model model) {
+		int adAllCnt = mapper.adAllCnt();
+		List<AllProductDTO> adAllprocuct = Collections.EMPTY_LIST ;
+		if(adAllCnt > 0) {
+			adAllprocuct = mapper.adAllProduct();	
+			ArrayList<ProductListDTO> localAdProductList = adshowProduct(adAllprocuct);
+            model.addAttribute("adAllprocuct", localAdProductList);	
+			
+		}
+		model.addAttribute("adAllCnt",adAllCnt);
+		
 	}
 	
 		
@@ -107,34 +113,23 @@ public class CategoryServiceImpl implements CategoryService{
 		int cnt = mapper.productCnt(Integer.parseInt(cate1));
 		List<AllProductDTO> productlist = Collections.EMPTY_LIST ;
 		if(cnt>0){
+			categoryMap.clear();
+		 	categoryMap.put("start", String.valueOf(startRow));
+		 	categoryMap.put("end", String.valueOf(endRow));
+		 	categoryMap.put("cate1", cate1);
 			 if ("readcnt".equals(sort)) {		
-				 	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
 				  	productlist = mapper.readList(categoryMap); // 인기순 정렬
 		        } else if ("wishcnt".equals(sort)) {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
 				 	productlist = mapper.wishList(categoryMap); // 찜 정렬
 		        }else if ("cheap".equals(sort)) {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
 				 	productlist = mapper.cheapList(categoryMap); // 가격낮은순 정렬
 		        } else { 
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
 				 	productlist = mapper.cateprodutList(categoryMap); // 기본(최신순) 정렬
 		        }
-		        showProduct(productlist);
+			 	ArrayList<ProductListDTO> localProductList = showProduct(productlist);
+		        model.addAttribute("productlist", localProductList); 
 		    }
-		model.addAttribute("productlist",productList);
+		
 		model.addAttribute("cnt",cnt);
 		model.addAttribute("pageNum",pageNum);
 	    model.addAttribute("pageSize",pageSize);
@@ -156,11 +151,25 @@ public class CategoryServiceImpl implements CategoryService{
 
 	}
 	
+	@Override //cate1 광고상품
+	public void adcateprodutlist(Model model, String cate1) {
+		int adCnt = mapper.adProductCnt(Integer.parseInt(cate1));
+		List<AllProductDTO> adproductlist = Collections.EMPTY_LIST ;
+		if (adCnt > 0) {
+			categoryMap.clear();
+			categoryMap.put("cate1", cate1);
+			adproductlist = mapper.adcateprodutList(categoryMap);
+			ArrayList<ProductListDTO> localAdProductList = adshowProduct(adproductlist);
+            model.addAttribute("adproductlist", localAdProductList);
+		}
+		model.addAttribute("adCnt",adCnt);
+		
+	}
 	
 	
 	//중분류 선택에 따른 상품 목록 ex: cate1 = 1 , cate2 = 1 감/딸기/토마토 상품 목록
 	@Override
-	public void cateprodictlistdetail(Model model, String cate1, String cate2
+	public void cateproductlistdetail(Model model, String cate1, String cate2
 									,int pageNum,String sort) {
 	
 		int pageSize = 10;
@@ -171,38 +180,23 @@ public class CategoryServiceImpl implements CategoryService{
 		int cntDetail = mapper.cntDetail(categoryMap);
 		List<AllProductDTO> productlistdetail = Collections.EMPTY_LIST ; 
 		if(cntDetail>0){
+			categoryMap.clear();
+		 	categoryMap.put("start", String.valueOf(startRow));
+		 	categoryMap.put("end", String.valueOf(endRow));
+		 	categoryMap.put("cate1", cate1);
+		 	categoryMap.put("cate2", cate2);
 			 if ("readcnt".equals(sort)) {		
-				 	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
-				 	categoryMap.put("cate2", cate2);
 				 	productlistdetail = mapper.readListDetail(categoryMap); // 인기순 정렬
 		        } else if ("wishcnt".equals(sort)) {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
-				 	categoryMap.put("cate2", cate2);
 				 	productlistdetail = mapper.wishListDetail(categoryMap); // 찜 정렬
 		        }else if ("cheap".equals(sort)) {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
-				 	categoryMap.put("cate2", cate2);
 				 	productlistdetail = mapper.cheapListDetail(categoryMap); // 찜 정렬
 		        } else {
-		        	categoryMap.clear();
-				 	categoryMap.put("start", String.valueOf(startRow));
-				 	categoryMap.put("end", String.valueOf(endRow));
-				 	categoryMap.put("cate1", cate1);
-				 	categoryMap.put("cate2", cate2);
 				 	productlistdetail = mapper.productlistdetail(categoryMap); // 기본(최신순) 정렬
 		        }
-		        showProduct(productlistdetail);
+			 	ArrayList<ProductListDTO> localProductList = showProduct(productlistdetail);
+		        model.addAttribute("productlistdetail", localProductList); 
 		    }
-		model.addAttribute("productlistdetail",productList);
 		model.addAttribute("cntDetail",cntDetail);
 		model.addAttribute("pageNum",pageNum);
 	    model.addAttribute("pageSize",pageSize);
@@ -225,20 +219,49 @@ public class CategoryServiceImpl implements CategoryService{
 
 	}
 		
+	@Override
+	public void adcateproductdetail(Model model, String cate1, String cate2) {
+		categoryMap.put("cate1", cate1);
+		categoryMap.put("cate2", cate2);
+		int adCntDetail = mapper.adCntDetail(categoryMap); 
+		List<AllProductDTO> adproductdetail = Collections.EMPTY_LIST ;
+		if(adCntDetail > 0) {
+			adproductdetail = mapper.adproductdetail(categoryMap);
+			ArrayList<ProductListDTO> localAdProductList = adshowProduct(adproductdetail);
+            model.addAttribute("adproductdetail", localAdProductList);
+		}
+		model.addAttribute("adCntDetail",adCntDetail);
+	}
+
 	
-	
-	public void showProduct(List<AllProductDTO> alprList) {
-		productList.clear();
-		ProductListDTO dto = null;
-		for (AllProductDTO alprDTO : alprList) {
-			seasonCategoryMap.put("username", alprDTO.getUsername());
+	public ArrayList<ProductListDTO> showProduct(List<AllProductDTO> alprList) {
+	    ArrayList<ProductListDTO> localProductList = new ArrayList<>();
+	    for (AllProductDTO alprDTO : alprList) {
+	    	seasonCategoryMap.put("username", alprDTO.getUsername());
 			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
 			String keyword = alprDTO.getProductnum() + "_1%";
 			seasonCategoryMap.put("keyword", keyword);
-			dto = mainMapper.findProductListValue(seasonCategoryMap);
-			productList.add(dto);		
-		}
+	        ProductListDTO dto = mainMapper.findProductListValue(seasonCategoryMap);
+	        localProductList.add(dto);
+	    }
+	    return localProductList;
 	}
+
+	public ArrayList<ProductListDTO> adshowProduct(List<AllProductDTO> alprList) {
+	    ArrayList<ProductListDTO> localAdProductList = new ArrayList<>();
+	    for (AllProductDTO alprDTO : alprList) {
+	    	seasonCategoryMap.put("username", alprDTO.getUsername());
+			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
+			String keyword = alprDTO.getProductnum() + "_1%";
+			seasonCategoryMap.put("keyword", keyword);
+	        ProductListDTO ad = mainMapper.findProductListValue(seasonCategoryMap);
+	        localAdProductList.add(ad);
+	    }
+	    return localAdProductList;
+	}
+	
+
+	
 		
 }
 
