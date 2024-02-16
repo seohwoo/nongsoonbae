@@ -64,7 +64,7 @@ public class ProductController {
 	@Autowired
 	private ArrayList<String> realFiles;
 	
-	// ÀÏ´Ü »óÁ¡ ¸ŞÀÎ
+	// ì¼ë‹¨ ìƒì  ë©”ì¸
 	@RequestMapping("productMain")
 	public String productMain(Model model, Principal principal) {
 		String username = principal.getName();		
@@ -73,7 +73,7 @@ public class ProductController {
 		boolean quitMembership = false;
 		if(payservice.isMembership(username).getGrade().get(0).getGrade().equals("ROLE_MEMBERSHIP")) {
 			isMembership = true;
-			if(payservice.lastMembershipPayDate(username).get(0).getSid().equals("¸â¹ö½± ÇØÁö")) {
+			if(payservice.lastMembershipPayDate(username).get(0).getSid().equals("ë©¤ë²„ì‰½ í•´ì§€")) {
 				quitMembership = true;
 			}
 		}
@@ -84,7 +84,7 @@ public class ProductController {
 			model.addAttribute("status", 0);
 		}else {
 			model.addAttribute("status", 1);
-			// ³» ÀÌ¸§ °¡Á®¿À±â
+			// ë‚´ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
 			String myName = service.selectMyName(username);
 			
 			model.addAttribute("myName", myName);
@@ -94,14 +94,14 @@ public class ProductController {
 		return "product/productMain";
 	}	
 	
-	// ³» »óÁ¡ Á¤º¸ µî·ÏÇÏ±â
+	// ë‚´ ìƒì  ì •ë³´ ë“±ë¡í•˜ê¸°
 	@RequestMapping("createProduct")
 	public String createProduct(Model model, String myName) {
 		model.addAttribute("myName", myName);
 		return "product/createProduct";
 	}	
 
-	// ³» »óÁ¡ Á¤º¸ µî·ÏÇÏ±â
+	// ë‚´ ìƒì  ì •ë³´ ë“±ë¡í•˜ê¸°
 	@RequestMapping("createProductPro")
 	public String createProductPro(Principal principal, ShopListDTO SLdto, AddressDTO Adto) {
 		String username = principal.getName();
@@ -110,9 +110,9 @@ public class ProductController {
 		SLdto.setUsername(username);
 		SLdto.setAddress(address);
 		
-		// ³» »óÁ¡ Á¤º¸ µî·ÏÇÏ±â
+		// ë‚´ ìƒì  ì •ë³´ ë“±ë¡í•˜ê¸°
 		service.shopListInsert(SLdto);
-		// ³» »óÁ¡ Å×ÀÌºí ¸¸µé±â
+		// ë‚´ ìƒì  í…Œì´ë¸” ë§Œë“¤ê¸°
 		service.createProduct(username);		
 		return "redirect:/product/productMain";
 	}
@@ -123,45 +123,45 @@ public class ProductController {
 	
 	// TEST
 	
-	// »óÇ° µî·ÏÇÏ´Â ÆäÀÌÁö
+	// ìƒí’ˆ ë“±ë¡í•˜ëŠ” í˜ì´ì§€
 	@RequestMapping("productWriteForm")
 	public String productWriteForm(String myName, Model model, Principal principal) {
 		model.addAttribute("myName", myName);
 		
-		// cate1 °ª °¡Á®¿À±â
+		// cate1 ê°’ ê°€ì ¸ì˜¤ê¸°
 		List<ProductCategoryDTO> cate1 = service.selectCate1();
 		model.addAttribute("cate1", cate1);
 		return "/product/productWriteForm";
 	}
 	
-	// cate2 °ª °¡Á®¿À±â
+	// cate2 ê°’ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping("productWriteForm2")
 	public String selectCate2(Model model , int cate1) {
-		// cate2 °ª °¡Á®¿À±â
+		// cate2 ê°’ ê°€ì ¸ì˜¤ê¸°
 		List<ProductCategoryDTO> cate2 = service.selectCate2(cate1);
 		model.addAttribute("cate2", cate2);
 		return "/product/productWriteForm2";
 	}
 	
 	
-	// cate3 °ª °¡Á®¿À±â
+	// cate3 ê°’ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping("productWriteForm3")
 	public String selectCate3(Model model ,int cate1, int cate2) {
-		// cate3 °ª °¡Á®¿À±â
+		// cate3 ê°’ ê°€ì ¸ì˜¤ê¸°
 		List<ProductCategoryDTO> cate3 = service.selectCate3(cate1, cate2);
 		model.addAttribute("cate3", cate3);
 		return "/product/productWriteForm3";
 	}	
-	// cate3 °ª °¡Á®¿À±â
+	// cate3 ê°’ ê°€ì ¸ì˜¤ê¸°
 	@RequestMapping("productWriteForm4")
 	public String selectCate4(Model model ,int cate1, int cate2, int cate3) {
-		// cate3 °ª °¡Á®¿À±â
+		// cate3 ê°’ ê°€ì ¸ì˜¤ê¸°
 		ProductCategoryDTO dto = service.selectCate4(cate1, cate2, cate3);
 		model.addAttribute("catedto", dto);
 		return "/product/firstOption";
 	}	
 	
-	// »óÇ° µî·ÏÇÏ±â
+	// ìƒí’ˆ ë“±ë¡í•˜ê¸°
 	@RequestMapping("productWritePro")
 	public String productWritePro(Principal principal, Model model, String[] fileNames,
 								  int cate1, int cate2, int cate3,
@@ -183,18 +183,18 @@ public class ProductController {
 		APdto.setCatenum(categorynum);		
 		APdto.setSeqnum("C_"+categorynum);
 		
-		// »óÁ¡ ÁÖ¼Ò °¡Á®¿À±â
+		// ìƒì  ì£¼ì†Œ ê°€ì ¸ì˜¤ê¸°
 		String fullAddress = service.selectAddress(username);
-		// °ø¹é ±âÁØÀ¸·Î ÀÚ¸£±â
+		// ê³µë°± ê¸°ì¤€ìœ¼ë¡œ ìë¥´ê¸°
 		String[] addressParts = fullAddress.split(" ");
-		// area1 ÁÖ¼Ò
+		// area1 ì£¼ì†Œ
 		String area1Address = addressParts[0];
-		// area2 ÁÖ¼Ò
+		// area2 ì£¼ì†Œ
 		String area2Address = addressParts[1];
 		
-		// area1 ÁÖ¼Ò ¹øÈ£·Î °¡Á®¿À±â
+		// area1 ì£¼ì†Œ ë²ˆí˜¸ë¡œ ê°€ì ¸ì˜¤ê¸°
 		int area1 = service.selectArea1(area1Address);
-		// area2 ÁÖ¼Ò ¹øÈ£·Î °¡Á®¿À±â
+		// area2 ì£¼ì†Œ ë²ˆí˜¸ë¡œ ê°€ì ¸ì˜¤ê¸°
 		int area2 = service.selectArea2(area2Address, area1);
 		
 		APdto.setArea1(area1);
@@ -205,17 +205,17 @@ public class ProductController {
 		avgPrice = (double) optiontotalprice[0] / ((double) optionunit[0] / optionamount);
 		APdto.setAvgprice((int) avgPrice);
 		
-		// AllProduct »óÇ° µî·ÏÇÏ±â
+		// AllProduct ìƒí’ˆ ë“±ë¡í•˜ê¸°
 		service.productInsert(APdto);
 		
 		String productnum = service.selectAllProductLastProductNum(username).get(0).getProductnum();
 		APdto.setProductnum(productnum);
 		String createReviewsProductnum = "P_"+productnum;
 		
-		// »óÇ° ¹øÈ£·Î ¸®ºä Å×ÀÌºí ¸¸µé±â
+		// ìƒí’ˆ ë²ˆí˜¸ë¡œ ë¦¬ë·° í…Œì´ë¸” ë§Œë“¤ê¸°
 		service.createReviews(createReviewsProductnum);
 
-		// ½º¸¶Æ® ¿¡µğÅÍ?
+		// ìŠ¤ë§ˆíŠ¸ ì—ë””í„°?
 		String content = APdto.getContent();
 		String fileRoot = request.getServletContext().getRealPath("/resources/summernoteImage/");
 		String realRoot = request.getServletContext().getRealPath("/resources/realImage/");
@@ -235,7 +235,7 @@ public class ProductController {
 					String realname = productnum+"_"+cnt+ext;
 					Idto.setFilename(realname);
 					
-					// ÆÄÀÏ ³Ö±â
+					// íŒŒì¼ ë„£ê¸°
 					service.imagesInsert(Idto);
 					Files.copy(sourceFile.toPath(), targetDirectory.toPath().resolve(realname), StandardCopyOption.REPLACE_EXISTING);
 					cnt++;
@@ -252,7 +252,7 @@ public class ProductController {
 			}
 	    }		
 
-		// ¿É¼Ç ³Ñ¾î¿Â °ª¸¸Å­ ¹İº¹
+		// ì˜µì…˜ ë„˜ì–´ì˜¨ ê°’ë§Œí¼ ë°˜ë³µ
 		for(int i = 0; i < optionname.length; i++) {
 			ProductDTO Pdto = new ProductDTO();						
 			Pdto.setUsername(username);
@@ -263,7 +263,7 @@ public class ProductController {
 			Pdto.setCatenum(categorynum);
 			Pdto.setSeqnum("C_"+categorynum);
 			
-			// username_product ¿É¼Çµé ³Ö±â
+			// username_product ì˜µì…˜ë“¤ ë„£ê¸°
 			service.optionInsert(Pdto);
 		}
 		return "/product/productWritePro";
@@ -271,7 +271,7 @@ public class ProductController {
 	
 	// FINISH
 	
-	// »óÁ¡ Á¤º¸ °¡Á®¿À´Â ÁÖ¼Ò
+	// ìƒì  ì •ë³´ ê°€ì ¸ì˜¤ëŠ” ì£¼ì†Œ
 	@RequestMapping("productMyShop")
 	public String selectMyShop(Principal principal, Model model, String username) {
 		String Session = principal.getName();
@@ -281,7 +281,7 @@ public class ProductController {
 		boolean quitMembership = false;
 		if(payservice.isMembership(username).getGrade().get(0).getGrade().equals("ROLE_MEMBERSHIP")) {
 			isMembership = true;
-			if(payservice.lastMembershipPayDate(username).get(0).getSid().equals("¸â¹ö½± ÇØÁö")) {
+			if(payservice.lastMembershipPayDate(username).get(0).getSid().equals("ë©¤ë²„ì‰½ í•´ì§€")) {
 				quitMembership = true;
 			}
 		}
@@ -292,7 +292,7 @@ public class ProductController {
 			model.addAttribute("status", 0);
 		}else {
 			model.addAttribute("status", 1);
-			// ³» ÀÌ¸§ °¡Á®¿À±â
+			// ë‚´ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
 			String myName = service.selectMyName(username);
 			
 			model.addAttribute("myName", myName);
@@ -302,15 +302,15 @@ public class ProductController {
 			ShopListDTO SLdto = service.selectMyShop(username);
 			List<AllProductDTO> APdto = service.selectUsernameProduct(username);
 					
-			// »óÁ¡ ÁÖ¼Ò 
+			// ìƒì  ì£¼ì†Œ 
 			String fullAddress = SLdto.getAddress();
-			// °ø¹é ±âÁØÀ¸·Î ÀÚ¸£±â
+			// ê³µë°± ê¸°ì¤€ìœ¼ë¡œ ìë¥´ê¸°
 			String[] addressParts = fullAddress.split(" ");
-			// area1 ÁÖ¼Ò
+			// area1 ì£¼ì†Œ
 			String area1Address = addressParts[0];
-			// area2 ÁÖ¼Ò
+			// area2 ì£¼ì†Œ
 			String area2Address = addressParts[1];
-			// ÁÖ¼Ò ÇÕÃÄ
+			// ì£¼ì†Œ í•©ì³
 			String address = area1Address + " " + area2Address;
 			
 			model.addAttribute("address" , address);
@@ -324,14 +324,14 @@ public class ProductController {
 		return "/product/productMyShop";
 	}
 	
-	// ÀÏ´Ü »óÁ¡ ¸ŞÀÎ
+	// ì¼ë‹¨ ìƒì  ë©”ì¸
 	@RequestMapping("allProduct")
 	public String selectAllproduct(Model model) {
 		List<AllProductDTO> APdto = service.selectAllproduct();
 		model.addAttribute("APdto", APdto);
 	
 		/*
-		// allproduct Àç°í¼ö 0ÀÎ »óÇ°µé »èÁ¦
+		// allproduct ì¬ê³ ìˆ˜ 0ì¸ ìƒí’ˆë“¤ ì‚­ì œ
 		for (AllProductDTO dto : APdto) {
 		    String productnum = dto.getProductnum();
 		    String username = dto.getUsername();
@@ -343,28 +343,33 @@ public class ProductController {
 		return "/product/allProduct";
 	}
 	
-	// »óÇ° »ó¼¼Á¤º¸
+	// ìƒí’ˆ ìƒì„¸ì •ë³´
 	@RequestMapping("productInfo")
 	public String productInfo(Principal principal, String productnum, Model model, String follow) {
-		String username = principal.getName();
 
-		// »óÇ° Á¤º¸ ÆäÀÌÁö
+		String username = "";
+		if(principal!=null) {
+			username = principal.getName();
+		}
+		
+
+		// ìƒí’ˆ ì •ë³´ í˜ì´ì§€
 		AllProductDTO APdto = service.selectProductInfo(follow, productnum);
-		// »óÇ° ¿Ã¸° »ç¶÷ÀÇ ÁÖ¼Ò, ÀÌ¸§, ÆÈ·Î¿ì Ã£±â
+		// ìƒí’ˆ ì˜¬ë¦° ì‚¬ëŒì˜ ì£¼ì†Œ, ì´ë¦„, íŒ”ë¡œìš° ì°¾ê¸°
 		AllProductDTO APdtoNAF = service.selectProductNameAddressFollowers(follow, productnum);
-		// »óÇ° ¿É¼Çµé °¡Á®¿À±â
+		// ìƒí’ˆ ì˜µì…˜ë“¤ ê°€ì ¸ì˜¤ê¸°
 		List<ProductDTO> Pdto = service.selectProductOptionAll(follow, productnum);
-		// »óÇ° »çÁø °¡Á®¿À±â
+		// ìƒí’ˆ ì‚¬ì§„ ê°€ì ¸ì˜¤ê¸°
 		List<AllProductDTO> Images = service.selectProductImagesAll(follow, productnum);
 		
-		// »óÇ° ¸®ºä ¼ö
+		// ìƒí’ˆ ë¦¬ë·° ìˆ˜
 		int cnt = service.selectReviewsCount(productnum);
-		// »óÇ° ¸®ºä °¡Á®¿À±â 
+		// ìƒí’ˆ ë¦¬ë·° ê°€ì ¸ì˜¤ê¸° 
 		List<ReviewsDTO> Rdto = service.selectReviewsAll(follow, productnum);
 
 		
 		
-		// »óÇ° ¸®ºä °¡Á®¿À±â 
+		// ìƒí’ˆ ë¦¬ë·° ê°€ì ¸ì˜¤ê¸° 
 		List<String> ReviewsName = service.selectReviewsUsername(productnum);
 		List<ReviewsDTO> allReviews = new ArrayList<>();
 		
@@ -380,38 +385,39 @@ public class ProductController {
 		    totalStars += dto.getStars();
 		}
 		double stars = (double) totalStars / cnt;
-		stars = Math.round(stars * 10.0) / 10.0; // ¹İ¿Ã¸²
+		stars = Math.round(stars * 10.0) / 10.0; // ë°˜ì˜¬ë¦¼
 
 		
 		
-		// »óÁ¡ ÁÖ¼Ò 
+		// ìƒì  ì£¼ì†Œ 
 		String fullAddress = APdtoNAF.getAddress();
-		// °ø¹é ±âÁØÀ¸·Î ÀÚ¸£±â
+		// ê³µë°± ê¸°ì¤€ìœ¼ë¡œ ìë¥´ê¸°
 		String[] addressParts = fullAddress.split(" ");
-		// area1 ÁÖ¼Ò
+		// area1 ì£¼ì†Œ
 		String area1Address = addressParts[0];
-		// area2 ÁÖ¼Ò
+		// area2 ì£¼ì†Œ
 		String area2Address = addressParts[1];
-		// ÁÖ¼Ò ÇÕÃÄ
+		// ì£¼ì†Œ í•©ì³
 		String address = area1Address + " " + area2Address;		
 		
 		ProductReadcountDTO PRCdto = new ProductReadcountDTO();
-		// ¿À´Ã ³¯Â¥ ±¸ÇÏ´Â ÄÚµå
+		// ì˜¤ëŠ˜ ë‚ ì§œ êµ¬í•˜ëŠ” ì½”ë“œ
 		Date date = new Date();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd");
 		String todaydate = simpleDateFormat.format(date);
 		PRCdto.setTodaydate(todaydate);
 		
-		// ¿À´Ã »óÇ° Á¶È¸ÇÑ À¯Àú Ã£±â
-		int ReadCnt = service.selectTodayReadcntUsername(username, productnum, todaydate);
-		
-		if(ReadCnt == 0) {
-			// »óÇ° Á¶È¸¼ö Áõ°¡
-			service.updateReadcntPlus(productnum);
-			// »óÇ° Á¶È¸ÇÑ À¯ÀúÁ¤º¸ ³Ö±â
-			service.productReadcntInsert(username, productnum);
+		if(principal!=null) {
+			// ì˜¤ëŠ˜ ìƒí’ˆ ì¡°íšŒí•œ ìœ ì € ì°¾ê¸°
+			int ReadCnt = service.selectTodayReadcntUsername(username, productnum, todaydate);
+			
+			if(ReadCnt == 0 ) {
+				// ìƒí’ˆ ì¡°íšŒìˆ˜ ì¦ê°€
+				service.updateReadcntPlus(productnum);
+				// ìƒí’ˆ ì¡°íšŒí•œ ìœ ì €ì •ë³´ ë„£ê¸°
+				service.productReadcntInsert(username, productnum);
+			}
 		}
-		
 		model.addAttribute("follow", follow);
 		model.addAttribute("productnum", productnum);
 		model.addAttribute("APdto", APdto);
@@ -428,7 +434,7 @@ public class ProductController {
 		return "/product/productInfo";
 	}
 
-	// ÆÈ·Î¿ìÇÏ±â
+	// íŒ”ë¡œìš°í•˜ê¸°
 	@RequestMapping("followPro")
 	public String followPro(String follow, Principal principal) {
 		String username = principal.getName();
@@ -448,11 +454,11 @@ public class ProductController {
 		return "redirect:/product/productMain";
 	}	
 	
-	// ¸®ºä ÀÛ¼ºÇÏ´Â ÆäÀÌÁö
+	// ë¦¬ë·° ì‘ì„±í•˜ëŠ” í˜ì´ì§€
 	@RequestMapping("productReview")
 	public String productReview(Principal principal, String optionnum, String productnum, Model model) {
 		String username = principal.getName();
-		// ´Ğ³×ÀÓ °¡Á®¿À±â
+		// ë‹‰ë„¤ì„ ê°€ì ¸ì˜¤ê¸°
 		String name = service.selectMyName(username);
 		
 		model.addAttribute("productnum", productnum);
@@ -461,7 +467,7 @@ public class ProductController {
 		return "/product/productReview";
 	}
 	
-	// ¸®ºä ÀÛ¼ºÇÏ±â
+	// ë¦¬ë·° ì‘ì„±í•˜ê¸°
 	@RequestMapping("productReviewPro")
 	public String productReviewPro(Principal principal, ReviewsDTO Rdto, List<MultipartFile> filelist, HttpServletRequest request, 
 								   String productnum, String optionnum, String name) {
@@ -475,7 +481,7 @@ public class ProductController {
 	}
 	
 	
-	// »óÇ° »ó¼¼Á¤º¸ Â¬?
+	// ìƒí’ˆ ìƒì„¸ì •ë³´ ì§­?
 	@RequestMapping("productDetail")
 	public String productDetail(Principal principal, Model model, String productnum) {
 		String username = principal.getName();
@@ -496,7 +502,7 @@ public class ProductController {
 		return "/product/productDetail";
 	}
 
-	// ÂòÇÏ±â
+	// ì°œí•˜ê¸°
 	@RequestMapping("productPickPro")
 	public String productPickPro(Principal principal, Model model, String productnum, String follow, String optionnum) {
 		String username = principal.getName();
@@ -518,7 +524,7 @@ public class ProductController {
 		return "redirect:/product/productMain";
 	}
 	
-	// Àå¹Ù±¸´Ï ´ã±â
+	// ì¥ë°”êµ¬ë‹ˆ ë‹´ê¸°
 	@RequestMapping("productShoppingPro")
 	public String ShoppingPro(Principal principal, String productnum, String follow, String optionnum, String count) {
 		String username = principal.getName();
@@ -541,13 +547,13 @@ public class ProductController {
 		return "product/sample";
 	}
 	
-	// »óÁ¡ Æó¼âÇÏ±â
+	// ìƒì  íì‡„í•˜ê¸°
 	@RequestMapping("deleteShoplist")
 	public String deleteShoplist() {
 		return "product/deleteShoplist";
 	}
 	
-	// »óÁ¡ Æó¼âÇÏ±â
+	// ìƒì  íì‡„í•˜ê¸°
 	@RequestMapping("deleteShoplistPro")
 	public String deleteShoplistPro(Principal principal) {
 		String username = principal.getName();
@@ -565,7 +571,7 @@ public class ProductController {
 		return "product/deleteShoplistPro";
 	}	
 	
-	// ¸®ºä »èÁ¦ÇÏ±â
+	// ë¦¬ë·° ì‚­ì œí•˜ê¸°
 	@RequestMapping("reviewsDelete")
 	public String reviewsDelete(String productnum, String myName, Model model) {
 
@@ -588,7 +594,7 @@ public class ProductController {
 	
 	
 	
-	 // ½º¸¶Æ® ¿¡µğÅÍ?
+	 // ìŠ¤ë§ˆíŠ¸ ì—ë””í„°?
 	 public void isFile(String[] filenames, String content) {
 		 srcValues.clear();
 		 realFiles.clear();
@@ -645,19 +651,19 @@ public class ProductController {
 
 
 	/*
-	// 24³â ±¸ÇÏ´Â ÄÚµå
+	// 24ë…„ êµ¬í•˜ëŠ” ì½”ë“œ
 	Date date = new Date();
 	SimpleDateFormat smf = new SimpleDateFormat("yyyy/MM/dd");		
 	String day = smf.format(date);		
 	String year = day.split("/")[0].substring(2, 4);
 	String keyword = "%" + year + categorynum + "%";
 	String productnum = "";
-	// °¡Àå ÃÖ±ÙÀÇ »óÇ°¹øÈ£°ª
+	// ê°€ì¥ ìµœê·¼ì˜ ìƒí’ˆë²ˆí˜¸ê°’
 	int productnumCnt = service.selectLastProductNumCnt(keyword, username);
-	// »óÇ°³Ñ¹ö°¡ ¾øÀ¸¸é productnum ¸¸µé±â
+	// ìƒí’ˆë„˜ë²„ê°€ ì—†ìœ¼ë©´ productnum ë§Œë“¤ê¸°
 	if(productnumCnt==0) {
 		productnum = year + categorynum + "00001";
-	// »óÇ°³Ñ¹ö ÀÖÀ¸¸é ±âÁ¸ productnum¿¡ +1ÇÏ±â
+	// ìƒí’ˆë„˜ë²„ ìˆìœ¼ë©´ ê¸°ì¡´ productnumì— +1í•˜ê¸°
 	}else {
 		productnum = service.selectOptionNum(keyword, username).get(0);
 		productnum = String.valueOf(Long.parseLong(productnum) + (long) 1);

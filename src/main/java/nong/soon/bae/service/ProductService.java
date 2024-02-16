@@ -35,6 +35,8 @@ public interface ProductService {
 	
 	public ProductCategoryDTO selectCate4(int cate1,int cate2,int cate3);
 	
+	//상품정보를 가져옴
+	public AllProductDTO findProductInfoToReadcnt(String productnum);
 	
 	// 상품 등록하기
 	public void productInsert(AllProductDTO APdto);	

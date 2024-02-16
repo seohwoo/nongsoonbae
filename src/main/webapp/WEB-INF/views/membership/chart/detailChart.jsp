@@ -7,6 +7,7 @@
 		<title>멤버쉽차트</title>
 	</head>
 	<body>
+		<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<h1>${name}</h1>
 		<canvas id="myChart" style="width: 100%; height: 500px"></canvas>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>		
@@ -43,5 +44,9 @@
 		  });
 		 
 		</script>
+		<br />
+		<br />
+		<br />
+		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>

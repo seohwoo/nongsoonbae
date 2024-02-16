@@ -23,151 +23,151 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductMapper mapper;
 
-	// ³» ÀÌ¸§ °¡Á®¿À±â
+	// ë‚´ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public String selectMyName(String username) {
 		return mapper.selectMyName(username);
 	}	
 	
-	// ³» »óÁ¡ Á¤º¸ µî·ÏÇÏ±â
+	// ë‚´ ìƒì  ì •ë³´ ë“±ë¡í•˜ê¸°
 	@Override
 	public void shopListInsert(ShopListDTO SLdto) {
 		mapper.shopListInsert(SLdto);
 	}
 	
-	// ³» »óÁ¡ Å×ÀÌºí ¸¸µé±â
+	// ë‚´ ìƒì  í…Œì´ë¸” ë§Œë“¤ê¸°
 	@Override
 	public void createProduct(String username) {
 		mapper.createProduct(username);
 	}
 
-	// Ä«Å×°í¸® ´ëºĞ·ù
+	// ì¹´í…Œê³ ë¦¬ ëŒ€ë¶„ë¥˜
 	@Override
 	public List<ProductCategoryDTO> selectCate1() {
 		return mapper.selectCate1();
 	}
 
-	// Ä«Å×°í¸® ÁßºĞ·ù	
+	// ì¹´í…Œê³ ë¦¬ ì¤‘ë¶„ë¥˜	
 	@Override
 	public List<ProductCategoryDTO> selectCate2(int cate1) {
 		return mapper.selectCate2(cate1);
 	}
 
-	// Ä«Å×°í¸® ¼ÒºĞ·ù
+	// ì¹´í…Œê³ ë¦¬ ì†Œë¶„ë¥˜
 	@Override
 	public List<ProductCategoryDTO> selectCate3(int cate1, int cate2) {
 		return mapper.selectCate3(cate1, cate2);
 	}	
 	
-	//Ä«Å×°í¸® ´ÜÀ§°ª °¡Á®¿À±â
+	//ì¹´í…Œê³ ë¦¬ ë‹¨ìœ„ê°’ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public ProductCategoryDTO selectCate4(int cate1, int cate2, int cate3) {
 		return mapper.selectCate4(cate1, cate2, cate3);
 	}
 	
-	// »óÇ° µî·ÏÇÏ±â
+	// ìƒí’ˆ ë“±ë¡í•˜ê¸°
 	@Override
 	public void productInsert(AllProductDTO APdto) {
 		mapper.productInsert(APdto);
 	}
 
-	// »óÇ° µî·ÏÇÑ Á÷ÈÄÀÇ productnum ±¸ÇÏ±â
+	// ìƒí’ˆ ë“±ë¡í•œ ì§í›„ì˜ productnum êµ¬í•˜ê¸°
 	@Override
 	public List<AllProductDTO> selectAllProductLastProductNum(String username) {
 		return mapper.selectAllProductLastProductNum(username);
 	}	
 
-	// »óÇ° µî·ÏÇÒ ¶§ »óÇ° ¸®ºä Å×ÀÌºí ¸¸µé±â
+	// ìƒí’ˆ ë“±ë¡í•  ë•Œ ìƒí’ˆ ë¦¬ë·° í…Œì´ë¸” ë§Œë“¤ê¸°
 	@Override
 	public void createReviews(String createReviewsProductnum) {
 		mapper.createReviews(createReviewsProductnum);
 	}	
 	
-	// »óÁ¡ ÁÖ¼Ò °¡Á®¿À´Â ÄÚµå
+	// ìƒì  ì£¼ì†Œ ê°€ì ¸ì˜¤ëŠ” ì½”ë“œ
 	@Override
 	public String selectAddress(String username) {
 		return mapper.selectAddress(username);
 	}	
 
-	// area1 °ª °¡Á®¿À´Â ÄÚµå
+	// area1 ê°’ ê°€ì ¸ì˜¤ëŠ” ì½”ë“œ
 	@Override
 	public int selectArea1(String area1Address) {
 		return mapper.selectArea1(area1Address);
 	}
 
-	// area2 °ª °¡Á®¿À´Â ÄÚµå
+	// area2 ê°’ ê°€ì ¸ì˜¤ëŠ” ì½”ë“œ
 	@Override
 	public int selectArea2(String area2Address, int area1) {
 		return mapper.selectArea2(area1, area2Address);
 	}
 	
-	// »óÇ° µî·ÏÇÒ ¶§ ÀÌ¹ÌÁö ³Ö±â
+	// ìƒí’ˆ ë“±ë¡í•  ë•Œ ì´ë¯¸ì§€ ë„£ê¸°
 	@Override
 	public void imagesInsert(ImagesDTO Idto) {
 		mapper.imagesInsert(Idto);
 	}
 
-	// »óÇ° µî·ÏÇÒ ¶§ username_product¿¡ ¿É¼Çµé ³Ö±â
+	// ìƒí’ˆ ë“±ë¡í•  ë•Œ username_productì— ì˜µì…˜ë“¤ ë„£ê¸°
 	@Override
 	public void optionInsert(ProductDTO Pdto) {
 		mapper.optionInsert(Pdto);
 	}
 
-	// »óÇ° ÂòÇÏ±â
+	// ìƒí’ˆ ì°œí•˜ê¸°
 	@Override
 	public void InsertProductPick(MyPageDTO MPdto) {
 		mapper.InsertProductPick(MPdto);
 	}
 
-	// »óÇ°¿¡ Âò +1 ÇÏ±â
+	// ìƒí’ˆì— ì°œ +1 í•˜ê¸°
 	@Override
 	public void allproductWishcntPlus(String productnum) {
 		mapper.allproductWishcntPlus(productnum);
 	}
 	
-	// »óÇ° Âò À¯¹«
+	// ìƒí’ˆ ì°œ ìœ ë¬´
 	@Override
 	public int selectPickCount(String username, String productnum) {
 		return mapper.selectPickCount(username, productnum);
 	}
 
-	// ¸¶ÀÌÆäÀÌÁö¿¡ »óÇ° Âò »èÁ¦ÇÏ±â
+	// ë§ˆì´í˜ì´ì§€ì— ìƒí’ˆ ì°œ ì‚­ì œí•˜ê¸°
 	@Override
 	public void deleteProductPick(String username, String productnum) {
 		mapper.deleteProductPick(username, productnum);
 	}
 
-	// Allproduct »óÇ°¿¡ Âò -1 ÇÏ±â
+	// Allproduct ìƒí’ˆì— ì°œ -1 í•˜ê¸°
 	@Override
 	public void allproductWishcntMinus(String productnum) {
 		mapper.allproductWishcntMinus(productnum);
 	}
 
-	// ³óºÎ ÆÈ·Î¿ìÇÏ±â
+	// ë†ë¶€ íŒ”ë¡œìš°í•˜ê¸°
 	@Override
 	public void InsertUsernameFollow(MyPageDTO MPdto) {
 		mapper.InsertUsernameFollow(MPdto);
 	}	
 
-	// ³óºÎ ÆÈ·Î¿ìÇÏ¸é userdetails¿¡ followers +1 ÇÏ±â
+	// ë†ë¶€ íŒ”ë¡œìš°í•˜ë©´ userdetailsì— followers +1 í•˜ê¸°
 	@Override
 	public void userdetailsUpdateFollowersPlus(String follow) {
 		mapper.userdetailsUpdateFollowersPlus(follow);
 	}	
 	
-	// ¸¶ÀÌÆäÀÌÁö ³óºÎ ±¸µ¶ À¯¹«
+	// ë§ˆì´í˜ì´ì§€ ë†ë¶€ êµ¬ë… ìœ ë¬´
 	@Override
 	public int selectFollowCount(String username, String follow) {
 		return mapper.selectFollowCount(username, follow);
 	}
 	
-	// ³óºÎ ÆÈ·Î¿ì Ãë¼ÒÇÏ±â
+	// ë†ë¶€ íŒ”ë¡œìš° ì·¨ì†Œí•˜ê¸°
 	@Override
 	public void deleteFollow(String username, String follow) {
 		mapper.deleteFollow(username, follow);
 	}
 	
-	// ³óºÎ ÆÈ·Î¿ì Ãë¼ÒÇÏ¸é userdetails¿¡ followers -1 ÇÏ±â
+	// ë†ë¶€ íŒ”ë¡œìš° ì·¨ì†Œí•˜ë©´ userdetailsì— followers -1 í•˜ê¸°
 	@Override
 	public void userdetailsUpdateFollowersMinus(String follow) {
 		mapper.userdetailsUpdateFollowersMinus(follow);
@@ -193,25 +193,25 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	
-	// »óÇ° Á¤º¸ ÆäÀÌÁö
+	// ìƒí’ˆ ì •ë³´ í˜ì´ì§€
 	@Override
 	public AllProductDTO selectProductInfo(String follow, String productnum) {
 		return mapper.selectProductInfo(follow, productnum);
 	}	
 	
-	// »óÇ° ¿Ã¸° »ç¶÷ÀÇ ÁÖ¼Ò, ÀÌ¸§, ÆÈ·Î¿ì Ã£±â	
+	// ìƒí’ˆ ì˜¬ë¦° ì‚¬ëŒì˜ ì£¼ì†Œ, ì´ë¦„, íŒ”ë¡œìš° ì°¾ê¸°	
 	@Override
 	public AllProductDTO selectProductNameAddressFollowers(String follow, String productnum) {
 		return mapper.selectProductNameAddressFollowers(follow, productnum);
 	}
 	
-	// »óÇ° ¿É¼Çµé °¡Á®¿À±â
+	// ìƒí’ˆ ì˜µì…˜ë“¤ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<ProductDTO> selectProductOptionAll(String follow, String productnum) {
 		return mapper.selectProductOptionAll(follow, productnum);
 	}	
 	
-	// »óÇ° »çÁø °¡Á®¿À±â
+	// ìƒí’ˆ ì‚¬ì§„ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<AllProductDTO> selectProductImagesAll(String follow, String productnum) {
 		return mapper.selectProductImagesAll(follow, productnum);
@@ -227,43 +227,43 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	
-	// ³» »óÁ¡ ÆäÀÌÁö¿¡ ÇÊ¿äÇÑ Á¤º¸µé °¡Á®¿À±â
+	// ë‚´ ìƒì  í˜ì´ì§€ì— í•„ìš”í•œ ì •ë³´ë“¤ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public ShopListDTO selectMyShop(String username) {
 		return mapper.selectMyShop(username);
 	}
 
-	// À¯ÀúÀÇ »óÇ°µé °¡Á®¿À±â
+	// ìœ ì €ì˜ ìƒí’ˆë“¤ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<AllProductDTO> selectUsernameProduct(String username) {
 		return mapper.selectUsernameProduct(username);
 	}
 
-	// ÀÌ¸§ÀÌ¶û »óÇ° °¡Á®¿À´Â ÄÚµå
+	// ì´ë¦„ì´ë‘ ìƒí’ˆ ê°€ì ¸ì˜¤ëŠ” ì½”ë“œ
 	@Override
 	public AllProductDTO selectAllProductPlusNameFollowers(String productnum) {
 		return mapper.selectAllProductPlusNameFollowers(productnum);
 	}
 
-	// »óÇ° µî·ÏÇÑ »óÁ¡ area1 ÁÖ¼Ò	
+	// ìƒí’ˆ ë“±ë¡í•œ ìƒì  area1 ì£¼ì†Œ	
 	@Override
 	public AreaDTO selectArea1Address(int area1) {
 		return mapper.selectArea1Address(area1);
 	}
 
-	// »óÇ° µî·ÏÇÑ »óÁ¡ area2 ÁÖ¼Ò
+	// ìƒí’ˆ ë“±ë¡í•œ ìƒì  area2 ì£¼ì†Œ
 	@Override
 	public AreaDTO selectArea2Address(int area1, int area2) {
 		return mapper.selectArea2Address(area1, area2);
 	}
 
-	// »óÇ° ¿É¼Ç °¡Á®¿À±â	
+	// ìƒí’ˆ ì˜µì…˜ ê°€ì ¸ì˜¤ê¸°	
 	@Override
 	public List<ProductDTO> selectProductOption(String follow, String productnum) {
 		return mapper.selectProductOption(follow, productnum);
 	}
 	
-	// »óÇ° ÀÌ¹ÌÁö °¡Á®¿À±â
+	// ìƒí’ˆ ì´ë¯¸ì§€ ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<ImagesDTO> selectProductImages(String follow, String productnum) {
 		return mapper.selectProductImages(follow, productnum);
@@ -271,7 +271,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-	// »óÇ° ÀüÃ¼¸ñ·Ï º¸±â	
+	// ìƒí’ˆ ì „ì²´ëª©ë¡ ë³´ê¸°	
 	@Override
 	public List<AllProductDTO> selectAllproduct() {
 		return mapper.selectAllproduct();
@@ -290,7 +290,7 @@ public class ProductServiceImpl implements ProductService {
 		return mapper.CheckMyShop(username);
 	}
 
-	// »óÇ° ¸®ºä¾²±â
+	// ìƒí’ˆ ë¦¬ë·°ì“°ê¸°
 	@Override
 	public int reviewInsert(List<MultipartFile> filelist, ReviewsDTO Rdto, String path) {
 		int check = 0;
@@ -328,37 +328,37 @@ public class ProductServiceImpl implements ProductService {
 		return result;		
 	}	
 	
-	// »óÇ° ¸®ºä °¡Á®¿À±â
+	// ìƒí’ˆ ë¦¬ë·° ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<ReviewsDTO> selectReviewsAll(String follow, String productnum) {
 		return mapper.selectReviewsAll(follow, productnum);
 	}	
 
-	// »óÇ° ¸®ºä ¼ö
+	// ìƒí’ˆ ë¦¬ë·° ìˆ˜
 	@Override
 	public int selectReviewsCount(String productnum) {
 		return mapper.selectReviewsCount(productnum);
 	}	
 	
-	// Àå¹Ù±¸´Ï ´ã±â
+	// ì¥ë°”êµ¬ë‹ˆ ë‹´ê¸°
 	@Override
 	public void insertShopping(MyPageDTO MPdto) {
 		mapper.insertShopping(MPdto);
 	}
 
-	// shoplist¿¡¼­ ³» »óÁ¡ Á¤º¸ »èÁ¦ÇÏ±â	
+	// shoplistì—ì„œ ë‚´ ìƒì  ì •ë³´ ì‚­ì œí•˜ê¸°	
 	@Override
 	public void deleteShoplist(String username) {
 		mapper.deleteShoplist(username);
 	}
 
-	// productnum °ªÀ¸·Î ¸®ºä Å×ÀÌºí »èÁ¦ÇÏ±â
+	// productnum ê°’ìœ¼ë¡œ ë¦¬ë·° í…Œì´ë¸” ì‚­ì œí•˜ê¸°
 	@Override
 	public void dropReviewsTable(String productnum) {
 		mapper.dropReviewsTable(productnum);
 	}
 
-	// usernameÀ¸·Î productnum °¡Á®¿À±â
+	// usernameìœ¼ë¡œ productnum ê°€ì ¸ì˜¤ê¸°
 	@Override
 	public List<String> selectUsernameProductnum(String username) {
 		return mapper.selectUsernameProductnum(username);
@@ -380,7 +380,7 @@ public class ProductServiceImpl implements ProductService {
 		mapper.deleteAllproduct(username, productnum);
 	}
 
-	// »óÇ° ÆÇ¸Å½Ã Àç°í ¾÷µ¥ÀÌÆ®
+	// ìƒí’ˆ íŒë§¤ì‹œ ì¬ê³  ì—…ë°ì´íŠ¸
 	@Override
 	public MyPageDTO selectMypage3(String username) {
 		return mapper.selectMypage3(username);
@@ -391,19 +391,19 @@ public class ProductServiceImpl implements ProductService {
 		mapper.updateProductCount(follow, cnt);
 	}
 
-	// »óÇ° Á¶È¸¼ö Áõ°¡
+	// ìƒí’ˆ ì¡°íšŒìˆ˜ ì¦ê°€
 	@Override
 	public void updateReadcntPlus(String productnum) {
 		mapper.updateReadcntPlus(productnum);
 	}
 
-	// »óÇ° Á¶È¸ÇÑ À¯ÀúÁ¤º¸ ³Ö±â
+	// ìƒí’ˆ ì¡°íšŒí•œ ìœ ì €ì •ë³´ ë„£ê¸°
 	@Override
 	public void productReadcntInsert(String username, String productnum) {
 		mapper.productReadcntInsert(username, productnum);
 	}
 
-	// ¿À´Ã »óÇ° Á¶È¸ÇÑ À¯Àú Ã£±â
+	// ì˜¤ëŠ˜ ìƒí’ˆ ì¡°íšŒí•œ ìœ ì € ì°¾ê¸°
 	@Override
 	public int selectTodayReadcntUsername(String username, String productnum, String todaydate) {
 		return mapper.selectTodayReadcntUsername(username, productnum, todaydate);
@@ -434,43 +434,16 @@ public class ProductServiceImpl implements ProductService {
 		mapper.myReviewsDelete(productnum, myName);
 	}
 
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
 }
 
 
-	/* °¡Àå ÃÖ±ÙÀÇ »óÇ°¹øÈ£°ª ¾øÀ¸¸é Ä«¿îÆ®0 ÀÖÀ¸¸é »óÇ° ¼ö
+	/* ê°€ì¥ ìµœê·¼ì˜ ìƒí’ˆë²ˆí˜¸ê°’ ì—†ìœ¼ë©´ ì¹´ìš´íŠ¸0 ìˆìœ¼ë©´ ìƒí’ˆ ìˆ˜
 	@Override
 	public int selectLastProductNumCnt(String keyword, String username) {
 		return mapper.selectLastProductNumCnt(keyword, username);
 	}
 	
-	// »óÇ°¹øÈ£°¡ ÀÖÀ¸¸é »óÇ°¹øÈ£ »Ì¾Æ¿À´Â°Å
+	// ìƒí’ˆë²ˆí˜¸ê°€ ìˆìœ¼ë©´ ìƒí’ˆë²ˆí˜¸ ë½‘ì•„ì˜¤ëŠ”ê±°
 	@Override
 	public List<AllProductDTO> selectLastProductNum(String keyword) {
 		return mapper.selectLastProductNum(keyword);
