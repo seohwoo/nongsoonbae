@@ -642,8 +642,22 @@ public class ProductController {
          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
       }
    }
+   
+   @RequestMapping("shopinfo")
+   public String shopinfo(Model model, String username, Principal pri) {
+	   boolean isUser = false;
+	   if(username.equals(pri.getName())) {
+		   isUser = true;
+		   service.findMyShopInfo(model, username);
+		   service.findMySellChart(model, username);
+	   }
+	   model.addAttribute("isUser", isUser);
+	   return "/user/myshop/shopinfo";
+   }
+   
 }
 
+	
 
    /*
    // 24년 구하는 코드

@@ -1,5 +1,6 @@
  package nong.soon.bae.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -236,6 +237,22 @@ public interface ProductMapper {
 	// 리뷰 삭제하기
 	public void myReviewsDelete(@Param("productnum") String productnum, 
 			 					@Param("myName") String myName);
+	
+	
+	public ShopListDTO findMyShopInfo(String username);
+	
+	public int findTodayPriceCnt(String username);
+	
+	public int findTodayPrice(String username);
+	
+	public int isUserSell(String username);
+	
+	public List<String> userSellDateList(String username);
+	
+	public int findSellDatePrice(HashMap<String, String> map);
+	
+	public ShopListDTO findByShopInfo(String username);
+	
 }
 	
 	

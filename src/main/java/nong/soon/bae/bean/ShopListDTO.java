@@ -13,6 +13,9 @@ public class ShopListDTO {
 	private String address;
 	private int grade;
 	
+	
+	private int product_count;
+	private int total_payment;
 	private String name;
 	private String image;
 	private int followers;

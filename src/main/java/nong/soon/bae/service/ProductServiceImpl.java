@@ -1,10 +1,17 @@
 package nong.soon.bae.service;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.AllProductDTO;
@@ -22,152 +29,157 @@ public class ProductServiceImpl implements ProductService {
 
    @Autowired
    private ProductMapper mapper;
+   @Autowired
+   private HashMap<String, String> productMap;
+   @Autowired
+	private SimpleDateFormat simpleDateFormat;
+   
 
-   // 내 이름 가져오기
+   // �궡 �씠由� 媛��졇�삤湲�
    @Override
    public String selectMyName(String username) {
       return mapper.selectMyName(username);
    }   
    
-   // 내 상점 정보 등록하기
+   // �궡 �긽�젏 �젙蹂� �벑濡앺븯湲�
    @Override
    public void shopListInsert(ShopListDTO SLdto) {
       mapper.shopListInsert(SLdto);
    }
    
-   // 내 상점 테이블 만들기
+   // �궡 �긽�젏 �뀒�씠釉� 留뚮뱾湲�
    @Override
    public void createProduct(String username) {
       mapper.createProduct(username);
    }
 
-   // 카테고리 대분류
+   // 移댄뀒怨좊━ ��遺꾨쪟
    @Override
    public List<ProductCategoryDTO> selectCate1() {
       return mapper.selectCate1();
    }
 
-   // 카테고리 중분류   
+   // 移댄뀒怨좊━ 以묐텇瑜�   
    @Override
    public List<ProductCategoryDTO> selectCate2(int cate1) {
       return mapper.selectCate2(cate1);
    }
 
-   // 카테고리 소분류
+   // 移댄뀒怨좊━ �냼遺꾨쪟
    @Override
    public List<ProductCategoryDTO> selectCate3(int cate1, int cate2) {
       return mapper.selectCate3(cate1, cate2);
    }   
    
-   //카테고리 단위값 가져오기
+   //移댄뀒怨좊━ �떒�쐞媛� 媛��졇�삤湲�
    @Override
    public ProductCategoryDTO selectCate4(int cate1, int cate2, int cate3) {
       return mapper.selectCate4(cate1, cate2, cate3);
    }
    
-   // 상품 등록하기
+   // �긽�뭹 �벑濡앺븯湲�
    @Override
    public void productInsert(AllProductDTO APdto) {
       mapper.productInsert(APdto);
    }
 
-   // 상품 등록한 직후의 productnum 구하기
+   // �긽�뭹 �벑濡앺븳 吏곹썑�쓽 productnum 援ы븯湲�
    @Override
    public List<AllProductDTO> selectAllProductLastProductNum(String username) {
       return mapper.selectAllProductLastProductNum(username);
    }   
 
-   // 상품 등록할 때 상품 리뷰 테이블 만들기
+   // �긽�뭹 �벑濡앺븷 �븣 �긽�뭹 由щ럭 �뀒�씠釉� 留뚮뱾湲�
    @Override
    public void createReviews(String createReviewsProductnum) {
       mapper.createReviews(createReviewsProductnum);
    }   
    
-   // 상점 주소 가져오는 코드
+   // �긽�젏 二쇱냼 媛��졇�삤�뒗 肄붾뱶
    @Override
    public String selectAddress(String username) {
       return mapper.selectAddress(username);
    }   
 
-   // area1 값 가져오는 코드
+   // area1 媛� 媛��졇�삤�뒗 肄붾뱶
    @Override
    public int selectArea1(String area1Address) {
       return mapper.selectArea1(area1Address);
    }
 
-   // area2 값 가져오는 코드
+   // area2 媛� 媛��졇�삤�뒗 肄붾뱶
    @Override
    public int selectArea2(String area2Address, int area1) {
       return mapper.selectArea2(area1, area2Address);
    }
    
-   // 상품 등록할 때 이미지 넣기
+   // �긽�뭹 �벑濡앺븷 �븣 �씠誘몄� �꽔湲�
    @Override
    public void imagesInsert(ImagesDTO Idto) {
       mapper.imagesInsert(Idto);
    }
 
-   // 상품 등록할 때 username_product에 옵션들 넣기
+   // �긽�뭹 �벑濡앺븷 �븣 username_product�뿉 �샃�뀡�뱾 �꽔湲�
    @Override
    public void optionInsert(ProductDTO Pdto) {
       mapper.optionInsert(Pdto);
    }
 
-   // 상품 찜하기
+   // �긽�뭹 李쒗븯湲�
    @Override
    public void InsertProductPick(MyPageDTO MPdto) {
       mapper.InsertProductPick(MPdto);
    }
 
-   // 상품에 찜 +1 하기
+   // �긽�뭹�뿉 李� +1 �븯湲�
    @Override
    public void allproductWishcntPlus(String productnum) {
       mapper.allproductWishcntPlus(productnum);
    }
    
-   // 상품 찜 유무
+   // �긽�뭹 李� �쑀臾�
    @Override
    public int selectPickCount(String username, String productnum) {
       return mapper.selectPickCount(username, productnum);
    }
 
-   // 마이페이지에 상품 찜 삭제하기
+   // 留덉씠�럹�씠吏��뿉 �긽�뭹 李� �궘�젣�븯湲�
    @Override
    public void deleteProductPick(String username, String productnum) {
       mapper.deleteProductPick(username, productnum);
    }
 
-   // Allproduct 상품에 찜 -1 하기
+   // Allproduct �긽�뭹�뿉 李� -1 �븯湲�
    @Override
    public void allproductWishcntMinus(String productnum) {
       mapper.allproductWishcntMinus(productnum);
    }
 
-   // 농부 팔로우하기
+   // �냽遺� �뙏濡쒖슦�븯湲�
    @Override
    public void InsertUsernameFollow(MyPageDTO MPdto) {
       mapper.InsertUsernameFollow(MPdto);
    }   
 
-   // 농부 팔로우하면 userdetails에 followers +1 하기
+   // �냽遺� �뙏濡쒖슦�븯硫� userdetails�뿉 followers +1 �븯湲�
    @Override
    public void userdetailsUpdateFollowersPlus(String follow) {
       mapper.userdetailsUpdateFollowersPlus(follow);
    }   
    
-   // 마이페이지 농부 구독 유무
+   // 留덉씠�럹�씠吏� �냽遺� 援щ룆 �쑀臾�
    @Override
    public int selectFollowCount(String username, String follow) {
       return mapper.selectFollowCount(username, follow);
    }
    
-   // 농부 팔로우 취소하기
+   // �냽遺� �뙏濡쒖슦 痍⑥냼�븯湲�
    @Override
    public void deleteFollow(String username, String follow) {
       mapper.deleteFollow(username, follow);
    }
    
-   // 농부 팔로우 취소하면 userdetails에 followers -1 하기
+   // �냽遺� �뙏濡쒖슦 痍⑥냼�븯硫� userdetails�뿉 followers -1 �븯湲�
    @Override
    public void userdetailsUpdateFollowersMinus(String follow) {
       mapper.userdetailsUpdateFollowersMinus(follow);
@@ -193,25 +205,25 @@ public class ProductServiceImpl implements ProductService {
    
    
    
-   // 상품 정보 페이지
+   // �긽�뭹 �젙蹂� �럹�씠吏�
    @Override
    public AllProductDTO selectProductInfo(String follow, String productnum) {
       return mapper.selectProductInfo(follow, productnum);
    }   
    
-   // 상품 올린 사람의 주소, 이름, 팔로우 찾기   
+   // �긽�뭹 �삱由� �궗�엺�쓽 二쇱냼, �씠由�, �뙏濡쒖슦 李얘린   
    @Override
    public AllProductDTO selectProductNameAddressFollowers(String follow, String productnum) {
       return mapper.selectProductNameAddressFollowers(follow, productnum);
    }
    
-   // 상품 옵션들 가져오기
+   // �긽�뭹 �샃�뀡�뱾 媛��졇�삤湲�
    @Override
    public List<ProductDTO> selectProductOptionAll(String follow, String productnum) {
       return mapper.selectProductOptionAll(follow, productnum);
    }   
    
-   // 상품 사진 가져오기
+   // �긽�뭹 �궗吏� 媛��졇�삤湲�
    @Override
    public List<AllProductDTO> selectProductImagesAll(String follow, String productnum) {
       return mapper.selectProductImagesAll(follow, productnum);
@@ -227,43 +239,43 @@ public class ProductServiceImpl implements ProductService {
    
    
    
-   // 내 상점 페이지에 필요한 정보들 가져오기
+   // �궡 �긽�젏 �럹�씠吏��뿉 �븘�슂�븳 �젙蹂대뱾 媛��졇�삤湲�
    @Override
    public ShopListDTO selectMyShop(String username) {
       return mapper.selectMyShop(username);
    }
 
-   // 유저의 상품들 가져오기
+   // �쑀���쓽 �긽�뭹�뱾 媛��졇�삤湲�
    @Override
    public List<AllProductDTO> selectUsernameProduct(String username) {
       return mapper.selectUsernameProduct(username);
    }
 
-   // 이름이랑 상품 가져오는 코드
+   // �씠由꾩씠�옉 �긽�뭹 媛��졇�삤�뒗 肄붾뱶
    @Override
    public AllProductDTO selectAllProductPlusNameFollowers(String productnum) {
       return mapper.selectAllProductPlusNameFollowers(productnum);
    }
 
-   // 상품 등록한 상점 area1 주소   
+   // �긽�뭹 �벑濡앺븳 �긽�젏 area1 二쇱냼   
    @Override
    public AreaDTO selectArea1Address(int area1) {
       return mapper.selectArea1Address(area1);
    }
 
-   // 상품 등록한 상점 area2 주소
+   // �긽�뭹 �벑濡앺븳 �긽�젏 area2 二쇱냼
    @Override
    public AreaDTO selectArea2Address(int area1, int area2) {
       return mapper.selectArea2Address(area1, area2);
    }
 
-   // 상품 옵션 가져오기   
+   // �긽�뭹 �샃�뀡 媛��졇�삤湲�   
    @Override
    public List<ProductDTO> selectProductOption(String follow, String productnum) {
       return mapper.selectProductOption(follow, productnum);
    }
    
-   // 상품 이미지 가져오기
+   // �긽�뭹 �씠誘몄� 媛��졇�삤湲�
    @Override
    public List<ImagesDTO> selectProductImages(String follow, String productnum) {
       return mapper.selectProductImages(follow, productnum);
@@ -271,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-   // 상품 전체목록 보기   
+   // �긽�뭹 �쟾泥대ぉ濡� 蹂닿린   
    @Override
    public List<AllProductDTO> selectAllproduct() {
       return mapper.selectAllproduct();
@@ -290,7 +302,7 @@ public class ProductServiceImpl implements ProductService {
       return mapper.CheckMyShop(username);
    }
 
-   // 상품 리뷰쓰기
+   // �긽�뭹 由щ럭�벐湲�
    @Override
    public int reviewInsert(List<MultipartFile> filelist, ReviewsDTO Rdto, String path) {
       int check = 0;
@@ -328,37 +340,37 @@ public class ProductServiceImpl implements ProductService {
       return result;      
    }   
    
-   // 상품 리뷰 가져오기
+   // �긽�뭹 由щ럭 媛��졇�삤湲�
    @Override
    public List<ReviewsDTO> selectReviewsAll(String follow, String productnum) {
       return mapper.selectReviewsAll(follow, productnum);
    }   
 
-   // 상품 리뷰 수
+   // �긽�뭹 由щ럭 �닔
    @Override
    public int selectReviewsCount(String productnum) {
       return mapper.selectReviewsCount(productnum);
    }   
    
-   // 장바구니 담기
+   // �옣諛붽뎄�땲 �떞湲�
    @Override
    public void insertShopping(MyPageDTO MPdto) {
       mapper.insertShopping(MPdto);
    }
 
-   // shoplist에서 내 상점 정보 삭제하기   
+   // shoplist�뿉�꽌 �궡 �긽�젏 �젙蹂� �궘�젣�븯湲�   
    @Override
    public void deleteShoplist(String username) {
       mapper.deleteShoplist(username);
    }
 
-   // productnum 값으로 리뷰 테이블 삭제하기
+   // productnum 媛믪쑝濡� 由щ럭 �뀒�씠釉� �궘�젣�븯湲�
    @Override
    public void dropReviewsTable(String productnum) {
       mapper.dropReviewsTable(productnum);
    }
 
-   // username으로 productnum 가져오기
+   // username�쑝濡� productnum 媛��졇�삤湲�
    @Override
    public List<String> selectUsernameProductnum(String username) {
       return mapper.selectUsernameProductnum(username);
@@ -380,7 +392,7 @@ public class ProductServiceImpl implements ProductService {
       mapper.deleteAllproduct(username, productnum);
    }
 
-   // 상품 판매시 재고 업데이트
+   // �긽�뭹 �뙋留ㅼ떆 �옱怨� �뾽�뜲�씠�듃
    @Override
    public List<MyPageDTO> selectMypage3(String username) {
       return mapper.selectMypage3(username);
@@ -391,19 +403,19 @@ public class ProductServiceImpl implements ProductService {
       mapper.updateProductCount(follow, cnt, optionnum);
    }
 
-   // 상품 조회수 증가
+   // �긽�뭹 議고쉶�닔 利앷�
    @Override
    public void updateReadcntPlus(String productnum) {
       mapper.updateReadcntPlus(productnum);
    }
 
-   // 상품 조회한 유저정보 넣기
+   // �긽�뭹 議고쉶�븳 �쑀���젙蹂� �꽔湲�
    @Override
    public void productReadcntInsert(String username, String productnum) {
       mapper.productReadcntInsert(username, productnum);
    }
 
-   // 오늘 상품 조회한 유저 찾기
+   // �삤�뒛 �긽�뭹 議고쉶�븳 �쑀�� 李얘린
    @Override
    public int selectTodayReadcntUsername(String username, String productnum, String todaydate) {
       return mapper.selectTodayReadcntUsername(username, productnum, todaydate);
@@ -438,17 +450,56 @@ public class ProductServiceImpl implements ProductService {
 	public AllProductDTO findProductInfoToReadcnt(String productnum) {
 		return mapper.findProductInfoToReadcnt(productnum);
 	}
+
+	public String[] todayInfo() {
+		Date date = new Date();
+		String formatDate = simpleDateFormat.format(date);
+		String[] today = formatDate.split("/");
+		return today;
+	}
+	
+	@Override
+	public void findMyShopInfo(Model model, String username) {
+		ShopListDTO dto = mapper.findMyShopInfo(username);
+		int todayPrice = 0;
+		if(mapper.findTodayPriceCnt(username) > 0) {
+			todayPrice = mapper.findTodayPrice(username);
+		}
+		model.addAttribute("shopDTO", dto);
+		model.addAttribute("todayPrice", todayPrice);
+	}
+
+	@Override
+	public void findMySellChart(Model model, String username) {
+		int cnt = mapper.isUserSell(username);
+		String shopname = mapper.findByShopInfo(username).getShopname();
+		List<String> sellDateList = Collections.EMPTY_LIST;
+		ArrayList<Integer> sellPriceList = new ArrayList<Integer>();
+		if(cnt > 0) {
+			sellDateList = mapper.userSellDateList(username);
+			productMap.put("username", username);
+			for (String selldate : sellDateList) {
+				productMap.put("selldate", selldate);
+				int total = mapper.findSellDatePrice(productMap);
+				sellPriceList.add(total);
+			}
+		}
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("shopname", shopname);
+		model.addAttribute("sellDateList", sellDateList);
+		model.addAttribute("sellPriceList", sellPriceList);
+	}
 	
 }
 
 
-   /* 가장 최근의 상품번호값 없으면 카운트0 있으면 상품 수
+   /* 媛��옣 理쒓렐�쓽 �긽�뭹踰덊샇媛� �뾾�쑝硫� 移댁슫�듃0 �엳�쑝硫� �긽�뭹 �닔
    @Override
    public int selectLastProductNumCnt(String keyword, String username) {
       return mapper.selectLastProductNumCnt(keyword, username);
    }
    
-   // 상품번호가 있으면 상품번호 뽑아오는거
+   // �긽�뭹踰덊샇媛� �엳�쑝硫� �긽�뭹踰덊샇 戮묒븘�삤�뒗嫄�
    @Override
    public List<AllProductDTO> selectLastProductNum(String keyword) {
       return mapper.selectLastProductNum(keyword);

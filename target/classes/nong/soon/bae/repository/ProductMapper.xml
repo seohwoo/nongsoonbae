@@ -460,6 +460,65 @@
 		delete from  P_${productnum}_reviews where username=#{myName}
 	</delete>
 	
+	<select id="findMyShopInfo" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
+		<![CDATA[
+			SELECT 
+			    u.name,
+			    ud.image,
+			    ud.followers,
+			    sl.regdate,
+			    ap.product_count,
+			    yp.total_payment
+			FROM 
+			    users u
+			JOIN 
+			    userdetails ud ON u.username = ud.username
+			JOIN 
+			    shoplist sl ON u.username = sl.username
+			LEFT JOIN 
+			    (SELECT username, COUNT(*) AS product_count FROM allproduct WHERE grade < 200 GROUP BY username) ap ON u.username = ap.username
+			LEFT JOIN 
+			    (SELECT username, SUM(totalprice) AS total_payment FROM ${username}_payment WHERE status = 102 GROUP BY username) yp ON u.username = yp.username
+			WHERE 
+			    u.username = #{username}
+		]]>    
+	</select>
+	
+	<select id="findTodayPriceCnt" parameterType="String" resultType="int">
+		SELECT count(*) 
+		FROM ${username}_payment 
+		WHERE status = 102 
+		AND TO_CHAR(orderdate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
+	
+	<select id="findTodayPrice" parameterType="String" resultType="int">
+		SELECT SUM(totalprice) 
+		FROM ${username}_payment 
+		WHERE status = 102 
+		AND TO_CHAR(orderdate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
+	
+	<select id="isUserSell" parameterType="String" resultType="int">
+		select count(*) from ${username}_payment where status = 102
+	</select>
+	
+	<select id="userSellDateList" parameterType="String" resultType="String">
+		SELECT DISTINCT TO_CHAR(orderdate, 'YYYY-MM-DD') AS orderdate
+		FROM ${username}_payment 
+		WHERE status = 102
+	</select>
+	
+	<select id="findSellDatePrice" parameterType="hashmap" resultType="int">
+		SELECT sum(totalprice)
+		FROM ${username}_payment 
+		WHERE status = 102 
+		AND TO_CHAR(orderdate, 'YYYY-MM-DD') = #{selldate}
+	</select>
+	
+	<select id="findByShopInfo" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
+		select * from shoplist where username=#{username}
+	</select>
+	
 </mapper>    
 
 

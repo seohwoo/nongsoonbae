@@ -3,6 +3,7 @@ package nong.soon.bae.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import nong.soon.bae.bean.AllProductDTO;
@@ -213,6 +214,12 @@ public interface ProductService {
 
 	// 리뷰 삭제하기
 	public void myReviewsDelete(String productnum, String myName);
+	
+	/** 본인 상점정보 확인하기 */
+	public void findMyShopInfo(Model model, String username);
+	
+	/** 본인 판매내역 차트 확인하기 */
+	public void findMySellChart(Model model, String username);
 }
 
 
