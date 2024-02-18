@@ -348,6 +348,18 @@ public class ProductController {
    @RequestMapping("productInfo")
    public String productInfo(Principal pri, String productnum, Model model, String follow) {
 	  String username = FileRoot.getIp();
+	  boolean isUser = false;
+	  boolean isLogedIn = false;
+	  if(pri != null) {
+		  isLogedIn = true;
+		  if(pri.getName().equals(follow)) {
+			  isUser = true;
+		  }
+    	  String myName = service.selectMyName(username);
+    	  model.addAttribute("myName", myName);
+      }
+	  model.addAttribute("isUser", isUser);
+	  model.addAttribute("isLogedIn", isLogedIn);
       
       // 상품 정보 페이지
       AllProductDTO APdto = service.selectProductInfo(follow, productnum);
@@ -376,10 +388,7 @@ public class ProductController {
           allReviews.addAll(reviews);
       }
       
-      if(pri != null) {
-    	  String myName = service.selectMyName(username);
-    	  model.addAttribute("myName", myName);
-      }
+      
       
       int totalStars = 0;
       for (ReviewsDTO dto : Rdto) {
@@ -526,7 +535,8 @@ public class ProductController {
    // 장바구니 담기
    @RequestMapping("productShoppingPro")
    public String ShoppingPro(Principal principal, String productnum, String follow, String optionnum, String count) {
-      String username = principal.getName();
+      
+	  String username = principal.getName();
       MyPageDTO MPdto = new MyPageDTO();
       MPdto.setUsername(username);
       MPdto.setFollow(follow);

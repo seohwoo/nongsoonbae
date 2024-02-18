@@ -15,6 +15,7 @@ import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 
 public interface ProductMapper {	
+	
 	// 내 이름 가져오기
 	public String selectMyName(String username);
 	
