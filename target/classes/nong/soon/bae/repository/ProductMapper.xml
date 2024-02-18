@@ -506,6 +506,7 @@
 		SELECT DISTINCT TO_CHAR(orderdate, 'YYYY-MM-DD') AS orderdate
 		FROM ${username}_payment 
 		WHERE status = 102
+		order by orderdate asc
 	</select>
 	
 	<select id="findSellDatePrice" parameterType="hashmap" resultType="int">
