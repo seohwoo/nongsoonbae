@@ -366,11 +366,13 @@ public class ProductController {
       
       
       // 상품 리뷰 가져오기 
-      List<String> ReviewsName = service.selectReviewsUsername(productnum);
+      List<ReviewsDTO> ReviewsName = service.selectReviewsUsername(productnum);
       List<ReviewsDTO> allReviews = new ArrayList<>();
       
-      for (String usernames : ReviewsName) {
-          List<ReviewsDTO> reviews = service.ReviewsInfoFinal(productnum, follow, usernames);
+      for (ReviewsDTO reviewDTO : ReviewsName) {
+    	  String usernames = reviewDTO.getUsername();
+    	  String formatdate = reviewDTO.getFormatdate();
+          List<ReviewsDTO> reviews = service.ReviewsInfoFinal(productnum, follow, usernames, formatdate);
           allReviews.addAll(reviews);
       }
       

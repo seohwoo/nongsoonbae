@@ -20,4 +20,6 @@ public class PaymentDTO {
 	private Date orderdate;
 	private String sid;
 	private int status;
+	
+	private String formatdate;
 }

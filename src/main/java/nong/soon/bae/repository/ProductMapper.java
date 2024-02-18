@@ -227,12 +227,13 @@ public interface ProductMapper {
 	public void dropUsernameProduct(String username);
 
 	// 상품 리뷰 쓴 사람 가져오기
-	public List<String> selectReviewsUsername(String productnum);
+	public List<ReviewsDTO> selectReviewsUsername(String productnum);
 	
 	// 리뷰 쓴 사람들 가져오기 최종
 	public List<ReviewsDTO> ReviewsInfoFinal(@Param("productnum") String productnum, 
 											 @Param("follow") String follow, 
-											 @Param("usernames") String usernames);
+											 @Param("usernames") String usernames,
+											 @Param("formatdate") String formatdate);
 
 	// 리뷰 삭제하기
 	public void myReviewsDelete(@Param("productnum") String productnum, 

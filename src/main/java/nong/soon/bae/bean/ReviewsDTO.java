@@ -23,4 +23,7 @@ public class ReviewsDTO {
 	private int files;
 	private String username_1;
 	private String usernames;
+	
+	private String formatdate;
+	
 }

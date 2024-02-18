@@ -142,8 +142,10 @@ public class MypageServiceImpl implements MypageService {
 		    HashMap<String, String> SelectPayMap = new HashMap<>();
 		    SelectPayMap.put("username", username);
 		    SelectPayMap.put("follow", PaymentDTO.getFollow());
-		    List<MyPageDTO> tempList = mapper.selectPayDetail(SelectPayMap);
-		    list.addAll(tempList);
+		    SelectPayMap.put("productnum", PaymentDTO.getProductnum());
+		    SelectPayMap.put("orderdate", PaymentDTO.getFormatdate());
+		    MyPageDTO dto = mapper.selectPayDetail(SelectPayMap);
+		    list.add(dto);
 		}
 		model.addAttribute("paylist", list);
 		

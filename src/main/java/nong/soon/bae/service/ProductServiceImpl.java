@@ -432,13 +432,13 @@ public class ProductServiceImpl implements ProductService {
    }
 
    @Override
-   public List<String> selectReviewsUsername(String productnum) {
+   public List<ReviewsDTO> selectReviewsUsername(String productnum) {
       return mapper.selectReviewsUsername(productnum);
    }
 
    @Override
-   public List<ReviewsDTO> ReviewsInfoFinal(String productnum, String follow, String usernames) {
-      return mapper.ReviewsInfoFinal(productnum, follow, usernames);
+   public List<ReviewsDTO> ReviewsInfoFinal(String productnum, String follow, String usernames, String formatdate) {
+      return mapper.ReviewsInfoFinal(productnum, follow, usernames, formatdate);
    }
 
    @Override

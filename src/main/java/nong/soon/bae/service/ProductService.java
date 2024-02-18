@@ -207,10 +207,10 @@ public interface ProductService {
 	public void dropUsernameProduct(String username);
 	
 	// 상품 리뷰 쓴 사람 가져오기
-	public List<String> selectReviewsUsername(String productnum);
+	public List<ReviewsDTO> selectReviewsUsername(String productnum);
 	
 	// 리뷰 쓴 사람들 가져오기 최종
-	public List<ReviewsDTO> ReviewsInfoFinal(String productnum, String follow, String usernames);
+	public List<ReviewsDTO> ReviewsInfoFinal(String productnum, String follow, String usernames, String formatdate);
 
 	// 리뷰 삭제하기
 	public void myReviewsDelete(String productnum, String myName);

@@ -439,9 +439,11 @@
 
 
 	<!-- 상품 리뷰 쓴 사람 가져오기  -->
-	<select id="selectReviewsUsername" resultType="String" parameterType="String">
-		select u.username from P_${productnum}_reviews r
-    		left join users u ON u.name = r.username
+	<select id="selectReviewsUsername" resultType="nong.soon.bae.bean.ReviewsDTO" parameterType="String">
+		select u.username, TO_CHAR(r.regdate, 'YYYY-MM-DD-HH24:MI:SS') formatdate 
+		from P_${productnum}_reviews r
+    	left join users u ON u.name = r.username
+    	order by r.regdate desc
 	</select>
 
 	<!-- 리뷰 쓴 사람들 가져오기 최종 -->
@@ -453,6 +455,7 @@
           WHERE filename LIKE '%\_1%' escape '\' ORDER BY filename ASC)
             i ON r.productnum = i.productnum
           where r.productnum=#{productnum} and u.username=#{usernames}
+          and TO_CHAR(r.regdate, 'YYYY-MM-DD-HH24:MI:SS') = #{formatdate}
 	</select>
 	
 	<!-- 리뷰 삭제하기 -->
