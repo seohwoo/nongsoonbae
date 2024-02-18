@@ -13,12 +13,17 @@
 	});
 	const ctx = document.getElementById('myChart');
 	var myChart = new Chart(ctx, {
-	  type: 'line',
+	  type: 'doughnut',
 	  data: {
 	    labels: labelsArray,
 	    datasets: [{
 	      label: '${shopname}',
 	      data: ${sellPriceList},
+	      backgroundColor: [
+	          'teal',
+	          'violet',
+	          'blue'
+	      ],
 	      borderWidth: 3
 	    },
 	    ]

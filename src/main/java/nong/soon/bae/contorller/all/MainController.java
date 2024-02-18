@@ -14,6 +14,7 @@ import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.NoticeBoardDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.data.ApiKeys;
+import nong.soon.bae.data.FileRoot;
 import nong.soon.bae.service.AreaService;
 import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
