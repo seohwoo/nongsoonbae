@@ -76,8 +76,10 @@
 			SELECT 
 			    m.orderdate,
 			    m.realprice,
+			    p.optionnum,
 			    p.optionname,
 			    s.shopname,
+			    a.productnum,
 			    a.productname
 			FROM
 			    (SELECT * FROM ${username}_payment WHERE productnum = #{productnum} 

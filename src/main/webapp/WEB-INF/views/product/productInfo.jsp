@@ -87,17 +87,6 @@
 		}
 
 		
-		function openReviewWindow() {
-			var pdtoVal= $("#Pdto").val();
-			if('-------' == pdtoVal){
-				alert("상품 옵션을 선택해주세요.");
-			}else{
-			var optionnum = $("#selectedOptionNum").val();
-			var productnum = ${productnum};
-			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=400,height=300,resizable=yes');
-			}
-		}
-		
 	    function openDeleteWindow(productnum, myName) {
 	        // 새 창을 열기
 	        var width = 460;
@@ -173,7 +162,6 @@
 			<input type="button" value="찜하기" onclick="addToWishList()">
 			<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
 			<input type="button" value="장바구니담기" onclick="addToCart()">
-			<button onclick="openReviewWindow()">리뷰작성</button>	
 		</c:if>
 		<c:if test="${isUser}">
 			<input type="button" value="내상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
