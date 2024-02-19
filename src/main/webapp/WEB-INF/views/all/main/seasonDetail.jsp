@@ -13,7 +13,7 @@
 			<h1>상품을 준비중입니다😭😭😭😭</h1>
 		</c:if>
 		<c:if test="${productCnt>0}">
-		<div class="container mx-auto mt-4">
+		<div class="container g-3 mx-auto mt-4">
  		  <div class="row">
 			<c:forEach var="dto" items="${productList}">
 				<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>	

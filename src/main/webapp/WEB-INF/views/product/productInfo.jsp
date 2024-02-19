@@ -100,9 +100,10 @@
 	    }
 				
 	</script>
-	
+	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<body>
-		<table border="1px" style="text-align: center;" id="finish">
+	
+		<table border="1px" style="text-align: center; margin-left: auto; margin-right: auto;" id="finish">
 			<tr> 
 				<td>농부 이름</td>
 				<td>${APdtoNAF.name}</td>
@@ -205,7 +206,7 @@
 		
 		<br /><br /><br /><br /> <hr /> <br />
 		<tr>${APdto.content}</tr>
-		
+	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
 
