@@ -13,6 +13,7 @@ import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
+import nong.soon.bae.bean.UsersDTO;
 
 public interface ProductMapper {	
 	
@@ -255,6 +256,13 @@ public interface ProductMapper {
 	
 	public ShopListDTO findByShopInfo(String username);
 	
+	public UsersDTO findRealUsername(String myName);
+
+	public int findReviewImageCnt(HashMap<String, String> map);
+	
+	public List<ImagesDTO> findReviewImages(HashMap<String, String> map);
+	
+	public void deleteReviewImages(HashMap<String, String> map);
 }
 	
 	

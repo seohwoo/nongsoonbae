@@ -50,23 +50,23 @@
 		        <button type="submit">👉</button>
 		    </form>
 		</c:if>
-		<div style="display: flex;">
+		<div style="display: flex; text-align: center;">
 			<c:if test="${cnt == 0 }" >
-				   <h1> 상품을 준비 중입니다. </h1>
+				   <h1 style="margin-left: auto;margin-right: auto;"> 상품을 준비 중입니다. </h1>
 			</c:if>
 		</div>
-		<div style="display: flex;">
+		<div >
 			<c:if test="${cnt >  0 }" >
 			<!-- http://localhost:8080/nsb/area?pageNum=1&sort=readcnt -->
 				<form id="sortForm" action="/nsb/area" method="get">
 			        <input type="hidden" name="pageNum" value="1" />
 			        <input type="hidden" name="area1" value="${area1}" />
 			        <input type="hidden" name="sort" id="sortInput" /> 
-			        <select id="sortSelect" onchange="setSortAndSubmitDropdown()">
-				        <option value="">기본정렬(최신순)</option>
-				        <option value="readcnt" ${sort == 'readcnt' ? 'selected' : ''}>인기순</option>
-				        <option value="wishcnt" ${sort == 'wishcnt' ? 'selected' : ''}>찜 많은 순</option>
-				    	<option value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option> 
+			        <select class="btn dropdown-toggle" id="sortSelect" onchange="setSortAndSubmitDropdown()" style="background: #fff; margin: 10px;">
+				        <option class="dropdown-item" value="">기본정렬(최신순)</option>
+				        <option class="dropdown-item" value="readcnt" ${sort == 'readcnt' ? 'selected' : ''}>인기순</option>
+				        <option class="dropdown-item" value="wishcnt" ${sort == 'wishcnt' ? 'selected' : ''}>찜 많은 순</option>
+				    	<option class="dropdown-item" value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option> 
 				    </select>
     			</form>
     			<!-- 광고상품 -->
@@ -88,7 +88,7 @@
 			</div>
 			</c:if>	
 			</div>
-	<div class="pagination">
+	<div class="pagination" style="justify-content:center; margin-top: 10px; margin-bottom: 20px;">
 		<c:if test="${isAreaSelected && !empty sort}">
 			<c:if test="${startPage > 10}">
 	    		<form action="/nsb/area" method="get">

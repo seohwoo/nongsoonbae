@@ -79,6 +79,7 @@
 			<h1>상품을 준비중입니다😭😭😭😭</h1>
 		</c:if>
 		<c:if test="${productCnt>0}">
+
 		<form id="sortForm" action="/nsb/main" method="get">
 			<input type="hidden" name="categoryNum" value="${categoryNum}"/>
 		    <input type="hidden" name="pageNum" value="1" />
@@ -101,6 +102,7 @@
 					</c:forEach>
 				</c:if>
 			</div>
+
  		  <div class="row">
 			<c:forEach var="dto" items="${list}">
 				<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>	

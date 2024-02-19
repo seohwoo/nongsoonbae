@@ -43,20 +43,20 @@
 			</tr>
 			<tr>
 				<td>
-					<div style="display: flex; ">
+					<div style="display: flex; justify-content: center;">
 						<c:if test="${isCate3==0}">
 							<h1>해당 카테고리의 소분류를 준비중입니다..</h1>
 						</c:if>
 						<c:if test="${isCate3>0}">
 							<c:forEach var="cate" items="${cateList}" >
-								<div style="margin-right: 10px;">
+								<div>
 									<form action="/nsb/chart" method="get">
 										<input type="hidden" name="categoryNum" value="${categoryNum}">
 										<input type="hidden" name="cate1" value="${cate.cate1}">
 										<input type="hidden" name="cate2" value="${cate.cate2}">
 										<input type="hidden" name="cate3" value="${cate.cate3}">
 										<button class="btn" type="submit">
-											<img src="${cate.img}" border="0" width="100" height="100" class="bd-placeholder-img rounded-circle">
+											<img src="${cate.img}" border="0" width="60" height="60" class="bd-placeholder-img rounded-circle">
 											<br />
 											<span>${cate.catename}</span>
 										</button>

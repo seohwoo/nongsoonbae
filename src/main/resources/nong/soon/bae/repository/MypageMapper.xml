@@ -76,18 +76,37 @@
 			SELECT 
 			    m.orderdate,
 			    m.realprice,
+			    p.optionnum,
 			    p.optionname,
 			    s.shopname,
-			    a.productname
+			    a.productnum,
+			    a.productname,
+			    u.name,
+			    COUNT(r.username) as review_count
 			FROM
-			    (SELECT * FROM ${username}_payment WHERE productnum = #{productnum} 
-			    AND TO_CHAR(orderdate, 'YYYY-MM-DD-HH24:MI:SS') = #{orderdate}  ) m
+			    (SELECT * FROM ${username}_payment WHERE productnum = #{productnum}
+			    AND TO_CHAR(orderdate, 'YYYY-MM-DD-HH24:MI:SS') = #{orderdate} ) m
 			LEFT JOIN 
 			    ${follow}_product p ON m.optionnum = p.optionnum
 			LEFT JOIN 
 			    shoplist s ON m.follow = s.username
 			LEFT JOIN 
 			    allproduct a ON p.productnum = a.productnum
+			LEFT JOIN 
+			    users u ON m.username = u.username    
+			LEFT JOIN 
+			    P_${productnum}_reviews r ON r.username = u.name
+			WHERE
+			    u.username = #{username}          
+			GROUP BY
+			    m.orderdate,
+			    m.realprice,
+			    p.optionnum,
+			    p.optionname,
+			    s.shopname,
+			    a.productnum,
+			    a.productname,
+			    u.name    
 		]]>
 	</select>
 	
