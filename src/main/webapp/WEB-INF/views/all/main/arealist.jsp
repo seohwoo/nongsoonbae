@@ -55,7 +55,7 @@
 				   <h1> 상품을 준비 중입니다. </h1>
 			</c:if>
 		</div>
-		<div style="display: flex;">
+		<div >
 			<c:if test="${cnt >  0 }" >
 			<!-- http://localhost:8080/nsb/area?pageNum=1&sort=readcnt -->
 				<form id="sortForm" action="/nsb/area" method="get">
