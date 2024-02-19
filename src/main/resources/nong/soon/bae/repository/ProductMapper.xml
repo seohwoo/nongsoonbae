@@ -523,6 +523,22 @@
 		select * from shoplist where username=#{username}
 	</select>
 	
+	<select id="findRealUsername" parameterType="String" resultType="nong.soon.bae.bean.UsersDTO">
+		select * from users where name=#{myName}
+	</select>
+	
+	<select id="findReviewImageCnt" parameterType="hashmap" resultType="int">
+		select count(*) from ${username}_images where productnum=#{productnum}
+	</select>
+	
+	<select id="findReviewImages" parameterType="hashmap" resultType="nong.soon.bae.bean.ImagesDTO">
+		select * from ${username}_images where productnum=#{productnum}
+	</select>
+	
+	<delete id="deleteReviewImages" parameterType="hashmap">
+		delete from ${username}_images where productnum=#{productnum}
+	</delete>
+	
 </mapper>    
 
 

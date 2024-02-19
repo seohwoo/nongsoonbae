@@ -19,21 +19,6 @@
 			</div>
 		  </c:if>
 		  
-		  <!-- 
-		  function openReviewWindow() {
-			var pdtoVal= $("#Pdto").val();
-			if('-------' == pdtoVal){
-				alert("상품 옵션을 선택해주세요.");
-			}else{
-			var optionnum = $("#selectedOptionNum").val();
-			var productnum = ${productnum};
-			var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=400,height=300,resizable=yes');
-			}
-		}
-		  
-		   -->
-		  
-		  
 		  <c:if test="${buystatus eq 1}">
 		  <div>
 			<table cellspacing="0" class="g-table-list product">
@@ -55,7 +40,9 @@
 							<td class="g-table-list-rwd"><a href="#">${pay.shopname}</a></td>
 							<td>${pay.realprice}원</td>
 							<td class="g-table-list-date"><fmt:formatDate value="${pay.orderdate}" dateStyle="short" type="date"/></td>
-							<td><button onclick="window.open('/product/productReview?optionnum=${pay.optionnum}&productnum=${pay.productnum}', '_blank', 'width=400,height=300,resizable=yes')">리뷰작성</button></td>
+							<c:if test="${pay.review_count==0}">
+								<td><button onclick="window.open('/product/productReview?optionnum=${pay.optionnum}&productnum=${pay.productnum}', '_blank', 'width=400,height=300,resizable=yes')">리뷰작성</button></td>
+							</c:if>
 						</tr>
 					</tbody>
 				</c:forEach>

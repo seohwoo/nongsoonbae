@@ -197,7 +197,7 @@
 					
 					<td>
 						<c:if test="${allReviews.username eq myName}">
-							<button onclick="openDeleteWindow('${productnum}', '${myName}')">리뷰 삭제</button>
+							<button onclick="openDeleteWindow('${productnum}', '${myName}')">❌</button>
 						</c:if>
 					</td>			
 			</c:forEach>  
