@@ -33,6 +33,25 @@
 				</div>
 			</c:if>
 		</div>
+		<c:if test="${startPage > 10}">
+	    		<form action="/nsb/result" method="post">
+	       			<input type="hidden" name="searchNum" value="${startPage-10}">
+	       			<button type="submit">이전</button>
+	    		</form>
+			</c:if>
+			<c:forEach var="i" begin="${startPage}" end="${endPage}">
+		   		 <form action="/nsb/result" method="post">
+		   		 	<input type="hidden" name="userSearch" value="${userSearch}">
+		   		 	<input type="hidden" name="searchNum" value="${i}">
+					<button type="submit">${i}</button>
+		    	 </form>
+			</c:forEach>
+			<c:if test="${endPage < pageCount}">
+	    		<form action="/nsb/result" method="post">
+	     	   		<input type="hidden" name="searchNum" value="${startPage+10}">
+	        		<button type="submit">다음</button>
+	    		</form>
+			</c:if>
 		<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
