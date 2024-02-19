@@ -9,6 +9,7 @@
 	 	  	<img src="/resources/realImage/${dto.image_filename}" width="300px" height="300px" class="card-img-top" alt="...">
 	 	  	<div class="card-body">
 		  		<h5 class="card-title">${dto.productname}</h5>
+		    	<p class="card-text"><span>가격 ${dto.min_price}</span></p>
 		    	<p class="card-text"><span>별점 : ${dto.avg_stars}(${dto.review_count}) , 조회수 : ${dto.readcnt}, 찜개수 : ${dto.wishcnt}</span></p>
 		        <p class="card-text"><span><fmt:formatDate value="${dto.startdate}" dateStyle="long" type="date"/></span></p>
 		    	<div class="farmer">
