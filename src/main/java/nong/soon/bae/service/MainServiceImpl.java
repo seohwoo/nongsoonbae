@@ -70,22 +70,72 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public void detailSeasonCategory(Model model, String cate1, String cate2, String cate3) {
+	public void detailSeasonCategory(Model model, String cate1, String cate2, String cate3,int pageNum,String sort) {
+		int pageSize = 2;
+	    int startRow = (pageNum - 1) * pageSize + 1;
+	    int endRow = pageNum * pageSize;
 		seasonCategoryMap.put("cate1", cate1);
 		seasonCategoryMap.put("cate2", cate2);
 		seasonCategoryMap.put("cate3", cate3);
+		seasonCategoryMap.put("start", String.valueOf(startRow));
+		seasonCategoryMap.put("end", String.valueOf(endRow));
+		
 		String catename = mapper.findCatename(seasonCategoryMap);
 		int cnt = mapper.seasonProductCnt(seasonCategoryMap);
 		List<AllProductDTO> list = Collections.EMPTY_LIST;
 		if(cnt > 0) {
+			if ("readcnt".equals(sort)) {		
+				list = mapper.readList(seasonCategoryMap); // 인기순(조회수) 정렬
+	        } else if ("wishcnt".equals(sort)) {
+	        	list = mapper.wishList(seasonCategoryMap); // 찜 정렬
+	        }else if ("cheap".equals(sort)) {
+	        	list = mapper.cheapList(seasonCategoryMap); // 가격낮은순 정렬
+	        } else {
 			list = mapper.seasonProduct(seasonCategoryMap);
-			showProduct(list);
 		}
+			ArrayList<ProductListDTO> localProductList = exshowProduct(list);
+	        model.addAttribute("list", localProductList); 
+			
 		model.addAttribute("catename", catename);
 		model.addAttribute("productCnt", cnt);
+		model.addAttribute("sort",sort);
 		model.addAttribute("productList", productList);
+		model.addAttribute("pageSize", pageSize);
+		 	int pageCount = cnt / pageSize + (cnt % pageSize == 0 ? 0 : 1);
+		    int startPage = (int) ((pageNum - 1) / 10) * 10 + 1;
+		    int pageBlock = 10;
+		    int endPage = startPage + pageBlock - 1;
+		    if (endPage > pageCount) {
+		        endPage = pageCount;
+		    }
+		    
+		    model.addAttribute("pageCount", pageCount);
+		    model.addAttribute("startPage", startPage);
+		    model.addAttribute("pageBlock", pageBlock);
+		    model.addAttribute("endPage", endPage);
+		}
 	}
 
+	
+	
+	@Override
+	public void adDetailSeason(Model model, String cate1, String cate2, String cate3) {
+		seasonCategoryMap.put("cate1", cate1);
+		seasonCategoryMap.put("cate2", cate2);
+		seasonCategoryMap.put("cate3", cate3);
+		int adCnt = mapper.adCnt(seasonCategoryMap);
+		List<AllProductDTO> adList = Collections.EMPTY_LIST;
+		if (adCnt >0) {
+			adList = mapper.adDetailSeason(seasonCategoryMap);
+			ArrayList<ProductListDTO> localAdProductList = adshowProduct(adList);
+            model.addAttribute("adList", localAdProductList);
+		}
+		model.addAttribute("adCnt",adCnt);
+	}
+	
+	
+	
+	
 	@Override
 	public void showChart(Model model, String cate1, String cate2, String cate3) {
 		thislist.clear();
@@ -215,6 +265,20 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("userSearch", userSearch);
 		model.addAttribute("searchCnt", cnt);
 		model.addAttribute("searchList", productList);
+		model.addAttribute("searchNum",searchNum);
+		
+			int pageCount = cnt / searchPageSize + (cnt % searchPageSize == 0 ? 0 : 1);
+		    int startPage = (int) ((searchNum - 1) / 10) * 10 + 1;
+		    int pageBlock = 10;
+		    int endPage = startPage + pageBlock - 1;
+		    if (endPage > pageCount) {
+		        endPage = pageCount;
+		    }
+		    
+		    model.addAttribute("pageCount", pageCount);
+		    model.addAttribute("startPage", startPage);
+		    model.addAttribute("pageBlock", pageBlock);
+		    model.addAttribute("endPage", endPage);
 	}
 	
 	
@@ -234,6 +298,19 @@ public class MainServiceImpl implements MainService {
 	}
 	
 
+	public ArrayList<ProductListDTO> exshowProduct(List<AllProductDTO> alprList) {
+	    ArrayList<ProductListDTO> localProductList = new ArrayList<>();
+	    for (AllProductDTO alprDTO : alprList) {
+	    	seasonCategoryMap.put("username", alprDTO.getUsername());
+			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
+			String keyword = alprDTO.getProductnum() + "_1%";
+			seasonCategoryMap.put("keyword", keyword);
+	        ProductListDTO dto = mapper.findProductListValue(seasonCategoryMap);
+	        localProductList.add(dto);
+	    }
+	    return localProductList;
+	}
+	
 	public ArrayList<ProductListDTO> adshowProduct(List<AllProductDTO> alprList) {
 	    ArrayList<ProductListDTO> localAdProductList = new ArrayList<>();
 	    for (AllProductDTO alprDTO : alprList) {
@@ -276,6 +353,8 @@ public class MainServiceImpl implements MainService {
 		return isMembership;
 
 	}
+
+	
 
 	
 }

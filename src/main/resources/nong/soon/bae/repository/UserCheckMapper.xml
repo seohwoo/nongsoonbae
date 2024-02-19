@@ -24,7 +24,7 @@
 		update shoplist set grade=1 where username=#{username}
 	</update>
 	<update id="allstop" parameterType="hashMap" >
-		update allproduct set grade=1 where username=#{username}
+		update allproduct set grade=200 where username=#{username}
 	</update>
 	<insert id="blacklistInsert" parameterType="hashMap"  >
 		insert into blacklist values (

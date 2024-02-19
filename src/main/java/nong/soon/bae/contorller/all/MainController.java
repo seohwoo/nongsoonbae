@@ -38,7 +38,9 @@ public class MainController{
 	
 		
 	@RequestMapping("main")
-	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch) {
+	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch,
+					@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+					@RequestParam(value="sort", required=false) String sort) {
 		NoticeBoardDTO notice = noticeservice.showNewNotice();
 		model.addAttribute("notice",notice);
 		if (categoryNum==null) {
@@ -46,7 +48,8 @@ public class MainController{
 		}
 		service.seasonCategory(model, Integer.parseInt(categoryNum));
 		if(cate1!=null && cate2!=null && cate3!=null ) {
-			service.detailSeasonCategory(model, cate1, cate2, cate3);
+			service.detailSeasonCategory(model, cate1, cate2, cate3,pageNum,sort);
+			service.adDetailSeason(model, cate1,cate2,cate3);
 		}
 		return "all/main/main";
 	}

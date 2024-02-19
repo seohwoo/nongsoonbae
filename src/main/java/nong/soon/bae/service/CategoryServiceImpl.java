@@ -40,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService{
 	// 전체상품리스트
 	@Override
 	public void allproductlist(Model model,String sort, int pageNum) { //전체 품목 뽑기
-		int pageSize = 10;
+		int pageSize = 12;
 	    int startRow = (pageNum - 1) * pageSize + 1;
 	    int endRow = pageNum * pageSize;
 		int allCnt = mapper.allCnt();
@@ -107,7 +107,7 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public void cateprodutlist(Model model, String cate1,int pageNum, String sort) {
 		
-		int pageSize = 10;
+		int pageSize = 12;
 	    int startRow = (pageNum - 1) * pageSize + 1;
 	    int endRow = pageNum * pageSize;
 		int cnt = mapper.productCnt(Integer.parseInt(cate1));
@@ -172,7 +172,7 @@ public class CategoryServiceImpl implements CategoryService{
 	public void cateproductlistdetail(Model model, String cate1, String cate2
 									,int pageNum,String sort) {
 	
-		int pageSize = 10;
+		int pageSize = 12;
 	    int startRow = (pageNum - 1) * pageSize + 1;
 	    int endRow = pageNum * pageSize;
 		categoryMap.put("cate1", cate1);

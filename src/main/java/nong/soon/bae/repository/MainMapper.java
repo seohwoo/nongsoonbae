@@ -42,6 +42,14 @@ public interface MainMapper {
 	public List<AllProductDTO> searchProduct(HashMap<String, String> map);
 	/** 검색 결과 광고 4개 랜덤 출력*/
 	public List<AllProductDTO> searchAdProduct(String keyword);
+	/** 제철 광고 상품 갯수*/
+	public int adCnt (HashMap<String, String> map);
+	/** 제철 상품 인기,찜,가격순 정렬*/
+	public List<AllProductDTO> readList (HashMap<String, String> map);
+	public List<AllProductDTO> wishList (HashMap<String, String> map);
+	public List<AllProductDTO> cheapList (HashMap<String, String> map);
+	/** 제출 광고 상품 4개 랜덤 조회*/
+	public List<AllProductDTO> adDetailSeason(HashMap<String, String> map);
 	/** 로그인한 유저가 맴버쉽회원인지 조회 */
 	public UsersDTO isMembership(String username);
 	/** 전체 상품 리스트 중 한칸에 들어가는 모든 정보*/
