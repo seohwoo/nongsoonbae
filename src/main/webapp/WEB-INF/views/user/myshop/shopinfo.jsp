@@ -30,32 +30,33 @@
 		 		<div class="col-md-6">
 		 			 <div class="card" style="height: 15rem; text-align: left;">
 		 			 	<h5 style="padding: 30px;">전체판매</h5>
-						<h1 style="padding-left: 30px;">${shopDTO.total_payment}원</h1>
+						<h1 style="padding-left: 30px;">${shopDTO.total_payment}\</h1>
+						<p style="padding-left: 30px;" class="text-muted">#전국 #딸기 랭킹 2위</p>
 					</div>
 				</div>
 				<div class="col-md-6">
 		 			 <div class="card" style="height: 15rem; text-align: left;">
-		 			 	<h5 style="padding: 30px;">오늘 판매량</h5>
-						<h1 style="padding-left: 30px;">${todayPrice}</h1>
+		 			 	<h5 style="padding: 30px;">오늘 수익</h5>
+						<h1 style="padding-left: 30px;">${todayPrice}\</h1>
 					</div>
 				</div>
 				<div class="col-md-6">
 		 			 <div class="card" style="height: 15rem; text-align: left;">
 		 			 	<h5 style="padding: 30px;">상품등록개수</h5>
-						<h1 style="padding-left: 30px;">${shopDTO.product_count}</h1>
+						<h1 style="padding-left: 30px;">${shopDTO.product_count}건</h1>
 					</div>
 				</div>
 				<div class="col-md-6">
 		 			 <div class="card" style="height: 15rem; text-align: left;">
 		 			 	<h5 style="padding: 30px;">팔로위</h5>
-						<h1 style="padding-left: 30px;">${shopDTO.followers}</h1>
+						<h1 style="padding-left: 30px;">${shopDTO.followers}명</h1>
 					</div>
 				</div>
 			</div>
 		</div>
 		<hr />
 		<div style="margin-top: 5vh;">
-			<h2>이거 무슨 차트임?</h2>
+			<h2>판매 날짜 차트</h2>
 			<jsp:include page="/WEB-INF/views/user/myshop/shopchart.jsp" />
 		</div>
 		<br />
