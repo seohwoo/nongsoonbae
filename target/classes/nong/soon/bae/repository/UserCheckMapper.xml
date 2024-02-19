@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.UserCheckMapper">
+	<select id="count" resultType="int">
+		select count(*) from users where grade='ROLE_USER' or grade='ROLE_MEMBERSHIP'
+	</select>
+	<select id="userlist" resultType="nong.soon.bae.bean.UserCheckDTO" >
+		<![CDATA[
+         SELECT * FROM 
+    		(SELECT b.*, rownum r FROM 
+      		  (SELECT * FROM users WHERE grade = 'ROLE_USER' or grade='ROLE_MEMBERSHIP' ORDER BY birth DESC) b) 
+				WHERE r >= #{start} AND r <= #{end}
+      ]]>
+	</select>
+	<update id="userstop" parameterType="hashMap" >
+		update users set grade='ROLE_STOP' where username=#{username}
+	</update>
+	<select id="findshop" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
+		select * from shoplist where username=#{username}
+	</select>
+	<update id="shopstop" parameterType="hashMap" >
+		update shoplist set grade=1 where username=#{username}
+	</update>
+	<update id="allstop" parameterType="hashMap" >
+		update allproduct set grade=1 where username=#{username}
+	</update>
+	<insert id="blacklistInsert" parameterType="hashMap"  >
+		insert into blacklist values (
+				#{username},
+				#{reason},
+				sysdate
+		)
+	</insert>
+	<select id="blackcount" resultType="int">
+		select count(*) from users where grade='ROLE_STOP'
+	</select>
+	<select id="blacklist" resultType="nong.soon.bae.bean.UserCheckDTO" >
+		<![CDATA[
+         SELECT * FROM 
+    		(SELECT a.*, rownum r FROM 
+       			 (SELECT u.username AS u_username,u.name AS u_name,u.email AS u_email, b.reason AS b_reason, b.bandate AS b_bandate
+         			FROM users u 
+         				JOIN blacklist b ON u.username = b.username 
+        					 ORDER BY b.bandate DESC) a) 
+			WHERE r >= #{start} AND r <= #{end}
+
+      ]]>
+	</select>
+	<update id="reuser" parameterType="hashMap">
+		update users set grade='ROLE_USER' where username=#{username}
+	</update>
+	<update id="reshop" parameterType="String">
+		update shoplist set grade=100 where username=#{username}
+	</update>
+	<update id="reall" parameterType="String">
+		update allproduct set grade=100 where username=#{username}
+	</update>
+	<delete id="deleteblacklist" parameterType="hashMap">
+		delete from blacklist where username=#{username}
+	</delete>
+	<select id="searchUserCnt" parameterType="String" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) FROM users WHERE 	
+			(username LIKE #{keyword} OR name LIKE #{keyword})  AND (grade = 'ROLE_USER' OR grade = 'ROLE_MEMBERSHIP')
+		
+		 ]]>
+	</select>
+	<select id="serchUserlist" parameterType="hashmap" resultType="nong.soon.bae.bean.UserCheckDTO">
+		<![CDATA[
+		SELECT * FROM 
+    		(SELECT b.*, rownum r FROM 
+        		(SELECT * FROM users 
+         			WHERE (username LIKE #{keyword} OR name LIKE #{keyword}) 
+          				 AND (grade = 'ROLE_USER' OR grade = 'ROLE_MEMBERSHIP') 
+         					ORDER BY username DESC) b) 
+                WHERE r >= #{start} AND r <= #{end}
+                
+		]]>
+	</select>
+	<select id="blacksearchUserCnt" parameterType="String" resultType="int">
+		<![CDATA[
+		SELECT COUNT(*) FROM users WHERE 	
+			(username LIKE #{keyword} OR name LIKE #{keyword}) AND grade = 'ROLE_STOP'
+		
+		 ]]>
+	</select>
+	<select id="blackserchUserlist" parameterType="hashmap" resultType="nong.soon.bae.bean.UserCheckDTO" >
+		<![CDATA[
+		SELECT * FROM 
+    		(SELECT a.*, rownum r FROM 
+       				 (SELECT u.username AS u_username, u.name AS u_name, 
+        				 u.email AS u_email, b.reason AS b_reason, b.bandate AS b_bandate 
+         					FROM users u JOIN blacklist b ON u.username = b.username 
+         						WHERE u.username LIKE #{keyword} OR u.name LIKE #{keyword}
+        						 ORDER BY b.bandate DESC) a) WHERE r >= #{start} AND r <= #{end}        
+
+      ]]>
+	</select>
+	<select id="showCate" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory order by cate1 asc, cate2 asc
+	</select>
+	<select id="maxNum" >
+		SELECT MAX(cate1) FROM productcategory
+	</select>
+	<insert id="insertNewCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{cateNum},
+            0,
+            0,
+            #{addCate}
+        )
+	</insert>
+	<update id="addCateFile" parameterType="hashMap">
+		update productcategory set img=#{realname} where catename=#{addCate}
+	</update>
+	<select id="showSubCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1Select} and cate2>0 and cate3=0 order by cate2 asc
+	</select>
+	<select id="subMaxNum" parameterType="int" resultType="int">
+		SELECT MAX(cate2) FROM productcategory where cate1=#{cate1Select}
+	</select>
+	<select id="showDetailCate" parameterType="int" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1Select} and cate2>=0 and cate3>0 order by cate1,cate2,cate3 desc
+	</select>
+	<select id="subDetailMaxNum" parameterType="hashMap" resultType="int">
+		SELECT MAX(cate3) FROM productcategory where cate1=#{cate1Select} and cate2=#{maxNum}
+	</select>
+	<insert id="insertDetailCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{cate1Select},
+            #{subMaxNum},
+            #{detailNum},
+            #{addDetail}
+        )
+	
+	</insert>
+	<update id="addDetailFile" parameterType="hashMap">
+		update productcategory set img=#{realname} where catename=#{addDetail}
+	</update>
+	<select id="etcCnt" parameterType="hashMap" resultType="int">
+		select count(*) from productcategory where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3>0
+	</select>
+	<select id="showEtcCate" parameterType="hashMap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		select * from productcategory where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3>0 order by cate3
+	</select>
+	<select id="findEtcName" parameterType="hashMap" resultType="String">
+		select catename from productcategory where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3=0 
+	</select>
+	<update id="updateCateName" parameterType="hashMap">
+		update productcategory set catename=#{newCateName} where cate1=#{cate1Select} and cate2=#{subMaxNum} and cate3=0
+	</update>
+	<insert id="updateEtcCate" parameterType="hashMap"  >
+		insert into productcategory (cate1,cate2,cate3,catename)values (
+            #{cate1Select},
+            #{etcNum},
+            0,
+            #{etcName}
+        )
+	
+	</insert>
+	<delete id="deleteDetailCate" parameterType="hashMap">
+		delete from productcategory where cate3=#{detailNum} and catename=#{addDetail}
+	</delete>
+	<delete id="deleteCate" parameterType="hashMap">
+		delete from productcategory where cate1=#{cateNum} and catename=#{addCate}
+	</delete>
+</mapper>

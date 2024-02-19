@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+.seller {
+	padding: 10px;
+}
+.background {
+	background: url("https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+	height: 10em;
+	width: 60%;
+	background-position: center center;
+	background-size: cover;
+	margin-left: auto;
+	margin-right: auto;
+	}
+.sellimg {
+	 width:100px; 
+	 height:100px;
+	 margin-top: -4em;
+	 margin-bottom: 10px;
+	 border: 4px solid #f5f5f5;
+	 border-radius: 50%;
+}
+.sellbutton {
+	border: none;
+	background-color: #369F36;
+	color: #fff;
+	
+}
+.sellcontent {
+	
+}
+.sellcontent>table {
+	border: none;
+	background-color: #fff;
+	margin-left: auto;
+	margin-right: auto;s
+}
+.contenttable>td{
+	padding: 30px;
+}
+.map {
+	margin-top: 80px;
+}
+.map>#map{
+	width:40%;
+	height:240px; 
+	margin-left: auto; 
+	margin-right: auto;
+	margin-bottom: 100px;
+}
+
+.productform {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.cate {
+	
+	
+}
+.writeform {
+	margin-left: auto;
+	margin-right: auto;
+	align-items: center;
+	
+}
+#firstOption{
+	
+}

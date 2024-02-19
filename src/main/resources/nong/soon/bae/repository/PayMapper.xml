@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.PayMapper">
+	<select id="findAddCartCnt" parameterType="hashmap" resultType="int">
+		select count(*) from ${username}_mypage where wishstatus=3
+	</select>
+	<select id="findAddCartSeller" parameterType="hashmap" resultType="String">
+		select distinct follow from ${username}_mypage where wishstatus=3
+	</select>
+	<select id="findAddCart" parameterType="hashmap" resultType="myPageDTO">
+		SELECT cart.*, pl.price, pl.optionname
+		FROM ${username}_mypage cart
+		JOIN ${seller}_product pl 
+		ON cart.productnum = pl.productnum 
+		AND cart.optionnum = pl.optionnum
+		WHERE cart.wishstatus = 3
+	</select>
+	<select id="isFirstMembershipCnt" parameterType="hashmap" resultType="int">
+		select count(*) from ${username}_payment where productnum='membership'
+	</select>
+	<select id="isFirstMembership" parameterType="hashmap" resultType="paymentDTO">
+		select * from ${username}_payment where productnum='membership'
+	</select>
+	<insert id="insertUsersPayment" parameterType="paymentDTO">
+		insert into ${username}_payment(username, follow, productnum, optionnum, realprice, totalprice, quantity, sid, status)
+		values(#{username}, #{follow}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid}, 101)
+	</insert>
+	
+	<!-- 정룡 추가 -->
+	<insert id="insertUsersPayment102" parameterType="paymentDTO">
+		insert into ${follow}_payment(username, follow, productnum, optionnum, realprice, totalprice, quantity, sid, status)
+		values(#{follow}, #{username}, #{productnum}, #{optionnum}, #{realprice}, #{totalprice}, #{quantity}, #{sid}, 102)
+	</insert>
+	<!--  -->
+	
+	<delete id="deleteUsersAddCart" parameterType="String">
+		delete from ${username}_mypage where wishstatus=3
+	</delete>
+	
+	<resultMap type="nong.soon.bae.bean.UsersDTO" id="memberMap">
+	    <id property="username" column="username"/>
+	    <result property="username" column="username"/>
+	    <result property="password" column="password"/>
+	    <result property="name" column="name"/>
+	    <result property="email" column="email"/>
+	    <result property="birth" column="birth"/>
+	    <result property="gender" column="gender"/>
+	    <result property="regsite" column="regsite"/>
+	    <collection property="grade" resultMap="authMap">
+	    </collection> 
+	  </resultMap>
+	  <resultMap type="nong.soon.bae.bean.UserGradeDTO" id="authMap">
+	    <result property="grade" column="grade"/>
+	    <result property="username" column="username"/>
+	  </resultMap>
+	<select id="isMembership" parameterType="String" resultMap="memberMap">
+		select * from users where username=#{username}
+	</select>
+	<select id="findGrade" parameterType="String" resultType="userGradeDTO">
+		select * from usergrade where name=#{gradename}
+	</select>
+	<update id="changeGrade" parameterType="String">
+		update users set grade=#{gradename} where username=#{username}
+	</update>
+	<select id="lastMembershipPayDate" parameterType="String" resultType="paymentDTO">
+		select * from ${username}_payment where productnum='membership'order by orderdate desc
+	</select>
+	<update id="updateRegularPayment" parameterType="hashmap">
+		update ${username}_payment set sid=#{newsid} where sid=#{lastsid}
+	</update>
+</mapper>

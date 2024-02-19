@@ -23,7 +23,20 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+			<param-value>
+				/WEB-INF/spring/appServlet/servlet-context.xml
+				/WEB-INF/spring/appServlet/all/main-context.xml
+				/WEB-INF/spring/appServlet/user/mail-context.xml
+				/WEB-INF/spring/appServlet/user/product-context.xml
+				/WEB-INF/spring/appServlet/user/chat-context.xml
+				/WEB-INF/spring/appServlet/user/pay-context.xml
+				/WEB-INF/spring/appServlet/test-context.xml
+				/WEB-INF/spring/appServlet/membership/membership-context.xml
+				/WEB-INF/spring/appServlet/admin/notice-context.xml
+				/WEB-INF/spring/appServlet/admin/usercheck-context.xml
+				/WEB-INF/spring/appServlet/user/mypage-context.xml
+				/WEB-INF/spring/appServlet/user/ad-context.xml
+			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

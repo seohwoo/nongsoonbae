@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.MainMapper">
+	
+	<select id="seasonCategoryCnt" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from productcategory where cate3>0 and month like #{keyword}
+		]]>
+	</select>
+	
+	<select id="seasonCategory" parameterType="hashmap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		<![CDATA[
+			select * from 
+			(select c.* , rownum r from 
+			(select * from productcategory 
+			where month like #{keyword} order by cate1, readcount) c) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	
+	<select id="findCatename" parameterType="hashmap" resultType="String">
+		select catename from productcategory where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3}
+	</select>
+	
+	<select id="seasonProductCnt" parameterType="hashmap" resultType="int">
+		select count(*) from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3}
+	</select>
+	
+	<select id="seasonProduct" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct 
+		where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=100 
+		order by readcnt desc, startdate desc, wishcnt desc
+	</select>
+	
+	<select id="isChart" parameterType="hashmap" resultType="int">
+		select count(*) from chart where name=#{catename}
+	</select>
+	
+	<select id="productChart" parameterType="hashmap" resultType="String">
+		select avg(avgprice) from chart where regdate like #{keyword} and name=#{catename}
+	</select>
+	
+	<select id="maxAvgPrice" parameterType="String" resultType="int">
+		select max(avgprice) from chart where name=#{catename}
+	</select>
+	
+	<select id="chartCategory" parameterType="hashmap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		<![CDATA[
+			select * from 
+			(select c.* , rownum r from 
+			(select * from productcategory 
+			where cate1=#{cate1} and cate3>0 
+			order by cate2 asc, cate3 asc) c) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	
+	<select id="chartCategoryCnt" parameterType="String" resultType="int">
+		select count(*) from productcategory where cate1=#{cate1} and cate3>0
+	</select>
+	
+	<select id="cateMenu" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		<![CDATA[
+			select * from productcategory where cate1>0 and cate2=0
+		]]>
+	</select>
+	
+	<select id="nextCate" parameterType="hashmap" resultType="nong.soon.bae.bean.ProductCategoryDTO">
+		<![CDATA[
+			select * from 
+			(select c.* , rownum r from 
+			(select * from productcategory 
+			where cate1=#{cate1} and cate3>0 
+			order by cate2 asc, cate3 asc) c) 
+			where r = #{start}
+		]]>
+	</select>
+	
+	<select id="searchProductCnt" parameterType="String" resultType="int">
+		select count(*) from allproduct where productname like #{keyword}
+	</select>
+	
+	<select id="searchProduct" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+			select * from 
+			(select a.* , rownum r from 
+			(select * from allproduct 
+			where productname like #{keyword}) a) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	
+	<resultMap type="nong.soon.bae.bean.UsersDTO" id="memberMap">
+	    <id property="username" column="username"/>
+	    <result property="username" column="username"/>
+	    <result property="password" column="password"/>
+	    <result property="name" column="name"/>
+	    <result property="email" column="email"/>
+	    <result property="birth" column="birth"/>
+	    <result property="gender" column="gender"/>
+	    <result property="regsite" column="regsite"/>
+	    <collection property="grade" resultMap="authMap">
+	    </collection> 
+	  </resultMap>
+	  <resultMap type="nong.soon.bae.bean.UserGradeDTO" id="authMap">
+	    <result property="grade" column="grade"/>
+	    <result property="username" column="username"/>
+	  </resultMap>
+	
+	<select id="isMembership" parameterType="String" resultMap="memberMap">
+		select * from users where username=#{username}
+	</select>
+	
+	<select id="findProductListValue" parameterType="hashmap" resultType="productListDTO">
+		SELECT 
+		    ap.username,
+		    ap.productnum,
+		    ap.productname,
+		    ap.startdate,
+    		ap.enddate,
+    		ap.wishcnt,
+    		ap.readcnt,
+		    u.name AS user_name,
+		    ud.image AS user_image,
+		    (SELECT MIN(price) 
+		     FROM ${username}_product 
+		     WHERE username = ap.username AND productnum = ap.productnum) AS min_price,
+		    ROUND((SELECT AVG(stars) 
+           	FROM P_${productnum}_reviews 
+           	WHERE productnum = ap.productnum), 1) AS avg_stars,
+		    (SELECT COUNT(*) 
+		     FROM P_${productnum}_reviews 
+		     WHERE productnum = ap.productnum) AS review_count,
+		    pc1.catename AS cate_name,
+		    a1.areaname AS area_name1,
+		    a2.areaname AS area_name2,
+		    si.filename AS image_filename
+		FROM 
+		    allproduct ap
+		LEFT JOIN 
+		    users u ON ap.username = u.username
+		LEFT JOIN 
+		    userdetails ud ON ap.username = ud.username
+		LEFT JOIN 
+		    productcategory pc1 ON ap.cate1 = pc1.cate1 and ap.cate2 = pc1.cate2 and ap.cate3 = pc1.cate3
+		LEFT JOIN 
+		    area a1 ON ap.area1 = a1.area1 AND a1.area2 = 0
+		LEFT JOIN 
+		    area a2 ON ap.area1 = a2.area1 AND ap.area2 = a2.area2
+		LEFT JOIN 
+		    ${username}_images si ON ap.username = si.username AND ap.productnum = si.productnum AND si.filename LIKE #{keyword}
+		WHERE 
+		    ap.username = #{username}
+		    AND ap.productnum = #{productnum}
+	</select>
+	
+	
+</mapper>

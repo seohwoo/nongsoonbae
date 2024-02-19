@@ -1,0 +1,232 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+table.main, .title{
+	font-family: 'SUITE-Regular';
+	display: -ms-flexbox;
+	-ms-flex-align: center;
+	text-align: center;
+	align-items: center;
+	margin-left:auto;
+	margin-right:auto;
+}
+table.table {
+	--table-bg: transparent;
+	margin: auto;
+	padding: 15px;
+}
+table.chart{
+	width : 80%;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+table.chartsub{
+	margin-bottom: 60px;
+}
+table.season{
+	padding-top: 100px;
+}
+.page-header{
+	display: -ms-flexbox;
+	display: flex;
+}
+h1.page-header {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+.notice {
+  position: relative;
+  margin-top: 1em;
+  background: #F9F9F9;
+  padding: 1em 1em 1em 1em;
+  border-left: 4px solid #DDD;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.success {
+  border-color: #2ECC40;
+}
+td.search{
+	
+	
+}
+td.chart{
+	
+}
+td.detail{
+	padding-top: 50px;
+}
+td.page{
+	display: flex;
+	margin-left: auto; 
+	margin-right: auto;
+}
+.bton {
+	padding-left : 0px;
+	padding-right : 0px;
+	border: none;
+}
+.btn {
+	margin: 1px;
+}
+.catelist {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+	background: #fbfcfd;
+	height: 50px;
+	width: 80%;
+	align-items: center;
+	border: 1px solid #ced4d9;
+	justify-content: center;
+}
+.catebtn {
+	border: none;
+	background: none;
+}
+.catenull{
+	margin-left: auto; 
+	margin-right: auto; 
+	margin-top: 30px; 
+	margin-bottom: 30px;
+}
+.areabtn{
+	justify-content: center;
+	border: none;
+	display: flex;
+	margin-bottom: 80px;
+}
+
+<!--메인카드-->
+:root {
+  --gradient: linear-gradient(to left top, #DD2476 10%, #FF512F 90%) !important;
+}
+.card {
+  margin-bottom: 2rem;
+}
+div.farmer {
+	float: right; 
+	display: inline-block; 
+	display: flex;
+}
+p {
+	
+}
+div.farmer a {
+	align-self: flex-end;
+}
+div.farmer b {
+	padding: 2px;
+	margin-left: 5px; 
+	margin-right: 5px;
+}
+
+<!--메인 슬라이드-->
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.intro-header {
+  font-family: 'SUITE-Regular';
+  
+  color: #fff;
+}
+
+.intro {
+  height: 50vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.1rem;
+  margin-top: -6%;
+  margin-bottom: 4%;
+  z-index: -1;
+}
+.intro-slideshow img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index:-1;
+  /* filter: brightness(50%); */ /* 0% black, 100% original image, values > 100% are allowed for brighter than original image. */
+  /* display: none; */
+  opacity: 0;
+  transition: opacity 0.75s ease-in-out;
+}
+/* .intro-slideshow img:first-child {
+  display: block;
+  opacity: 1;
+} */
+.intro .intro-header {
+  border-radius: 0.5rem;
+  padding: 13rem 2.5rem
+  
+}
+.intro h1 {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+.intro p {
+  font-size: 1.75rem;
+}
+.intro-back{
+	background-color: rgba(0,0,0,0.5);
+    height: 50vh;
+    width: 100%;
+}
+
+@media (max-width: 700px) {
+  html { font-size: 12px; }
+  .intro-header { padding: 1.5rem 2rem; }
+  .intro h1 { font-size: 2.5rem; }
+  .intro p { font-size: 1.25rem; }
+}
+
+
+.serch-input {    
+	height:60px;
+    width:700px;
+    min-width: 150px;
+    box-sizing: border-box;
+    border: 4px solid #198754;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    padding: 0px 12px 0px 12px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    display: block;
+    text-align: center;
+  
+   -webkit-border-radius: 50px;
+   -moz-border-radius: 50px;
+   border-radius: 50px;
+   color: #198754;
+    }   
+#searchButton{
+	box-sizing: border-box;
+    border: none;
+    padding: 0px 12px 0px 12px;
+    margin-left: -80px;
+    background: none;
+    }
