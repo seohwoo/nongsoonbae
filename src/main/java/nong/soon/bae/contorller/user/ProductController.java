@@ -664,6 +664,7 @@ public class ProductController {
 		   service.findMySellChart(model, username);
 	   }
 	   model.addAttribute("isUser", isUser);
+	   model.addAttribute("username", username);
 	   return "/user/myshop/shopinfo";
    }
    
