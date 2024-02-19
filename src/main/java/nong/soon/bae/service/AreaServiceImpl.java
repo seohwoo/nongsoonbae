@@ -156,6 +156,20 @@ public class AreaServiceImpl implements AreaService{
 	}
 	
 	
+	public void exshowProduct(List<AllProductDTO> alprList) {
+		productList.clear();
+		ProductListDTO dto = null;
+		for (AllProductDTO alprDTO : alprList) {
+			seasonCategoryMap.put("username", alprDTO.getUsername());
+			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
+			String keyword = alprDTO.getProductnum() + "_1%";
+			seasonCategoryMap.put("keyword", keyword);
+			dto = mainMapper.findProductListValue(seasonCategoryMap);
+			productList.add(dto);		
+		}
+	}
+	
+	
 	public ArrayList<ProductListDTO> showProduct(List<AllProductDTO> alprList) {
 	    ArrayList<ProductListDTO> localProductList = new ArrayList<>();
 	    for (AllProductDTO alprDTO : alprList) {

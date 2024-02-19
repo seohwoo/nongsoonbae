@@ -36,8 +36,12 @@ public interface MainMapper {
 	public ProductCategoryDTO nextCate(HashMap<String, String> map);
 	/** 검색결과 개수 */
 	public int searchProductCnt(String keyword);
+	/** 검색결과 개수(광고) */
+	public int searchAdProductCnt(String keyword);
 	/** 검색결과 리스트(10개씩 출력) */
 	public List<AllProductDTO> searchProduct(HashMap<String, String> map);
+	/** 검색 결과 광고 4개 랜덤 출력*/
+	public List<AllProductDTO> searchAdProduct(String keyword);
 	/** 로그인한 유저가 맴버쉽회원인지 조회 */
 	public UsersDTO isMembership(String username);
 	/** 전체 상품 리스트 중 한칸에 들어가는 모든 정보*/

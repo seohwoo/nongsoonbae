@@ -16,6 +16,11 @@
 				<h1>검색결과가 없습니다</h1>
 			</c:if>
 			<c:if test="${searchCnt>0}">
+				<c:if test="${adCnt>0}">
+					<c:forEach var="ad" items="${adproductlist}">
+						<%@include file="/WEB-INF/views/all/main/adListComponent.jsp"%>
+					</c:forEach>
+				</c:if>
 				<c:forEach var="dto" items="${searchList}">
 					<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 				</c:forEach>

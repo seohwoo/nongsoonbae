@@ -202,7 +202,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void findProduct(Model model, String userSearch, int searchNum) {
-		int searchPageSize = 10;
+		int searchPageSize = 12;
 		String keyword = "%" + userSearch + "%";
 		seasonCategoryMap.put("keyword", keyword);
 		int cnt = mapper.searchProductCnt(keyword);
@@ -216,6 +216,37 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("searchCnt", cnt);
 		model.addAttribute("searchList", productList);
 	}
+	
+	
+	@Override
+	public void findAdProduct(Model model, String userSearch) {
+		List<AllProductDTO> adproductlist = Collections.EMPTY_LIST ;
+		String keyword = "%" + userSearch + "%";
+		seasonCategoryMap.put("keyword", keyword);
+		int adCnt = mapper.searchAdProductCnt(keyword);
+		if(adCnt >0) {
+			adproductlist = mapper.searchAdProduct(keyword);
+			ArrayList<ProductListDTO> localAdProductList = adshowProduct(adproductlist);
+            model.addAttribute("adproductlist", localAdProductList);
+		
+		}
+		model.addAttribute("adCnt",adCnt);
+	}
+	
+
+	public ArrayList<ProductListDTO> adshowProduct(List<AllProductDTO> alprList) {
+	    ArrayList<ProductListDTO> localAdProductList = new ArrayList<>();
+	    for (AllProductDTO alprDTO : alprList) {
+	    	seasonCategoryMap.put("username", alprDTO.getUsername());
+			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
+			String keyword = alprDTO.getProductnum() + "_1%";
+			seasonCategoryMap.put("keyword", keyword);
+	        ProductListDTO ad = mapper.findProductListValue(seasonCategoryMap);
+	        localAdProductList.add(ad);
+	    }
+	    return localAdProductList;
+	}
+	
 	
 	/**
 	 * main에 보여줄 값을 한번에 저장하기 위해 사용(일단보류)
@@ -245,4 +276,6 @@ public class MainServiceImpl implements MainService {
 		return isMembership;
 
 	}
+
+	
 }
