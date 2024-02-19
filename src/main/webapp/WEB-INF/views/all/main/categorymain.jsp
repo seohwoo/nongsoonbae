@@ -100,6 +100,7 @@
 						</div>
 					</div>
 				</c:if>
+				<!--일반 상품 정렬  -->
 				<div class="container mx-auto mt-4">
 	 			  	<div class="row">
 						<c:forEach var="dto" items="${allproductList}">

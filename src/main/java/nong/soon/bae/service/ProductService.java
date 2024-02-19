@@ -220,6 +220,9 @@ public interface ProductService {
 	
 	/** 본인 판매내역 차트 확인하기 */
 	public void findMySellChart(Model model, String username);
+	
+	public void deleteReviewImages(String productnum, String myName, String path);
+	
 }
 
 

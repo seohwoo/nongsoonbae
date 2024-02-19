@@ -489,6 +489,25 @@ public class ProductServiceImpl implements ProductService {
 		model.addAttribute("sellDateList", sellDateList);
 		model.addAttribute("sellPriceList", sellPriceList);
 	}
+
+	@Override
+	public void deleteReviewImages(String productnum, String myName, String path) {
+		String username = mapper.findRealUsername(myName).getUsername();
+		List<ImagesDTO> list = Collections.EMPTY_LIST;
+		productMap.put("username", username);
+		productMap.put("productnum", productnum);
+		int cnt = mapper.findReviewImageCnt(productMap);
+		if(cnt > 0) {
+			list = mapper.findReviewImages(productMap);
+			for (ImagesDTO dto : list) {
+				File file = new File(path+dto.getFilename());
+				if(file.isFile()) {
+					file.delete();
+				}
+			}
+			mapper.deleteReviewImages(productMap);
+		}
+	}
 	
 }
 

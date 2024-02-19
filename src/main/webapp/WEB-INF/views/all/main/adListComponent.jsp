@@ -9,8 +9,9 @@
 	 	  	<img src="/resources/realImage/${ad.image_filename}" width="300px" height="300px" class="card-img-top" alt="...">
 	 	  	<div class="card-body">
 		  		<h5 class="card-title">✨ ${ad.productname}</h5>
-		    	<p class="card-text"><span>별점 : ${ad.total_stars}(${ad.review_count}) , 조회수 : ${ad.readcnt}, 찜개수 : ${ad.wishcnt}</span></p>
-		        <p class="card-text"><span><fmt:formatDate value="${dto.startdate}" dateStyle="long" type="date"/></span></p>
+		  		<p class="card-text"><span>가격 ${ad.min_price}</span></p>
+		    	<p class="card-text"><span>별점 : ${ad.avg_stars}(${ad.review_count}) , 조회수 : ${ad.readcnt}, 찜개수 : ${ad.wishcnt}</span></p>
+		        <p class="card-text"><span><fmt:formatDate value="${ad.startdate}" dateStyle="long" type="date"/></span></p>
 		    	<div class="farmer">
 		    	<p class="card-subtitle mb-2 text-muted h6"><label>${ad.area_name1} > ${ad.area_name2}</label><b>${ad.username}</b></p>
 				<a href="/product/productMyShop?username=${ad.username}">

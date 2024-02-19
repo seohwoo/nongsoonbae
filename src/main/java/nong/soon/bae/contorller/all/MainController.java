@@ -58,6 +58,7 @@ public class MainController{
 			searchNum = "1";
 		}
 		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
+		service.findAdProduct (model, userSearch);
 		return "all/main/result";
 	}
 	

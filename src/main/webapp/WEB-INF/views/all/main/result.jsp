@@ -21,6 +21,11 @@
 			<c:if test="${searchCnt>0}">
 				<div class="container mx-auto mt-4">
 	 				<div class="row">
+	 					<c:if test="${adCnt>0}">
+							<c:forEach var="ad" items="${adproductlist}">
+								<%@include file="/WEB-INF/views/all/main/adListComponent.jsp"%>
+							</c:forEach>
+						</c:if>
 						<c:forEach var="dto" items="${searchList}">
 							<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>
 						</c:forEach>

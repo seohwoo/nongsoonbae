@@ -23,4 +23,6 @@ public class MyPageDTO {
 	private String productname;
 	private int realprice;
 	private Date orderdate;
+	
+	private int review_count;
 }
