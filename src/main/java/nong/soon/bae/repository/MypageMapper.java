@@ -25,5 +25,5 @@ public interface MypageMapper {
 	public void deleteCart(MyPageDTO dto);
 	
 	public List<PaymentDTO> selectPay(String username);
-	public List<MyPageDTO> selectPayDetail(HashMap map);
+	public MyPageDTO selectPayDetail(HashMap map);
 }

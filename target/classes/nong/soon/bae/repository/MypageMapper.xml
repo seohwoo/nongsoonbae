@@ -66,7 +66,10 @@
 	
 	<!-- 정기결제 구매 내역 제외 -->
 	<select id="selectPay" resultType="nong.soon.bae.bean.PaymentDTO">
-		select distinct follow from ${username}_payment where sid='simple payment'
+		SELECT follow,productnum, TO_CHAR(orderdate, 'YYYY-MM-DD-HH24:MI:SS') formatdate
+		FROM ${username}_payment
+		WHERE sid = 'simple payment' AND status = 101
+		ORDER BY orderdate DESC
 	</select>
 	<select id="selectPayDetail" parameterType="HashMap" resultType="nong.soon.bae.bean.MyPageDTO">
 		<![CDATA[
@@ -77,7 +80,8 @@
 			    s.shopname,
 			    a.productname
 			FROM
-			    (SELECT * FROM ${username}_payment WHERE sid = 'simple payment') m
+			    (SELECT * FROM ${username}_payment WHERE productnum = #{productnum} 
+			    AND TO_CHAR(orderdate, 'YYYY-MM-DD-HH24:MI:SS') = #{orderdate}  ) m
 			LEFT JOIN 
 			    ${follow}_product p ON m.optionnum = p.optionnum
 			LEFT JOIN 

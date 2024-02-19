@@ -12,6 +12,7 @@ public class MyPageDTO {
 	private String optionnum;
 	private int count;
 	private int wishstatus;
+	private String formatdate;
 	
 	private String filename;
 	private String optionname;

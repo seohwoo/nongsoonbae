@@ -1,5 +1,6 @@
  package nong.soon.bae.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +15,7 @@ import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
 
 public interface ProductMapper {	
+	
 	// 내 이름 가져오기
 	public String selectMyName(String username);
 	
@@ -226,16 +228,33 @@ public interface ProductMapper {
 	public void dropUsernameProduct(String username);
 
 	// 상품 리뷰 쓴 사람 가져오기
-	public List<String> selectReviewsUsername(String productnum);
+	public List<ReviewsDTO> selectReviewsUsername(String productnum);
 	
 	// 리뷰 쓴 사람들 가져오기 최종
 	public List<ReviewsDTO> ReviewsInfoFinal(@Param("productnum") String productnum, 
 											 @Param("follow") String follow, 
-											 @Param("usernames") String usernames);
+											 @Param("usernames") String usernames,
+											 @Param("formatdate") String formatdate);
 
 	// 리뷰 삭제하기
 	public void myReviewsDelete(@Param("productnum") String productnum, 
 			 					@Param("myName") String myName);
+	
+	
+	public ShopListDTO findMyShopInfo(String username);
+	
+	public int findTodayPriceCnt(String username);
+	
+	public int findTodayPrice(String username);
+	
+	public int isUserSell(String username);
+	
+	public List<String> userSellDateList(String username);
+	
+	public int findSellDatePrice(HashMap<String, String> map);
+	
+	public ShopListDTO findByShopInfo(String username);
+	
 }
 	
 	

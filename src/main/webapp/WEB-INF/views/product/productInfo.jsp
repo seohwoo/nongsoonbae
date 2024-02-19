@@ -52,24 +52,38 @@
 		})
 
 
+		function logedIn() {
+			 
+		}
 		
-		
+		function addToWishList() {
+			if(${isLogedIn} === false) {
+				alert("로그인 해주세요!!");
+				window.location = '/member/form';
+			}else{
+				window.location = '/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val();
+			} 
+		}
 		
 		
 		function addToCart() {
-			var pdtoVal = $("#Pdto").val();
-			var selectedOptionVal = $("#Pdto").val();
-			    selectedOptionCount = selectedOptionVal.split("-")[1];
-			    
-			if ('-------' == pdtoVal) {
-				alert("상품 옵션을 선택해주세요.");
-		    } else if (parseInt(selectedOptionCount) === 0) {
-		        alert("상품 재고가 없습니다.");	
-			} else {
-				var optionnum = $("#selectedOptionNum").val();
-				var productnum = ${productnum};
-				window.location = '/product/productShoppingPro?follow=${follow}&productnum=' + productnum + '&optionnum=' + $('#selectedOptionNum').val() + '&count=' + $('#count').val();
-			}
+			if(${isLogedIn} === false) {
+				alert("로그인 해주세요!!");
+				window.location = '/member/form';
+			}else{
+				var pdtoVal = $("#Pdto").val();
+				var selectedOptionVal = $("#Pdto").val();
+				    selectedOptionCount = selectedOptionVal.split("-")[1];
+				if ('-------' == pdtoVal) {
+					alert("상품 옵션을 선택해주세요.");
+			    } else if (parseInt(selectedOptionCount) === 0) {
+			        alert("상품 재고가 없습니다.");	
+				} else {
+					var optionnum = $("#selectedOptionNum").val();
+					var productnum = ${productnum};
+					window.location = '/product/productShoppingPro?follow=${follow}&productnum=' + productnum + '&optionnum=' + $('#selectedOptionNum').val() + '&count=' + $('#count').val();
+				}
+			} 
 		}
 
 		
@@ -156,10 +170,16 @@
 		</table>
 <!-- ----------- -->
 		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
-		<input type="button" value="찜하기" onclick="javascript:window.location='/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val()">
-		<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-		<input type="button" value="장바구니담기" onclick="addToCart()">
-		<button onclick="openReviewWindow()">리뷰작성</button>	
+		<c:if test="${!isUser}">
+			<input type="button" value="찜하기" onclick="addToWishList()">
+			<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
+			<input type="button" value="장바구니담기" onclick="addToCart()">
+			<button onclick="openReviewWindow()">리뷰작성</button>	
+		</c:if>
+		<c:if test="${isUser}">
+			<input type="button" value="내상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
+			<input type="button" value="상품내리기" onclick="javascript:window.location='#'">
+		</c:if>
 	
 		<br /><br /><br /><br /> <hr /> <br />
 		<table border="1" style="text-align: center;">

@@ -348,6 +348,18 @@ public class ProductController {
    @RequestMapping("productInfo")
    public String productInfo(Principal pri, String productnum, Model model, String follow) {
 	  String username = FileRoot.getIp();
+	  boolean isUser = false;
+	  boolean isLogedIn = false;
+	  if(pri != null) {
+		  isLogedIn = true;
+		  if(pri.getName().equals(follow)) {
+			  isUser = true;
+		  }
+    	  String myName = service.selectMyName(username);
+    	  model.addAttribute("myName", myName);
+      }
+	  model.addAttribute("isUser", isUser);
+	  model.addAttribute("isLogedIn", isLogedIn);
       
       // 상품 정보 페이지
       AllProductDTO APdto = service.selectProductInfo(follow, productnum);
@@ -366,18 +378,17 @@ public class ProductController {
       
       
       // 상품 리뷰 가져오기 
-      List<String> ReviewsName = service.selectReviewsUsername(productnum);
+      List<ReviewsDTO> ReviewsName = service.selectReviewsUsername(productnum);
       List<ReviewsDTO> allReviews = new ArrayList<>();
       
-      for (String usernames : ReviewsName) {
-          List<ReviewsDTO> reviews = service.ReviewsInfoFinal(productnum, follow, usernames);
+      for (ReviewsDTO reviewDTO : ReviewsName) {
+    	  String usernames = reviewDTO.getUsername();
+    	  String formatdate = reviewDTO.getFormatdate();
+          List<ReviewsDTO> reviews = service.ReviewsInfoFinal(productnum, follow, usernames, formatdate);
           allReviews.addAll(reviews);
       }
       
-      if(pri != null) {
-    	  String myName = service.selectMyName(username);
-    	  model.addAttribute("myName", myName);
-      }
+      
       
       int totalStars = 0;
       for (ReviewsDTO dto : Rdto) {
@@ -524,7 +535,8 @@ public class ProductController {
    // 장바구니 담기
    @RequestMapping("productShoppingPro")
    public String ShoppingPro(Principal principal, String productnum, String follow, String optionnum, String count) {
-      String username = principal.getName();
+      
+	  String username = principal.getName();
       MyPageDTO MPdto = new MyPageDTO();
       MPdto.setUsername(username);
       MPdto.setFollow(follow);
@@ -642,8 +654,22 @@ public class ProductController {
          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseJson);
       }
    }
+   
+   @RequestMapping("shopinfo")
+   public String shopinfo(Model model, String username, Principal pri) {
+	   boolean isUser = false;
+	   if(username.equals(pri.getName())) {
+		   isUser = true;
+		   service.findMyShopInfo(model, username);
+		   service.findMySellChart(model, username);
+	   }
+	   model.addAttribute("isUser", isUser);
+	   return "/user/myshop/shopinfo";
+   }
+   
 }
 
+	
 
    /*
    // 24년 구하는 코드

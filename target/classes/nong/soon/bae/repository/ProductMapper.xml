@@ -439,9 +439,11 @@
 
 
 	<!-- 상품 리뷰 쓴 사람 가져오기  -->
-	<select id="selectReviewsUsername" resultType="String" parameterType="String">
-		select u.username from P_${productnum}_reviews r
-    		left join users u ON u.name = r.username
+	<select id="selectReviewsUsername" resultType="nong.soon.bae.bean.ReviewsDTO" parameterType="String">
+		select u.username, TO_CHAR(r.regdate, 'YYYY-MM-DD-HH24:MI:SS') formatdate 
+		from P_${productnum}_reviews r
+    	left join users u ON u.name = r.username
+    	order by r.regdate desc
 	</select>
 
 	<!-- 리뷰 쓴 사람들 가져오기 최종 -->
@@ -453,12 +455,73 @@
           WHERE filename LIKE '%\_1%' escape '\' ORDER BY filename ASC)
             i ON r.productnum = i.productnum
           where r.productnum=#{productnum} and u.username=#{usernames}
+          and TO_CHAR(r.regdate, 'YYYY-MM-DD-HH24:MI:SS') = #{formatdate}
 	</select>
 	
 	<!-- 리뷰 삭제하기 -->
 	<delete id="myReviewsDelete" parameterType="String">
 		delete from  P_${productnum}_reviews where username=#{myName}
 	</delete>
+	
+	<select id="findMyShopInfo" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
+		<![CDATA[
+			SELECT 
+			    u.name,
+			    ud.image,
+			    ud.followers,
+			    sl.regdate,
+			    ap.product_count,
+			    yp.total_payment
+			FROM 
+			    users u
+			JOIN 
+			    userdetails ud ON u.username = ud.username
+			JOIN 
+			    shoplist sl ON u.username = sl.username
+			LEFT JOIN 
+			    (SELECT username, COUNT(*) AS product_count FROM allproduct WHERE grade < 200 GROUP BY username) ap ON u.username = ap.username
+			LEFT JOIN 
+			    (SELECT username, SUM(totalprice) AS total_payment FROM ${username}_payment WHERE status = 102 GROUP BY username) yp ON u.username = yp.username
+			WHERE 
+			    u.username = #{username}
+		]]>    
+	</select>
+	
+	<select id="findTodayPriceCnt" parameterType="String" resultType="int">
+		SELECT count(*) 
+		FROM ${username}_payment 
+		WHERE status = 102 
+		AND TO_CHAR(orderdate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
+	
+	<select id="findTodayPrice" parameterType="String" resultType="int">
+		SELECT SUM(totalprice) 
+		FROM ${username}_payment 
+		WHERE status = 102 
+		AND TO_CHAR(orderdate, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
+	
+	<select id="isUserSell" parameterType="String" resultType="int">
+		select count(*) from ${username}_payment where status = 102
+	</select>
+	
+	<select id="userSellDateList" parameterType="String" resultType="String">
+		SELECT DISTINCT TO_CHAR(orderdate, 'YYYY-MM-DD') AS orderdate
+		FROM ${username}_payment 
+		WHERE status = 102
+		order by orderdate asc
+	</select>
+	
+	<select id="findSellDatePrice" parameterType="hashmap" resultType="int">
+		SELECT sum(totalprice)
+		FROM ${username}_payment 
+		WHERE status = 102 
+		AND TO_CHAR(orderdate, 'YYYY-MM-DD') = #{selldate}
+	</select>
+	
+	<select id="findByShopInfo" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
+		select * from shoplist where username=#{username}
+	</select>
 	
 </mapper>    
 

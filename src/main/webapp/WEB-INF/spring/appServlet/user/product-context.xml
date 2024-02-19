@@ -10,5 +10,9 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<beans:bean id="ProductDTO" class="nong.soon.bae.bean.ProductDTO"/>
-	 
+	<beans:bean id="productMap" class="java.util.HashMap" >
+	   	<beans:constructor-arg>
+	    	<beans:map key-type="String" value-type="String" />
+	   	</beans:constructor-arg>
+   </beans:bean>
 </beans:beans>
