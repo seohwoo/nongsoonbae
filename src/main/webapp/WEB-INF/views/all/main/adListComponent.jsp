@@ -10,7 +10,7 @@
 	 	  	<div class="card-body">
 		  		<h5 class="card-title">✨ ${ad.productname}</h5>
 		  		<p class="card-text"><span>가격 ${ad.min_price}</span></p>
-		    	<p class="card-text"><span>별점 : ${ad.avg_stars}(${ad.review_count}) , 조회수 : ${ad.readcnt}, 찜개수 : ${ad.wishcnt}</span></p>
+		    	<p class="card-text"><span>★ ${ad.avg_stars}(${ad.review_count})<b class="text-muted" style="font-size: 12px;">조회수 : ${ad.readcnt} 찜 : ${ad.wishcnt}</b></span></p>
 		        <p class="card-text"><span><fmt:formatDate value="${ad.startdate}" dateStyle="long" type="date"/></span></p>
 		    	<div class="farmer">
 		    	<p class="card-subtitle mb-2 text-muted h6"><label>${ad.area_name1} > ${ad.area_name2}</label><b>${ad.username}</b></p>
