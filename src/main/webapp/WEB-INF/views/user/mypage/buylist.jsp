@@ -36,8 +36,8 @@
 					<tbody>
 						<tr>
 							
-							<td><a href="#">${pay.productname}</a><p class="g-table-list-col-small-copy">${pay.optionname}</p></td>
-							<td class="g-table-list-rwd"><a href="#">${pay.shopname}</a></td>
+							<td><a href="/product/productInfo?productnum=${pay.productnum}&follow=${pay.follow}">${pay.productname}</a><p class="g-table-list-col-small-copy">${pay.optionname}</p></td>
+							<td class="g-table-list-rwd"><a href="/product/productMyShop?username=${pay.follow}">${pay.shopname}</a></td>
 							<td>${pay.realprice}원</td>
 							<td class="g-table-list-date"><fmt:formatDate value="${pay.orderdate}" dateStyle="short" type="date"/></td>
 							<c:if test="${pay.review_count==0}">
