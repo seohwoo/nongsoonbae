@@ -111,13 +111,9 @@ public class MypageServiceImpl implements MypageService {
 		    SelectMyCartMap.put("username", myPageDTO.getUsername());
 		    SelectMyCartMap.put("follow", myPageDTO.getFollow());
 		    SelectMyCartMap.put("optionnum", myPageDTO.getOptionnum());
-		    List<MyPageDTO> tempList = mapper.selectMyCart(SelectMyCartMap);
-		    System.out.println(tempList);
-		    for (MyPageDTO dto : tempList) {
-		    	list.add(dto);
-			}
+		    MyPageDTO tempList = mapper.selectMyCart(SelectMyCartMap);
+		    list.add(tempList);
 		}
-		System.out.println(list);
 		model.addAttribute("MyCart", list);
 	}
 
