@@ -13,7 +13,7 @@
 	<script>
 		$(function() {
 			var selectedOptionCount;
-			
+			var optionSelected = false; // 옵션 선택 여부를 나타내는 변수
 			$("#Pdto").on("change", function() {
 				var selectedOptionVal = $("#Pdto").val();
 				var selectedOptionNum = selectedOptionVal.split("-")[0];
@@ -22,19 +22,30 @@
 				
 				var selectedOptionText = $("#Pdto option:selected").text();
                 var newRow = $("<tr>").append($("<td>").text(selectedOptionText));
+
+                // 이미 옵션이 선택된 경우 경고 메시지 표시
+                if (optionSelected) {
+                    alert("상품은 한 가지만 선택할 수 있습니다.");
+                    return; // 선택한 옵션 초기화 없이 종료
+                }
+                optionSelected = true; // 옵션이 선택되었음을 표시
+                
                 
             	// 증가, 감소 버튼 추가
                 var increaseButton = $("<button>").text("+").click(increaseQuantity);
                 var decreaseButton = $("<button>").text("-").click(decreaseQuantity);
+                var deleteButton = $("<button>").text("X").click(deleteRow);
                 var numberText = $("<input type='text' name='count' id='count' value='1' readonly>");
                 
-                newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton));
+                newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton).append(deleteButton));
                 $("#finish").append(newRow);
 			})
 			
 			function increaseQuantity(e) {
+				var selectedOptionVal = $("#Pdto").val();
+				    selectedOptionCount = selectedOptionVal.split("-")[1];
 				
-				if(parseInt(selectedOptionCount) > e.target.nextElementSibling.value) {
+				if(parseInt(selectedOptionCount) > parseInt(e.target.nextElementSibling.value)) {
 					e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
 				}else{
 					alert("재고 수가 부족합니다.");
@@ -49,6 +60,14 @@
             	}
             var number = e.target.nextElementSibling.value;
             }
+
+            function deleteRow() {
+                $(this).closest('tr').remove();
+                optionSelected = false; // 옵션 선택 초기화
+                $("#Pdto").val("-------"); // 옵션 값을 "-------"으로 설정
+            }
+		
+		
 		})
 
 
@@ -143,17 +162,20 @@
 				<td>${cnt}개  ${stars}/5</td>
 			<tr>
 			
+			<!-- TEST -->
+			
 				<td>상품 옵션</td>
 				<td>
-					<select id="Pdto" name="Pdto">
-						<option value="-------">-------</option>
-							<c:forEach var="Pdto" items="${Pdto}">
-								<option value="${Pdto.optionnum}-${Pdto.productcount}">
-									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount - Pdto.sellcount}
-									<c:if test="${(Pdto.productcount - Pdto.sellcount) == 0}">(품절)</c:if>
-								</option>
-							</c:forEach>
-					</select>
+				    <select id="Pdto" name="Pdto">
+				        <option value="-------">-------</option>
+				        <c:forEach var="Pdto" items="${Pdto}">
+				            <c:if test="${(Pdto.productcount - Pdto.sellcount) != 0}">
+				                <option value="${Pdto.optionnum}-${Pdto.productcount}">
+				                    상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount - Pdto.sellcount}
+				                </option>
+				            </c:if>
+				        </c:forEach>
+				    </select>
 				</td>
 			</tr>
 		</table>
@@ -166,7 +188,7 @@
 		</c:if>
 		<c:if test="${isUser}">
 			<input type="button" value="내상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-			<input type="button" value="상품내리기" onclick="javascript:window.location='#'">
+			<input type="button" value="상품내리기" onclick="javascript:window.location='/product/deleteProduct?productnum=${productnum}&username=${follow}'">
 		</c:if>
 	
 		<br /><br /><br /><br /> <hr /> <br />

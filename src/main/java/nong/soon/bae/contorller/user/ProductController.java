@@ -346,7 +346,7 @@ public class ProductController {
    
    // 상품 상세정보
    @RequestMapping("productInfo")
-   public String productInfo(Principal pri, String productnum, Model model, String follow) {
+   public String productInfo(Principal pri, String productnum, Model model, String follow, HttpServletRequest request) {
 	  String username = FileRoot.getIp();
 	  boolean isUser = false;
 	  boolean isLogedIn = false;
@@ -361,6 +361,8 @@ public class ProductController {
       }
 	  model.addAttribute("isUser", isUser);
 	  model.addAttribute("isLogedIn", isLogedIn);
+	  // 현재 페이지의 URL을 세션에 저장
+	  request.getSession().setAttribute("prevPage", request.getRequestURI());
       
       // 상품 정보 페이지
       AllProductDTO APdto = service.selectProductInfo(follow, productnum);
@@ -550,9 +552,16 @@ public class ProductController {
 
    // TEST
    @RequestMapping("sample")
-   public String sample(String optionnum, Model model, String productnum) {
-      model.addAttribute("optionnum", optionnum);
-      model.addAttribute("productnum", productnum);
+   public String sample() {
+	  
+	   List<AllProductDTO> APdto = service.allProductSelect();
+	      for (AllProductDTO dto : APdto) {
+	    	    String usernames = dto.getUsername();
+	    	    String productnum = dto.getProductnum();
+	    	    logger.info("Processing usernames: {} and productnum: {}", usernames, productnum);
+	    	    service.updateAllProductGrade200(productnum, usernames);
+	    	}
+	      
       return "product/sample";
    }
    
@@ -665,7 +674,19 @@ public class ProductController {
 	   model.addAttribute("username", username);
 	   return "/user/myshop/shopinfo";
    }
+
+   @RequestMapping("deleteProduct")
+   public String deleteProduct(Model model, String productnum, String username) {
+	   service.updateProductGrade200(productnum);
+	   model.addAttribute("username", username);
+	   return "redirect:/product/deleteProductPro";
+   }
    
+   @RequestMapping("deleteProductPro")
+   public String deleteProductPro(String username, Model model) {
+	   model.addAttribute("username", username);
+	   return "/product/deleteProductPro";
+   }   
 }
 
 	

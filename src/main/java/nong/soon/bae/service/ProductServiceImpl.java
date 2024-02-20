@@ -35,151 +35,151 @@ public class ProductServiceImpl implements ProductService {
 	private SimpleDateFormat simpleDateFormat;
    
 
-   // �궡 �씠由� 媛��졇�삤湲�
+   // �뜝�럡�� �뜝�럩逾좑옙逾녑뜝占� �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public String selectMyName(String username) {
       return mapper.selectMyName(username);
    }   
    
-   // �궡 �긽�젏 �젙蹂� �벑濡앺븯湲�
+   // �뜝�럡�� �뜝�럡留믣뜝�럩�젍 �뜝�럩�젧�솻洹⑥삕 �뜝�럥苡삣슖�돦鍮쒒뇡占썹뼨�먯삕
    @Override
    public void shopListInsert(ShopListDTO SLdto) {
       mapper.shopListInsert(SLdto);
    }
    
-   // �궡 �긽�젏 �뀒�씠釉� 留뚮뱾湲�
+   // �뜝�럡�� �뜝�럡留믣뜝�럩�젍 �뜝�럥占쎈���삕占쎈턄占쎈눀�뜝占� 嶺뚮씭�뒧獄��뼅臾얍뜝占�
    @Override
    public void createProduct(String username) {
       mapper.createProduct(username);
    }
 
-   // 移댄뀒怨좊━ ��遺꾨쪟
+   // �뇖�궠�샑占쎈�ㅿ옙�뫁伊볩옙遊� �뜝�룞�삕占쎄껀熬곣뫁泥�
    @Override
    public List<ProductCategoryDTO> selectCate1() {
       return mapper.selectCate1();
    }
 
-   // 移댄뀒怨좊━ 以묐텇瑜�   
+   // �뇖�궠�샑占쎈�ㅿ옙�뫁伊볩옙遊� 繞벿살탮占쎈�뗰옙紐닷뜝占�   
    @Override
    public List<ProductCategoryDTO> selectCate2(int cate1) {
       return mapper.selectCate2(cate1);
    }
 
-   // 移댄뀒怨좊━ �냼遺꾨쪟
+   // �뇖�궠�샑占쎈�ㅿ옙�뫁伊볩옙遊� �뜝�럥爰뽳옙寃ヨ쥈�뫁泥�
    @Override
    public List<ProductCategoryDTO> selectCate3(int cate1, int cate2) {
       return mapper.selectCate3(cate1, cate2);
    }   
    
-   //移댄뀒怨좊━ �떒�쐞媛� 媛��졇�삤湲�
+   //�뇖�궠�샑占쎈�ㅿ옙�뫁伊볩옙遊� �뜝�럥堉듿뜝�럩留꾣뤆�룊�삕 �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public ProductCategoryDTO selectCate4(int cate1, int cate2, int cate3) {
       return mapper.selectCate4(cate1, cate2, cate3);
    }
    
-   // �긽�뭹 �벑濡앺븯湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥苡삣슖�돦鍮쒒뇡占썹뼨�먯삕
    @Override
    public void productInsert(AllProductDTO APdto) {
       mapper.productInsert(APdto);
    }
 
-   // �긽�뭹 �벑濡앺븳 吏곹썑�쓽 productnum 援ы븯湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥苡삣슖�돦鍮쒒뇡占� 嶺뚯쉳�궞占쎈쐩�뜝�럩踰� productnum 占쎈쨨占쎈뿫由��뼨�먯삕
    @Override
    public List<AllProductDTO> selectAllProductLastProductNum(String username) {
       return mapper.selectAllProductLastProductNum(username);
    }   
 
-   // �긽�뭹 �벑濡앺븷 �븣 �긽�뭹 由щ럭 �뀒�씠釉� 留뚮뱾湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥苡삣슖�돦鍮쒒뇡占� �뜝�럥瑜� �뜝�럡留믣뜝�럥占쏙옙 占쎈뎨占쎈맧�쑏 �뜝�럥占쎈���삕占쎈턄占쎈눀�뜝占� 嶺뚮씭�뒧獄��뼅臾얍뜝占�
    @Override
    public void createReviews(String createReviewsProductnum) {
       mapper.createReviews(createReviewsProductnum);
    }   
    
-   // �긽�젏 二쇱냼 媛��졇�삤�뒗 肄붾뱶
+   // �뜝�럡留믣뜝�럩�젍 �썒�슣�닔占쎄틬 �뤆�룊�삕�뜝�럩二у뜝�럩沅롥뜝�럥裕� 占쎄턀�겫�뼔援�
    @Override
    public String selectAddress(String username) {
       return mapper.selectAddress(username);
    }   
 
-   // area1 媛� 媛��졇�삤�뒗 肄붾뱶
+   // area1 �뤆�룊�삕 �뤆�룊�삕�뜝�럩二у뜝�럩沅롥뜝�럥裕� 占쎄턀�겫�뼔援�
    @Override
    public int selectArea1(String area1Address) {
       return mapper.selectArea1(area1Address);
    }
 
-   // area2 媛� 媛��졇�삤�뒗 肄붾뱶
+   // area2 �뤆�룊�삕 �뤆�룊�삕�뜝�럩二у뜝�럩沅롥뜝�럥裕� 占쎄턀�겫�뼔援�
    @Override
    public int selectArea2(String area2Address, int area1) {
       return mapper.selectArea2(area1, area2Address);
    }
    
-   // �긽�뭹 �벑濡앺븷 �븣 �씠誘몄� �꽔湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥苡삣슖�돦鍮쒒뇡占� �뜝�럥瑜� �뜝�럩逾졿쾬�꼶梨룟뜝占� �뜝�럡�맜�뼨�먯삕
    @Override
    public void imagesInsert(ImagesDTO Idto) {
       mapper.imagesInsert(Idto);
    }
 
-   // �긽�뭹 �벑濡앺븷 �븣 username_product�뿉 �샃�뀡�뱾 �꽔湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥苡삣슖�돦鍮쒒뇡占� �뜝�럥瑜� username_product�뜝�럥�뱺 �뜝�럩湲욕뜝�럥占썩댙�삕獄�占� �뜝�럡�맜�뼨�먯삕
    @Override
    public void optionInsert(ProductDTO Pdto) {
       mapper.optionInsert(Pdto);
    }
 
-   // �긽�뭹 李쒗븯湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 嶺뚢돦裕됮뇡占썹뼨�먯삕
    @Override
    public void InsertProductPick(MyPageDTO MPdto) {
       mapper.InsertProductPick(MPdto);
    }
 
-   // �긽�뭹�뿉 李� +1 �븯湲�
+   // �뜝�럡留믣뜝�럥占쎈콈�삕�굢占� 嶺뚢댙�삕 +1 �뜝�럥由��뼨�먯삕
    @Override
    public void allproductWishcntPlus(String productnum) {
       mapper.allproductWishcntPlus(productnum);
    }
    
-   // �긽�뭹 李� �쑀臾�
+   // �뜝�럡留믣뜝�럥占쏙옙 嶺뚢댙�삕 �뜝�럩占쏙옙�닱�뜝占�
    @Override
    public int selectPickCount(String username, String productnum) {
       return mapper.selectPickCount(username, productnum);
    }
 
-   // 留덉씠�럹�씠吏��뿉 �긽�뭹 李� �궘�젣�븯湲�
+   // 嶺뚮씭�쐠占쎈턄�뜝�럥�쓡�뜝�럩逾좂춯�쉻�삕�뜝�럥�뱺 �뜝�럡留믣뜝�럥占쏙옙 嶺뚢댙�삕 �뜝�럡�뀭�뜝�럩�젷�뜝�럥由��뼨�먯삕
    @Override
    public void deleteProductPick(String username, String productnum) {
       mapper.deleteProductPick(username, productnum);
    }
 
-   // Allproduct �긽�뭹�뿉 李� -1 �븯湲�
+   // Allproduct �뜝�럡留믣뜝�럥占쎈콈�삕�굢占� 嶺뚢댙�삕 -1 �뜝�럥由��뼨�먯삕
    @Override
    public void allproductWishcntMinus(String productnum) {
       mapper.allproductWishcntMinus(productnum);
    }
 
-   // �냽遺� �뙏濡쒖슦�븯湲�
+   // �뜝�럥爰쀯옙寃ュ뜝占� �뜝�럥�냻�슖�돦裕뉛옙�뮡�뜝�럥由��뼨�먯삕
    @Override
    public void InsertUsernameFollow(MyPageDTO MPdto) {
       mapper.InsertUsernameFollow(MPdto);
    }   
 
-   // �냽遺� �뙏濡쒖슦�븯硫� userdetails�뿉 followers +1 �븯湲�
+   // �뜝�럥爰쀯옙寃ュ뜝占� �뜝�럥�냻�슖�돦裕뉛옙�뮡�뜝�럥由�嶺뚮〕�삕 userdetails�뜝�럥�뱺 followers +1 �뜝�럥由��뼨�먯삕
    @Override
    public void userdetailsUpdateFollowersPlus(String follow) {
       mapper.userdetailsUpdateFollowersPlus(follow);
    }   
    
-   // 留덉씠�럹�씠吏� �냽遺� 援щ룆 �쑀臾�
+   // 嶺뚮씭�쐠占쎈턄�뜝�럥�쓡�뜝�럩逾좂춯�쉻�삕 �뜝�럥爰쀯옙寃ュ뜝占� 占쎈쨨占쎈맧利� �뜝�럩占쏙옙�닱�뜝占�
    @Override
    public int selectFollowCount(String username, String follow) {
       return mapper.selectFollowCount(username, follow);
    }
    
-   // �냽遺� �뙏濡쒖슦 痍⑥냼�븯湲�
+   // �뜝�럥爰쀯옙寃ュ뜝占� �뜝�럥�냻�슖�돦裕뉛옙�뮡 占쎈퓛占쎈쳛占쎄틬�뜝�럥由��뼨�먯삕
    @Override
    public void deleteFollow(String username, String follow) {
       mapper.deleteFollow(username, follow);
    }
    
-   // �냽遺� �뙏濡쒖슦 痍⑥냼�븯硫� userdetails�뿉 followers -1 �븯湲�
+   // �뜝�럥爰쀯옙寃ュ뜝占� �뜝�럥�냻�슖�돦裕뉛옙�뮡 占쎈퓛占쎈쳛占쎄틬�뜝�럥由�嶺뚮〕�삕 userdetails�뜝�럥�뱺 followers -1 �뜝�럥由��뼨�먯삕
    @Override
    public void userdetailsUpdateFollowersMinus(String follow) {
       mapper.userdetailsUpdateFollowersMinus(follow);
@@ -205,25 +205,25 @@ public class ProductServiceImpl implements ProductService {
    
    
    
-   // �긽�뭹 �젙蹂� �럹�씠吏�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럩�젧�솻洹⑥삕 �뜝�럥�쓡�뜝�럩逾좂춯�쉻�삕
    @Override
    public AllProductDTO selectProductInfo(String follow, String productnum) {
       return mapper.selectProductInfo(follow, productnum);
    }   
    
-   // �긽�뭹 �삱由� �궗�엺�쓽 二쇱냼, �씠由�, �뙏濡쒖슦 李얘린   
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럩沅욑옙逾녑뜝占� �뜝�럡�뀬�뜝�럩肉뷴뜝�럩踰� �썒�슣�닔占쎄틬, �뜝�럩逾좑옙逾녑뜝占�, �뜝�럥�냻�슖�돦裕뉛옙�뮡 嶺뚢돦堉먪뵳占�   
    @Override
    public AllProductDTO selectProductNameAddressFollowers(String follow, String productnum) {
       return mapper.selectProductNameAddressFollowers(follow, productnum);
    }
    
-   // �긽�뭹 �샃�뀡�뱾 媛��졇�삤湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럩湲욕뜝�럥占썩댙�삕獄�占� �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public List<ProductDTO> selectProductOptionAll(String follow, String productnum) {
       return mapper.selectProductOptionAll(follow, productnum);
    }   
    
-   // �긽�뭹 �궗吏� 媛��졇�삤湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럡�뀬嶺뚯쉻�삕 �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public List<AllProductDTO> selectProductImagesAll(String follow, String productnum) {
       return mapper.selectProductImagesAll(follow, productnum);
@@ -239,43 +239,43 @@ public class ProductServiceImpl implements ProductService {
    
    
    
-   // �궡 �긽�젏 �럹�씠吏��뿉 �븘�슂�븳 �젙蹂대뱾 媛��졇�삤湲�
+   // �뜝�럡�� �뜝�럡留믣뜝�럩�젍 �뜝�럥�쓡�뜝�럩逾좂춯�쉻�삕�뜝�럥�뱺 �뜝�럥�닡�뜝�럩�뭵�뜝�럥由� �뜝�럩�젧�솻洹ｏ옙獄�占� �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public ShopListDTO selectMyShop(String username) {
       return mapper.selectMyShop(username);
    }
 
-   // �쑀���쓽 �긽�뭹�뱾 媛��졇�삤湲�
+   // �뜝�럩占썲뜝�룞�삕�뜝�럩踰� �뜝�럡留믣뜝�럥占쎈콈�삕獄�占� �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public List<AllProductDTO> selectUsernameProduct(String username) {
       return mapper.selectUsernameProduct(username);
    }
 
-   // �씠由꾩씠�옉 �긽�뭹 媛��졇�삤�뒗 肄붾뱶
+   // �뜝�럩逾좑옙逾녘쥈�뫗逾졾뜝�럩�굚 �뜝�럡留믣뜝�럥占쏙옙 �뤆�룊�삕�뜝�럩二у뜝�럩沅롥뜝�럥裕� 占쎄턀�겫�뼔援�
    @Override
    public AllProductDTO selectAllProductPlusNameFollowers(String productnum) {
       return mapper.selectAllProductPlusNameFollowers(productnum);
    }
 
-   // �긽�뭹 �벑濡앺븳 �긽�젏 area1 二쇱냼   
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥苡삣슖�돦鍮쒒뇡占� �뜝�럡留믣뜝�럩�젍 area1 �썒�슣�닔占쎄틬   
    @Override
    public AreaDTO selectArea1Address(int area1) {
       return mapper.selectArea1Address(area1);
    }
 
-   // �긽�뭹 �벑濡앺븳 �긽�젏 area2 二쇱냼
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥苡삣슖�돦鍮쒒뇡占� �뜝�럡留믣뜝�럩�젍 area2 �썒�슣�닔占쎄틬
    @Override
    public AreaDTO selectArea2Address(int area1, int area2) {
       return mapper.selectArea2Address(area1, area2);
    }
 
-   // �긽�뭹 �샃�뀡 媛��졇�삤湲�   
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럩湲욕뜝�럥占쏙옙 �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕   
    @Override
    public List<ProductDTO> selectProductOption(String follow, String productnum) {
       return mapper.selectProductOption(follow, productnum);
    }
    
-   // �긽�뭹 �씠誘몄� 媛��졇�삤湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럩逾졿쾬�꼶梨룟뜝占� �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public List<ImagesDTO> selectProductImages(String follow, String productnum) {
       return mapper.selectProductImages(follow, productnum);
@@ -283,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-   // �긽�뭹 �쟾泥대ぉ濡� 蹂닿린   
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럩�쓧嶺뚳퐢占쏙옙嫄졾슖�댙�삕 �솻洹ｋ뼬�뵳占�   
    @Override
    public List<AllProductDTO> selectAllproduct() {
       return mapper.selectAllproduct();
@@ -302,7 +302,7 @@ public class ProductServiceImpl implements ProductService {
       return mapper.CheckMyShop(username);
    }
 
-   // �긽�뭹 由щ럭�벐湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 占쎈뎨占쎈맧�쑏�뜝�럥苡븀뼨�먯삕
    @Override
    public int reviewInsert(List<MultipartFile> filelist, ReviewsDTO Rdto, String path) {
       int check = 0;
@@ -340,37 +340,37 @@ public class ProductServiceImpl implements ProductService {
       return result;      
    }   
    
-   // �긽�뭹 由щ럭 媛��졇�삤湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 占쎈뎨占쎈맧�쑏 �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public List<ReviewsDTO> selectReviewsAll(String follow, String productnum) {
       return mapper.selectReviewsAll(follow, productnum);
    }   
 
-   // �긽�뭹 由щ럭 �닔
+   // �뜝�럡留믣뜝�럥占쏙옙 占쎈뎨占쎈맧�쑏 �뜝�럥�빢
    @Override
    public int selectReviewsCount(String productnum) {
       return mapper.selectReviewsCount(productnum);
    }   
    
-   // �옣諛붽뎄�땲 �떞湲�
+   // �뜝�럩�궋�뛾�룆�뼺占쎈윞�뜝�럥鍮� �뜝�럥堉뽫뼨�먯삕
    @Override
    public void insertShopping(MyPageDTO MPdto) {
       mapper.insertShopping(MPdto);
    }
 
-   // shoplist�뿉�꽌 �궡 �긽�젏 �젙蹂� �궘�젣�븯湲�   
+   // shoplist�뜝�럥�뱺�뜝�럡�맋 �뜝�럡�� �뜝�럡留믣뜝�럩�젍 �뜝�럩�젧�솻洹⑥삕 �뜝�럡�뀭�뜝�럩�젷�뜝�럥由��뼨�먯삕   
    @Override
    public void deleteShoplist(String username) {
       mapper.deleteShoplist(username);
    }
 
-   // productnum 媛믪쑝濡� 由щ럭 �뀒�씠釉� �궘�젣�븯湲�
+   // productnum �뤆�룆占썬굦紐드슖�댙�삕 占쎈뎨占쎈맧�쑏 �뜝�럥占쎈���삕占쎈턄占쎈눀�뜝占� �뜝�럡�뀭�뜝�럩�젷�뜝�럥由��뼨�먯삕
    @Override
    public void dropReviewsTable(String productnum) {
       mapper.dropReviewsTable(productnum);
    }
 
-   // username�쑝濡� productnum 媛��졇�삤湲�
+   // username�뜝�럩紐드슖�댙�삕 productnum �뤆�룊�삕�뜝�럩二у뜝�럩沅롧뼨�먯삕
    @Override
    public List<String> selectUsernameProductnum(String username) {
       return mapper.selectUsernameProductnum(username);
@@ -392,7 +392,7 @@ public class ProductServiceImpl implements ProductService {
       mapper.deleteAllproduct(username, productnum);
    }
 
-   // �긽�뭹 �뙋留ㅼ떆 �옱怨� �뾽�뜲�씠�듃
+   // �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥�냷嶺뚮씞�걠占쎈뻣 �뜝�럩�궨占썩뫅�삕 �뜝�럥�뵜�뜝�럥�몥�뜝�럩逾졾뜝�럥諭�
    @Override
    public List<MyPageDTO> selectMypage3(String username) {
       return mapper.selectMypage3(username);
@@ -403,19 +403,19 @@ public class ProductServiceImpl implements ProductService {
       mapper.updateProductCount(follow, cnt, optionnum);
    }
 
-   // �긽�뭹 議고쉶�닔 利앷�
+   // �뜝�럡留믣뜝�럥占쏙옙 �댖怨뚰�э옙�뤂�뜝�럥�빢 嶺뚯빘鍮볟뜝占�
    @Override
    public void updateReadcntPlus(String productnum) {
       mapper.updateReadcntPlus(productnum);
    }
 
-   // �긽�뭹 議고쉶�븳 �쑀���젙蹂� �꽔湲�
+   // �뜝�럡留믣뜝�럥占쏙옙 �댖怨뚰�э옙�뤂�뜝�럥由� �뜝�럩占썲뜝�룞�삕�뜝�럩�젧�솻洹⑥삕 �뜝�럡�맜�뼨�먯삕
    @Override
    public void productReadcntInsert(String username, String productnum) {
       mapper.productReadcntInsert(username, productnum);
    }
 
-   // �삤�뒛 �긽�뭹 議고쉶�븳 �쑀�� 李얘린
+   // �뜝�럩沅롥뜝�럥裕� �뜝�럡留믣뜝�럥占쏙옙 �댖怨뚰�э옙�뤂�뜝�럥由� �뜝�럩占썲뜝�룞�삕 嶺뚢돦堉먪뵳占�
    @Override
    public int selectTodayReadcntUsername(String username, String productnum, String todaydate) {
       return mapper.selectTodayReadcntUsername(username, productnum, todaydate);
@@ -490,6 +490,7 @@ public class ProductServiceImpl implements ProductService {
 		model.addAttribute("sellPriceList", sellPriceList);
 	}
 
+
 	@Override
 	public void deleteReviewImages(String productnum, String myName, String path) {
 		String username = mapper.findRealUsername(myName).getUsername();
@@ -508,17 +509,36 @@ public class ProductServiceImpl implements ProductService {
 			mapper.deleteReviewImages(productMap);
 		}
 	}
+
+	// �긽�뭹 �궡由ш린 (grade 200)
+	@Override
+	public void updateProductGrade200(String productnum) {
+		mapper.updateProductGrade200(productnum);
+	}
+
+	// allProduct username , productnum
+	@Override
+	public List<AllProductDTO> allProductSelect() {
+		return mapper.allProductSelect();
+	}
+	
+	// �긽�뭹 �옱怨좎닔 0�씠硫� �벑湲� 200
+	@Override
+	public void updateAllProductGrade200(String productnum, String usernames) {
+		mapper.updateAllProductGrade200(productnum, usernames);
+
+	}
 	
 }
 
 
-   /* 媛��옣 理쒓렐�쓽 �긽�뭹踰덊샇媛� �뾾�쑝硫� 移댁슫�듃0 �엳�쑝硫� �긽�뭹 �닔
+   /* �뤆�룊�삕�뜝�럩�궋 嶺뚣끉裕꾬옙�젎�뜝�럩踰� �뜝�럡留믣뜝�럥占쎈같由곤옙�쐡占쎄퉰�뤆�룊�삕 �뜝�럥�뵪�뜝�럩紐든춯濡녹삕 �뇖�궠�샍占쎈뮧�뜝�럥諭�0 �뜝�럩肉녑뜝�럩紐든춯濡녹삕 �뜝�럡留믣뜝�럥占쏙옙 �뜝�럥�빢
    @Override
    public int selectLastProductNumCnt(String keyword, String username) {
       return mapper.selectLastProductNumCnt(keyword, username);
    }
    
-   // �긽�뭹踰덊샇媛� �엳�쑝硫� �긽�뭹踰덊샇 戮묒븘�삤�뒗嫄�
+   // �뜝�럡留믣뜝�럥占쎈같由곤옙�쐡占쎄퉰�뤆�룊�삕 �뜝�럩肉녑뜝�럩紐든춯濡녹삕 �뜝�럡留믣뜝�럥占쎈같由곤옙�쐡占쎄퉰 嶺뚮�⑹탳�뇡�꼻�삕占쎄텕�뜝�럥裕됪ㅀ袁ъ삕
    @Override
    public List<AllProductDTO> selectLastProductNum(String keyword) {
       return mapper.selectLastProductNum(keyword);
