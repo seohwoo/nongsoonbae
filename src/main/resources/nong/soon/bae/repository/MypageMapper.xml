@@ -76,6 +76,7 @@
 			SELECT 
 			    m.orderdate,
 			    m.realprice,
+			    m.follow,
 			    p.optionnum,
 			    p.optionname,
 			    s.shopname,
@@ -101,12 +102,13 @@
 			GROUP BY
 			    m.orderdate,
 			    m.realprice,
+			    m.follow,
 			    p.optionnum,
 			    p.optionname,
 			    s.shopname,
 			    a.productnum,
 			    a.productname,
-			    u.name    
+			    u.name  
 		]]>
 	</select>
 	
