@@ -246,7 +246,8 @@ public class MembershipController {
 				// username_product 옵션들 넣기
 				productService.optionInsert(Pdto);
 			}
-			return "/membership/product/productWritePro";
+			
+			return "redirect:/product/productMyShop?username=" + username;
 		}	
 		
 		// FINISH

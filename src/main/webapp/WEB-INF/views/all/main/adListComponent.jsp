@@ -14,7 +14,7 @@
 		        <p class="card-text"><span><fmt:formatDate value="${ad.startdate}" dateStyle="long" type="date"/></span></p>
 		    	<div class="farmer">
 		    	<p class="card-subtitle mb-2 text-muted h6"><label>${ad.area_name1} > ${ad.area_name2}</label><b>${ad.username}</b></p>
-				<a href="/product/productMyShop?username=${ad.username}">
+				<a href="/product/productMyShop?username=${ad.user_name}">
 					<img src="/resources/img/${ad.user_image}" width="80px" height="80px" style="" /></div>
 				</a>
 	  		</div>

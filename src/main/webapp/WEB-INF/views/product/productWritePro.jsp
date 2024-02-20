@@ -9,6 +9,6 @@
 	</head>
 
 	<body>
-		<c:redirect url= "/product/productMain" />
+		<c:redirect url= "product/productMyShop?username=${username}" />
 	</body>
 </html>

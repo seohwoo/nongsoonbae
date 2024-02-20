@@ -267,7 +267,8 @@ public class ProductController {
          // username_product 옵션들 넣기
          service.optionInsert(Pdto);
       }
-      return "/product/productWritePro";
+      
+      return "redirect:/product/productMyShop?username=" + username;
    }   
    
    // FINISH
