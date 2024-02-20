@@ -29,9 +29,37 @@
 	</select>
 	
 	<select id="seasonProduct" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
-		select * from allproduct 
-		where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=100 
-		order by readcnt desc, startdate desc, wishcnt desc
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=100 order by startdate desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	
+	<select id="readList" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=100 order by readcnt desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="wishList" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=100 order by wishcnt desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="cheapList" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=100 order by avgprice asc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
 	</select>
 	
 	<select id="isChart" parameterType="hashmap" resultType="int">
@@ -78,8 +106,21 @@
 		]]>
 	</select>
 	
+	<select id="adCnt" parameterType="hashmap" resultType="int">
+		select count(*) from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=40
+	</select>
+	
+	<select id="adDetailSeason" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
+		select * from allproduct where cate1=#{cate1} and cate2=#{cate2} and cate3=#{cate3} and grade=40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
+	</select>
+	
+	
 	<select id="searchProductCnt" parameterType="String" resultType="int">
 		select count(*) from allproduct where productname like #{keyword}
+	</select>
+	
+	<select id="searchAdProductCnt" parameterType="String" resultType="int">
+		select count(*) from allproduct where productname like #{keyword} and grade=40
 	</select>
 	
 	<select id="searchProduct" parameterType="hashmap" resultType="nong.soon.bae.bean.AllProductDTO">
@@ -87,11 +128,13 @@
 			select * from 
 			(select a.* , rownum r from 
 			(select * from allproduct 
-			where productname like #{keyword}) a) 
+			where productname like #{keyword} and grade=100) a) 
 			where r >= #{start} and r <= #{end}
 		]]>
 	</select>
-	
+	<select id="searchAdProduct" parameterType="String" resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE productname like #{keyword} and grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
+	</select>
 	<resultMap type="nong.soon.bae.bean.UsersDTO" id="memberMap">
 	    <id property="username" column="username"/>
 	    <result property="username" column="username"/>

@@ -149,13 +149,6 @@
 			    </tr>
 			    
 			    <textarea id="summernote" name="content"></textarea>
-			    
-			    <tr> 
-					<td width="200">판매종료일</td>
-					<td width="400"> 
-						<input type="date" name="enddate" size="15" required="required">
-					</td>
-			    </tr>
 		
 			    <tr> 
 				    <td width="200">옵션</td>

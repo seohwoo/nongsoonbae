@@ -352,6 +352,7 @@ public class ProductController {
 	  boolean isLogedIn = false;
 	  if(pri != null) {
 		  isLogedIn = true;
+		  username = pri.getName();
 		  if(pri.getName().equals(follow)) {
 			  isUser = true;
 		  }
@@ -382,7 +383,6 @@ public class ProductController {
       // 상품 리뷰 가져오기 
       List<ReviewsDTO> ReviewsName = service.selectReviewsUsername(productnum);
       List<ReviewsDTO> allReviews = new ArrayList<>();
-      
       for (ReviewsDTO reviewDTO : ReviewsName) {
     	  String usernames = reviewDTO.getUsername();
     	  String formatdate = reviewDTO.getFormatdate();
@@ -595,17 +595,15 @@ public class ProductController {
 
       model.addAttribute("myName", myName);
       model.addAttribute("productnum", productnum);
-      logger.info("myName======"+myName);
-      logger.info("productnum======"+productnum);
       return "product/reviewsDelete";
    }      
 
    @RequestMapping("reviewsDeletePro")
-   public String reviewsDeletePro(String productnum, String myName) {
+   public String reviewsDeletePro(String productnum, String myName, HttpServletRequest request) {
       service.myReviewsDelete(productnum, myName);
-
-      logger.info("myName======"+myName);
-      logger.info("productnum======"+productnum);      
+      String path = request.getServletContext().getRealPath("/resources/file/reviews/");
+      service.deleteReviewImages(productnum, myName, path);
+      
       return "product/reviewsDeletePro";
    }   
    
@@ -673,22 +671,39 @@ public class ProductController {
 		   service.findMySellChart(model, username);
 	   }
 	   model.addAttribute("isUser", isUser);
+	   model.addAttribute("username", username);
 	   return "/user/myshop/shopinfo";
    }
 
    @RequestMapping("deleteProduct")
    public String deleteProduct(Model model, String productnum, String username) {
+<<<<<<< HEAD
 	   service.updateProductGrade200(productnum);
 	   model.addAttribute("username", username);
 	   return "redirect:/product/deleteProductPro";
+=======
+      service.updateProductGrade200(productnum);
+      model.addAttribute("username", username);
+      return "redirect:/product/deleteProductPro";
+>>>>>>> branch 'shw/3' of https://github.com/seohwoo/nongsoonbae.git
    }
    
    @RequestMapping("deleteProductPro")
    public String deleteProductPro(String username, Model model) {
+<<<<<<< HEAD
 	   model.addAttribute("username", username);
 	   return "/product/deleteProductPro";
    }   
 }
+=======
+      model.addAttribute("username", username);
+      return "/product/deleteProductPro";
+   }   
+}   
+   
+   
+
+>>>>>>> branch 'shw/3' of https://github.com/seohwoo/nongsoonbae.git
 
 	
 

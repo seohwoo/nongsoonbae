@@ -43,24 +43,37 @@ public class MainController{
 	
 		
 	@RequestMapping("main")
-	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch) {
+	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch,
+					@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+					@RequestParam(value="sort", required=false) String sort) {
 		NoticeBoardDTO notice = noticeservice.showNewNotice();
 		model.addAttribute("notice",notice);
 		if (categoryNum==null) {
 			categoryNum = "1";
 		}
 		service.seasonCategory(model, Integer.parseInt(categoryNum));
-		if(cate1!=null && cate2!=null && cate3!=null ) {
-			service.detailSeasonCategory(model, cate1, cate2, cate3);
+		if ((cate1 == null && cate2 == null) || (cate1.equals("0") && cate2.equals("0"))) { //ÀüÃ¼Ç×¸ñ¸®½ºÆ® 
+			cateservice.adallproductlist(model); //±¤°í
+			cateservice.allproductlist(model,sort,pageNum); 
+			model.addAttribute("isCateSelect", 0);
 		}
 		
-		// Á¤·æ
-		List<AllProductDTO> APdto = productService.allProductSelect();
-		    for (AllProductDTO dto : APdto) {
-		    	String usernames = dto.getUsername();
-		    	String productnum = dto.getProductnum();
-		    	productService.updateAllProductGrade200(productnum, usernames);
-		    }		
+
+		if(cate1!=null && cate2!=null && cate3!=null ) {
+			service.detailSeasonCategory(model, cate1, cate2, cate3,pageNum,sort);
+			service.adDetailSeason(model, cate1,cate2,cate3);
+		}
+		
+	    // Á¤·æ
+	    List<AllProductDTO> APdto = productService.allProductSelect();
+	        for (AllProductDTO dto : APdto) {
+	           String usernames = dto.getUsername();
+	           String productnum = dto.getProductnum();
+	           productService.updateAllProductGrade200(productnum, usernames);
+	    }		
+		
+	        
+	        
 		
 		return "all/main/main";
 	}
@@ -71,7 +84,9 @@ public class MainController{
 		if(searchNum == null) {
 			searchNum = "1";
 		}
+		System.out.println();
 		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
+		service.findAdProduct (model, userSearch);
 		return "all/main/result";
 	}
 	
