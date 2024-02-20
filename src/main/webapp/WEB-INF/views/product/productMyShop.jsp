@@ -54,8 +54,17 @@
 					<c:if test="${Session==follow}">
 					<button class="sellbutton" onclick="openNewWindow()">상점 폐쇄하기</button>
 					<input type="button" class="sellbutton" value="판매량조회" onclick="javascript:window.location='/product/shopinfo?username=${follow}'">
-					<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
-					<input type="button" class="sellbutton" value="멤버쉽" onclick="javascript:window.location='/user/membership'">
+					<c:if test="${isMembership && !quitMembership}">
+						<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/membership/write?myName=${myName}'">
+						<input type="button" class="sellbutton" value="멤버쉽" onclick="javascript:window.location='/user/membership'">
+					</c:if>
+					<c:if test="${!isMembership && !quitMembership}">
+						<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">
+						<input type="button" class="sellbutton" value="멤버쉽" onclick="javascript:window.location='/user/membership'">
+					</c:if>
+					<c:if test="${isMembership && quitMembership}">
+						<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/membership/write?myName=${myName}'">
+					</c:if>
 					<input type="button" class="sellbutton" value="광고신청하기" onclick="javascript:window.location='/user/adMain'">
 					</c:if>
 				</div>

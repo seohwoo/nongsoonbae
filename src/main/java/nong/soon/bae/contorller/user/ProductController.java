@@ -665,8 +665,23 @@ public class ProductController {
 	   model.addAttribute("username", username);
 	   return "/user/myshop/shopinfo";
    }
+
+   @RequestMapping("deleteProduct")
+   public String deleteProduct(Model model, String productnum, String username) {
+      service.updateProductGrade200(productnum);
+      model.addAttribute("username", username);
+      return "redirect:/product/deleteProductPro";
+   }
    
-}
+   @RequestMapping("deleteProductPro")
+   public String deleteProductPro(String username, Model model) {
+      model.addAttribute("username", username);
+      return "/product/deleteProductPro";
+   }   
+}   
+   
+   
+
 
 	
 

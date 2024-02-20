@@ -264,13 +264,16 @@
 	
 	<!-- 유저의 상품들 가져오기 -->
 	<select id="selectUsernameProduct" resultType="nong.soon.bae.bean.AllProductDTO" parameterType="String">
-		SELECT ap.username, ap.productnum, ap.wishcnt, ap.readcnt, ap.productname, di.filename, dp.price FROM AllProduct ap 
-		LEFT JOIN (SELECT productnum, filename FROM ${username}_images
-    		WHERE filename LIKE '%\_1%' escape '\' ORDER BY filename ASC)
-   			di ON ap.productnum = di.productnum
-  		LEFT JOIN (SELECT productnum, MIN(price) AS price FROM ${username}_product
-    		GROUP BY productnum) dp ON ap.productnum = dp.productnum
-			WHERE ap.username = #{username}
+		     <![CDATA[
+         SELECT ap.username, ap.productnum, ap.wishcnt, ap.readcnt, ap.productname, di.filename, dp.price FROM AllProduct ap 
+         LEFT JOIN (SELECT productnum, filename FROM ${username}_images
+             WHERE filename LIKE '%\_1%' escape '\' ORDER BY filename ASC)
+               di ON ap.productnum = di.productnum
+           LEFT JOIN (SELECT productnum, MIN(price) AS price FROM ${username}_product
+             GROUP BY productnum) dp ON ap.productnum = dp.productnum
+            WHERE ap.username = #{username} AND ap.grade <> 200
+      ]]>
+
 	</select>
 	
 
@@ -538,7 +541,33 @@
 	<delete id="deleteReviewImages" parameterType="hashmap">
 		delete from ${username}_images where productnum=#{productnum}
 	</delete>
-	
+
+
+	   <!-- 상품 내리기 (grade 200) -->
+   <update id="updateProductGrade200" parameterType="String">
+      update allproduct set grade=200 where productnum=#{productnum}
+   </update>
+   
+   <!-- allProduct username , productnum  -->
+   <select id="allProductSelect" resultType="nong.soon.bae.bean.AllProductDTO">
+      select * from allproduct
+   </select>
+   
+   <!-- 상품 재고수 0이면 등급 200 -->
+   <update id="updateAllProductGrade200" parameterType="String">
+      <![CDATA[
+         UPDATE allproduct SET grade = 200
+            WHERE productnum IN (
+                SELECT productnum FROM ${usernames}_product
+                  WHERE productnum = #{productnum}
+                AND productnum NOT IN (
+                 SELECT productnum
+                 FROM ${usernames}_product
+                 WHERE productcount <> 0
+             )
+         )
+      ]]>
+	</update>
 </mapper>    
 
 

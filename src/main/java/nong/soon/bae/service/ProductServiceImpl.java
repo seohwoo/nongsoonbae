@@ -509,6 +509,25 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 	
+	   // 상품 내리기 (grade 200)
+	   @Override
+	   public void updateProductGrade200(String productnum) {
+	      mapper.updateProductGrade200(productnum);
+	   }
+
+	   // allProduct username , productnum
+	   @Override
+	   public List<AllProductDTO> allProductSelect() {
+	      return mapper.allProductSelect();
+	   }
+	   
+	   // 상품 재고수 0이면 등급 200
+	   @Override
+	   public void updateAllProductGrade200(String productnum, String usernames) {
+	      mapper.updateAllProductGrade200(productnum, usernames);
+	   }	
+	
+	
 }
 
 

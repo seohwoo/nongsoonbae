@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.NoticeBoardDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
@@ -19,10 +20,14 @@ import nong.soon.bae.service.AreaService;
 import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
 import nong.soon.bae.service.NoticeService;
+import nong.soon.bae.service.ProductService;
 
 @RequestMapping("/nsb/*")
 @Controller
 public class MainController{
+	
+	@Autowired
+	private ProductService productService;
 	
 	@Autowired
 	private MainService service;
@@ -47,10 +52,28 @@ public class MainController{
 			categoryNum = "1";
 		}
 		service.seasonCategory(model, Integer.parseInt(categoryNum));
+		if ((cate1 == null && cate2 == null) || (cate1.equals("0") && cate2.equals("0"))) { //전체항목리스트 
+			cateservice.adallproductlist(model); //광고
+			cateservice.allproductlist(model,sort,pageNum); 
+			model.addAttribute("isCateSelect", 0);
+		}
+		
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.detailSeasonCategory(model, cate1, cate2, cate3,pageNum,sort);
 			service.adDetailSeason(model, cate1,cate2,cate3);
 		}
+		
+	    // 정룡
+	    List<AllProductDTO> APdto = productService.allProductSelect();
+	        for (AllProductDTO dto : APdto) {
+	           String usernames = dto.getUsername();
+	           String productnum = dto.getProductnum();
+	           productService.updateAllProductGrade200(productnum, usernames);
+	    }		
+		
+	        
+	        
+		
 		return "all/main/main";
 	}
 	
@@ -60,6 +83,7 @@ public class MainController{
 		if(searchNum == null) {
 			searchNum = "1";
 		}
+		System.out.println();
 		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
 		service.findAdProduct (model, userSearch);
 		return "all/main/result";

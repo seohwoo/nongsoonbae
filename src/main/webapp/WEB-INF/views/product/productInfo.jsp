@@ -9,97 +9,126 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 		<script src="/resources/js/jquery-3.7.1.min.js"></script>
 	</head>
-
-	<script>
-		$(function() {
-			var selectedOptionCount;
-			
-			$("#Pdto").on("change", function() {
-				var selectedOptionVal = $("#Pdto").val();
-				var selectedOptionNum = selectedOptionVal.split("-")[0];
-					selectedOptionCount = selectedOptionVal.split("-")[1];
-				$("#selectedOptionNum").val(selectedOptionNum);
-				
-				var selectedOptionText = $("#Pdto option:selected").text();
+   <script>
+      $(function() {
+         var selectedOptionCount;
+         var optionSelected = false; // 옵션 선택 여부를 나타내는 변수
+         $("#Pdto").on("change", function() {
+            var selectedOptionVal = $("#Pdto").val();
+            var selectedOptionNum = selectedOptionVal.split("-")[0];
+               selectedOptionCount = selectedOptionVal.split("-")[1];
+            $("#selectedOptionNum").val(selectedOptionNum);
+            
+            var selectedOptionText = $("#Pdto option:selected").text();
                 var newRow = $("<tr>").append($("<td>").text(selectedOptionText));
+
+                // 이미 옵션이 선택된 경우 경고 메시지 표시
+                if (optionSelected) {
+                    alert("상품은 한 가지만 선택할 수 있습니다.");
+                    return; // 선택한 옵션 초기화 없이 종료
+                }
+                optionSelected = true; // 옵션이 선택되었음을 표시
                 
-            	// 증가, 감소 버튼 추가
+                
+               // 증가, 감소 버튼 추가
                 var increaseButton = $("<button>").text("+").click(increaseQuantity);
                 var decreaseButton = $("<button>").text("-").click(decreaseQuantity);
+                var deleteButton = $("<button>").text("X").click(deleteRow);
                 var numberText = $("<input type='text' name='count' id='count' value='1' readonly>");
                 
-                newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton));
+                newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton).append(deleteButton));
                 $("#finish").append(newRow);
-			})
-			
-			function increaseQuantity(e) {
-				
-				if(parseInt(selectedOptionCount) > e.target.nextElementSibling.value) {
-					e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
-				}else{
-					alert("재고 수가 부족합니다.");
-				}
-			}
-			
+         })
+         
+         function increaseQuantity(e) {
+            var selectedOptionVal = $("#Pdto").val();
+                selectedOptionCount = selectedOptionVal.split("-")[1];
+             
+            if(parseInt(selectedOptionCount) > parseInt(e.target.nextElementSibling.value)) {
+               e.target.nextElementSibling.value = parseInt(e.target.nextElementSibling.value)+1 ;
+            }else{
+               alert("재고 수가 부족합니다.");
+            }
+         }
+         
 
             function decreaseQuantity(e) {
-            	count = parseInt(e.target.previousElementSibling.value);
-            	if(count > 1){
-            		e.target.previousElementSibling.value = parseInt(e.target.previousElementSibling.value)-1 ;
-            	}
+               count = parseInt(e.target.previousElementSibling.value);
+               if(count > 1){
+                  e.target.previousElementSibling.value = parseInt(e.target.previousElementSibling.value)-1 ;
+               }
             var number = e.target.nextElementSibling.value;
             }
-		})
+
+            function deleteRow() {
+                $(this).closest('tr').remove();
+                optionSelected = false; // 옵션 선택 초기화
+                $("#Pdto").val("-------"); // 옵션 값을 "-------"으로 설정
+            }
+      
+      
+      })
 
 
-		function logedIn() {
-			 
-		}
-		
-		function addToWishList() {
-			if(${isLogedIn} === false) {
-				alert("로그인 해주세요!!");
-				window.location = '/member/form';
-			}else{
-				window.location = '/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val();
-			} 
-		}
-		
-		
-		function addToCart() {
-			if(${isLogedIn} === false) {
-				alert("로그인 해주세요!!");
-				window.location = '/member/form';
-			}else{
-				var pdtoVal = $("#Pdto").val();
-				var selectedOptionVal = $("#Pdto").val();
-				    selectedOptionCount = selectedOptionVal.split("-")[1];
-				if ('-------' == pdtoVal) {
-					alert("상품 옵션을 선택해주세요.");
-			    } else if (parseInt(selectedOptionCount) === 0) {
-			        alert("상품 재고가 없습니다.");	
-				} else {
-					var optionnum = $("#selectedOptionNum").val();
-					var productnum = ${productnum};
-					window.location = '/product/productShoppingPro?follow=${follow}&productnum=' + productnum + '&optionnum=' + $('#selectedOptionNum').val() + '&count=' + $('#count').val();
-				}
-			} 
-		}
+      function logedIn() {
+          
+      }
+      
+      function addToWishList() {
+         if(${isLogedIn} === false) {
+            alert("로그인 해주세요!!");
+            window.location = '/member/form';
+         }else{
+            window.location = '/product/productPickPro?follow=${follow}&productnum=${productnum}&optionnum='+ $('#selectedOptionNum').val();
+         } 
+      }
+      
+      
+      function addToCart() {
+         if(${isLogedIn} === false) {
+            alert("로그인 해주세요!!");
+            window.location = '/member/form';
+         }else{
+            var pdtoVal = $("#Pdto").val();
+            var selectedOptionVal = $("#Pdto").val();
+                selectedOptionCount = selectedOptionVal.split("-")[1];
+            if ('-------' == pdtoVal) {
+               alert("상품 옵션을 선택해주세요.");
+             } else if (parseInt(selectedOptionCount) === 0) {
+                 alert("상품 재고가 없습니다.");   
+            } else {
+               var optionnum = $("#selectedOptionNum").val();
+               var productnum = ${productnum};
+               window.location = '/product/productShoppingPro?follow=${follow}&productnum=' + productnum + '&optionnum=' + $('#selectedOptionNum').val() + '&count=' + $('#count').val();
+            }
+         } 
+      }
 
-		
-	    function openDeleteWindow(productnum, myName) {
-	        // 새 창을 열기
-	        var width = 460;
-	        var height = 300;
+      
+      function openReviewWindow() {
+         var pdtoVal= $("#Pdto").val();
+         if('-------' == pdtoVal){
+            alert("상품 옵션을 선택해주세요.");
+         }else{
+         var optionnum = $("#selectedOptionNum").val();
+         var productnum = ${productnum};
+         var reviewWindow = window.open('/product/productReview?optionnum='+optionnum + '&productnum='+productnum, '_blank', 'width=400,height=300,resizable=yes');
+         }
+      }
+      
+       function openDeleteWindow(productnum, myName) {
+           // 새 창을 열기
+           var width = 460;
+           var height = 300;
 
-	        // 화면 중앙에 위치하도록 계산
-	        var left = (window.innerWidth - width) / 2;
-	        var top = (window.innerHeight - height) / 2;
+           // 화면 중앙에 위치하도록 계산
+           var left = (window.innerWidth - width) / 2;
+           var top = (window.innerHeight - height) / 2;
 
-	        window.open('/product/reviewsDelete?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
-	    }
-				
-	</script>
+           window.open('/product/reviewsDelete?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+       }
+            
+   </script>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<body>
 	
@@ -143,18 +172,20 @@
 				<td>${cnt}개  ${stars}/5</td>
 			<tr>
 			
-				<td>상품 옵션</td>
-				<td>
-					<select id="Pdto" name="Pdto">
-						<option value="-------">-------</option>
-							<c:forEach var="Pdto" items="${Pdto}">
-								<option value="${Pdto.optionnum}-${Pdto.productcount}">
-									상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount - Pdto.sellcount}
-									<c:if test="${(Pdto.productcount - Pdto.sellcount) == 0}">(품절)</c:if>
-								</option>
-							</c:forEach>
-					</select>
-				</td>
+            <td>상품 옵션</td>
+            <td>
+                <select id="Pdto" name="Pdto">
+                    <option value="-------">-------</option>
+                    <c:forEach var="Pdto" items="${Pdto}">
+                        <c:if test="${(Pdto.productcount - Pdto.sellcount) != 0}">
+                            <option value="${Pdto.optionnum}-${Pdto.productcount}">
+                                상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount - Pdto.sellcount}
+                            </option>
+                        </c:if>
+                    </c:forEach>
+                </select>
+            </td>
+
 			</tr>
 		</table>
 <!-- ----------- -->
@@ -166,7 +197,7 @@
 		</c:if>
 		<c:if test="${isUser}">
 			<input type="button" value="내상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-			<input type="button" value="상품내리기" onclick="javascript:window.location='#'">
+			<input type="button" value="상품내리기" onclick="javascript:window.location='/product/deleteProduct?productnum=${productnum}&username=${follow}'">
 		</c:if>
 	
 		<br /><br /><br /><br /> <hr /> <br />

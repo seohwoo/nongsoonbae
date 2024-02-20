@@ -76,7 +76,7 @@
 	<body>
 		<h1>${catename}</h1>
 		<c:if test="${productCnt==0}">
-			<h1>상품을 준비중입니다😭😭😭😭</h1>
+			<h1>상품을 준비중입니다</h1>
 		</c:if>
 		<c:if test="${productCnt>0}">
 

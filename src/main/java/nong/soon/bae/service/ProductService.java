@@ -223,6 +223,15 @@ public interface ProductService {
 	
 	public void deleteReviewImages(String productnum, String myName, String path);
 	
+	   // 상품 내리기 (grade 200)
+	   public void updateProductGrade200(String productnum);
+	   
+	   // allProduct username , productnum
+	   public List<AllProductDTO> allProductSelect();
+	   
+	   // 상품 재고수 0이면 등급 200
+	   public void updateAllProductGrade200(String productnum, String usernames);	
+	
 }
 
 
