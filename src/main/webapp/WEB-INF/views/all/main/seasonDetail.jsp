@@ -42,41 +42,13 @@
 
 	            document.getElementById('sortForm').submit();
 	        }
-	        function goToPage(pageNum) {
-	            // 기존의 'sortForm'을 사용하거나 새로운 폼 생성 로직을 추가
-	            var form = document.createElement('form');
-	            form.setAttribute('method', 'get');
-	            form.setAttribute('action', '/nsb/main');
-
-	            // 필요한 hidden input 요소 생성 및 추가
-	            var inputs = [
-	                {name: 'categoryNum', value: '${categoryNum}'},
-	                {name: 'pageNum', value: pageNum},
-	                {name: 'cate1', value: '${cate1}'},
-	                {name: 'cate2', value: '${cate2}'},
-	                {name: 'cate3', value: '${cate3}'},
-	                {name: 'sort', value: document.getElementById('sortInput').value}
-	            ];
-
-	            inputs.forEach(function(input) {
-	                var element = document.createElement('input');
-	                element.setAttribute('type', 'hidden');
-	                element.setAttribute('name', input.name);
-	                element.setAttribute('value', input.value);
-	                form.appendChild(element);
-	            });
-	            document.body.appendChild(form);
-	            form.submit();
-	        }
-
-
 	    </script>
 	
 	</head>
 	<body>
 		<h1>${catename}</h1>
 		<c:if test="${productCnt==0}">
-			<h1>상품을 준비중입니다😭😭😭😭</h1>
+			<h1>상품을 준비중입니다</h1>
 		</c:if>
 		<c:if test="${productCnt>0}">
 
@@ -104,7 +76,7 @@
 			</div>
 
  		  <div class="row">
-			<c:forEach var="dto" items="${list}">
+			<c:forEach var="dto" items="${productList}">
 				<%@include file="/WEB-INF/views/all/main/listComponent.jsp"%>	
 			</c:forEach>
 			</div>

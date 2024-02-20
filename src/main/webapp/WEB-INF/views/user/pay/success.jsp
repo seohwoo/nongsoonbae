@@ -19,6 +19,6 @@
 		${kakaoApprove.approved_at }<br>
 		${amount.total}<br />
 		${amount.tax_free}<br />
-		<a href="/product/productMain">상점페이지로가기>></a>
+		<a href="/product/productMyShop?username=${username}">상점페이지로가기>></a>
 	</body>
 </html>

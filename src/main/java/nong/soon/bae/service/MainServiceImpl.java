@@ -15,6 +15,7 @@ import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductListDTO;
 import nong.soon.bae.bean.UserGradeDTO;
+import nong.soon.bae.repository.CategoryMapper;
 import nong.soon.bae.repository.MainMapper;
 
 @Service
@@ -22,6 +23,8 @@ public class MainServiceImpl implements MainService {
 
 	@Autowired
 	private MainMapper mapper;
+	@Autowired
+	private CategoryMapper cateMapper;
 	@Autowired
 	private SimpleDateFormat simpleDateFormat;
 	@Autowired
@@ -68,6 +71,64 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("categoryNum", categoryNum);
 		model.addAttribute("maxCategoryNum", maxCategoryNum);
 	}
+	
+	// 전체상품리스트
+		@Override
+		public void allproductlist(Model model,String sort, int pageNum) { //전체 품목 뽑기
+			int pageSize = 12;
+		    int startRow = (pageNum - 1) * pageSize + 1;
+		    int endRow = pageNum * pageSize;
+			int allCnt = cateMapper.allCnt();
+			List<AllProductDTO> allprocuctList = Collections.EMPTY_LIST ;
+			if(allCnt >0 ) {
+				seasonCategoryMap.clear();
+				seasonCategoryMap.put("start", String.valueOf(startRow));
+				seasonCategoryMap.put("end", String.valueOf(endRow));
+				 if ("readcnt".equals(sort)) {		
+					 	allprocuctList = cateMapper.readListAll(seasonCategoryMap); // 인기순(조회수) 정렬
+			        } else if ("wishcnt".equals(sort)) {
+			            allprocuctList = cateMapper.wishListAll(seasonCategoryMap); // 찜 정렬
+			        }else if ("cheap".equals(sort)) {
+			            allprocuctList = cateMapper.cheapListAll(seasonCategoryMap); // 가격낮은순 정렬
+			        } else {
+			            allprocuctList = cateMapper.allproductList(seasonCategoryMap); // 기본(최신순) 정렬
+			        }
+				 	ArrayList<ProductListDTO> localProductList = cateshowProduct(allprocuctList);
+			        model.addAttribute("productList", localProductList);
+			    }
+			
+			model.addAttribute("productCnt",allCnt);
+			model.addAttribute("pageNum",pageNum);
+		    model.addAttribute("pageSize",pageSize);
+		    model.addAttribute("sort",sort);
+		    
+		    int pageCount = allCnt / pageSize + ( allCnt % pageSize == 0 ? 0 : 1);
+			 
+	        int startPage = (int)(pageNum/10)*10+1;
+			int pageBlock=10;
+	        int endPage = startPage + pageBlock-1;
+	        if (endPage > pageCount) {
+				endPage = pageCount;
+	        }				
+	        model.addAttribute("pageCount",pageCount);
+	        model.addAttribute("startPage",startPage);
+	        model.addAttribute("pageBlock",pageBlock);
+	        model.addAttribute("endPage",endPage);
+		}
+		
+		@Override
+		public void adallproductlist(Model model) {
+			int adAllCnt = cateMapper.adAllCnt();
+			List<AllProductDTO> adAllprocuct = Collections.EMPTY_LIST ;
+			if(adAllCnt > 0) {
+				adAllprocuct = cateMapper.adAllProduct();	
+				ArrayList<ProductListDTO> localAdProductList = adshowProduct(adAllprocuct);
+	            model.addAttribute("adList", localAdProductList);	
+				
+			}
+			model.addAttribute("adCnt",adAllCnt);
+			
+		}
 
 	@Override
 	public void detailSeasonCategory(Model model, String cate1, String cate2, String cate3,int pageNum,String sort) {
@@ -91,15 +152,14 @@ public class MainServiceImpl implements MainService {
 	        }else if ("cheap".equals(sort)) {
 	        	list = mapper.cheapList(seasonCategoryMap); // 가격낮은순 정렬
 	        } else {
-			list = mapper.seasonProduct(seasonCategoryMap);
+	        	list = mapper.seasonProduct(seasonCategoryMap);
 		}
 			ArrayList<ProductListDTO> localProductList = exshowProduct(list);
-	        model.addAttribute("list", localProductList); 
+	        model.addAttribute("productList", localProductList); 
 			
 		model.addAttribute("catename", catename);
 		model.addAttribute("productCnt", cnt);
 		model.addAttribute("sort",sort);
-		model.addAttribute("productList", productList);
 		model.addAttribute("pageSize", pageSize);
 		 	int pageCount = cnt / pageSize + (cnt % pageSize == 0 ? 0 : 1);
 		    int startPage = (int) ((pageNum - 1) / 10) * 10 + 1;
@@ -115,7 +175,6 @@ public class MainServiceImpl implements MainService {
 		    model.addAttribute("endPage", endPage);
 		}
 	}
-
 	
 	
 	@Override
@@ -132,9 +191,7 @@ public class MainServiceImpl implements MainService {
 		}
 		model.addAttribute("adCnt",adCnt);
 	}
-	
-	
-	
+
 	
 	@Override
 	public void showChart(Model model, String cate1, String cate2, String cate3) {
@@ -311,6 +368,19 @@ public class MainServiceImpl implements MainService {
 	    return localProductList;
 	}
 	
+	public ArrayList<ProductListDTO> cateshowProduct(List<AllProductDTO> alprList) {
+	    ArrayList<ProductListDTO> localProductList = new ArrayList<>();
+	    for (AllProductDTO alprDTO : alprList) {
+	    	seasonCategoryMap.put("username", alprDTO.getUsername());
+			seasonCategoryMap.put("productnum", alprDTO.getProductnum());
+			String keyword = alprDTO.getProductnum() + "_1%";
+			seasonCategoryMap.put("keyword", keyword);
+	        ProductListDTO dto = mapper.findProductListValue(seasonCategoryMap);
+	        localProductList.add(dto);
+	    }
+	    return localProductList;
+	}
+
 	public ArrayList<ProductListDTO> adshowProduct(List<AllProductDTO> alprList) {
 	    ArrayList<ProductListDTO> localAdProductList = new ArrayList<>();
 	    for (AllProductDTO alprDTO : alprList) {
@@ -323,7 +393,6 @@ public class MainServiceImpl implements MainService {
 	    }
 	    return localAdProductList;
 	}
-	
 	
 	/**
 	 * main에 보여줄 값을 한번에 저장하기 위해 사용(일단보류)

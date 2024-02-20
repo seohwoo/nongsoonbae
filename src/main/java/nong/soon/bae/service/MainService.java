@@ -13,4 +13,7 @@ public interface MainService {
 	public void findProduct(Model model, String userSearch, int searchNum);
 	public void findAdProduct (Model model, String userSearch);
 	public boolean isMembership(boolean isMembership, String username);
+	public void allproductlist(Model model,String sort, int pageNum);
+	public void adallproductlist(Model model);
+	
 }

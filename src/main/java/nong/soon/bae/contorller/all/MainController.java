@@ -51,20 +51,28 @@ public class MainController{
 		if (categoryNum==null) {
 			categoryNum = "1";
 		}
+		if(cate1 == null && cate2 == null) {
+			cate1 = "0";
+			cate2 = "0";
+		}
 		service.seasonCategory(model, Integer.parseInt(categoryNum));
+		if (cate1.equals("0") && cate2.equals("0")) { //ÀüÃ¼Ç×¸ñ¸®½ºÆ® 
+			service.adallproductlist(model); //±¤°í
+			service.allproductlist(model,sort,pageNum); 
+		}
+		
 		if(cate1!=null && cate2!=null && cate3!=null ) {
 			service.detailSeasonCategory(model, cate1, cate2, cate3,pageNum,sort);
 			service.adDetailSeason(model, cate1,cate2,cate3);
 		}
 		
-		// Á¤·æ
-		List<AllProductDTO> APdto = productService.allProductSelect();
-		    for (AllProductDTO dto : APdto) {
-		    	String usernames = dto.getUsername();
-		    	String productnum = dto.getProductnum();
-		    	productService.updateAllProductGrade200(productnum, usernames);
-		    }		
-		
+	    // Á¤·æ
+	    List<AllProductDTO> APdto = productService.allProductSelect();
+	        for (AllProductDTO dto : APdto) {
+	           String usernames = dto.getUsername();
+	           String productnum = dto.getProductnum();
+	           productService.updateAllProductGrade200(productnum, usernames);
+	    }				
 		return "all/main/main";
 	}
 	
@@ -74,6 +82,7 @@ public class MainController{
 		if(searchNum == null) {
 			searchNum = "1";
 		}
+		System.out.println();
 		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
 		service.findAdProduct (model, userSearch);
 		return "all/main/result";
