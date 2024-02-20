@@ -264,7 +264,6 @@ public interface ProductMapper {
 	
 	public void deleteReviewImages(HashMap<String, String> map);
 	
-	
 	   // 상품 내리기 (grade 200)
 	   public void updateProductGrade200(String productnum);
 	   

@@ -222,7 +222,7 @@ public interface ProductService {
 	public void findMySellChart(Model model, String username);
 	
 	public void deleteReviewImages(String productnum, String myName, String path);
-	
+
 	   // 상품 내리기 (grade 200)
 	   public void updateProductGrade200(String productnum);
 	   

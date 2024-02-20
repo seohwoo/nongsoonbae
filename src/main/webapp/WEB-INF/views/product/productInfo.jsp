@@ -38,6 +38,7 @@
                 
                 newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton).append(deleteButton));
                 $("#finish").append(newRow);
+
          })
          
          function increaseQuantity(e) {
@@ -51,7 +52,6 @@
             }
          }
          
-
             function decreaseQuantity(e) {
                count = parseInt(e.target.previousElementSibling.value);
                if(count > 1){
@@ -65,9 +65,6 @@
                 optionSelected = false; // 옵션 선택 초기화
                 $("#Pdto").val("-------"); // 옵션 값을 "-------"으로 설정
             }
-      
-      
-      })
 
 
       function logedIn() {
@@ -185,7 +182,6 @@
                     </c:forEach>
                 </select>
             </td>
-
 			</tr>
 		</table>
 <!-- ----------- -->

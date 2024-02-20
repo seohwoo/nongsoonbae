@@ -25,7 +25,7 @@ import nong.soon.bae.service.ProductService;
 @RequestMapping("/nsb/*")
 @Controller
 public class MainController{
-	
+
 	@Autowired
 	private ProductService productService;
 	
@@ -72,9 +72,7 @@ public class MainController{
 	           String usernames = dto.getUsername();
 	           String productnum = dto.getProductnum();
 	           productService.updateAllProductGrade200(productnum, usernames);
-	    }		
-		
-		
+	    }				
 		return "all/main/main";
 	}
 	
