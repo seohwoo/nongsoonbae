@@ -6,7 +6,7 @@
 	margin: 0 auto;
 }
 .detail-content, .product-review {
-	
+	margin-top: 50px;
 }
 img {
 	width: 100px;
@@ -160,15 +160,38 @@ img {
 .reviews {
 	float: left;
 	margin-bottom: 50px;
+	width: 100%;
+	background: #fff;
 }
 .reviewsImg {
 	display: flex;
 }
-.reviewsImg img {
-	width: 50px;
-	height: 50px;
+.reviews p {
+	float: left;
 }
-
+.reviewsImg img {
+	width: 60px;
+	height: 60px;
+}
+.review-container {
+    padding: 30px;
+    margin: 50px;
+    border: black;
+    border-width: thin;
+    border-style: solid;
+    background: #fff;
+}
+.review-container * {
+	font-size: 18px;
+}
+.stars1 {
+	font-size: 30px;
+	cursor: pointer;
+}
+.stars1 .star {
+	color: #FFA500;
+    transition: color 0.3s;
+}
 @media screen and (min-width: 992px){
     .card-p{
         display: grid;

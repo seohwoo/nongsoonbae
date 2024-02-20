@@ -18,6 +18,7 @@
 		    <div class = "product-imgs">
 		      <div class = "img-display">
 		        <div class = "img-showcase">
+		        <!-- 이미지 반복 1 -->
 		          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt = "shoe image">
 		          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt = "shoe image">
 		          <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt = "shoe image">
@@ -26,6 +27,7 @@
 		      </div>
 		      <div class = "img-select">
 		        <div class = "img-item">
+		        <!-- 이미지 반복 2 + 개수 -->
 		          <a href = "#" data-id = "1">
 		            <img src = "https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt = "shoe image">
 		          </a>
@@ -58,7 +60,7 @@
 		      <div class = "product-rating">
 		        <i class = "fas fa-star"></i>
 		        <i class = "fas fa-star"></i>
-		        <i class = "fas fa-star"></i>
+		        <i class = "far fa-star"></i>
 		        <i class="fas fa-star"></i>
 		        <i class = "fas fa-star-half-alt"></i>
 		        <span>4.7(21)</span>
@@ -96,21 +98,24 @@
 		<hr />
 		<div class="product-review">
 			<div class="container mx-auto mt-6" style="display: flex;">
-				<div class="container">
+				<div class="container review-container">
 					<p>사용자 평점</p>
-					<p>4.7</p>
+					<b>4.7</b>
 				</div>
-				<div class="container">
+				<div class="container review-container">
 					<p>전체 리뷰 수</p>
-					<p>2건</p>
+					<b>2건</b>
 				</div>
 			</div>
+			<!-- 여기에 리뷰 반복 -->
 			<div class="reviews">
-				<p>구매 상품 : 어쩌고</p>
+				<div style="display: flex;"><b>구매자 이름 </b><p> 구매한 상품 : 어쩌고</p></div>
 				<p>리뷰 내용 길게 어쩌고저쩌고</p>
+				<div style="clear:both;"></div>
 				<div class="reviewsImg">
 					<img alt="reviewImg" src="/resources/img/logo.png"/><img alt="reviewImg" src="/resources/img/logo.png"/><img alt="reviewImg" src="/resources/img/logo.png"/><img alt="reviewImg" src="/resources/img/logo.png"/>
 				</div>
+				<hr />
 			</div>
 		</div>
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
