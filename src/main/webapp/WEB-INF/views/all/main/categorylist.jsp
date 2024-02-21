@@ -5,6 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	    <script>
 	        $(document).ready(function(){

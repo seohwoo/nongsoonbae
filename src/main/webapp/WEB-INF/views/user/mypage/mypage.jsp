@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>mypage</title>
+<link rel="icon" href="/resources/img/logo.png">
 <link href="/resources/css/mypage.css" rel="stylesheet" type="text/css">
 </head>
 <body>

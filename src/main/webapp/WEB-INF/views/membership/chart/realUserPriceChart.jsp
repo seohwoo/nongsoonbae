@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>${catename} 유처차트</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 		<c:if test="${isChart==0}">

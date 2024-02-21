@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
-
     <div class="col-md-3">
       <a href="/product/productInfo?productnum=${ad.productnum}&follow=${ad.username}">
 	      <div class="card" style="width: 18rem;">

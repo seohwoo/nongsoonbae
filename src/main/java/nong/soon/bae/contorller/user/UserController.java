@@ -143,7 +143,7 @@ public class UserController {
 		else {
 			redirectAttrs.addFlashAttribute("msg", "회원정보삭제에 실패했습니다.");
 		}
-		return "redirect:/nsb/main";
+		return "redirect:/user/logout";
 	}
 	
 	@RequestMapping("membership")

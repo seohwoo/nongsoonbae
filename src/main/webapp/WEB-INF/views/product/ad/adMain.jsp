@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>상품 광고</title>
+    <link rel="icon" href="/resources/img/logo.png">
     <style>
         body {
             font-family: Arial, sans-serif;

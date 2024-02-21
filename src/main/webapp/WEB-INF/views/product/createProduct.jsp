@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>상점 등록</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	</head>
 	

@@ -5,6 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 		<%@include file="/WEB-INF/views/include/header.jsp"%>
