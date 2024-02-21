@@ -42,7 +42,9 @@ public class UserController {
 	@RequestMapping("mypage")
 	public String mypage(Principal principal, Model model) {
 		String username = principal.getName();
+		String name = service.findNameInMyPage(username).getName();
 		model.addAttribute("username", username);
+		model.addAttribute("name", name);
 		return "user/mypage/mypage";
 	}
 	

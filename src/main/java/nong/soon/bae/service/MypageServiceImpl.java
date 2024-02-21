@@ -16,6 +16,7 @@ import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
+import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.MypageMapper;
 
 @Service
@@ -26,6 +27,11 @@ public class MypageServiceImpl implements MypageService {
 	@Autowired
 	MyPageDTO dto;
 	
+	
+	@Override
+	public UsersDTO findNameInMyPage(String username) {
+		return mapper.findNameInMyPage(username);
+	}
 
 	@Override
 	public List<MyPageDTO> selectLike(String username) {		
@@ -145,5 +151,6 @@ public class MypageServiceImpl implements MypageService {
 		model.addAttribute("paylist", list);
 		
 	}
+
 	
 }

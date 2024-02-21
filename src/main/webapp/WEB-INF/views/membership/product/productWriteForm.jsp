@@ -138,7 +138,7 @@
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<h3>${myName} 페이지</h3>
 		<h5>상품 등록</h5><br />
-		<form action="/membership/productWritePro" method="post" name="form" class="productform" enctype="multipart/form-data" id="addProduct">
+		<form action="/product/productWritePro" method="post" name="form" class="productform" enctype="multipart/form-data" id="addProduct">
 			<div class="cate">
 			<select id="cate1" name="cate1">
 				<option value="-------">-------</option>

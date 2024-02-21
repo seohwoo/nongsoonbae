@@ -59,7 +59,6 @@
 		
 		</script>
 	</div>
-	<p class="mt-5 mb-3 text-muted">loginForm.jsp</p>
 </form>
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
 </body>
