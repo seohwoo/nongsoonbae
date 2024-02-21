@@ -5,13 +5,17 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>물품 카테고리 추가하기</title>
+    <title>카테고리 추가하기</title>
+    <link rel="icon" href="/resources/img/logo.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
+    @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900|Noto+Serif:400,700,700i&display=swap');
 	    body {
-	        font-family: Arial, sans-serif;
-	        background-color: #f8f8f8;
-	        padding: 20px;
+	       font-family: 'Noto Sans KR', sans-serif; 
+	        background-color: #f5f5f5;
+	        margin: 0;
+	        padding: 10px;
+	        padding-top: 300px;
 	    }
 	
 	    h1, h2 {
@@ -58,18 +62,19 @@
 	    }
 	
 	    input[type="submit"] {
-	        background-color: #4CAF50;
-	        color: white;
-	        border: none;
-	        padding: 12px 20px;
-	        border-radius: 4px;
-	        cursor: pointer;
-	        font-size: 16px;
-	    }
+	    background-color: #4CAF50;
+	    color: white;
+	    border: none;
+	    padding: 12px 20px;
+	    border-radius: 4px;
+	    cursor: pointer;
+	    font-size: 16px;
+	    width: 150px; /* 버튼의 길이를 150px로 설정 */
+	}
 	
-	    input[type="submit"]:hover {
-	        background-color: #45a049;
-	    }
+	input[type="submit"]:hover {
+	    background-color: #45a049;
+	}
 	    select, button {
         padding: 8px 15px;
         margin-right: 10px;
@@ -88,11 +93,33 @@
 	    button:hover {
 	        background-color: #45a049;
 	    }
+	    .content {
+	        padding-top: 100px; /* 네비게이션 바 높이보다 약간 더 큰 값으로 설정 */
+	        
+	        padding-right: 20px;
+	    }
+	   
+	    .usernav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        z-index: 1000; /* 다른 콘텐츠 위에 위치하도록 z-index 설정 */
+    }
+    
+    .content {
+        padding-top: 100px; /* 네비게이션 바 높이보다 약간 더 큰 값으로 설정 */
+        padding-right: 20px;
+    }
 	</style>
 
 </head>
 <body>
-    <%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+    <div class="usernav">
+    	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+	</div>
+	<div class="content">
     <h1>물품별 카테고리 추가하기</h1>
     <table>
         <tr>
@@ -134,7 +161,7 @@
     	<jsp:include page="/WEB-INF/views/admin/usercheck/updateSubCate.jsp" />
     </div>
     
-    
+    </div>
    <script type="text/javascript">
     $(document).ready(function() {
         var existingCateNames = [];

@@ -5,7 +5,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>공지읽기</title>
+        <title>공지</title>
+        <link rel="icon" href="/resources/img/logo.png">
         <script>
 		    function confirmDelete() {
 		        return confirm('삭제하시겠습니까?');

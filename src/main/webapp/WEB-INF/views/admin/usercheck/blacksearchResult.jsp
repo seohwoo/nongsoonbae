@@ -6,6 +6,7 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>정지회원검색결과</title>
+	<link rel="icon" href="/resources/img/logo.png">ㄴ
 		<style>
 		        body {
 		        font-family: Arial, sans-serif;

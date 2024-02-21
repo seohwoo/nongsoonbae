@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>나의 광고</title>
+<link rel="icon" href="/resources/img/logo.png">
 	<style>
 	    body {
 	        font-family: Arial, sans-serif;
@@ -68,6 +69,7 @@
 	</style>
 	</head>
 	<body>
+	
 		<c:if test="${myAdCnt == 0 }">
 			<div class="adList">
 		     	아직 신청한 광고가 없습니다. 
@@ -75,7 +77,7 @@
 			<input type="button" value="돌아가기" onclick="javascript:window.location='/user/adMain'">
 		</c:if>
 	    <c:if test="${myAdCnt > 0 }">
-			<h2>나의 광고 ${myAdCnt}개</h2>
+			<h2>나의 광고 (${myAdCnt})</h2>
 			<c:forEach var="list" items="${myAdList}">
 			    <div class="adList">
 			       <h2> ${list.productname} (${list.productnum}) </h2>
@@ -103,6 +105,7 @@
 			    </div>
 			</c:forEach>
 			<input type="button" value="돌아가기" onclick="javascript:window.location='/user/adMain'">
+			<input type="button" value="창 닫기" onclick="window.close();" >
 		</c:if>
 	<script type="text/javascript">
 		$(document).ready(function() {

@@ -6,6 +6,7 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>중분류 항목 추가하기</title>
+	<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 	<h3> 기타 추가 된 품목 중분류로 합치기 </h3>

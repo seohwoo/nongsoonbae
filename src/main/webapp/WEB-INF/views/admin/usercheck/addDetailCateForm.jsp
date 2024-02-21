@@ -29,7 +29,7 @@
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            display: inline-block;
+            display: center;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
@@ -42,8 +42,9 @@
             padding: 12px 20px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
-            width: 100%;
+            font-size: 12px;
+          	width: 130px;
+          	height: 37px;
         }
 
         input[type="submit"]:hover {

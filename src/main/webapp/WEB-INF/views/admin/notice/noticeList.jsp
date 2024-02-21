@@ -6,9 +6,11 @@
    <head>
         <meta charset="UTF-8">
         <title>공지게시판</title>
+        <link rel="icon" href="/resources/img/logo.png">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <style>
-            body { font-family: Arial, sans-serif; }
+        @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900|Noto+Serif:400,700,700i&display=swap');
+            body { font-family: 'Noto Sans KR', sans-serif;  }
             .container { width: 80%; margin: auto; }
             .header { display: flex; justify-content: space-between; align-items: center; }
             .notice { border-bottom: 
@@ -48,13 +50,29 @@
 		.h1 {
 	    text-align: center; 
 		}
+		.content {
+	        padding-top: 130px; /* 네비게이션 바 높이보다 약간 더 큰 값으로 설정 */
+	        padding-left: 20px;
+	        padding-right: 20px;
+	    }
+	    .usernav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        z-index: 1000; /* 다른 콘텐츠 위에 위치하도록 z-index 설정 */
+    }
 		</style>
 	</head>
 	<body>
-	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+	<div class="usernav">
+        <%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+    </div>
+	<div class="content">
 			<div class="container">
 				<div class="header">
-					<h1>🍓🍓 공지게시판 🍓🍓</h1>
+					<h1> 공지게시판 </h1>
 					<button class="btn" onclick="window.location='/admin/noticeForm'">글쓰기</button>
 				</div>
 				<c:if test="${count > 0}">
@@ -96,7 +114,7 @@
 				</div>
 			</div>
 			
-			
+			</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 	        var status = <c:out value="${status}" default="-1" />;

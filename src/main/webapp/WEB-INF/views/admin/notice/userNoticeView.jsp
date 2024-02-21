@@ -5,7 +5,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>공지읽기</title>
+        <title>공지</title>
+        <link rel="icon" href="/resources/img/logo.png">
         <style>
             /* 기존 CSS 스타일 */
             body {
