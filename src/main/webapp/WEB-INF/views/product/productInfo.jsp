@@ -8,6 +8,8 @@
 		<title>상품 페이지</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 		<script src="/resources/js/jquery-3.7.1.min.js"></script>
+		<script src="/resources/js/productImg.js"></script>
+		<link href="/resources/css/productInfo.css" rel="stylesheet" type="text/css">
 	</head>
    <script>
       $(function() {
@@ -128,50 +130,57 @@
    </script>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<body>
-	
-		<table border="1px" style="text-align: center; margin-left: auto; margin-right: auto;" id="finish">
-			<tr> 
-				<td>농부 이름</td>
-				<td>${APdtoNAF.name}</td>
-			</tr>
-
-			<tr> 
-				<td>농장 주소</td>
-				<td>${address}</td>
-			</tr>			
-
-			<tr> 
-				<td>구독자 수</td>
-				<td>${APdtoNAF.followers}</td>
-			</tr>			
-
-			<tr> 
-				<td>상품 이름</td>
-				<td>${APdto.productname}</td>
-			</tr>			
-
-			<tr> 
-				<td>상품 가격</td>
-				<td>${APdto.price}</td>
-			</tr>
-
-			<tr>
-			    <td>상품 사진</td>
-			    <td>
-			        <c:forEach var="Images" items="${Images}">
-			            <img src="/resources/realImage/${Images.filename}" width="100" height="100">
-			        </c:forEach>
-			    </td>
-			</tr>
-			
-			<tr>
-				<td>리뷰수 / 평점</td>
-				<td>${cnt}개  ${stars}/5</td>
-			<tr>
-			
-            <td>상품 옵션</td>
-            <td>
-                <select id="Pdto" name="Pdto">
+		<div class = "card-wrapper">
+		  <div class = "card-p">
+		    <!-- card left -->
+		    <div class = "product-imgs">
+		      <div class = "img-display">
+		        <div class = "img-showcase">
+		        <!-- 이미지 반복 1 -->
+		        <c:forEach var="Images" items="${Images}">
+			            <img src="/resources/realImage/${Images.filename}" alt = "shoe image">
+			    </c:forEach>
+		        </div>
+		      </div>
+		      <div class = "img-select">
+		        <div class = "img-item">
+		        <!-- 이미지 반복 2 + 개수 -->
+		          <c:forEach var="Images" items="${Images}">
+		                <a href = "#" data-id = "1">
+			            <img src="/resources/realImage/${Images.filename}" alt = "shoe image">
+			            </a>
+			      </c:forEach>
+		        </div>
+		      </div>
+		    </div>
+		    <!-- card right -->
+		    <div class = "product-content">
+		      <div class="product-farmer">
+		      	<b>${APdtoNAF.name}</b><p class="text-muted" style="font-size: 12px;">구독자 수 : ${APdtoNAF.followers}명</p><input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="javascript:window.location='/chat/room" />
+		      </div>
+		      
+		      <h4 class = "product-title">${APdto.productname}</h4>
+		      <div style="clear:both;"></div>
+		      <div class = "product-rating">
+		        <i class = "fas fa-star"></i>
+		        <i class = "fas fa-star"></i>
+		        <i class = "far fa-star"></i>
+		        <i class="fas fa-star"></i>
+		        <i class = "fas fa-star-half-alt"></i>
+		        <span>4.7(21)</span>
+		      </div>
+			  <div style="clear:both;"></div>
+		      <div class = "product-price">
+		        <p class = "new-price">가격 : <span>${APdto.price}원</span></p>
+		      </div>
+		      <div style="clear:both;"></div>
+			  <br />
+		      <div class = "product-detail">
+		        <p>택배 배송 : 3000원</p>
+		        <div style="clear:both;"></div>
+		        <p class="text-muted">5만원 이상 구매 시 무료배송</p>
+		        <div style="clear:both;"></div>
+		        <select id="Pdto" name="Pdto">
                     <option value="-------">-------</option>
                     <c:forEach var="Pdto" items="${Pdto}">
                         <c:if test="${(Pdto.productcount - Pdto.sellcount) != 0}">
@@ -181,58 +190,61 @@
                         </c:if>
                     </c:forEach>
                 </select>
-            </td>
-			</tr>
-		</table>
-<!-- ----------- -->
-		<input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
-		<c:if test="${!isUser}">
-			<input type="button" value="찜하기" onclick="addToWishList()">
-			<input type="button" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-			<input type="button" value="장바구니담기" onclick="addToCart()">
-		</c:if>
-		<c:if test="${isUser}">
-			<input type="button" value="내상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
-			<input type="button" value="상품내리기" onclick="javascript:window.location='/product/deleteProduct?productnum=${productnum}&username=${follow}'">
-		</c:if>
-	
-		<br /><br /><br /><br /> <hr /> <br />
-		<table border="1" style="text-align: center;">
-			<tr>
-				<td>이름</td>
-				<td>상품 이름</td>
-				<td>별점</td>
-				<td>작성일</td>
-				<td>content</td>
-				<td>사진</td>
-				<td>리뷰삭제</td>
-			</tr>		
-			
+		      </div>
+			  <input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
+			  <div class = "purchase-info">
+			  <c:if test="${!isUser}">
+				<input type="button" class = "btn" value="찜하기" onclick="addToWishList()">
+				<input type="button" class = "btn" value="농부상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
+				<button type = "button" class = "btn"  onclick="addToCart()">
+		         장바구니 담기 <i class = "fas fa-shopping-cart"></i>
+		        </button>
+			  </c:if>
+			  <c:if test="${isUser}">
+				<input type="button" class = "btn"  value="내상점가기" onclick="javascript:window.location='/product/productMyShop?username=${follow}'">
+				<input type="button" class = "btn"  value="상품내리기" onclick="javascript:window.location='/product/deleteProduct?productnum=${productnum}&username=${follow}'">
+			  </c:if>
+			  </div>
+		      
+		    </div>
+		  </div>
+		</div>
+		<hr />
+		<div class="detail-content">
+			${APdto.content}
+		</div>
+		<hr />
+		<div class="product-review">
+			<div class="container mx-auto mt-6" style="display: flex;">
+				<div class="container review-container">
+					<p>사용자 평점</p>
+					<b>${stars}</b>
+				</div>
+				<div class="container review-container">
+					<p>전체 리뷰 수</p>
+					<b>${cnt}건</b>
+				</div>
+			</div>
+			<!-- 여기에 리뷰 반복 -->
 			<c:forEach var="allReviews" items="${allReviews}">
-				<tr>
-					<td>${allReviews.username}</td>
-					<td>${allReviews.optionname}</td>
-					<td>
-						<c:forEach begin="1" end="${allReviews.stars}" step="1" var="i">
-							<i class="fas fa-star" style="color: #ffc83d;"></i>
-						</c:forEach>
-					</td>
-					<td><fmt:formatDate value="${allReviews.regdate}" dateStyle="short" type="date"/></td>
-					<td>${allReviews.content}</td>
-					<td>
-						<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70">
-					</td>
-					
-					<td>
-						<c:if test="${allReviews.username eq myName}">
-							<button onclick="openDeleteWindow('${productnum}', '${myName}')">❌</button>
-						</c:if>
-					</td>			
-			</c:forEach>  
-		</table>
+			<div class="reviews">
+				<c:if test="${allReviews.username eq myName}">
+					<button onclick="openDeleteWindow('${productnum}', '${myName}')">❌</button>
+				</c:if>
+				<div style="display: flex;"><b>${allReviews.username} </b><p> 구매한 상품 : ${allReviews.optionname}</p></div>
+				<c:forEach begin="1" end="${allReviews.stars}" step="1" var="i">
+					<i class="fas fa-star" style="color: #ffc83d;"></i>
+				</c:forEach>
+				<p>${allReviews.content}</p><p class="text-muted"><fmt:formatDate value="${allReviews.regdate}" dateStyle="short" type="date"/></p>
+				<div style="clear:both;"></div>
+				<div class="reviewsImg">
+					<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70">
+				</div>
+				<hr />
+			</div>
+			</c:forEach>
+		</div>
 		
-		<br /><br /><br /><br /> <hr /> <br />
-		<tr>${APdto.content}</tr>
 	<%@include file="/WEB-INF/views/include/footer.jsp"%>
 	</body>
 </html>
