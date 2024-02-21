@@ -229,17 +229,24 @@
 			<!-- 여기에 리뷰 반복 -->
 			<c:forEach var="allReviews" items="${allReviews}">
 			<div class="reviews">
-				<c:if test="${allReviews.username eq myName}">
-					<button onclick="openDeleteWindow('${productnum}', '${myName}')">❌</button>
-				</c:if>
-				<div style="display: flex;"><b>${allReviews.username} </b><p> 구매한 상품 : ${allReviews.optionname}</p></div>
+				<div style="display: flex;">
+					<b>${allReviews.username} </b><p> 구매한 상품 : ${allReviews.optionname}</p>
+				</div>
 				<c:forEach begin="1" end="${allReviews.stars}" step="1" var="i">
 					<i class="fas fa-star" style="color: #ffc83d;"></i>
 				</c:forEach>
 				<p>${allReviews.content}</p><p class="text-muted"><fmt:formatDate value="${allReviews.regdate}" dateStyle="short" type="date"/></p>
 				<div style="clear:both;"></div>
 				<div class="reviewsImg">
-					<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70" />
+					<c:if test="${allReviews.filename != null }">
+						<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70" />
+					</c:if>
+				</div>
+				<br />
+				<div style="display: flex;">
+				<c:if test="${allReviews.username eq myName}">
+					<button onclick="openDeleteWindow('${productnum}', '${myName}')">❌</button>
+				</c:if>
 				</div>
 				<hr />
 			</div>
