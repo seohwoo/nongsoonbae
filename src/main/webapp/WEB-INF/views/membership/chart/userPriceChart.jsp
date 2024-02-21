@@ -95,7 +95,6 @@
 						<h1>차트를 준비중입니다...</h1>
 					</c:if>
 					<c:if test="${isChart>0 }">
-						<%@include file="/WEB-INF/views/membership/chart/realUserPriceChart.jsp"%>
 					</c:if>
 				</td>
 			</tr>

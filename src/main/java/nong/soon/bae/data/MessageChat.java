@@ -64,7 +64,7 @@ public class MessageChat extends DefaultEmbeddableVerticle {
 
         });
 
-        server.listen(9899);
+        server.listen(11111);
     }
 
     private String getRoomIdentifier(String username, String sendname, String chatno) {

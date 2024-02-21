@@ -61,8 +61,15 @@ public class ChatController {
 	}
 	
 	@RequestMapping("admin")
-	public String createRoom(Principal pri) {
+	public String createAdminRoom(Principal pri) {
 		ChatDTO dto = service.createAdminRoom(pri.getName());
+		return "redirect:/chat/room?chatno=" + dto.getChatno();
+	}
+	
+	@RequestMapping("create")
+	public String createRoom(Principal pri, String follow) {
+		String username = pri.getName();
+		ChatDTO dto = service.createRoom(username, follow);
 		return "redirect:/chat/room?chatno=" + dto.getChatno();
 	}
 	
@@ -70,6 +77,7 @@ public class ChatController {
 	public String test() {
 		return "/user/chat/test";
 	}
+	
 	
 	
 }

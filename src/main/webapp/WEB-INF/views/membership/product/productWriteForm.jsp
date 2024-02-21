@@ -109,7 +109,7 @@
 	       uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
 	    }
 	   e.preventDefault();
-	})
+	});
 
 	$(function() {
 		$("#cate1").on("change",function(){
@@ -123,7 +123,14 @@
 		});
 	});	
 	
- 	
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#chart').on('click', function () {
+	    		window.open('/membership/userChart?cate1=' + $('#cate1').val() + '&cate2=' + $('#cate2').val() + '&cate3=' + $('#cate3').val() , '_blank', 'width=600,height=1200');
+	    	});
+	    });
 	</script>
 
 	<body>
@@ -165,6 +172,7 @@
 						<input type="submit" name="confirm" value="상품등록">
 						<input type="reset" name="reset" value="다시입력">
 						<input type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">
+						<input type="button" value="카테고리차트" id="chart" />
 					</td>
 				</tr>			    
 			</table>	

@@ -14,7 +14,7 @@
 		</c:if>
 		<c:if test="${cnt>0}">
 			<script type="text/javascript">
-				alert("이미 퇴근처리 되었습니다!");
+				alert("이미 방이 있습니다");
 	      		history.go(-1);
 			</script>
 		</c:if>
