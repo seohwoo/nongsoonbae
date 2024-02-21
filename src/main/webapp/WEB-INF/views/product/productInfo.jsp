@@ -143,14 +143,14 @@
 		        </div>
 		      </div>
 		      <div class = "img-select">
-		        <div class = "img-item">
+		      	<c:forEach var="Images" items="${Images}" varStatus="loop">
+		        	<div class = "img-item">
 		        <!-- 이미지 반복 2 + 개수 -->
-		          <c:forEach var="Images" items="${Images}">
-		                <a href = "#" data-id = "1">
+		                <a href = "#" data-id="${loop.index + 1}">
 			            <img src="/resources/realImage/${Images.filename}" alt = "shoe image">
 			            </a>
-			      </c:forEach>
-		        </div>
+		        	</div>
+		        </c:forEach>
 		      </div>
 		    </div>
 		    <!-- card right -->
