@@ -10,12 +10,13 @@
 		<script src="/resources/js/jquery-3.7.1.min.js"></script>
 		<script src="/resources/js/productImg.js"></script>
 		<link href="/resources/css/productInfo.css" rel="stylesheet" type="text/css">
-	</head>
+   </head>
    <script>
       $(function() {
          var selectedOptionCount;
          var optionSelected = false; // 옵션 선택 여부를 나타내는 변수
          $("#Pdto").on("change", function() {
+        	 console.log("-----");
             var selectedOptionVal = $("#Pdto").val();
             var selectedOptionNum = selectedOptionVal.split("-")[0];
                selectedOptionCount = selectedOptionVal.split("-")[1];
@@ -41,7 +42,7 @@
                 newRow.append($("<td>").append(increaseButton).append(numberText).append(decreaseButton).append(deleteButton));
                 $("#finish").append(newRow);
 
-         })
+         });
          
          function increaseQuantity(e) {
             var selectedOptionVal = $("#Pdto").val();
@@ -68,7 +69,7 @@
                 $("#Pdto").val("-------"); // 옵션 값을 "-------"으로 설정
             }
 
-
+      }); 
       function logedIn() {
           
       }
@@ -126,7 +127,7 @@
 
            window.open('/product/reviewsDelete?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
        }
-      });      
+           
    </script>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<body>
@@ -179,17 +180,17 @@
 		        <p>택배 배송 : 3000원</p>
 		        <div style="clear:both;"></div>
 		        <p class="text-muted">5만원 이상 구매 시 무료배송</p>
-		        <div style="clear:both;"></div>
 		        <select id="Pdto" name="Pdto">
                     <option value="-------">-------</option>
                     <c:forEach var="Pdto" items="${Pdto}">
                         <c:if test="${(Pdto.productcount - Pdto.sellcount) != 0}">
                             <option value="${Pdto.optionnum}-${Pdto.productcount}">
-                                상품명 : ${Pdto.optionname} 가격 : ${Pdto.price} 재고 : ${Pdto.productcount - Pdto.sellcount}
+                                ${Pdto.optionname} : ${Pdto.price}원
                             </option>
                         </c:if>
                     </c:forEach>
                 </select>
+                 <div style="clear:both;" id="finish"></div>
 		      </div>
 			  <input type="hidden" id="selectedOptionNum" name="selectedOptionNum" value="" />
 			  <div class = "purchase-info">

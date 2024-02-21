@@ -53,11 +53,9 @@
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<c:if test="${status==0}">
-			<form action="/product/createProduct" method="post" style="min-height: 500px;">
-				<h3>아직 내 상점이 없습니다. 지금 바로 개설해보세요!</h3>
-				<input type="submit" value="나의 상점 만들기">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			</form>
+			<script type="text/javascript">
+				window.location.href= '/product/createProduct';
+			</script>
 		</c:if>
 		
 		<c:if test="${status!=0}">

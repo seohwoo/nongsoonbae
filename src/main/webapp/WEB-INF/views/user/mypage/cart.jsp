@@ -170,11 +170,12 @@
 					<c:forEach var="cart" items="${MyCart}">
 						<article class="product">
 							<div class="cart-image">
-									<img src="http://www.astudio.si/preview/blockedwp/wp-content/uploads/2012/08/5.jpg" alt="">
+									<img src="/resources/realImage/${cart.filename}" alt="">
 							</div>
 							<div class="content">
 								<h1><a href="/product/productInfo?productnum=${cart.productnum}&follow=${cart.username}">${cart.productname}</a></h1><button type="button" class="remove" data-optionnum="${cart.optionnum}">🗑</button>
-								<p style="color: #FFBF00;">${cart.optionname} ${cart.shopname}</p>
+								<p style="color: #FFBF00;">${cart.optionname}</p>
+								<p style="color: green; font-size: 11px;"> ${cart.shopname}</p>
 							</div>
 							<div class="content footer-content">					
 							    <span class="qt-minus" onclick="updateQuantity(this, ${cart.price}, '${cart.optionnum}', 'minus')">-</span>
