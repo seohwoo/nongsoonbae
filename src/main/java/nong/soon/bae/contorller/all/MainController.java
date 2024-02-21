@@ -25,7 +25,7 @@ import nong.soon.bae.service.ProductService;
 @RequestMapping("/nsb/*")
 @Controller
 public class MainController{
-	
+
 	@Autowired
 	private ProductService productService;
 	
@@ -51,11 +51,14 @@ public class MainController{
 		if (categoryNum==null) {
 			categoryNum = "1";
 		}
+		if(cate1 == null && cate2 == null) {
+			cate1 = "0";
+			cate2 = "0";
+		}
 		service.seasonCategory(model, Integer.parseInt(categoryNum));
-		if ((cate1 == null && cate2 == null) || (cate1.equals("0") && cate2.equals("0"))) { //전체항목리스트 
-			cateservice.adallproductlist(model); //광고
-			cateservice.allproductlist(model,sort,pageNum); 
-			model.addAttribute("isCateSelect", 0);
+		if (cate1.equals("0") && cate2.equals("0")) { //전체항목리스트 
+			service.adallproductlist(model); //광고
+			service.allproductlist(model,sort,pageNum); 
 		}
 		
 		if(cate1!=null && cate2!=null && cate3!=null ) {
@@ -69,11 +72,7 @@ public class MainController{
 	           String usernames = dto.getUsername();
 	           String productnum = dto.getProductnum();
 	           productService.updateAllProductGrade200(productnum, usernames);
-	    }		
-		
-	        
-	        
-		
+	    }				
 		return "all/main/main";
 	}
 	

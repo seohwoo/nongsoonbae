@@ -85,8 +85,8 @@
 					<tbody>
 						<tr>
 							<td><img src="/resources/img/${like.filename}" style="width: 50px; height: 50px;"></td>
-							<td><a href="#">${like.optionname}</a></td>
-							<td class="g-table-list-rwd"><a href="#">${like.username}</a></td>
+							<td><a href="/product/productInfo?productnum=${like.productnum}&follow=${like.username}">${like.optionname}</a></td>
+							<td class="g-table-list-rwd"><a href="/product/productMyShop?username=${like.username}">${like.username}</a></td>
 							<td>${like.price}원</td>
 							<td><button type="button" class="delete-like" data-productnum="${like.productnum}">🗑</button></td>
 						</tr>
@@ -124,7 +124,7 @@
 					<tr>
 						<td><img src="/resources/img/sample.jpg" style="width: 50px; height: 50px;"></td>
 						<td><a href="#">${farmer.shopname}</a></td>
-						<td class="g-table-list-rwd"><a href="#">${farmer.shopcontent}</a></td>
+						<td class="g-table-list-rwd"><a href="/product/productMyShop?username=${farmer.username}">${farmer.shopcontent}</a></td>
 						<td>${farmer.address}</td>
 						<td><button type="button" class="delete-farmer" data-productnum="${farmer.username}">🗑</button></td>	
 					</tr>

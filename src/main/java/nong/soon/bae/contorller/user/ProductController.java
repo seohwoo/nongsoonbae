@@ -267,7 +267,8 @@ public class ProductController {
          // username_product 옵션들 넣기
          service.optionInsert(Pdto);
       }
-      return "/product/productWritePro";
+      
+      return "redirect:/product/productMyShop?username=" + username;
    }   
    
    // FINISH
@@ -275,7 +276,13 @@ public class ProductController {
    // 상점 정보 가져오는 주소
    @RequestMapping("productMyShop")
    public String selectMyShop(Principal principal, Model model, String username) {
-      String Session = principal.getName();
+	   String Session = "isNotLogIn";
+	   boolean isNotLogIn = false;
+	   if(principal  != null) {
+    	  Session = principal.getName();
+    	  isNotLogIn = true;
+      }
+	  model.addAttribute("isNotLogIn", isNotLogIn);
       // 14
       String check = service.CheckMyShop(username);
       boolean isMembership = false;
@@ -346,7 +353,7 @@ public class ProductController {
    
    // 상품 상세정보
    @RequestMapping("productInfo")
-   public String productInfo(Principal pri, String productnum, Model model, String follow) {
+   public String productInfo(Principal pri, String productnum, Model model, String follow, HttpServletRequest request) {
 	  String username = FileRoot.getIp();
 	  boolean isUser = false;
 	  boolean isLogedIn = false;
@@ -361,6 +368,8 @@ public class ProductController {
       }
 	  model.addAttribute("isUser", isUser);
 	  model.addAttribute("isLogedIn", isLogedIn);
+	  // 현재 페이지의 URL을 세션에 저장
+	  request.getSession().setAttribute("prevPage", request.getRequestURI());
       
       // 상품 정보 페이지
       AllProductDTO APdto = service.selectProductInfo(follow, productnum);
@@ -459,7 +468,7 @@ public class ProductController {
          service.userdetailsUpdateFollowersMinus(follow);
       }
       
-      return "redirect:/product/productMain";
+      return "redirect:/product/productMyShop?username=" + follow;
    }   
    
    // 리뷰 작성하는 페이지
@@ -528,13 +537,15 @@ public class ProductController {
          service.deleteProductPick(username, productnum);
          service.allproductWishcntMinus(productnum);
       }
-      
-      return "redirect:/product/productMain";
+      model.addAttribute("pickCount", pickCount);
+      model.addAttribute("productnum", productnum);
+      model.addAttribute("follow", follow);
+      return "product/productPickPro";
    }
    
    // 장바구니 담기
    @RequestMapping("productShoppingPro")
-   public String ShoppingPro(Principal principal, String productnum, String follow, String optionnum, String count) {
+   public String ShoppingPro(Model model, Principal principal, String productnum, String follow, String optionnum, String count) {
       
 	  String username = principal.getName();
       MyPageDTO MPdto = new MyPageDTO();
@@ -544,15 +555,23 @@ public class ProductController {
       MPdto.setOptionnum(optionnum);
       MPdto.setCount(Integer.parseInt(count));
       service.insertShopping(MPdto);
-      
-      return "redirect:/product/productMain";
+      model.addAttribute("productnum", productnum);
+      model.addAttribute("follow", follow);
+      return "product/productShoppingPro";
    }
 
    // TEST
    @RequestMapping("sample")
-   public String sample(String optionnum, Model model, String productnum) {
-      model.addAttribute("optionnum", optionnum);
-      model.addAttribute("productnum", productnum);
+   public String sample() {
+	  
+	   List<AllProductDTO> APdto = service.allProductSelect();
+	      for (AllProductDTO dto : APdto) {
+	    	    String usernames = dto.getUsername();
+	    	    String productnum = dto.getProductnum();
+	    	    logger.info("Processing usernames: {} and productnum: {}", usernames, productnum);
+	    	    service.updateAllProductGrade200(productnum, usernames);
+	    	}
+	      
       return "product/sample";
    }
    

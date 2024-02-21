@@ -39,5 +39,5 @@ public class AllProductDTO {
 	private int amount;
 	private String unit;
 	
-	
+	private String usernames;
 }

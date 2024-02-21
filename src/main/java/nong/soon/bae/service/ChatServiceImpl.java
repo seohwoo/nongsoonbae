@@ -149,6 +149,30 @@ public class ChatServiceImpl implements ChatService{
 		}
 		return dto;
 	}
+
+	@Override
+	public ChatDTO createRoom(String username, String follow) {
+		String fileRoot = FileRoot.getFilepath();
+		String filePath = "";
+		chatMap.put("username", username);
+		chatMap.put("sendname", follow);
+		int cnt = mapper.adminChatCnt(chatMap);
+		if(cnt == 0) {
+			mapper.insertQnaToMe(chatMap);
+			mapper.insertQnaToSend(chatMap);
+		}	
+		ChatDTO dto = mapper.adminChatInfo(chatMap);
+		try {
+			filePath = fileRoot+"\\"+getRoomIdentifier(username, follow, String.valueOf(dto.getChatno()))+".txt";
+			Path path = Paths.get(filePath);
+			if(!Files.exists(path)) {
+				Files.createFile(path);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
 	
 }
 

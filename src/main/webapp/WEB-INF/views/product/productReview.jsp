@@ -115,14 +115,16 @@
 		})
 	</script>
 
-	<body>
+	<body style="background-color: #f5f5f5;">
+	<h2>리뷰 작성</h2>
 		<form action="/product/productReviewPro" method="post" name="form" enctype="multipart/form-data" id = "addProduct">
 			
-			<textarea placeholder="리뷰 작성" name="content"></textarea>
-			
-			<input type="file" class="btns2" name="filelist"  multiple="multiple"  onchange="displayFileCount()" />
-			
-			
+			<textarea placeholder="리뷰 작성" name="content" style="width:350px;height:250px"></textarea>
+			<br />
+			<input type="file" class="btns2" name="filelist"  multiple="multiple" value="사진 첨부"  onchange="displayFileCount()" />
+			<br />
+			상품의 별점을 남겨주세요.
+			<br />
 			<div class="stars1">
 				<label for="star1" class="star" data-rating="1"> <i class="far fa-star" style="color: #ffc83d;"></i></label>
 				<label for="star2" class="star" data-rating="2"> <i class="far fa-star" style="color: #ffc83d;"></i></label>
@@ -146,7 +148,7 @@
 			    
 		    <tr> 
 				<td colspan="2" align="center">
-		    		<input type="submit" name="confirm" value="리뷰쓰기" />
+		    		<input type="submit" name="confirm" style="border: none;background-color: #369F36;color: #fff;" value="리뷰쓰기" />
 		    	</td>
 		    </tr>		
 		</form>

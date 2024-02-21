@@ -13,6 +13,7 @@
     		
     		}
 	    </style>
+	    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	</head>
 
 	<script>
@@ -27,6 +28,13 @@
 	
 	        window.open('/product/deleteShoplist', '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
 	    }
+	    
+	    $(document).ready(function () {
+	    	$('#chat').on('click', function () {
+	    		 window.open('/chat/create?follow=' + "${follow}" , '_blank', 'width=600,height=1200');
+	    	});
+	    });
+	    
 	</script>
 	
 	<body>
@@ -47,16 +55,16 @@
 				<b class="h3">${SLdto.name}</b>
 				<p>${SLdto.shopname}</p>
 				<div class="container">
-					<c:if test="${Session!=follow}">
-					<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/followPro?follow=${follow}'">
-					<input type="button" class="sellbutton" value="💬판매자와 채팅" onclick="javascript:window.location='/chat/room" />
+					<c:if test="${Session!=follow && isNotLogIn}">
+						<input type="button" class="sellbutton" value="follow" onclick="javascript:window.location='/product/followPro?follow=${follow}'">
+						<input type="button" class="sellbutton" id="chat" value="💬판매자와 채팅" />
 					</c:if>
 					<c:if test="${Session==follow}">
 					<button class="sellbutton" onclick="openNewWindow()">상점 폐쇄하기</button>
 					<input type="button" class="sellbutton" value="판매량조회" onclick="javascript:window.location='/product/shopinfo?username=${follow}'">
 					<c:if test="${isMembership && !quitMembership}">
 						<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/membership/write?myName=${myName}'">
-						<input type="button" class="sellbutton" value="멤버쉽" onclick="javascript:window.location='/user/membership'">
+						<input type="button" class="sellbutton" value="멤버쉽해지" onclick="javascript:window.location='/user/membership'">
 					</c:if>
 					<c:if test="${!isMembership && !quitMembership}">
 						<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/product/productWriteForm?myName=${myName}'">

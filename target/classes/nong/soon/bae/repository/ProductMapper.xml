@@ -273,7 +273,6 @@
              GROUP BY productnum) dp ON ap.productnum = dp.productnum
             WHERE ap.username = #{username} AND ap.grade <> 200
       ]]>
-
 	</select>
 	
 
