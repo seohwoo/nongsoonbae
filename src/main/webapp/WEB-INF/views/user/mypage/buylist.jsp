@@ -41,7 +41,7 @@
 							<td>${pay.realprice}원</td>
 							<td class="g-table-list-date"><fmt:formatDate value="${pay.orderdate}" dateStyle="short" type="date"/></td>
 							<c:if test="${pay.review_count==0}">
-								<td><button onclick="window.open('/product/productReview?optionnum=${pay.optionnum}&productnum=${pay.productnum}', '_blank', 'width=400,height=300,resizable=yes')">리뷰작성</button></td>
+								<td><button onclick="window.open('/product/productReview?optionnum=${pay.optionnum}&productnum=${pay.productnum}', '_blank', 'width=500,height=600,resizable=yes')">리뷰작성</button></td>
 							</c:if>
 						</tr>
 					</tbody>
