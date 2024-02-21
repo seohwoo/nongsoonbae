@@ -54,7 +54,6 @@
 		    	    var value = selectElement.value;
 		    	    var price = 0; // 기본 가격을 0으로 초기화
 	
-		    	    // 숫자로 변환 가능한 값인지 확인 후 가격 계산
 		    	    if (value !== 'notChoice2') {
 		    	        price = parseInt(value) * 10000;
 		    	    }
@@ -86,6 +85,7 @@
 	    </script>
 	</head>
 	<body onload="calculatePrice()">
+	
 	    <div class="form-box">
         <h2>신청폼 작성하기</h2>
 	        <form id="adSubmitForm" action="/user/adFormPro" method="post" onsubmit="return validateForm()">

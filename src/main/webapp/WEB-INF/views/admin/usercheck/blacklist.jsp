@@ -7,13 +7,16 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>정지 회원 목록</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 			<style>
+			@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900|Noto+Serif:400,700,700i&display=swap');
 		        body {
-		        font-family: Arial, sans-serif;
-		        background-color: #f5f5f5;
+		        font-family: 'Noto Sans KR', sans-serif; 
+		       	background-color: #f5f5f5;
 		        margin: 0;
 		        padding: 10px;
+		        padding-top: 30px;
 			    }
 			    .blacklist {
 			        background-color: white;
@@ -32,7 +35,7 @@
 			        font-size: 0.8em; 
 			    }
 			    input[type="button"], input[type="submit"] {
-			        background-color: pink;
+			        background-color: green;
 			        color: white;
 			        border: none;
 			        padding: 8px 15px; 
@@ -44,17 +47,53 @@
 			        cursor: pointer;
 			        border-radius: 5px;
 			    }
-			    input[type="button"]:hover, input[type="submit"]:hover {
-			        background-color: blue;
-			    }
 			    .pagination form {
 			        display: inline;
 			        margin-right: 5px; 
 			    }
+			     .content {
+			        padding-top: 20px; /* 네비게이션 바 높이보다 약간 더 큰 값으로 설정 */
+			        padding-left: 20px;
+			        padding-right: 20px;
+			    }
+			     .pagination {
+				    text-align: center; /* 페이지네이션을 중앙 정렬합니다 */
+				    margin-top: 20px; /* 페이지네이션과 위의 요소와의 간격을 조정합니다 */
+					}
+				
+				.pagination form {
+				    display: inline-block; /* 폼을 인라인 블록으로 설정하여 가로로 나열합니다 */
+				    margin-right: 5px; /* 폼 사이의 간격을 조정합니다 */
+				}
+				
+				.pagination {
+				    text-align: center; /* 페이지네이션을 중앙 정렬합니다 */
+				    margin-top: 20px; /* 페이지네이션과 위의 요소와의 간격을 조정합니다 */
+					}
+					
+				.pagination form {
+				    display: inline-block; /* 폼을 인라인 블록으로 설정하여 가로로 나열합니다 */
+				    margin-right: 5px; /* 폼 사이의 간격을 조정합니다 */
+				}
+				
+				.pagination button {
+				    background-color: #f0f0f0; /* 버튼의 배경색을 연한 회색으로 설정 */
+				    color: #333; /* 버튼 내 글자색을 어두운 회색으로 설정 */
+				    padding: 8px 12px; /* 버튼의 패딩 */
+				    border: 1px solid #ccc; /* 버튼의 테두리를 연한 회색으로 설정 */
+				    border-radius: 4px; /* 모서리 둥글게 */
+				    cursor: pointer; /* 커서를 포인터로 */
+				    transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
+					}
+					
+				.pagination button:hover {
+				    background-color: #e0e0e0; /* 버튼을 호버했을 때의 배경색을 조금 더 어두운 회색으로 설정 */
+				}
 	    </style>	
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+	<div class="content">
 	<h1>정지 회원 목록 (${blackcount}명)</h1>
 		<div>
 			<jsp:include page="/WEB-INF/views/admin/usercheck/blackuserSearch.jsp" />
@@ -94,6 +133,7 @@
 				            <button type="submit">[다음]</button>
 				        </form>
 				    </c:if>
+				   </div>
 				   </div>
 	</body>
 	<script>

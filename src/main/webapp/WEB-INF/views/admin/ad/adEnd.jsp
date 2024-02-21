@@ -6,10 +6,12 @@
 	<head>
 	<meta charset="UTF-8">
 	<title>광고 종료 </title>
+	<link rel="icon" href="/resources/img/logo.png">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
+	@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900|Noto+Serif:400,700,700i&display=swap');
 	    body {
-	        font-family: Arial, sans-serif;
+	        font-family: 'Noto Sans KR', sans-serif;
 	        background-color: #f4f4f4;
 	        margin: 0;
 	        padding: 20px;
@@ -41,12 +43,68 @@
 	    input[type="button"]:hover {
 	        background-color: #45a049;
 	    }
+	    .content {
+	        padding-top: 130px; /* 네비게이션 바 높이보다 약간 더 큰 값으로 설정 */
+	        padding-left: 20px;
+	        padding-right: 20px;
+	    }
+	    .nav-links {
+        display: flex;
+        justify-content: start;
+        margin-bottom: 20px;
+        padding: 0;
+   	 }
+	    .nav-links a {
+	        background-color: #4CAF50;
+	        color: #333;
+	        padding: 10px 15px;
+	        margin-right: 10px;
+	        text-decoration: none;
+	        border-radius: 5px;
+	        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	        transition: background-color 0.3s ease-in-out;
+	    }
+	    .nav-links a:hover {
+	        background-color: #e9e9e9;
+	    }
+	    .pagination {
+	    text-align: center; /* 페이지네이션을 중앙 정렬합니다 */
+	    margin-top: 20px; /* 페이지네이션과 위의 요소와의 간격을 조정합니다 */
+		}
+		
+		.pagination form {
+		    display: inline-block; /* 폼을 인라인 블록으로 설정하여 가로로 나열합니다 */
+		    margin-right: 5px; /* 폼 사이의 간격을 조정합니다 */
+		}
+		
+		.pagination button {
+	    background-color: #f0f0f0; /* 버튼의 배경색을 연한 회색으로 설정 */
+	    color: #333; /* 버튼 내 글자색을 어두운 회색으로 설정 */
+	    padding: 8px 12px; /* 버튼의 패딩 */
+	    border: 1px solid #ccc; /* 버튼의 테두리를 연한 회색으로 설정 */
+	    border-radius: 4px; /* 모서리 둥글게 */
+	    cursor: pointer; /* 커서를 포인터로 */
+	    transition: background-color 0.3s; /* 호버 효과를 위한 전환 */
+		}
+		
+		.pagination button:hover {
+		    background-color: #e0e0e0; /* 버튼을 호버했을 때의 배경색을 조금 더 어두운 회색으로 설정 */
+		}
 	</style>
 	
 	</head>
 	<body>
-	<%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
-	<%@include file="/WEB-INF/views/admin/ad/adNav.jsp"%>
+	<div class="usernav">
+        <%@include file="/WEB-INF/views/admin/usercheck/usernav.jsp"%>
+    </div>
+    <div class="content">
+		 
+	    <div class="nav-links">
+	        <a href="/admin/adList">광고신청</a>
+	        <a href="/admin/adEndSoon">오늘 끝나는 광고</a>
+	        <a href="/admin/adIng">현재 광고 중</a>
+	        <a href="/admin/adEnd">종료된 광고</a>
+	    </div>
 	<div class="container">
 		<div class="header">
 			<h2>광고 종료된 상품(${adEndCnt}) </h2>			
@@ -92,6 +150,7 @@
 				        </form>
 				    </c:if>
 				</div>
-			</div>	     
+			</div>	 
+			</div>    
 	</body>
 </html>

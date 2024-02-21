@@ -5,7 +5,8 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>검색결과</title>
+	<title>회원검색결과</title>
+	<link rel="icon" href="/resources/img/logo.png">
 	<style>
 	        body {
 	        font-family: Arial, sans-serif;

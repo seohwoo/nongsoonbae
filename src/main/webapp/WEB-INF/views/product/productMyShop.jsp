@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>내 상점</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a59143e26d58362551774373cb766b2&libraries=services"></script>
 		<style type="text/css">
     		p {
@@ -17,6 +18,18 @@
 	</head>
 
 	<script>
+		 function openNewAdWindow() {
+		        // 광고신청 페이지를 새 창으로 열기
+		        var url = '/user/adMain'; // 새 창에서 열 페이지의 URL
+		        var width = 600; // 새 창의 너비
+		        var height = 750; // 새 창의 높이
+	
+		        // 화면 중앙에 위치하도록 계산
+		        var left = (window.innerWidth - width) / 2;
+		        var top = (window.innerHeight - height) / 2;
+	
+		        window.open(url, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+		    }
 	    function openNewWindow() {
 	        // 새 창을 열기
 	        var width = 460;
@@ -60,7 +73,7 @@
 						<input type="button" class="sellbutton" id="chat" value="💬판매자와 채팅" />
 					</c:if>
 					<c:if test="${Session==follow}">
-					<button class="sellbutton" onclick="openNewWindow()">상점 폐쇄하기</button>
+	
 					<input type="button" class="sellbutton" value="판매량조회" onclick="javascript:window.location='/product/shopinfo?username=${follow}'">
 					<c:if test="${isMembership && !quitMembership}">
 						<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/membership/write?myName=${myName}'">
@@ -73,7 +86,7 @@
 					<c:if test="${isMembership && quitMembership}">
 						<input type="button" class="sellbutton" value="상품 등록" onclick="javascript:window.location='/membership/write?myName=${myName}'">
 					</c:if>
-					<input type="button" class="sellbutton" value="광고신청하기" onclick="javascript:window.location='/user/adMain'">
+					<input type="button" class="sellbutton" value="광고신청하기" onclick="openNewAdWindow()">
 					</c:if>
 				</div>
 				<p class="text-muted" style="font-size: 12px;">관심 고객 수 : ${SLdto.followers}</p>
@@ -82,10 +95,9 @@
 		<div class="sellcontent">
 			<table style="text-align: center;">
 				<tr>
-					<td style="padding: 30px;">소개 : </td><td colspan="5">${SLdto.shopcontent}</td>
+					<td colspan="5">${SLdto.shopcontent}</td>
 				</tr>
 				<tr>
-					<td>판매 상품</td>
 					
 					<td colspan="5">
 					<c:forEach var="APdto" items="${APdto}"> 
@@ -116,6 +128,9 @@
 			<p>소재지 : ${address}</p>
 			<div id="map"></div>
 		</div>
+		<c:if test="${Session==follow}">
+			<button class="sellbutton" onclick="openNewWindow()">상점 폐쇄하기</button>
+		</c:if>
 		</c:if>
 		
 		<script>

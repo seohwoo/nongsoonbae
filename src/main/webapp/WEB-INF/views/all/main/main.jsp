@@ -4,8 +4,9 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>농순배</title>
-		<link rel="icon" href="/resources/img/logo.png">		
+		<title>농순배</title>	
+		<link rel="icon" href="/resources/img/logo.png">	
+
 		<script type="text/javascript">
 	        var errorParam = '<%= request.getParameter("error") %>';
 	        if (errorParam === 'true') {
@@ -34,6 +35,7 @@
 	    });
 	    </script>
 	    <script type="text/javascript" src="/resources/js/jquery-1.10.2.min.js"></script>
+
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
