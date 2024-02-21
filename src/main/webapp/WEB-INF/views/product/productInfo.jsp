@@ -124,7 +124,7 @@
 
            window.open('/product/reviewsDelete?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
        }
-            
+      });      
    </script>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 	<body>
