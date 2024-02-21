@@ -54,7 +54,6 @@
 	  	</div>
 	  </div>
 	</header>
-	<jsp:include page="/WEB-INF/views/include/loading.jsp" />
 	<table class="table-borderless main">
 		<tbody id="contentContainer">
 			<tr>

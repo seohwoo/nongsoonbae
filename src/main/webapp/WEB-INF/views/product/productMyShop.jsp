@@ -102,8 +102,8 @@
 							<div class="p-4" style="width: 900px;">
 						      <div class="row g-0 border rounded overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
 						        <div class="col p-4 d-flex flex-column position-static">
-						          <strong class="d-inline-block mb-2 text-primary-emphasis">${APdto.productnum}</strong>
 						          <h3 class="mb-0">${APdto.productname}</h3>
+						          <br />
 						          <div class="mb-1 text-body-secondary">${APdto.price}원</div></br>
 						          <a href="/product/productInfo?productnum=${APdto.productnum}&follow=${APdto.username}" class="icon-link gap-1 icon-link-hover stretched-link">
 						            상품 페이지 이동 >
