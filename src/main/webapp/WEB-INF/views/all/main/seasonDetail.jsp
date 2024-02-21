@@ -60,12 +60,12 @@
 			<input type="hidden" name="cate2" value="${cate2}"/>
 			<input type="hidden" name="cate3" value="${cate3}"/>
 		    <input type="hidden" name="sort" id="sortInput" /> 
-		    <select id="sortSelect" onchange="setSortAndSubmitDropdown()">
-		        <option value="">기본정렬(최신순)</option>
-		        <option value="readcnt" ${sort == 'readcnt' ? 'selected' : ''}>인기순</option>
-		        <option value="wishcnt" ${sort == 'wishcnt' ? 'selected' : ''}>찜 많은 순</option>
-		        <option value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option> 
-		    </select>
+		    <select class="btn dropdown-toggle" id="sortSelect" onchange="setSortAndSubmitDropdown()" style="background: #fff; margin: 10px;">
+				<option class="dropdown-item" value="">기본정렬(최신순)</option>
+				<option class="dropdown-item" value="readcnt" ${sort == 'readcnt' ? 'selected' : ''}>인기순</option>
+				<option class="dropdown-item" value="wishcnt" ${sort == 'wishcnt' ? 'selected' : ''}>찜 많은 순</option>
+				<option class="dropdown-item" value="cheap" ${sort == 'cheap' ? 'selected' : ''}>가격 낮은 순</option>
+			</select>
 		</form>
 		<div class="container mx-auto mt-4">
 			<div class="row">

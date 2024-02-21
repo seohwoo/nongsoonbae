@@ -88,6 +88,7 @@ public class MembershipController {
 		@RequestMapping("write")
 		public String productWriteForm(String myName, Model model, Principal principal) {
 			model.addAttribute("myName", myName);
+			model.addAttribute("username", principal.getName());
 			
 			// cate1 값 가져오기
 			List<ProductCategoryDTO> cate1 = productService.selectCate1();

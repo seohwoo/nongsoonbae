@@ -90,7 +90,7 @@ public class PayController {
 		model.addAttribute("amount", kakaoApprove.getAmount());
 		model.addAttribute("username", username);
 		
-		return "user/pay/success";
+		return "redirect:/user/mypage";
 	}
  
 	/**
