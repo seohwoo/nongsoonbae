@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	
 	<body>

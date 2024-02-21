@@ -5,6 +5,7 @@
 <html>
 <head>
 <title>welcome!!</title>
+<link rel="icon" href="/resources/img/logo.png">
 <link href="/resources/css/login.css" rel="stylesheet" type="text/css">
 
 </head>

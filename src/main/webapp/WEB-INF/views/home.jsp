@@ -3,6 +3,7 @@
 <html>
 <head>
 	<title>Home</title>
+	<link rel="icon" href="/resources/img/logo.png">
 </head>
 <body>
 <h1>

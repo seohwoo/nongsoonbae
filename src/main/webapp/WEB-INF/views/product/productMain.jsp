@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>일단 상점 메인</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
                               
 	<script>

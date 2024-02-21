@@ -71,6 +71,7 @@
 	    }
 	</style>
      
+
 	<script type="text/javascript">
         // "나의 광고 보기" 버튼 클릭 시 호출될 함수
         function viewMyAds() {

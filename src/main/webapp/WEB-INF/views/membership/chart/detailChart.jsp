@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>멤버쉽차트</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 		<%@include file="/WEB-INF/views/include/header.jsp"%>
