@@ -170,6 +170,6 @@ public class UserController {
 	@RequestMapping("quitMembership")
 	public String quitMembership(Principal principal) {
 		payService.userQuitMembership(principal.getName());
-		return "redirect:/product/productMain";
+		return "redirect:/product/productMyShop?username=" + principal.getName();
 	}
 }
