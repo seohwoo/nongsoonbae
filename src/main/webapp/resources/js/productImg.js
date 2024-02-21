@@ -55,3 +55,5 @@ ratings.forEach(rating => {
     const ratingContainer = document.querySelector('.product-rating');
     ratingContainer.innerHTML = starsHtml + `(${rating})(${cnt})`;
 });
+
+
