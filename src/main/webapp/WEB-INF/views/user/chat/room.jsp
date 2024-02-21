@@ -9,6 +9,7 @@
    <head>
       <meta charset="UTF-8">
       <title>room</title>
+      <link rel="icon" href="/resources/img/logo.png">
       <link href="/resources/css/chat.css" rel="stylesheet" type="text/css">
       <script type="text/javascript" src="/resources/js/jquery-1.10.2.min.js"></script>
       <script type="text/javascript" src="/resources/js/socket.io.js"></script>

@@ -4,7 +4,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>농순배</title>		
+		<title>농순배</title>
+		<link rel="icon" href="/resources/img/logo.png">		
 		<script type="text/javascript">
 	        var errorParam = '<%= request.getParameter("error") %>';
 	        if (errorParam === 'true') {

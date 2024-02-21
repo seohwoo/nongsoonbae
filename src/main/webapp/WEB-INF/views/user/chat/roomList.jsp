@@ -7,6 +7,7 @@
 		<meta charset="UTF-8">
 		<link href="/resources/css/chat.css" rel="stylesheet" type="text/css">
 		<title>채팅방목록</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 	<div style="width: 100%;">

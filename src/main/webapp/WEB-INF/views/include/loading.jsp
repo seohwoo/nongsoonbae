@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/resources/img/logo.png">
 <style type="text/css">
 	#load {
     width: 100%;

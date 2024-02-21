@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>판매 등록 홈페이지</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="/resources/summernote/summernote-lite.js"></script>
 		<script src="/resources/summernote/summernote-ko-KR.js"></script>

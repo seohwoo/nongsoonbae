@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>결제성공</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 		<h2>success</h2>

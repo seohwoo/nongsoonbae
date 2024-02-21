@@ -6,6 +6,7 @@
 	<head>
 	    <meta charset="UTF-8">
 	    <title>지역별</title>
+	    <link rel="icon" href="/resources/img/logo.png">
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	    <script type="text/javascript">
 		    $(document).ready(function(){

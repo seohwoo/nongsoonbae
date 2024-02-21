@@ -6,6 +6,7 @@
 	<head>
 	    <meta charset="UTF-8">
 	    <title>광고신청하기</title>
+	    <link rel="icon" href="/resources/img/logo.png">
 	    <style>
         body {
             font-family: Arial, sans-serif;
