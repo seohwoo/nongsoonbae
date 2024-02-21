@@ -125,7 +125,7 @@
            var left = (window.innerWidth - width) / 2;
            var top = (window.innerHeight - height) / 2;
 
-           window.open('/product/reviewsDelete?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+           window.open('/product/reviewsDeletePro?productnum=' + productnum + '&myName=' + myName, '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
        }
            
    </script>
@@ -239,7 +239,7 @@
 				<p>${allReviews.content}</p><p class="text-muted"><fmt:formatDate value="${allReviews.regdate}" dateStyle="short" type="date"/></p>
 				<div style="clear:both;"></div>
 				<div class="reviewsImg">
-					<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70">
+					<img src="/resources/file/reviews/${allReviews.filename}" width="70" height="70" />
 				</div>
 				<hr />
 			</div>

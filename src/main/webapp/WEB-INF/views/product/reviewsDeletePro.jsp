@@ -13,6 +13,7 @@
 </html>
 
 <script>
+	opener.location.reload();
 	alert("리뷰 삭제되었습니다.");
 	self.close();
 </script>
