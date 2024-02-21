@@ -138,19 +138,19 @@
 		        <div class = "img-showcase">
 		        <!-- 이미지 반복 1 -->
 		        <c:forEach var="Images" items="${Images}">
-			            <img src="/resources/realImage/${Images.filename}" alt = "shoe image">
+			            <img src="/resources/realImage/${Images.filename}" alt = "image">
 			    </c:forEach>
 		        </div>
 		      </div>
 		      <div class = "img-select">
-		        <div class = "img-item">
+		      	<c:forEach var="Images" items="${Images}" varStatus="loop">
+		        	<div class = "img-item">
 		        <!-- 이미지 반복 2 + 개수 -->
-		          <c:forEach var="Images" items="${Images}">
-		                <a href = "#" data-id = "1">
-			            <img src="/resources/realImage/${Images.filename}" alt = "shoe image">
+		                <a href = "#" data-id="${loop.index + 1}">
+			            <img src="/resources/realImage/${Images.filename}" alt = "image">
 			            </a>
-			      </c:forEach>
-		        </div>
+		        	</div>
+		        </c:forEach>
 		      </div>
 		    </div>
 		    <!-- card right -->
@@ -164,10 +164,10 @@
 		      <div class = "product-rating">
 		        <i class = "fas fa-star"></i>
 		        <i class = "fas fa-star"></i>
-		        <i class = "far fa-star"></i>
+		        <i class = "fas fa-star"></i>
 		        <i class="fas fa-star"></i>
 		        <i class = "fas fa-star-half-alt"></i>
-		        <span>4.7(21)</span>
+		        <span>${stars}(${cnt})</span>
 		      </div>
 			  <div style="clear:both;"></div>
 		      <div class = "product-price">
