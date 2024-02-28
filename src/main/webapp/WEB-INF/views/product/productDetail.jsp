@@ -4,7 +4,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>	
+		<title>Insert title here</title>
+		<link rel="icon" href="/resources/img/logo.png">	
 		<script src="/resources/js/jquery-3.7.1.min.js"></script>	
 	</head>
 	

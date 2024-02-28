@@ -58,19 +58,9 @@ public class MembershipController {
 	}
 	
 	@RequestMapping("userChart")
-	public String userChart(Model model, String cate1, String cate2, String cate3, String categoryNum) {
-		if(categoryNum == null) {
-			categoryNum = "1";
-		}
-		if(cate1 == null && cate2 == null && cate3 == null) {
-			cate1 = "1";
-			cate2 = "1";
-			cate3 = "1";
-		}
-		mainService.cateMenu(model);
-		mainService.showCategory(model, cate1, cate2, cate3, Integer.parseInt(categoryNum));
+	public String userChart(Model model, String cate1, String cate2, String cate3) {
 		service.showUserPriceChart(model, cate1, cate2, cate3);
-		return "/membership/chart/userPriceChart";
+		return "/membership/chart/realUserPriceChart";
 	}
 	
 	@RequestMapping("chart")
@@ -98,6 +88,7 @@ public class MembershipController {
 		@RequestMapping("write")
 		public String productWriteForm(String myName, Model model, Principal principal) {
 			model.addAttribute("myName", myName);
+			model.addAttribute("username", principal.getName());
 			
 			// cate1 값 가져오기
 			List<ProductCategoryDTO> cate1 = productService.selectCate1();
@@ -246,7 +237,8 @@ public class MembershipController {
 				// username_product 옵션들 넣기
 				productService.optionInsert(Pdto);
 			}
-			return "/membership/product/productWritePro";
+			
+			return "redirect:/product/productMyShop?username=" + username;
 		}	
 		
 		// FINISH

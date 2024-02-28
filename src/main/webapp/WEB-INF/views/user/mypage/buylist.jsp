@@ -29,16 +29,20 @@
 						<th class="g-table-list-col-title g-table-list-col-desc required">상점</th>
 						<th class="g-table-list-col-title g-table-list-col-money required">가격</th>
 						<th class="g-table-list-col-title g-table-list-col-date">구매일</th>
+						<th class="g-table-list-col-title g-table-list-col-date">리뷰작성</th>
 					</tr>
 				</thead>
 				<c:forEach var="pay" items="${paylist}">
 					<tbody>
 						<tr>
 							
-							<td><a href="#">${pay.productname}</a><p class="g-table-list-col-small-copy">${pay.optionname}</p></td>
-							<td class="g-table-list-rwd"><a href="#">${pay.shopname}</a></td>
+							<td><a href="/product/productInfo?productnum=${pay.productnum}&follow=${pay.follow}">${pay.productname}</a><p class="g-table-list-col-small-copy">${pay.optionname}</p></td>
+							<td class="g-table-list-rwd"><a href="/product/productMyShop?username=${pay.follow}">${pay.shopname}</a></td>
 							<td>${pay.realprice}원</td>
 							<td class="g-table-list-date"><fmt:formatDate value="${pay.orderdate}" dateStyle="short" type="date"/></td>
+							<c:if test="${pay.review_count==0}">
+								<td><button class="sellbutton" onclick="window.open('/product/productReview?optionnum=${pay.optionnum}&productnum=${pay.productnum}', '_blank', 'width=500,height=600,resizable=yes')">리뷰작성</button></td>
+							</c:if>
 						</tr>
 					</tbody>
 				</c:forEach>

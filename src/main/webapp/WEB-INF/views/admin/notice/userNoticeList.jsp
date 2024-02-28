@@ -6,6 +6,7 @@
    <head>
         <meta charset="UTF-8">
         <title>공지게시판</title>
+        <link rel="icon" href="/resources/img/logo.png">
         <style>
             body { font-family: Arial, sans-serif; }
             .container { width: 80%; margin: auto; }

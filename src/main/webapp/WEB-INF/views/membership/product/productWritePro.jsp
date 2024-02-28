@@ -5,9 +5,10 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 
 	<body>
-		<c:redirect url= "/product/productMain" />
+		<c:redirect url= "product/productMyShop?username=${username}" />
 	</body>
 </html>

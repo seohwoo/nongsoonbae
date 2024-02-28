@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -6,6 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>판매 등록 홈페이지</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="/resources/summernote/summernote-lite.js"></script>
 		<script src="/resources/summernote/summernote-ko-KR.js"></script>
@@ -176,7 +178,7 @@
 			    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			    
 			    <tr> 
-					<td colspan="2" align="center"> 
+					<td colspan="2" align="center" style="margin-top: 5vh;"> 
 						<input type="submit" name="confirm" value="상품등록" onclick="return confirmProductRegistration()"">
 						<input type="reset" name="reset" value="다시입력">
 						<input type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">

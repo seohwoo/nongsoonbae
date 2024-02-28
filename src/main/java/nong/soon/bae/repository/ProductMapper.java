@@ -13,6 +13,7 @@ import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ReviewsDTO;
 import nong.soon.bae.bean.ShopListDTO;
+import nong.soon.bae.bean.UsersDTO;
 
 public interface ProductMapper {	
 	
@@ -255,6 +256,23 @@ public interface ProductMapper {
 	
 	public ShopListDTO findByShopInfo(String username);
 	
+	public UsersDTO findRealUsername(String myName);
+
+	public int findReviewImageCnt(HashMap<String, String> map);
+	
+	public List<ImagesDTO> findReviewImages(HashMap<String, String> map);
+	
+	public void deleteReviewImages(HashMap<String, String> map);
+	
+	   // 상품 내리기 (grade 200)
+	   public void updateProductGrade200(String productnum);
+	   
+	   // allProduct username , productnum
+	   public List<AllProductDTO> allProductSelect();
+	   
+	   // 상품 재고수 0이면 등급 200
+	   public void updateAllProductGrade200(@Param("productnum") String productnum,
+	                               			@Param("usernames") String usernames);	
 }
 	
 	

@@ -5,6 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 		<div style="display: flex; flex-direction: column;">
@@ -14,8 +15,9 @@
 					<h1 class="h1 mb-4">${month}월</h1></td>
 				<c:forEach var="dto" items="${categoryList}">
 					<td>
-						<form action="/nsb/main" method="post">
+						<form action="/nsb/main" method="get">
 							<input type="hidden" name="categoryNum" value="${categoryNum}"/>
+							<input type="hidden" name="pageNum" value="1"/>
 							<input type="hidden" name="cate1" value="${dto.cate1}"/>
 							<input type="hidden" name="cate2" value="${dto.cate2}"/>
 							<input type="hidden" name="cate3" value="${dto.cate3}"/>

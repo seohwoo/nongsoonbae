@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>상점 등록</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	</head>
 	
@@ -112,7 +113,7 @@
 					<td colspan="2" align="center"> 
 						<input class="sellbutton" type="submit" value="나의 상점 만들기" >
 						<input class="sellbutton" type="reset" name="reset" value="다시입력">
-						<input class="sellbutton" type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">
+						<input class="sellbutton" type="button" value="등록안함" onclick="javascript:window.location='/user/mypage'">
 					</td>
 				</tr>			    
 			</table>	

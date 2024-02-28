@@ -110,6 +110,7 @@ public class PayServiceImpl implements PayService{
 		dto.setUsername(username);
 		dto.setProductnum("membership");
 		dto.setOptionnum("membership");
+		dto.setFollow("nongsoonbae");
 		dto.setRealprice(4900);
 		dto.setTotalprice(4900);
 		dto.setQuantity(1);

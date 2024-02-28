@@ -5,7 +5,7 @@
 <body>
 	<main class="col-7 py-md-5 pl-md-5 bd-content" role="main" style="margin-top: 30px; margin-left: auto; margin-right : auto;">
       
-      		<h1>${username}님! 어서오세요.</h1><br />
+      		<h1>${name}님! 어서오세요.</h1><br />
       		<div class="col d-flex" >
 	      		<div class="col p-4 m-4 d-flex flex-column position-static bg-body-tertiary border rounded-3">
 		          <strong class="d-inline-block mb-2 text-primary">Modify</strong>

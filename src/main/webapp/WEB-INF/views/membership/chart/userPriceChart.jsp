@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>실시간 차트</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
@@ -95,7 +96,6 @@
 						<h1>차트를 준비중입니다...</h1>
 					</c:if>
 					<c:if test="${isChart>0 }">
-						<%@include file="/WEB-INF/views/membership/chart/realUserPriceChart.jsp"%>
 					</c:if>
 				</td>
 			</tr>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import nong.soon.bae.bean.AllProductDTO;
 import nong.soon.bae.bean.AreaDTO;
 import nong.soon.bae.bean.NoticeBoardDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
@@ -19,10 +20,14 @@ import nong.soon.bae.service.AreaService;
 import nong.soon.bae.service.CategoryService;
 import nong.soon.bae.service.MainService;
 import nong.soon.bae.service.NoticeService;
+import nong.soon.bae.service.ProductService;
 
 @RequestMapping("/nsb/*")
 @Controller
 public class MainController{
+
+	@Autowired
+	private ProductService productService;
 	
 	@Autowired
 	private MainService service;
@@ -38,16 +43,36 @@ public class MainController{
 	
 		
 	@RequestMapping("main")
-	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch) {
+	public String main(Model model, String categoryNum, String cate1, String cate2, String cate3, String userSearch,
+					@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+					@RequestParam(value="sort", required=false) String sort) {
 		NoticeBoardDTO notice = noticeservice.showNewNotice();
 		model.addAttribute("notice",notice);
 		if (categoryNum==null) {
 			categoryNum = "1";
 		}
-		service.seasonCategory(model, Integer.parseInt(categoryNum));
-		if(cate1!=null && cate2!=null && cate3!=null ) {
-			service.detailSeasonCategory(model, cate1, cate2, cate3);
+		if(cate1 == null && cate2 == null) {
+			cate1 = "0";
+			cate2 = "0";
 		}
+		service.seasonCategory(model, Integer.parseInt(categoryNum));
+		if (cate1.equals("0") && cate2.equals("0")) { //전체항목리스트 
+			service.adallproductlist(model); //광고
+			service.allproductlist(model,sort,pageNum); 
+		}
+		
+		if(cate1!=null && cate2!=null && cate3!=null ) {
+			service.detailSeasonCategory(model, cate1, cate2, cate3,pageNum,sort);
+			service.adDetailSeason(model, cate1,cate2,cate3);
+		}
+		
+	    // 정룡
+	    List<AllProductDTO> APdto = productService.allProductSelect();
+	        for (AllProductDTO dto : APdto) {
+	           String usernames = dto.getUsername();
+	           String productnum = dto.getProductnum();
+	           productService.updateAllProductGrade200(productnum, usernames);
+	    }				
 		return "all/main/main";
 	}
 	
@@ -57,7 +82,9 @@ public class MainController{
 		if(searchNum == null) {
 			searchNum = "1";
 		}
+		System.out.println();
 		service.findProduct(model, userSearch, Integer.parseInt(searchNum));
+		service.findAdProduct (model, userSearch);
 		return "all/main/result";
 	}
 	

@@ -16,6 +16,7 @@ import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.ProductCategoryDTO;
 import nong.soon.bae.bean.ProductDTO;
 import nong.soon.bae.bean.ShopListDTO;
+import nong.soon.bae.bean.UsersDTO;
 import nong.soon.bae.repository.MypageMapper;
 
 @Service
@@ -26,6 +27,11 @@ public class MypageServiceImpl implements MypageService {
 	@Autowired
 	MyPageDTO dto;
 	
+	
+	@Override
+	public UsersDTO findNameInMyPage(String username) {
+		return mapper.findNameInMyPage(username);
+	}
 
 	@Override
 	public List<MyPageDTO> selectLike(String username) {		
@@ -106,19 +112,14 @@ public class MypageServiceImpl implements MypageService {
 	public void selectMyCart(String username, Model model) {
 		ArrayList<MyPageDTO> list = new ArrayList<MyPageDTO>();
 		List<MyPageDTO> cartCnt = mapper.findCartInfo(username);
-		System.out.println(cartCnt);
 		for (MyPageDTO myPageDTO : cartCnt) {
 			HashMap<String, String> SelectMyCartMap = new HashMap<>();
 		    SelectMyCartMap.put("username", myPageDTO.getUsername());
 		    SelectMyCartMap.put("follow", myPageDTO.getFollow());
 		    SelectMyCartMap.put("optionnum", myPageDTO.getOptionnum());
-		    List<MyPageDTO> tempList = mapper.selectMyCart(SelectMyCartMap);
-		    System.out.println(tempList);
-		    for (MyPageDTO dto : tempList) {
-		    	list.add(dto);
-			}
+		    MyPageDTO tempList = mapper.selectMyCart(SelectMyCartMap);
+		    list.add(tempList);
 		}
-		System.out.println(list);
 		model.addAttribute("MyCart", list);
 	}
 
@@ -150,5 +151,6 @@ public class MypageServiceImpl implements MypageService {
 		model.addAttribute("paylist", list);
 		
 	}
+
 	
 }

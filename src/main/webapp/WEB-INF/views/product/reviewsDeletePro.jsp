@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Insert title here</title>
+		<link rel="icon" href="/resources/img/logo.png">
 	</head>
 	
 	<body>
@@ -12,6 +13,7 @@
 </html>
 
 <script>
+	opener.location.reload();
 	alert("리뷰 삭제되었습니다.");
 	self.close();
 </script>

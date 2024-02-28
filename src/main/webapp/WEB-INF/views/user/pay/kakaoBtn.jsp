@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>카카오페이버튼</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 		<style type="text/css">
 			.custom-button {

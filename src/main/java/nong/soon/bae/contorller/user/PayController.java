@@ -88,7 +88,9 @@ public class PayController {
 		}
 		model.addAttribute("kakaoApprove", kakaoApprove);
 		model.addAttribute("amount", kakaoApprove.getAmount());
-		return "user/pay/success";
+		model.addAttribute("username", username);
+		
+		return "redirect:/user/mypage";
 	}
  
 	/**

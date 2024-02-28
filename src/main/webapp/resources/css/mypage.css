@@ -476,7 +476,10 @@ a:hover {
 	color: #53b5aa;
 	font-size: 25px;
 	font-weight: 300;
-	margin: 17px 0 20px 0;
+	margin: 17px 0 10px 0;
+}
+.product p {
+	margin-bottom: 0;
 }
 
 .product .footer-content {

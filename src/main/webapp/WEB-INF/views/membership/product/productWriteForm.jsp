@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>판매 등록 홈페이지</title>
+		<link rel="icon" href="/resources/img/logo.png">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="/resources/summernote/summernote-lite.js"></script>
 		<script src="/resources/summernote/summernote-ko-KR.js"></script>
@@ -109,7 +110,7 @@
 	       uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
 	    }
 	   e.preventDefault();
-	})
+	});
 
 	$(function() {
 		$("#cate1").on("change",function(){
@@ -123,14 +124,21 @@
 		});
 	});	
 	
- 	
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#chart').on('click', function () {
+	    		window.open('/membership/userChart?cate1=' + $('#cate1').val() + '&cate2=' + $('#cate2').val() + '&cate3=' + $('#cate3').val() , '_blank', 'width=600,height=1200');
+	    	});
+	    });
 	</script>
 
 	<body>
 	<%@include file="/WEB-INF/views/include/header.jsp"%>
 		<h3>${myName} 페이지</h3>
 		<h5>상품 등록</h5><br />
-		<form action="/membership/productWritePro" method="post" name="form" class="productform" enctype="multipart/form-data" id="addProduct">
+		<form action="/product/productWritePro" method="post" name="form" class="productform" enctype="multipart/form-data" id="addProduct">
 			<div class="cate">
 			<select id="cate1" name="cate1">
 				<option value="-------">-------</option>
@@ -149,13 +157,6 @@
 			    </tr>
 			    
 			    <textarea id="summernote" name="content"></textarea>
-			    
-			    <tr> 
-					<td width="200">판매종료일</td>
-					<td width="400"> 
-						<input type="date" name="enddate" size="15" required="required">
-					</td>
-			    </tr>
 		
 			    <tr> 
 				    <td width="200">옵션</td>
@@ -171,7 +172,8 @@
 					<td colspan="2" align="center"> 
 						<input type="submit" name="confirm" value="상품등록">
 						<input type="reset" name="reset" value="다시입력">
-						<input type="button" value="등록안함" onclick="javascript:window.location='/product/productMain'">
+						<input type="button" value="등록안함" onclick="javascript:window.location='/product/productMyShop?username=${username}'">
+						<input type="button" value="카테고리차트" id="chart" />
 					</td>
 				</tr>			    
 			</table>	

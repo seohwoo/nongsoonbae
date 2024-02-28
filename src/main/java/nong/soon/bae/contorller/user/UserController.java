@@ -42,14 +42,18 @@ public class UserController {
 	@RequestMapping("mypage")
 	public String mypage(Principal principal, Model model) {
 		String username = principal.getName();
+		String name = service.findNameInMyPage(username).getName();
 		model.addAttribute("username", username);
+		model.addAttribute("name", name);
 		return "user/mypage/mypage";
 	}
 	
 	@RequestMapping("home")
 	public String home(Principal principal, Model model) {
 		String username = principal.getName();
+		String name = service.findNameInMyPage(username).getName();
 		model.addAttribute("username", username);
+		model.addAttribute("name", name);
 		return "user/mypage/home";
 	}
 	
@@ -143,7 +147,7 @@ public class UserController {
 		else {
 			redirectAttrs.addFlashAttribute("msg", "회원정보삭제에 실패했습니다.");
 		}
-		return "redirect:/nsb/main";
+		return "redirect:/user/logout";
 	}
 	
 	@RequestMapping("membership")
@@ -166,6 +170,6 @@ public class UserController {
 	@RequestMapping("quitMembership")
 	public String quitMembership(Principal principal) {
 		payService.userQuitMembership(principal.getName());
-		return "redirect:/product/productMain";
+		return "redirect:/product/productMyShop?username=" + principal.getName();
 	}
 }

@@ -9,11 +9,6 @@
 	</head>
 	
 	<body>
-		<script>
-		opener.location.reload();
-		alert("상점이 폐쇄되었습니다.");
-		self.close();
-		
-		</script>
+		<c:redirect url= "/product/productMyShop?username=${username}" />   
 	</body>
 </html>

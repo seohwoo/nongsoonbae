@@ -29,13 +29,17 @@
     
 <input type="button" value="추가" id="option" >
 <div id="op"></div>
-
+<div class="option1">
 <input type="text" name="optionname" placeholder="상품명" required="required" /> 			
 <input type="number" name="optionunit" placeholder="단위" required="required" />
 ${catedto.unit} 
+</div>
+
 <input type="hidden" name="optionamount" value="${catedto.amount}"/>
-<input type="hidden" name="optionrealunit" value="${catedto.unit}"/><br />
+<input type="hidden" name="optionrealunit" value="${catedto.unit}"/>
+<div class="option2" style="margin-right: 20px;">
 <input type="number" name="optiontotalprice" placeholder="상품가격" required="required" />
-<input type="number" name="optionProductCount" placeholder="상품재고" required="required" /> <br />
+<input type="number" name="optionProductCount" placeholder="상품재고" required="required" /><br />
+</div>
 
 

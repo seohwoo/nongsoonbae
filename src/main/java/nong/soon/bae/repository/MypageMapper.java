@@ -6,8 +6,10 @@ import java.util.List;
 import nong.soon.bae.bean.MyPageDTO;
 import nong.soon.bae.bean.PaymentDTO;
 import nong.soon.bae.bean.ShopListDTO;
+import nong.soon.bae.bean.UsersDTO;
 
 public interface MypageMapper {
+	public UsersDTO findNameInMyPage(String username);
 	public List<MyPageDTO> selectLike(String username);
 	public List<MyPageDTO> selectfarmer(String username);
 	public List<MyPageDTO> selectcart(String username);
@@ -18,7 +20,7 @@ public interface MypageMapper {
 	public List<MyPageDTO> selectLikeDetail(HashMap map);
 	public List<ShopListDTO> selectFarmerDetail(HashMap map);
 	public List<MyPageDTO> findCartInfo(String username);
-	public List<MyPageDTO> selectMyCart(HashMap map);
+	public MyPageDTO selectMyCart(HashMap map);
 	
 	public void deleteLike(MyPageDTO dto);
 	public void deleteFarmer(MyPageDTO dto);
