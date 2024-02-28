@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.MypageMapper">
+
+	<select id="findNameInMyPage" parameterType="String" resultType="nong.soon.bae.bean.UsersDTO">
+		select * from users where username=#{username}
+	</select>
+	
+	<select id="selectLike" resultType="nong.soon.bae.bean.MyPageDTO">
+		select * from ${username}_mypage where wishstatus=1
+	</select>
+	<select id="selectfarmer" resultType="nong.soon.bae.bean.MyPageDTO">
+		select * from ${username}_mypage where wishstatus=2
+	</select>
+	<select id="selectcart" resultType="nong.soon.bae.bean.MyPageDTO">
+		select * from ${username}_mypage where wishstatus=3
+	</select>
+	<select id="cntlike" resultType="int">
+		select count(*) from ${username}_mypage where wishstatus=1
+	</select>
+	<select id="cntfarmer" resultType="int">
+		select count(*) from ${username}_mypage where wishstatus=2
+	</select>
+	<select id="cntcart" resultType="int">
+		select count(*) from ${username}_mypage where wishstatus=3
+	</select>
+	
+	<select id="selectLikeDetail" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
+		<![CDATA[
+			SELECT m.optionname, m.price, m.username, i.filename, mp.productnum
+			FROM (
+			    SELECT productnum, min(optionnum) as optionnum FROM ${username}_product
+			    WHERE productnum = #{productnum} GROUP BY productnum)  mp
+			LEFT JOIN ${username}_images i ON mp.productnum = i.productnum and i.filename LIKE '%\_1%' escape '\'
+			LEFT JOIN ${username}_product m ON m.productnum = mp.productnum AND m.optionnum = mp.optionnum
+		]]>
+	</select>
+	<select id="selectFarmerDetail" parameterType="String" resultType="nong.soon.bae.bean.ShopListDTO">
+		<![CDATA[
+			SELECT u.image, s.* FROM (
+			    SELECT shopname, shopcontent, regdate, address, username 
+			    FROM shoplist 
+			    WHERE username=#{username}) s 
+			JOIN userdetails u ON s.username = u.username
+		]]>
+	</select>
+	<select id="findCartInfo" parameterType="String" resultType="nong.soon.bae.bean.MyPageDTO">
+		select distinct optionnum, username, follow from ${username}_mypage	where wishstatus=3
+	</select>
+	<select id="selectMyCart" parameterType="hashMap" resultType="nong.soon.bae.bean.MyPageDTO">
+		<![CDATA[
+			select 
+				m.count, 
+				i.filename, 
+				p.optionname, 
+				p.price, 
+				p.optionnum, 
+				p.productnum, 
+				p.username, 
+				s.shopname, 
+				a.productname 
+			from
+			(select * from ${follow}_product where optionnum=#{optionnum}) p
+			left join ${follow}_images i on p.productnum=i.productnum AND i.filename LIKE '%\_1%' escape '\' and i.filename NOT LIKE '%P\_%' escape '\'
+			left join ${username}_mypage m on m.follow=p.username and m.optionnum=#{optionnum}
+			left join shoplist s on s.username=p.username
+			left join allproduct a on a.productnum = p.productnum
+			where m.wishstatus=3
+		]]>
+	</select>
+	<delete id="deleteLike">
+		DELETE FROM ${username}_mypage WHERE productnum = #{productnum} AND wishstatus = 1
+	</delete>
+	<delete id="deleteFarmer">
+		DELETE FROM ${username}_mypage WHERE follow = #{follow} AND wishstatus = 2
+	</delete>
+	<delete id="deleteCart">
+		delete from ${username}_mypage where optionnum=#{optionnum} and wishstatus=3
+	</delete>
+	
+	<!-- 정기결제 구매 내역 제외 -->
+	<select id="selectPay" resultType="nong.soon.bae.bean.PaymentDTO">
+		SELECT follow,productnum, TO_CHAR(orderdate, 'YYYY-MM-DD-HH24:MI:SS') formatdate
+		FROM ${username}_payment
+		WHERE sid = 'simple payment' AND status = 101
+		ORDER BY orderdate DESC
+	</select>
+	<select id="selectPayDetail" parameterType="HashMap" resultType="nong.soon.bae.bean.MyPageDTO">
+		<![CDATA[
+			SELECT 
+			    m.orderdate,
+			    m.realprice,
+			    m.follow,
+			    p.optionnum,
+			    p.optionname,
+			    s.shopname,
+			    a.productnum,
+			    a.productname,
+			    u.name,
+			    COUNT(r.username) as review_count
+			FROM
+			    (SELECT * FROM ${username}_payment WHERE productnum = #{productnum}
+			    AND TO_CHAR(orderdate, 'YYYY-MM-DD-HH24:MI:SS') = #{orderdate} ) m
+			LEFT JOIN 
+			    ${follow}_product p ON m.optionnum = p.optionnum
+			LEFT JOIN 
+			    shoplist s ON m.follow = s.username
+			LEFT JOIN 
+			    allproduct a ON p.productnum = a.productnum
+			LEFT JOIN 
+			    users u ON m.username = u.username    
+			LEFT JOIN 
+			    P_${productnum}_reviews r ON r.username = u.name
+			WHERE
+			    u.username = #{username}          
+			GROUP BY
+			    m.orderdate,
+			    m.realprice,
+			    m.follow,
+			    p.optionnum,
+			    p.optionname,
+			    s.shopname,
+			    a.productnum,
+			    a.productname,
+			    u.name  
+		]]>
+	</select>
+	
+	
+</mapper>

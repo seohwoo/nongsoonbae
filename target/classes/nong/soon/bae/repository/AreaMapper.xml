@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.AreaMapper">
+	<select id="arealistall" parameterType="hashMap"  resultType="nong.soon.bae.bean.AreaDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from area where area2=0 ) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="allCnt" parameterType="hashMap" resultType="int" >
+			select count(*) from allproduct
+	</select>
+	<select id="adAllCnt"  resultType="int" >
+			select count(*) from allproduct where grade = 40
+	</select>
+	<select id="allproductList" parameterType="hashMap"  resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where grade = 100 order by startdate desc ) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="adAllProduct"  resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
+	</select>
+	<select id="readListAll" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where grade = 100 order by readcnt desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="wishListAll"  parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+	         select * from 
+		         (select b.*, rownum r from 
+		         (select * from allproduct where grade = 100 order by wishcnt desc) b) 
+	         where r >= #{start} and r <= #{end}
+	      ]]>
+	</select>
+	<select id="cheapListAll"  parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+	         select * from 
+		         (select b.*, rownum r from 
+		         (select * from allproduct where grade = 100 order by avgprice asc ) b) 
+	         where r >= #{start} and r <= #{end}
+	      ]]>
+	</select>
+	<select id="readList" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where grade = 100 and area1=#{area1} order by readcnt desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="wishList" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where grade = 100 and area1=#{area1} order by wishcnt desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="cheapList" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where grade = 100 and area1=#{area1} order by avgprice asc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="areaprodutList" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		<![CDATA[
+         select * from 
+	         (select b.*, rownum r from 
+	         (select * from allproduct where grade = 100 and area1=#{area1} order by startdate desc) b) 
+         where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="productCnt" parameterType="int" resultType="int">
+		select count(*)from allproduct where grade = 100 and area1=#{area1} 
+	</select>
+	<select id="adProductCnt" parameterType="int" resultType="int">
+		select count(*)from allproduct where area1=#{area1} and grade = 40
+	</select>
+	<select id="adareaprodutList" parameterType="hashMap" resultType="nong.soon.bae.bean.AllProductDTO">
+		SELECT * FROM allproduct WHERE area1=#{area1} and grade = 40 ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 4 ROWS ONLY
+	</select>
+</mapper>

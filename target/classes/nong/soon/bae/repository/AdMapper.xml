@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nong.soon.bae.repository.AdMapper">
+	<select id="myproduct" resultType="nong.soon.bae.bean.AllProductDTO" >
+		select * from allproduct where username=#{username} order by productnum
+	</select>
+	<select id="myAd" resultType="nong.soon.bae.bean.AdDTO" >
+		select a.*,p.* from ad a join allproduct p on a.username = p.username and a.productnum=p.productnum where a.username = #{username} order by num desc
+	</select>
+	<select id="myAdCnt" parameterType="String" resultType="int">
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+			AND a.productnum = p.productnum WHERE a.username=#{username}
+	</select>
+	<select id="checkAd" parameterType="hashMap" resultType="nong.soon.bae.bean.AdDTO">
+		<![CDATA[
+        select * from ad where username=#{username} and productnum= #{adSelect} and adstatus <= 41
+      ]]>
+	</select>
+	<insert id="submitAd" parameterType="hashMap">
+			insert into ad(num,username,productnum,
+						submitdate,days,price,adstatus) values(
+						ad_seq.NEXTVAL,
+						#{username},
+						#{adSelect},
+						sysdate,
+						#{daySelect},
+			            #{price},
+			            41
+					)
+	</insert>
+	<select id="submitCnt" resultType="int">
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+		AND a.productnum = p.productnum WHERE a.adstatus = 41
+	</select>
+	<select id="adList" parameterType="hashMap" resultType="nong.soon.bae.bean.AdDTO">
+		<![CDATA[
+		SELECT * FROM 
+    	(SELECT b.*, ROWNUM r FROM 
+        	(SELECT a.*, p.productname AS p_productname
+         	FROM ad a
+         		JOIN allproduct p ON a.username = p.username AND a.productnum = p.productnum
+        		 WHERE a.adstatus = 41
+         			ORDER BY a.num DESC) b) 
+					where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<update id="adStart" parameterType="hashMap">
+		update ad set adstatus=40, startdate=sysdate, enddate=sysdate+#{days} where productnum=#{productnum} and num=#{num}
+	</update>
+	<update id="updateStatus" parameterType="hashMap">
+		update allproduct set grade=40 where productnum=#{productnum}
+	</update>
+	<update id="adNo" parameterType="hashMap">
+		update ad set adstatus=42 where num=#{num} and productnum=#{productnum} and username=#{username}
+	</update>
+	<select id="endSoonCnt" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+			AND a.productnum = p.productnum WHERE TRUNC(a.enddate) <= TRUNC(SYSDATE) and a.adstatus = 40
+		]]>
+	</select>
+	<select id="adEndSoon" parameterType="hashMap" resultType="nong.soon.bae.bean.AdDTO">
+		<![CDATA[
+		SELECT * FROM 
+    	(SELECT b.*, ROWNUM r FROM 
+        	(SELECT a.*, p.productname AS p_productname
+         	FROM ad a
+         		JOIN allproduct p ON a.username = p.username AND a.productnum = p.productnum
+        		 where TRUNC(a.enddate) <= TRUNC(SYSDATE) and a.adstatus=40 order by a.enddate) b) 
+					where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<update id="adEnd" parameterType="hashMap">
+		update ad set adstatus=43 where num=#{num} and username=#{username} and productnum=#{productnum} 
+	</update>
+	<update id="reUpdateStatus" parameterType="hashMap">
+		update allproduct set grade=100 where username=#{username} and productnum=#{productnum} 
+	</update>
+	<select id="adIngCnt" resultType="int">
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+			AND a.productnum = p.productnum WHERE a.adstatus = 40
+	</select>
+	<select id="adIngList" parameterType="hashMap" resultType="nong.soon.bae.bean.AdDTO" >
+		<![CDATA[
+		SELECT * FROM 
+    	(SELECT b.*, ROWNUM r FROM 
+        	(SELECT a.*, p.productname AS p_productname
+         	FROM ad a
+         		JOIN allproduct p ON a.username = p.username AND a.productnum = p.productnum
+        		 WHERE a.adstatus = 40
+         			ORDER BY a.num DESC) b) 
+					where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+	<select id="adEndCnt" resultType="int">
+		SELECT COUNT(*) AS total FROM ad a JOIN allproduct p ON a.username = p.username 
+			AND a.productnum = p.productnum WHERE a.adstatus = 43
+	</select>
+	<select id="adEndList" resultType="nong.soon.bae.bean.AdDTO" >
+		<![CDATA[
+		SELECT * FROM 
+    	(SELECT b.*, ROWNUM r FROM 
+        	(SELECT a.*, p.productname AS p_productname
+         	FROM ad a
+         		JOIN allproduct p ON a.username = p.username AND a.productnum = p.productnum
+        		 WHERE a.adstatus = 43
+         			ORDER BY a.num DESC) b) 
+					where r >= #{start} and r <= #{end}
+      ]]>
+	</select>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  	<typeAliases>
+  		<typeAlias type="nong.soon.bae.bean.ChatDTO" alias="chatDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.UsersDTO" alias="usersDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.UserGradeDTO" alias="userGradeDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.MyPageDTO" alias="myPageDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.PaymentDTO" alias="paymentDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.ChartDTO" alias="chartDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.ProductListDTO" alias="productListDTO"/>
+  		<typeAlias type="nong.soon.bae.bean.AllProductDTO" alias="allProductDTO"/>
+  	</typeAliases>
+</configuration>
